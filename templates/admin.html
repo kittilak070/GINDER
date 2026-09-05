@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINDER Admin - จัดการข้อมูลอาหาร</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Palette from Design Specification */
+            --color-primary: #EE7816;
+            --color-secondary: #FF3377;
+            --color-bg: #100923;
+            --color-success: #00FF26;
+            --color-danger: #FF3232;
+            --color-warning: #F2FF00;
+            --color-info: #3284FF;
+            --color-light: #FFFFFF;
+            --color-dark: #000000;
+            --color-grey: #616161;
+
+            --bg-primary: #100923;
+            --bg-secondary: #170e33;
+            --bg-card: rgba(26, 15, 52, 0.55);
+            --accent-pink: #FF3377;
+            --accent-orange: #EE7816;
+            --accent-purple: #3284FF;
+            --accent-green: #00FF26;
+            --accent-gradient: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+            --text-primary: #FFFFFF;
+            --text-secondary: #b6afcc;
+            --text-muted: #616161;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6);
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+        }
+
+        *, button, input, select, textarea {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Mitr', sans-serif;
+        }
+
+        body {
+            font-family: 'Mitr', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background glow */
+        .bg-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-glow-1 {
+            background-color: var(--accent-pink);
+            top: -100px;
+            left: -100px;
+        }
+
+        .bg-glow-2 {
+            background-color: var(--accent-purple);
+            bottom: -100px;
+            right: -100px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            backdrop-filter: blur(20px);
+            background-color: rgba(16, 9, 35, 0.7);
+            border-left: 1px solid var(--glass-border);
+            border-right: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            font-family: 'Mitr', sans-serif;
+        }
+
+        .logo i {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius-sm);
+            border: none;
+            cursor: pointer;
+            font-family: 'Mitr', sans-serif;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(238, 120, 22, 0.35);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-danger {
+            background: #FF3232;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        .btn-edit {
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-delete {
+            background: rgba(255, 50, 50, 0.15);
+            color: #FF3232;
+            border: 1px solid rgba(255, 50, 50, 0.3);
+            padding: 0.35rem 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-delete:hover {
+            background: #FF3232;
+            color: white;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-md);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            width: 100%;
+            font-family: 'Mitr', sans-serif;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--glass-shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: rgba(26, 17, 54, 0.8);
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .restaurant-img {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--border-radius-sm);
+            object-fit: cover;
+            background: #111;
+        }
+
+        .badge-type {
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            background: rgba(255, 119, 51, 0.2);
+            color: var(--accent-orange);
+            margin: 0.1rem;
+        }
+
+        .allergens-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .allergen-tag {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Modal styling */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(16, 9, 35, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: #170e33;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.8rem;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-control {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.65rem 0.8rem;
+            border-radius: var(--border-radius-sm);
+            color: white;
+            font-family: 'Mitr', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-pink);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            accent-color: var(--accent-pink);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 1rem;
+        }
+
+        /* Admin Tabs & Analytics Styling */
+        .admin-nav-tabs {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.8rem;
+            overflow-x: auto;
+        }
+
+        .admin-nav-tab {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .admin-nav-tab:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+
+        .admin-nav-tab.active {
+            background: var(--accent-gradient);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(255, 51, 119, 0.3);
+        }
+
+        .admin-section.hidden {
+            display: none !important;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .analytics-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-md);
+            padding: 1.2rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .analytics-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .analytics-num {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .analytics-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+
+        .role-badge {
+            padding: 0.25rem 0.65rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .role-admin {
+            background: rgba(255, 51, 119, 0.15);
+            color: var(--accent-pink);
+            border: 1px solid rgba(255, 51, 119, 0.3);
+        }
+
+        .role-user {
+            background: rgba(50, 132, 255, 0.15);
+            color: var(--accent-purple);
+            border: 1px solid rgba(50, 132, 255, 0.3);
+        }
+
+        .user-avatar-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));
+            color: white;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .feedback-item {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-md);
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-fire-flame-curved"></i>
+                <span>KINDER Admin</span>
+            </div>
+            <div style="display: flex; gap: 0.8rem;">
+                <a href="/" class="btn btn-secondary"><i class="fa-solid fa-home"></i> ไปหน้าแอปหลัก</a>
+                <button id="btn-open-add" class="btn btn-primary"><i class="fa-solid fa-plus"></i>
+                    เพิ่มร้านใหม่</button>
+            </div>
+        </header>
+
+        <!-- ADMIN NAVIGATION TABS -->
+        <div class="admin-nav-tabs">
+            <button id="tab-nav-restaurants" class="admin-nav-tab active" type="button"><i class="fa-solid fa-utensils"></i> จัดการร้านอาหาร</button>
+            <button id="tab-nav-users" class="admin-nav-tab" type="button"><i class="fa-solid fa-users-gear"></i> จัดการผู้ใช้งาน</button>
+            <button id="tab-nav-analytics" class="admin-nav-tab" type="button"><i class="fa-solid fa-chart-pie"></i> รายงานสถิติ</button>
+            <button id="tab-nav-feedback" class="admin-nav-tab" type="button"><i class="fa-solid fa-inbox"></i> ข้อความเสนอแนะ</button>
+        </div>
+
+        <!-- SECTION 1: RESTAURANTS -->
+        <div id="section-restaurants" class="admin-section">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                <input type="text" id="search-input" placeholder="ค้นหาชื่ออาหาร/ร้านอาหาร...">
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">รูป</th>
+                            <th>ชื่อ</th>
+                            <th>ประเภท</th>
+                            <th>ราคาเริ่มต้น</th>
+                            <th>พิกัด GPS</th>
+                            <th>สารก่อภูมิแพ้</th>
+                            <th style="width: 150px; text-align: center;">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="restaurants-table-body">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 2: USER MANAGEMENT -->
+        <div id="section-users" class="admin-section hidden">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                <input type="text" id="user-search-input" placeholder="ค้นหาชื่อผู้ใช้, ชื่อที่แสดง...">
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">โปรไฟล์</th>
+                            <th>ชื่อผู้ใช้ (Username)</th>
+                            <th>ชื่อที่แสดง (Display Name)</th>
+                            <th style="width: 120px;">บทบาท</th>
+                            <th>วันที่สมัคร</th>
+                            <th style="width: 170px; text-align: center;">จัดการสิทธิ์ / บัญชี</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: DASHBOARD ANALYTICS -->
+        <div id="section-analytics" class="admin-section hidden">
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(255, 51, 119, 0.15); color: var(--accent-pink);">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="stat-total-restaurants">0</div>
+                        <div class="analytics-label">ร้านอาหารทั้งหมด</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(50, 132, 255, 0.15); color: var(--accent-purple);">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="stat-total-users">0</div>
+                        <div class="analytics-label">ผู้ใช้งานในระบบ</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(0, 255, 38, 0.15); color: var(--accent-green);">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="stat-total-matches">0</div>
+                        <div class="analytics-label">แมตช์สำเร็จทั้งหมด</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(238, 120, 22, 0.15); color: var(--accent-orange);">
+                        <i class="fa-solid fa-tag"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="stat-avg-price">~0฿</div>
+                        <div class="analytics-label">ราคาเฉลี่ยต่อคน</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two Column Details -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); padding: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-crown text-accent"></i> 5 ร้านยอดนิยมที่คนแมตช์สูงสุด
+                    </h3>
+                    <div id="analytics-top-restaurants" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <!-- Top restaurants dynamically loaded -->
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); padding: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-pie-chart text-accent"></i> สัดส่วนประเภทอาหารในระบบ
+                    </h3>
+                    <div id="analytics-categories" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <!-- Categories dynamically loaded -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: FEEDBACK -->
+        <div id="section-feedback" class="admin-section hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.1rem;"><i class="fa-solid fa-inbox text-accent"></i> กล่องข้อความเสนอแนะ & แจ้งปัญหา</h3>
+                <span id="feedback-count-badge" class="badge-type" style="background: var(--accent-gradient); color: white;">0 ข้อความ</span>
+            </div>
+            <div id="feedback-list-container">
+                <!-- Feedback loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD/EDIT FORM MODAL -->
+    <div id="form-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">เพิ่มข้อมูลร้านอาหาร</h3>
+                <button id="btn-close-modal"
+                    style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;"><i
+                        class="fa-solid fa-times"></i></button>
+            </div>
+            <form id="restaurant-form">
+                <input type="hidden" id="form-id">
+
+                <div class="form-group">
+                    <label for="form-name">ชื่อร้านอาหาร *</label>
+                    <input type="text" id="form-name" class="form-control" placeholder="เช่น เจ๊โอว เล้งแซ่บ" required>
+                </div>
+
+                <div class="form-group">
+                    <label>ประเภทร้านอาหาร (เลือกได้มากกว่า 1)</label>
+                    <div class="checkbox-group" id="form-type-group">
+                        <label class="checkbox-item"><input type="checkbox" name="restaurant-type" value="อาหารไทย / อาหารใต้"> อาหารไทย / อาหารใต้</label>
+                        <label class="checkbox-item"><input type="checkbox" name="restaurant-type" value="จานด่วน / ก๋วยเตี๋ยว"> จานด่วน / ก๋วยเตี๋ยว</label>
+                        <label class="checkbox-item"><input type="checkbox" name="restaurant-type" value="อาหารทะเล / ซีฟู้ด"> อาหารทะเล / ซีฟู้ด</label>
+                        <label class="checkbox-item"><input type="checkbox" name="restaurant-type" value="ปิ้งย่าง / ชาบู"> ปิ้งย่าง / ชาบู</label>
+                        <label class="checkbox-item"><input type="checkbox" name="restaurant-type" value="คาเฟ่ / ของหวาน"> คาเฟ่ / ของหวาน</label>
+                        <label class="checkbox-item"><input type="checkbox" name="restaurant-type" value="อาหารฮาลาล"> อาหารฮาลาล</label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="form-rating">คะแนนรีวิว (0 - 5.0)</label>
+                        <input type="number" id="form-rating" class="form-control" step="0.1" min="0" max="5"
+                            value="4.0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="form-price">ราคาเริ่มต้น (บาท)</label>
+                        <input type="number" id="form-price" class="form-control" min="1" value="100">
+                    </div>
+                    <input type="hidden" id="form-lat">
+                    <input type="hidden" id="form-lng">
+                </div>
+
+                <div class="form-group">
+                    <label for="form-image">ลิงก์รูปภาพ (URL)</label>
+                    <input type="url" id="form-image" class="form-control"
+                        placeholder="https://images.unsplash.com/...">
+                </div>
+
+                <div class="form-group">
+                    <label>สารก่อภูมิแพ้ที่มีในอาหาร</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox" name="allergens" value="อาหารทะเล">
+                            อาหารทะเล</label>
+                        <label class="checkbox-item"><input type="checkbox" name="allergens" value="แป้งสาลี/กลูเตน">
+                            แป้งสาลี/กลูเตน</label>
+                        <label class="checkbox-item"><input type="checkbox" name="allergens" value="นม/ชีส">
+                            นม/ชีส</label>
+                        <label class="checkbox-item"><input type="checkbox" name="allergens" value="ไข่"> ไข่</label>
+                        <label class="checkbox-item"><input type="checkbox" name="allergens" value="ถั่ว"> ถั่ว</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="form-description">คำอธิบาย</label>
+                    <textarea id="form-description" class="form-control" rows="2"
+                        placeholder="รายละเอียดร้านเด็ด..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="form-address">ที่อยู่/ลิงก์ Google Maps นำทาง</label>
+                    <input type="text" id="form-address" class="form-control"
+                        placeholder="ใส่ที่อยู่ หรือ วางลิงก์ Google Maps เพื่อให้ปุ่มนำทางลิงก์โดยตรง">
+                    <span id="gps-status"
+                        style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; display: block;"><i
+                            class="fa-solid fa-location-crosshairs"></i> ยังไม่ได้รับตำแหน่ง GPS</span>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="btn-cancel-modal" class="btn btn-secondary">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let allRestaurants = [];
+        let allUsers = [];
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // DOM Elements
+        const tableBody = document.getElementById('restaurants-table-body');
+        const searchInput = document.getElementById('search-input');
+        const formModal = document.getElementById('form-modal');
+        const btnOpenAdd = document.getElementById('btn-open-add');
+        const btnCloseModal = document.getElementById('btn-close-modal');
+        const btnCancelModal = document.getElementById('btn-cancel-modal');
+        const form = document.getElementById('restaurant-form');
+
+        // Initial Load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadRestaurants();
+            setupEventListeners();
+            setupAdminTabs();
+        });
+
+        // ---------------- TAB NAVIGATION ----------------
+        function setupAdminTabs() {
+            const tabs = [
+                { btn: document.getElementById('tab-nav-restaurants'), section: document.getElementById('section-restaurants'), onOpen: () => loadRestaurants() },
+                { btn: document.getElementById('tab-nav-users'), section: document.getElementById('section-users'), onOpen: () => loadUsers() },
+                { btn: document.getElementById('tab-nav-analytics'), section: document.getElementById('section-analytics'), onOpen: () => loadAnalytics() },
+                { btn: document.getElementById('tab-nav-feedback'), section: document.getElementById('section-feedback'), onOpen: () => loadFeedback() }
+            ];
+
+            tabs.forEach(tab => {
+                if (!tab.btn) return;
+                tab.btn.addEventListener('click', () => {
+                    tabs.forEach(t => {
+                        if (t.btn) t.btn.classList.remove('active');
+                        if (t.section) t.section.classList.add('hidden');
+                    });
+                    tab.btn.classList.add('active');
+                    if (tab.section) tab.section.classList.remove('hidden');
+                    if (typeof tab.onOpen === 'function') tab.onOpen();
+                });
+            });
+        }
+
+        // ---------------- RESTAURANTS (CMS) ----------------
+        function loadRestaurants() {
+            fetch('/api/admin/restaurants')
+                .then(res => res.json())
+                .then(data => {
+                    allRestaurants = data;
+                    renderTable(data);
+                })
+                .catch(err => {
+                    console.error('Error loading restaurants:', err);
+                    alert('เกิดข้อผิดพลาดในการดึงข้อมูลร้านอาหาร');
+                });
+        }
+
+        function renderTable(list) {
+            tableBody.innerHTML = '';
+            if (list.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">ไม่พบข้อมูลอาหาร/ร้านอาหาร</td></tr>`;
+                return;
+            }
+
+            list.forEach(r => {
+                const tr = document.createElement('tr');
+
+                // Allergens tags
+                const allergenTags = (r.allergens || []).map(a => `<span class="allergen-tag">${escapeHtml(a)}</span>`).join('');
+
+                // Types badges
+                const typesList = Array.isArray(r.type) ? r.type : [r.type];
+                const typeBadges = typesList.map(t => `<span class="badge-type">${escapeHtml(t)}</span>`).join(' ');
+
+                const latNum = parseFloat(r.latitude);
+                const lngNum = parseFloat(r.longitude);
+                const gpsText = (!isNaN(latNum) && !isNaN(lngNum)) ? `${latNum.toFixed(4)}, ${lngNum.toFixed(4)}` : '<span style="color: var(--text-muted);">ไม่มีพิกัด</span>';
+                tr.innerHTML = `
+                    <td><img src="${r.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'}" class="restaurant-img" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'"></td>
+                    <td style="font-weight: 600;">${escapeHtml(r.name)}</td>
+                    <td>${typeBadges}</td>
+                    <td>${r.avgPrice}฿</td>
+                    <td>${gpsText}</td>
+                    <td><div class="allergens-list">${allergenTags}</div></td>
+                    <td style="text-align: center;">
+                        <button class="btn btn-edit" onclick="editRestaurant('${r.id}')"><i class="fa-solid fa-edit"></i></button>
+                        <button class="btn btn-delete" onclick="deleteRestaurant('${r.id}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function setupEventListeners() {
+            const addressInput = document.getElementById('form-address');
+            const latInput = document.getElementById('form-lat');
+            const lngInput = document.getElementById('form-lng');
+            const gpsStatus = document.getElementById('gps-status');
+
+            // Search Restaurants
+            searchInput.addEventListener('input', (e) => {
+                const q = e.target.value.toLowerCase().trim();
+                const filtered = allRestaurants.filter(r => r.name.toLowerCase().includes(q));
+                renderTable(filtered);
+            });
+
+            // Parse coordinates from URL
+            addressInput.addEventListener('input', (e) => {
+                const val = e.target.value.trim();
+                const match = val.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || val.match(/query=(-?\d+\.\d+),(-?\d+\.\d+)/) || val.match(/place\/(-?\d+\.\d+),(-?\d+\.\d+)/);
+                if (match) {
+                    latInput.value = match[1];
+                    lngInput.value = match[2];
+                    gpsStatus.innerHTML = `<i class="fa-solid fa-location-dot" style="color: var(--accent-green);"></i> ตรวจจับพิกัดจากลิงก์: ${parseFloat(match[1]).toFixed(4)}, ${parseFloat(match[2]).toFixed(4)}`;
+                }
+            });
+
+            // Open Add Modal
+            btnOpenAdd.addEventListener('click', () => {
+                document.getElementById('modal-title').innerText = 'เพิ่มข้อมูลร้านอาหาร';
+                form.reset();
+                document.getElementById('form-id').value = '';
+                latInput.value = '';
+                lngInput.value = '';
+                gpsStatus.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> กำลังดึงตำแหน่งพิกัดปัจจุบันของคุณ...`;
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            latInput.value = position.coords.latitude;
+                            lngInput.value = position.coords.longitude;
+                            gpsStatus.innerHTML = `<i class="fa-solid fa-location-crosshairs" style="color: var(--accent-green);"></i> ใช้ตำแหน่ง GPS ปัจจุบันของคุณสำเร็จ`;
+                        },
+                        (error) => {
+                            console.warn("Geolocation error:", error);
+                            gpsStatus.innerHTML = `<i class="fa-solid fa-location-crosshairs" style="color: var(--text-muted);"></i> ไม่สามารถดึงตำแหน่ง GPS ได้ (กรุณาวางลิงก์ Google Maps)`;
+                        },
+                        { timeout: 5000 }
+                    );
+                } else {
+                    gpsStatus.innerHTML = `<i class="fa-solid fa-location-crosshairs" style="color: var(--text-muted);"></i> เบราว์เซอร์ไม่รองรับ GPS (กรุณาวางลิงก์ Google Maps)`;
+                }
+                formModal.classList.add('active');
+            });
+
+            // Close Modal
+            const closeModal = () => {
+                formModal.classList.remove('active');
+            };
+            btnCloseModal.addEventListener('click', closeModal);
+            btnCancelModal.addEventListener('click', closeModal);
+
+            // Form Submit
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const id = document.getElementById('form-id').value;
+
+                // Get checked allergens
+                const checkedBoxes = document.querySelectorAll('input[name="allergens"]:checked');
+                const allergens = Array.from(checkedBoxes).map(cb => cb.value);
+
+                // Get checked types
+                const checkedTypes = document.querySelectorAll('input[name="restaurant-type"]:checked');
+                const restaurantTypes = Array.from(checkedTypes).map(cb => cb.value);
+
+                // Map price Range
+                const avgPrice = parseInt(document.getElementById('form-price').value);
+                let priceRange = '$';
+                if (avgPrice > 300) priceRange = '$$$';
+                else if (avgPrice >= 100) priceRange = '$$';
+
+                const payload = {
+                    name: document.getElementById('form-name').value.trim(),
+                    type: restaurantTypes,
+                    rating: parseFloat(document.getElementById('form-rating').value),
+                    avgPrice: avgPrice,
+                    priceRange: priceRange,
+                    image: document.getElementById('form-image').value.trim() || null,
+                    description: document.getElementById('form-description').value.trim(),
+                    address: document.getElementById('form-address').value.trim(),
+                    latitude: latInput.value ? parseFloat(latInput.value) : null,
+                    longitude: lngInput.value ? parseFloat(lngInput.value) : null,
+                    allergens: allergens
+                };
+
+                const method = id ? 'PUT' : 'POST';
+                const url = id ? `/api/admin/restaurants/${id}` : '/api/admin/restaurants';
+
+                fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            closeModal();
+                            loadRestaurants();
+                        } else {
+                            alert(data.message || 'บันทึกไม่สำเร็จ');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error saving restaurant:', err);
+                        alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+                    });
+            });
+        }
+
+        // Global functions for restaurant edit/delete
+        window.editRestaurant = function (id) {
+            const r = allRestaurants.find(item => String(item.id) === String(id));
+            if (!r) return;
+
+            const gpsStatus = document.getElementById('gps-status');
+
+            document.getElementById('modal-title').innerText = 'แก้ไขข้อมูลร้านอาหาร';
+            document.getElementById('form-id').value = r.id;
+            document.getElementById('form-name').value = r.name;
+            document.getElementById('form-rating').value = r.rating;
+            document.getElementById('form-price').value = r.avgPrice;
+            document.getElementById('form-image').value = r.image || '';
+            document.getElementById('form-description').value = r.description || '';
+            document.getElementById('form-address').value = r.address || '';
+            document.getElementById('form-lat').value = r.latitude || '';
+            document.getElementById('form-lng').value = r.longitude || '';
+
+            const latNum = parseFloat(r.latitude);
+            const lngNum = parseFloat(r.longitude);
+            if (!isNaN(latNum) && !isNaN(lngNum)) {
+                gpsStatus.innerHTML = `<i class="fa-solid fa-location-dot" style="color: var(--accent-green);"></i> พิกัดที่บันทึกไว้: ${latNum.toFixed(4)}, ${lngNum.toFixed(4)}`;
+            } else {
+                gpsStatus.innerHTML = `<i class="fa-solid fa-location-crosshairs" style="color: var(--text-muted);"></i> ไม่มีพิกัดบันทึกไว้`;
+            }
+
+            // Set type checkboxes
+            const typeCheckboxes = document.querySelectorAll('input[name="restaurant-type"]');
+            const savedTypes = Array.isArray(r.type) ? r.type : [r.type];
+            typeCheckboxes.forEach(cb => {
+                cb.checked = savedTypes.includes(cb.value);
+            });
+
+            // Set allergens checkboxes
+            const checkboxes = document.querySelectorAll('input[name="allergens"]');
+            checkboxes.forEach(cb => {
+                cb.checked = (r.allergens || []).includes(cb.value);
+            });
+
+            formModal.classList.add('active');
+        };
+
+        window.deleteRestaurant = function (id) {
+            const r = allRestaurants.find(item => String(item.id) === String(id));
+            if (!r) return;
+
+            if (confirm(`คุณแน่ใจหรือไม่ที่จะลบอาหาร/ร้าน "${r.name}"?`)) {
+                fetch(`/api/admin/restaurants/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            loadRestaurants();
+                        } else {
+                            alert(data.message || 'ลบไม่สำเร็จ');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error deleting restaurant:', err);
+                        alert('เกิดข้อผิดพลาดในการลบข้อมูล');
+                    });
+            }
+        };
+
+        // ---------------- USER MANAGEMENT ----------------
+        const userSearchInput = document.getElementById('user-search-input');
+        const usersTableBody = document.getElementById('users-table-body');
+
+        function loadUsers() {
+            usersTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดข้อมูลผู้ใช้...</td></tr>`;
+            fetch('/api/admin/users')
+                .then(res => res.json())
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        allUsers = data;
+                        renderUsersTable(data);
+                    } else {
+                        usersTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--accent-pink);">ไม่สามารถโหลดข้อมูลผู้ใช้ได้ (${escapeHtml(data.message || 'Error')})</td></tr>`;
+                    }
+                })
+                .catch(err => {
+                    console.error('Error loading users:', err);
+                    usersTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--accent-pink);">เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ใช้</td></tr>`;
+                });
+        }
+
+        function renderUsersTable(list) {
+            usersTableBody.innerHTML = '';
+            if (list.length === 0) {
+                usersTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">ไม่พบข้อมูลผู้ใช้งาน</td></tr>`;
+                return;
+            }
+
+            list.forEach(u => {
+                const tr = document.createElement('tr');
+                const firstLetter = (u.displayName || u.username || '?').charAt(0).toUpperCase();
+                const roleBadge = u.role === 'admin'
+                    ? `<span class="role-badge role-admin"><i class="fa-solid fa-shield-halved"></i> แอดมิน (Admin)</span>`
+                    : `<span class="role-badge role-user"><i class="fa-solid fa-user"></i> ผู้ใช้ทั่วไป</span>`;
+
+                const dateStr = u.createdAt ? new Date(u.createdAt).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+
+                const toggleRoleText = u.role === 'admin' ? 'ลดเป็นผู้ใช้' : 'ตั้งเป็นแอดมิน';
+                const toggleRoleIcon = u.role === 'admin' ? 'fa-user-minus' : 'fa-user-shield';
+                const toggleRoleClass = u.role === 'admin' ? 'btn-secondary' : 'btn-primary';
+
+                tr.innerHTML = `
+                    <td>
+                        <div class="user-avatar-circle">${escapeHtml(firstLetter)}</div>
+                    </td>
+                    <td style="font-weight: 600;">${escapeHtml(u.username)}</td>
+                    <td>${escapeHtml(u.displayName || '-')}</td>
+                    <td>${roleBadge}</td>
+                    <td style="color: var(--text-secondary); font-size: 0.85rem;">${dateStr}</td>
+                    <td style="text-align: center; white-space: nowrap;">
+                        <button class="btn ${toggleRoleClass}" style="padding: 0.35rem 0.7rem; font-size: 0.8rem; margin-right: 0.3rem;" onclick="toggleUserRole('${u.id}', '${u.role}', '${escapeHtml(u.username)}')">
+                            <i class="fa-solid ${toggleRoleIcon}"></i> ${toggleRoleText}
+                        </button>
+                        <button class="btn btn-delete" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;" onclick="deleteUser('${u.id}', '${escapeHtml(u.username)}')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                usersTableBody.appendChild(tr);
+            });
+        }
+
+        if (userSearchInput) {
+            userSearchInput.addEventListener('input', (e) => {
+                const q = e.target.value.toLowerCase().trim();
+                const filtered = allUsers.filter(u =>
+                    (u.username && u.username.toLowerCase().includes(q)) ||
+                    (u.displayName && u.displayName.toLowerCase().includes(q))
+                );
+                renderUsersTable(filtered);
+            });
+        }
+
+        window.toggleUserRole = function (id, currentRole, username) {
+            const newRole = currentRole === 'admin' ? 'user' : 'admin';
+            const actionText = newRole === 'admin' ? 'ตั้งเป็นแอดมิน' : 'เปลี่ยนเป็นผู้ใช้ทั่วไป';
+            if (!confirm(`คุณต้องการ ${actionText} สำหรับผู้ใช้ "${username}" ใช่หรือไม่?`)) return;
+
+            fetch(`/api/admin/users/${id}/role`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ role: newRole })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        loadUsers();
+                    } else {
+                        alert(data.message || 'เปลี่ยนบทบาทไม่สำเร็จ');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error updating user role:', err);
+                    alert('เกิดข้อผิดพลาดในการเปลี่ยนสิทธิ์ผู้ใช้');
+                });
+        };
+
+        window.deleteUser = function (id, username) {
+            if (!confirm(`คุณแน่ใจหรือไม่ที่จะลบบัญชีผู้ใช้ "${username}" อย่างถาวร?`)) return;
+
+            fetch(`/api/admin/users/${id}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        loadUsers();
+                    } else {
+                        alert(data.message || 'ลบผู้ใช้ไม่สำเร็จ');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error deleting user:', err);
+                    alert('เกิดข้อผิดพลาดในการลบผู้ใช้');
+                });
+        };
+
+        // ---------------- DASHBOARD ANALYTICS ----------------
+        function loadAnalytics() {
+            fetch('/api/admin/analytics')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('stat-total-restaurants').innerText = data.totalRestaurants || 0;
+                    document.getElementById('stat-total-users').innerText = data.totalUsers || 0;
+                    document.getElementById('stat-total-matches').innerText = data.totalMatches || 0;
+                    document.getElementById('stat-avg-price').innerText = `~${data.avgPrice || 0}฿`;
+
+                    // Top restaurants
+                    const topListEl = document.getElementById('analytics-top-restaurants');
+                    topListEl.innerHTML = '';
+                    if (!data.topMatchedRestaurants || data.topMatchedRestaurants.length === 0) {
+                        topListEl.innerHTML = `<div style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 1rem;">ยังไม่มีประวัติการแมตช์ร้านอาหาร</div>`;
+                    } else {
+                        data.topMatchedRestaurants.forEach((r, idx) => {
+                            const row = document.createElement('div');
+                            row.style.cssText = 'display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0.8rem; background: rgba(255,255,255,0.03); border-radius: var(--border-radius-sm); border: 1px solid var(--glass-border);';
+                            row.innerHTML = `
+                                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                                    <span style="font-weight: 700; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; background: ${idx === 0 ? 'var(--accent-gradient)' : 'rgba(255,255,255,0.1)'}; border-radius: 50%; font-size: 0.75rem; color: white;">${idx + 1}</span>
+                                    <span style="font-weight: 500;">${escapeHtml(r.name)}</span>
+                                </div>
+                                <span style="font-weight: 600; color: var(--accent-orange); font-size: 0.9rem;"><i class="fa-solid fa-fire"></i> ${r.count} ครั้ง</span>
+                            `;
+                            topListEl.appendChild(row);
+                        });
+                    }
+
+                    // Categories breakdown
+                    const catListEl = document.getElementById('analytics-categories');
+                    catListEl.innerHTML = '';
+                    const cats = Object.entries(data.categories || {});
+                    if (cats.length === 0) {
+                        catListEl.innerHTML = `<div style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 1rem;">ไม่มีข้อมูลประเภทอาหาร</div>`;
+                    } else {
+                        const maxCount = Math.max(...cats.map(([_, count]) => count), 1);
+                        cats.sort((a, b) => b[1] - a[1]).forEach(([name, count]) => {
+                            const pct = Math.round((count / maxCount) * 100);
+                            const row = document.createElement('div');
+                            row.style.cssText = 'display: flex; flex-direction: column; gap: 0.3rem;';
+                            row.innerHTML = `
+                                <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                                    <span>${escapeHtml(name)}</span>
+                                    <span style="font-weight: 600; color: var(--text-secondary);">${count} ร้าน</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+                                    <div style="width: ${pct}%; height: 100%; background: var(--accent-gradient); border-radius: 4px; transition: width 0.4s ease;"></div>
+                                </div>
+                            `;
+                            catListEl.appendChild(row);
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.error('Error loading analytics:', err);
+                });
+        }
+
+        // ---------------- FEEDBACK MANAGEMENT ----------------
+        function loadFeedback() {
+            const container = document.getElementById('feedback-list-container');
+            const badge = document.getElementById('feedback-count-badge');
+            container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดข้อเสนอแนะ...</div>`;
+
+            fetch('/api/admin/feedback')
+                .then(res => res.json())
+                .then(data => {
+                    if (!Array.isArray(data)) {
+                        container.innerHTML = `<div style="color: var(--accent-pink); text-align: center; padding: 1rem;">ไม่สามารถโหลดข้อมูลได้</div>`;
+                        return;
+                    }
+
+                    badge.innerText = `${data.length} ข้อความ`;
+
+                    if (data.length === 0) {
+                        container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 3rem 1rem; background: var(--bg-card); border-radius: var(--border-radius-md); border: 1px solid var(--glass-border);">
+                            <i class="fa-regular fa-envelope-open" style="font-size: 2.5rem; margin-bottom: 0.8rem; opacity: 0.5;"></i>
+                            <p>ยังไม่มีข้อความเสนอแนะหรือแจ้งปัญหาเข้ามา</p>
+                        </div>`;
+                        return;
+                    }
+
+                    container.innerHTML = '';
+                    data.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'feedback-item';
+
+                        let typeLabel = 'ข้อเสนอแนะ';
+                        let typeColor = 'rgba(50, 132, 255, 0.2)';
+                        let typeTextColor = 'var(--accent-purple)';
+                        if (item.type === 'suggest_restaurant') {
+                            typeLabel = '🍲 แนะนำร้านอาหาร';
+                            typeColor = 'rgba(255, 119, 51, 0.2)';
+                            typeTextColor = 'var(--accent-orange)';
+                        } else if (item.type === 'bug_report') {
+                            typeLabel = '🐞 รายงานปัญหา';
+                            typeColor = 'rgba(255, 51, 119, 0.2)';
+                            typeTextColor = 'var(--accent-pink)';
+                        }
+
+                        const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+
+                        card.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                                    <span class="badge-type" style="background: ${typeColor}; color: ${typeTextColor}; margin: 0;">${typeLabel}</span>
+                                    <span style="font-weight: 700; font-size: 1.05rem;">${escapeHtml(item.title)}</span>
+                                </div>
+                                <button class="btn btn-delete" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="deleteFeedback('${item.id}')">
+                                    <i class="fa-solid fa-trash"></i> ลบ
+                                </button>
+                            </div>
+                            <div style="color: var(--text-primary); font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap; background: rgba(0,0,0,0.15); padding: 0.8rem; border-radius: var(--border-radius-sm);">
+                                ${escapeHtml(item.description)}
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; flex-wrap: wrap; gap: 0.5rem;">
+                                <span><i class="fa-regular fa-user"></i> ผู้ส่ง: <strong>${escapeHtml(item.contact || 'ไม่ระบุตัวตน')}</strong></span>
+                                <span><i class="fa-regular fa-clock"></i> ${dateStr}</span>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch(err => {
+                    console.error('Error loading feedback:', err);
+                    container.innerHTML = `<div style="color: var(--accent-pink); text-align: center; padding: 1rem;">เกิดข้อผิดพลาดในการโหลดข้อมูลข้อเสนอแนะ</div>`;
+                });
+        }
+
+        window.deleteFeedback = function (id) {
+            if (!confirm('คุณต้องการลบข้อความนี้ใช่หรือไม่?')) return;
+            fetch(`/api/admin/feedback/${id}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        loadFeedback();
+                    } else {
+                        alert(data.message || 'ลบไม่สำเร็จ');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error deleting feedback:', err);
+                    alert('เกิดข้อผิดพลาดในการลบ');
+                });
+        };
+    </script>
+</body>
+
+</html>

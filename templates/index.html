@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>KINDER - ปัดหาคู่กินมติเอกฉันท์</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS Icons & Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- QR Code Scanner Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
+    <!-- Dynamic Theme Styling -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-fire-flame-curved"></i></span>
+                <span class="logo-text">KINDER</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <div id="room-badge" class="room-badge hidden">
+                    <i class="fa-solid fa-users"></i> ห้อง: <span id="badge-room-id">0000</span>
+                </div>
+                <div id="user-header-profile" class="user-profile-header">
+                    <button id="btn-header-login" class="btn btn-secondary btn-sm"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: var(--border-radius-sm);">
+                        <i class="fa-solid fa-user-circle"></i> เข้าสู่ระบบ
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <!-- VIEW 0: AUTHENTICATION SCREEN -->
+            <section id="view-auth" class="view-section active">
+                <div class="auth-container glass">
+                    <!-- Logo or App Title -->
+                    <div class="auth-logo" style="text-align: center; margin-bottom: 2rem;">
+                        <span class="logo-icon" style="font-size: 3rem; display: inline-block;"><i
+                                class="fa-solid fa-fire-flame-curved"></i></span>
+                        <h1 class="logo-text" style="font-size: 2.5rem; margin-top: 0.5rem; display: block;">KINDER</h1>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.9rem;">
+                            กรุณาเข้าสู่ระบบก่อนใช้งาน</p>
+                    </div>
+
+                    <!-- Custom Segmented Toggle Button -->
+                    <div class="custom-auth-toggle">
+                        <button id="auth-toggle-login" class="toggle-btn active" type="button">LOGIN</button>
+                        <button id="auth-toggle-signup" class="toggle-btn" type="button">SIGN UP</button>
+                    </div>
+
+                    <!-- Forms Container -->
+                    <div class="auth-forms-wrapper">
+                        <!-- Login Form -->
+                        <form id="view-login-form">
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label for="view-login-username"
+                                    style="font-size: 0.95rem; margin-bottom: 0.6rem; display: block; color: var(--text-secondary);">ชื่อผู้ใช้
+                                    (Username)</label>
+                                <input type="text" id="view-login-username" class="form-control"
+                                    placeholder="กรอกชื่อผู้ใช้ของคุณ" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0.5rem;">
+                                <label for="view-login-password"
+                                    style="font-size: 0.95rem; margin-bottom: 0.6rem; display: block; color: var(--text-secondary);">รหัสผ่าน
+                                    (Password)</label>
+                                <input type="password" id="view-login-password" class="form-control"
+                                    placeholder="กรอกรหัสผ่านของคุณ" required>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; margin-bottom: 1.2rem;">
+                                <button type="button" class="btn-trigger-forgot-pwd" style="background: none; border: none; color: var(--accent-orange); font-size: 0.85rem; cursor: pointer; text-decoration: underline; padding: 0.2rem 0;">
+                                    <i class="fa-solid fa-key"></i> ลืมรหัสผ่าน?
+                                </button>
+                            </div>
+                            <button type="submit" class="btn btn-primary full-width"
+                                style="padding: 0.9rem; font-size: 1rem; margin-top: 0.2rem;">
+                                <i class="fa-solid fa-sign-in-alt"></i> เข้าสู่ระบบ
+                            </button>
+                        </form>
+
+                        <!-- Signup Form -->
+                        <form id="view-signup-form" class="hidden">
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label for="view-signup-username"
+                                    style="font-size: 0.95rem; margin-bottom: 0.6rem; display: block; color: var(--text-secondary);">ชื่อผู้ใช้
+                                    (Username) *</label>
+                                <input type="text" id="view-signup-username" class="form-control"
+                                    placeholder="ชื่อผู้ใช้ภาษาอังกฤษ/ตัวเลข" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label for="view-signup-password"
+                                    style="font-size: 0.95rem; margin-bottom: 0.6rem; display: block; color: var(--text-secondary);">รหัสผ่าน
+                                    (Password) *</label>
+                                <input type="password" id="view-signup-password" class="form-control"
+                                    placeholder="ตั้งรหัสผ่านของคุณ" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label for="view-signup-confirm-password"
+                                    style="font-size: 0.95rem; margin-bottom: 0.6rem; display: block; color: var(--text-secondary);">ยืนยันรหัสผ่าน
+                                    (Confirm Password) *</label>
+                                <input type="password" id="view-signup-confirm-password" class="form-control"
+                                    placeholder="กรอกรหัสผ่านอีกครั้ง" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label for="view-signup-email" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block; color: var(--text-secondary);">
+                                    <i class="fa-solid fa-envelope text-accent"></i> อีเมล (สำหรับกู้คืนรหัสผ่านทาง OTP)
+                                </label>
+                                <input type="email" id="view-signup-email" class="form-control" placeholder="เช่น yourname@gmail.com">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label for="view-signup-question" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block; color: var(--text-secondary);">
+                                    <i class="fa-solid fa-question-circle text-accent"></i> คำถามความปลอดภัย (สำหรับกู้คืนทันที)
+                                </label>
+                                <select id="view-signup-question" class="form-control" style="background: rgba(255,255,255,0.08); color: var(--text-primary);">
+                                    <option value="" style="background: #170e33; color: #fff;">-- เลือกคำถามความปลอดภัย --</option>
+                                    <option value="ชื่อสัตว์เลี้ยงตัวแรกของคุณคืออะไร?" style="background: #170e33; color: #fff;">ชื่อสัตว์เลี้ยงตัวแรกของคุณคืออะไร?</option>
+                                    <option value="โรงเรียนประถมที่คุณเคยเรียนชื่ออะไร?" style="background: #170e33; color: #fff;">โรงเรียนประถมที่คุณเคยเรียนชื่ออะไร?</option>
+                                    <option value="เมนูอาหารที่คุณชอบที่สุดคืออะไร?" style="background: #170e33; color: #fff;">เมนูอาหารที่คุณชอบที่สุดคืออะไร?</option>
+                                    <option value="จังหวัดที่คุณเกิดคือจังหวัดอะไร?" style="background: #170e33; color: #fff;">จังหวัดที่คุณเกิดคือจังหวัดอะไร?</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label for="view-signup-answer" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block; color: var(--text-secondary);">
+                                    คำตอบคำถามความปลอดภัย
+                                </label>
+                                <input type="text" id="view-signup-answer" class="form-control" placeholder="พิมพ์คำตอบที่คุณจำได้ง่าย">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label for="view-signup-pin" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block; color: var(--text-secondary);">
+                                    <i class="fa-solid fa-shield-halved text-accent"></i> Recovery PIN (รหัสกู้คืน 4-6 หลัก)
+                                </label>
+                                <input type="password" id="view-signup-pin" maxlength="6" class="form-control" placeholder="เช่น 1234 หรือ 987654">
+                            </div>
+                            <button type="submit" class="btn btn-primary full-width"
+                                style="padding: 0.9rem; font-size: 1rem; margin-top: 0.5rem;">
+                                <i class="fa-solid fa-user-plus"></i> สมัครสมาชิก & เข้าสู่ระบบ
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 1: LANDING SCREEN -->
+            <section id="view-landing" class="view-section">
+                <div class="hero-section">
+                    <h1 class="hero-title animate-gradient">วันนี้กินอะไรดี?</h1>
+                    <p class="hero-subtitle">เบื่อไหมกับการเลือกของกินไม่ลงตัว? ชวนกลุ่มเพื่อนมา "ปัดหาร้านเด็ด"
+                        ที่มติเอกฉันท์กัน!</p>
+                </div>
+                <div class="menu-actions">
+                    <button id="btn-goto-create" class="btn btn-primary btn-lg">
+                        <i class="fa-solid fa-plus-circle"></i> สร้างกลุ่มใหม่
+                    </button>
+
+                    <div class="landing-join-box glass"
+                        style="margin-top: 1rem; padding: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem;">
+                        <h4
+                            style="font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); text-align: center;">
+                            <i class="fa-solid fa-users text-accent"></i> เข้าร่วมกลุ่มที่มีอยู่แล้ว
+                        </h4>
+                        <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem; align-items: center;">
+                            <input type="text" id="landing-room-id" placeholder="รหัสห้อง 4 หลัก" class="form-control"
+                                style="text-align: center; letter-spacing: 2px; font-weight: bold; font-size: 1.1rem; padding: 0.75rem 0.5rem; text-transform: uppercase;">
+                            <button id="btn-landing-join" class="btn btn-primary"
+                                style="padding: 0.75rem 1.2rem;">เข้าร่วม</button>
+                        </div>
+                        <div
+                            style="display: flex; align-items: center; justify-content: center; gap: 0.8rem; color: var(--text-muted); font-size: 0.75rem; margin: 0.1rem 0;">
+                            <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
+                            <span>หรือ</span>
+                            <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
+                        </div>
+                        <button id="btn-landing-scan-qr" class="btn btn-secondary full-width"
+                            style="padding: 0.75rem 1.2rem;">
+                            <i class="fa-solid fa-qrcode text-accent"></i> สแกน QR Code เข้ากลุ่มทันที
+                        </button>
+                    </div>
+                </div>
+                <div class="app-info-card">
+                    <h3><i class="fa-solid fa-star text-accent"></i> จุดเด่นกติกา KINDER</h3>
+                    <ul>
+                        <li><i class="fa-solid fa-check text-success"></i> <strong>ปัดพร้อมกัน:</strong>
+                            เข้าห้องโหวตร่วมกันแบบเรียลไทม์</li>
+                        <li><i class="fa-solid fa-check text-success"></i> <strong>มติเอกฉันท์:</strong>
+                            หากทุกคนปัดขวาร้านเดียวกัน ล็อคเป้าทันที!</li>
+                        <li><i class="fa-solid fa-check text-success"></i> <strong>ระวังหมดเวลา:</strong>
+                            ถ้าไม่มีร้านที่มติเอกฉันท์ใน 3 นาที ระบบจะสุ่มจากร้านที่ยอดไลก์สูงสุดให้ทันที</li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.2rem;">
+                    <button id="btn-open-feedback" type="button" class="btn btn-secondary btn-sm" style="font-size: 0.8rem; padding: 0.45rem 1rem; border-radius: 20px;">
+                        <i class="fa-solid fa-comment-dots text-accent"></i> เสนอแนะร้านอาหาร / แจ้งปัญหา
+                    </button>
+                </div>
+            </section>
+
+            <!-- VIEW 2: PREFERENCES CONFIG (HOST ONLY) -->
+            <section id="view-preferences" class="view-section">
+                <div class="section-title">
+                    <h2><i class="fa-solid fa-sliders text-accent"></i> ตั้งค่าการค้นหา</h2>
+                    <p>กำหนดเงื่อนไขร้านอาหารสำหรับทุกคนในห้อง</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="pref-name">ชื่อของคุณ</label>
+                    <input type="text" id="pref-name" placeholder="เช่น นัท, ส้ม, บอย" maxlength="15"
+                        class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>ข้อมูลการแพ้อาหาร (เพื่อกรองร้านที่มีส่วนผสมออก)</label>
+                    <div class="allergy-selector host-allergy-selector">
+                        <div class="allergy-pill" data-allergen="อาหารทะเล">
+                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล
+                        </div>
+                        <div class="allergy-pill" data-allergen="แป้งสาลี/กลูเตน">
+                            <i class="fa-solid fa-bread-slice"></i> แป้งสาลี/กลูเตน
+                        </div>
+                        <div class="allergy-pill" data-allergen="นม/ชีส">
+                            <i class="fa-solid fa-cheese"></i> นม/ชีส
+                        </div>
+                        <div class="allergy-pill" data-allergen="ไข่">
+                            <i class="fa-solid fa-egg"></i> ไข่
+                        </div>
+                        <div class="allergy-pill" data-allergen="ถั่ว">
+                            <i class="fa-solid fa-seedling"></i> ถั่ว
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ประเภทร้านอาหารที่ต้องการทาน</label>
+                    <div class="food-type-selector">
+                        <div class="type-pill active" data-type="อาหารไทย / อาหารใต้">
+                            <i class="fa-solid fa-bowl-food"></i> อาหารไทย / อาหารใต้
+                        </div>
+                        <div class="type-pill" data-type="จานด่วน / ก๋วยเตี๋ยว">
+                            <i class="fa-solid fa-bowl-rice"></i> จานด่วน / ก๋วยเตี๋ยว
+                        </div>
+                        <div class="type-pill" data-type="อาหารทะเล / ซีฟู้ด">
+                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล / ซีฟู้ด
+                        </div>
+                        <div class="type-pill" data-type="ปิ้งย่าง / ชาบู">
+                            <i class="fa-solid fa-fire"></i> ปิ้งย่าง / ชาบู
+                        </div>
+                        <div class="type-pill" data-type="คาเฟ่ / ของหวาน">
+                            <i class="fa-solid fa-ice-cream"></i> คาเฟ่ / ของหวาน
+                        </div>
+                        <div class="type-pill" data-type="อาหารฮาลาล">
+                            <i class="fa-solid fa-star-and-crescent"></i> อาหารฮาลาล
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>งบประมาณเริ่มต้นต่อคน</label>
+                    <div class="budget-selector">
+                        <div class="budget-pill active" data-min="0" data-max="99">
+                            <strong>$</strong><span>&lt; 100฿</span>
+                        </div>
+                        <div class="budget-pill" data-min="100" data-max="300">
+                            <strong>$$</strong><span>100 - 300฿</span>
+                        </div>
+                        <div class="budget-pill" data-min="301" data-max="9999">
+                            <strong>$$$</strong><span>&gt; 300฿</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label>ระยะทางสูงสุด</label>
+                        <span id="distance-val" class="range-value">2.0 กม.</span>
+                    </div>
+                    <input type="range" id="pref-distance" min="0.5" max="20.0" step="0.5" value="2.0" class="slider">
+                </div>
+
+                <div class="action-buttons">
+                    <button id="btn-back-to-landing" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i>
+                        ย้อนกลับ</button>
+                    <button id="btn-create-room" class="btn btn-primary">สร้างห้องเลย <i
+                            class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- VIEW 3: JOIN CONFIG -->
+            <section id="view-join" class="view-section">
+                <div class="section-title">
+                    <h2><i class="fa-solid fa-right-to-bracket text-accent"></i> เข้าร่วมห้องกลุ่ม</h2>
+                    <p>ใส่ชื่อและรหัสห้องเพื่อเข้าร่วมการปัดโหวต</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="join-room-id">รหัสห้อง</label>
+                    <input type="text" id="join-room-id" class="form-control"
+                        style="text-transform: uppercase; text-align: center; letter-spacing: 2px; font-weight: bold; color: var(--accent-orange); background: rgba(255, 255, 255, 0.02); cursor: default; border-color: rgba(255, 51, 119, 0.2);"
+                        readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="join-name">ชื่อของคุณ</label>
+                    <input type="text" id="join-name" placeholder="เช่น นัท, ส้ม, บอย" maxlength="15"
+                        class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>ข้อมูลการแพ้อาหาร (เพื่อกรองร้านที่มีส่วนผสมออก)</label>
+                    <div class="allergy-selector">
+                        <div class="allergy-pill" data-allergen="อาหารทะเล">
+                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล
+                        </div>
+                        <div class="allergy-pill" data-allergen="แป้งสาลี/กลูเตน">
+                            <i class="fa-solid fa-bread-slice"></i> แป้งสาลี/กลูเตน
+                        </div>
+                        <div class="allergy-pill" data-allergen="นม/ชีส">
+                            <i class="fa-solid fa-cheese"></i> นม/ชีส
+                        </div>
+                        <div class="allergy-pill" data-allergen="ไข่">
+                            <i class="fa-solid fa-egg"></i> ไข่
+                        </div>
+                        <div class="allergy-pill" data-allergen="ถั่ว">
+                            <i class="fa-solid fa-seedling"></i> ถั่ว
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="btn-back-to-landing-join" class="btn btn-secondary"><i
+                            class="fa-solid fa-arrow-left"></i> ย้อนกลับ</button>
+                    <button id="btn-submit-join" class="btn btn-primary">เข้าห้องโหวต <i
+                            class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- VIEW 4: LOBBY -->
+            <section id="view-lobby" class="view-section">
+                <div class="lobby-card glass">
+                    <div class="room-code-container">
+                        <p class="lobby-label">รหัสห้องเข้าร่วม</p>
+                        <h1 id="lobby-room-id" class="lobby-room-id">----</h1>
+                        <button id="btn-copy-room-id" class="btn-copy-code" title="คัดลอกรหัสห้อง">
+                            <i class="fa-regular fa-copy"></i> คัดลอกรหัสห้อง
+                        </button>
+                        <div class="qr-container">
+                            <canvas id="lobby-qr"></canvas>
+                        </div>
+                        <p class="qr-help">สแกน QR Code หรือส่งรหัสห้องให้เพื่อน</p>
+                    </div>
+
+                    <div class="lobby-members">
+                        <h3><i class="fa-solid fa-circle-user text-accent"></i> สมาชิกในห้อง (<span
+                                id="member-count">0</span> คน)</h3>
+                        <div id="members-list" class="members-list">
+                            <!-- Members injected via JS -->
+                        </div>
+                    </div>
+
+                    <div class="lobby-actions">
+                        <button id="btn-start-game" class="btn btn-primary btn-lg full-width hidden">
+                            <i class="fa-solid fa-play"></i> เริ่มการโหวตเลย!
+                        </button>
+                        <div id="host-wait-msg" class="host-wait-msg">
+                            <div class="spinner"></div>
+                            <span>รอหัวหน้าห้องกดเริ่มโหวต...</span>
+                        </div>
+                        <button id="btn-leave-lobby" class="btn btn-secondary full-width"
+                            style="margin-top: 0.8rem; padding: 0.8rem; font-size: 0.95rem;">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-accent"></i> ออกจากห้อง
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 5: SWIPE DECK (PLAYING) -->
+            <section id="view-swipe" class="view-section">
+                <div class="game-status-bar">
+                    <button id="btn-leave-swipe" class="btn btn-secondary"
+                        style="padding: 0.5rem 0.8rem; font-size: 0.8rem; border-radius: var(--border-radius-sm);">
+                        <i class="fa-solid fa-arrow-left text-accent"></i> ออกห้อง
+                    </button>
+
+                    <!-- TIMER COMPONENT -->
+                    <div class="timer-wrapper">
+                        <svg class="timer-svg" viewBox="0 0 100 100">
+                            <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="timer-progress" id="timer-bar" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <span id="timer-text" class="timer-text">03:00</span>
+                    </div>
+
+                    <!-- PROGRESS COUNTER -->
+                    <div class="progress-details">
+                        <div class="deck-count"><i class="fa-solid fa-images"></i> เหลือ <span
+                                id="cards-remaining">0</span> ใบ</div>
+                    </div>
+                </div>
+
+                <!-- CARDS DECK CONTAINER -->
+                <div class="deck-container">
+                    <div id="swipe-deck" class="swipe-deck">
+                        <!-- Swipe Card dynamically loaded here -->
+                        <div class="deck-empty-state">
+                            <i class="fa-solid fa-circle-check text-success"
+                                style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                            <h3>คุณปัดครบแล้ว!</h3>
+                            <p>กำลังรอเพื่อนๆ ปัดจนครบ...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SWIPE CONTROLS -->
+                <div class="swipe-controls">
+                    <button id="btn-swipe-left" class="control-btn dislike-btn" title="ไม่กิน (ปัดซ้าย)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <button id="btn-toggle-info" class="control-btn info-btn" title="ดูรายละเอียด">
+                        <i class="fa-solid fa-info"></i>
+                    </button>
+                    <button id="btn-swipe-right" class="control-btn like-btn" title="อยากกิน (ปัดขวา)">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+                </div>
+
+                <!-- GROUP REAL-TIME PROGRESS WIDGET -->
+                <div class="group-progress-widget glass">
+                    <h4><i class="fa-solid fa-chart-line text-accent"></i> ความคืบหน้าของกลุ่ม</h4>
+                    <div id="group-progress-list" class="group-progress-list">
+                        <!-- Progress of users in real time -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 6: RESULT / MATCH SCREEN -->
+            <section id="view-result" class="view-section">
+                <div class="result-header">
+                    <div class="match-stamp animate-bounce" id="result-stamp">
+                        <i class="fa-solid fa-heart"></i> MATCHED!
+                    </div>
+                    <p id="result-subtitle" class="result-subtitle">ทุกคนปัดขวาใจตรงกันที่ร้านนี้!</p>
+                </div>
+
+                <div id="matched-restaurant-card" class="matched-card glass">
+                    <!-- Dynamic details injected by JS -->
+                </div>
+
+                <div class="result-actions">
+                    <a id="btn-open-map" href="#" target="_blank" class="btn btn-primary btn-lg full-width">
+                        <i class="fa-solid fa-map-location-dot"></i> นำทางด้วย Google Maps
+                    </a>
+                    <button id="btn-restart" class="btn btn-secondary full-width">
+                        <i class="fa-solid fa-rotate-left"></i> กลับหน้าหลัก/สร้างกลุ่มใหม่
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- QR SCANNER OVERLAY MODAL -->
+    <div id="qr-scanner-modal" class="qr-modal hidden">
+        <div class="qr-modal-content glass">
+            <div class="qr-modal-header"
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem; margin-bottom: 0.8rem;">
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0;"><i
+                        class="fa-solid fa-qrcode text-accent"></i> สแกน QR Code เพื่อเข้าห้อง</h3>
+                <button id="btn-close-scanner"
+                    style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; padding: 0.2rem;"><i
+                        class="fa-solid fa-times"></i></button>
+            </div>
+            <div id="qr-reader"
+                style="width: 100%; border-radius: var(--border-radius-md); overflow: hidden; background: #000; aspect-ratio: 1/1; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            </div>
+            <p
+                style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 0.6rem; line-height: 1.4;">
+                หันกล้องหน้า/หลังไปทาง QR Code ห้อง KINDER ของเพื่อน
+            </p>
+        </div>
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-modal" class="auth-modal hidden">
+        <div class="auth-modal-content glass">
+            <div class="auth-modal-header"
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem; margin-bottom: 0.8rem;">
+                <h3 id="auth-modal-title"
+                    style="font-size: 1.1rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fa-solid fa-user-circle text-accent"></i> <span>เข้าสู่ระบบ</span>
+                </h3>
+                <button id="btn-close-auth"
+                    style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; padding: 0.2rem;"><i
+                        class="fa-solid fa-times"></i></button>
+            </div>
+
+            <!-- Tab selector -->
+            <div class="auth-tabs"
+                style="display: flex; gap: 0.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+                <button id="tab-login" class="auth-tab-btn active"
+                    style="flex: 1; background: none; border: none; color: var(--text-primary); padding: 0.4rem; font-weight: 600; cursor: pointer; border-radius: var(--border-radius-sm);">เข้าสู่ระบบ</button>
+                <button id="tab-signup" class="auth-tab-btn"
+                    style="flex: 1; background: none; border: none; color: var(--text-muted); padding: 0.4rem; font-weight: 600; cursor: pointer; border-radius: var(--border-radius-sm);">สมัครสมาชิก</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="auth-login-form">
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label for="login-username"
+                        style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">ชื่อผู้ใช้
+                        (Username)</label>
+                    <input type="text" id="login-username" class="form-control"
+                        placeholder="ชื่อผู้ใช้ภาษาอังกฤษ/ตัวเลข" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0.4rem;">
+                    <label for="login-password"
+                        style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">รหัสผ่าน
+                        (Password)</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="รหัสผ่านของคุณ"
+                        required>
+                </div>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 0.8rem;">
+                    <button type="button" class="btn-trigger-forgot-pwd" style="background: none; border: none; color: var(--accent-orange); font-size: 0.8rem; cursor: pointer; text-decoration: underline; padding: 0.2rem 0;">
+                        <i class="fa-solid fa-key"></i> ลืมรหัสผ่าน?
+                    </button>
+                </div>
+                <button type="submit" class="btn btn-primary full-width" style="padding: 0.75rem;"><i
+                        class="fa-solid fa-sign-in-alt"></i> ลงชื่อเข้าใช้งาน</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="auth-signup-form" class="hidden">
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label for="signup-username"
+                        style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">ชื่อผู้ใช้
+                        (Username) *</label>
+                    <input type="text" id="signup-username" class="form-control"
+                        placeholder="ชื่อผู้ใช้ภาษาอังกฤษ/ตัวเลข" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label for="signup-password"
+                        style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">รหัสผ่าน
+                        (Password) *</label>
+                    <input type="password" id="signup-password" class="form-control" placeholder="ตั้งรหัสผ่านของคุณ"
+                        required>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label for="signup-email" style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">
+                        <i class="fa-solid fa-envelope text-accent"></i> อีเมล (สำหรับกู้คืนรหัสผ่านทาง OTP)
+                    </label>
+                    <input type="email" id="signup-email" class="form-control" placeholder="เช่น yourname@gmail.com">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label for="signup-question" style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">
+                        <i class="fa-solid fa-question-circle text-accent"></i> คำถามความปลอดภัย
+                    </label>
+                    <select id="signup-question" class="form-control" style="background: rgba(255,255,255,0.08); color: var(--text-primary); font-size: 0.85rem;">
+                        <option value="" style="background: #170e33; color: #fff;">-- เลือกคำถามความปลอดภัย --</option>
+                        <option value="ชื่อสัตว์เลี้ยงตัวแรกของคุณคืออะไร?" style="background: #170e33; color: #fff;">ชื่อสัตว์เลี้ยงตัวแรกของคุณคืออะไร?</option>
+                        <option value="โรงเรียนประถมที่คุณเคยเรียนชื่ออะไร?" style="background: #170e33; color: #fff;">โรงเรียนประถมที่คุณเคยเรียนชื่ออะไร?</option>
+                        <option value="เมนูอาหารที่คุณชอบที่สุดคืออะไร?" style="background: #170e33; color: #fff;">เมนูอาหารที่คุณชอบที่สุดคืออะไร?</option>
+                        <option value="จังหวัดที่คุณเกิดคือจังหวัดอะไร?" style="background: #170e33; color: #fff;">จังหวัดที่คุณเกิดคือจังหวัดอะไร?</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label for="signup-answer" style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">
+                        คำตอบคำถามความปลอดภัย
+                    </label>
+                    <input type="text" id="signup-answer" class="form-control" placeholder="พิมพ์คำตอบที่คุณจำได้ง่าย">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label for="signup-pin" style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">
+                        <i class="fa-solid fa-shield-halved text-accent"></i> Recovery PIN (รหัสกู้คืน 4-6 หลัก)
+                    </label>
+                    <input type="password" id="signup-pin" maxlength="6" class="form-control" placeholder="เช่น 1234 หรือ 987654">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label
+                        style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">ข้อมูลการแพ้อาหารเริ่มต้น</label>
+                    <div class="allergy-selector signup-allergy-selector"
+                        style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.4rem;">
+                        <div class="allergy-pill" data-allergen="อาหารทะเล"
+                            style="padding: 0.4rem 0.6rem; font-size: 0.75rem;">
+                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล
+                        </div>
+                        <div class="allergy-pill" data-allergen="แป้งสาลี/กลูเตน"
+                            style="padding: 0.4rem 0.6rem; font-size: 0.75rem;">
+                            <i class="fa-solid fa-bread-slice"></i> แป้งสาลี
+                        </div>
+                        <div class="allergy-pill" data-allergen="นม/ชีส"
+                            style="padding: 0.4rem 0.6rem; font-size: 0.75rem;">
+                            <i class="fa-solid fa-cheese"></i> นม/ชีส
+                        </div>
+                        <div class="allergy-pill" data-allergen="ไข่"
+                            style="padding: 0.4rem 0.6rem; font-size: 0.75rem;">
+                            <i class="fa-solid fa-egg"></i> ไข่
+                        </div>
+                        <div class="allergy-pill" data-allergen="ถั่ว"
+                            style="padding: 0.4rem 0.6rem; font-size: 0.75rem;">
+                            <i class="fa-solid fa-seedling"></i> ถั่ว
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary full-width" style="padding: 0.75rem;"><i
+                        class="fa-solid fa-user-plus"></i> สมัครสมาชิก & เข้าสู่ระบบ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PROFILE & MATCH HISTORY MODAL -->
+    <div id="modal-profile" class="modal">
+        <div class="modal-content glass" style="max-width: 520px; width: 92%;">
+            <div class="modal-header">
+                <h3 id="profile-modal-title"><i class="fa-solid fa-id-card text-accent"></i> โปรไฟล์ของฉัน</h3>
+                <button id="btn-close-profile-modal" class="btn-close-modal" type="button"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Profile Navigation Tabs -->
+            <div class="profile-tabs" style="display: flex; gap: 0.4rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem;">
+                <button id="tab-profile-info" class="btn btn-sm btn-primary active" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.7rem;"><i class="fa-solid fa-user"></i> ข้อมูลส่วนตัว</button>
+                <button id="tab-profile-password" class="btn btn-sm btn-secondary" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.7rem;"><i class="fa-solid fa-key"></i> เปลี่ยนรหัสผ่าน</button>
+                <button id="tab-profile-history" class="btn btn-sm btn-secondary" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.7rem;"><i class="fa-solid fa-clock-rotate-left"></i> ประวัติการแมตช์</button>
+                <button id="tab-profile-security" class="btn btn-sm btn-secondary" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.7rem;"><i class="fa-solid fa-shield-halved"></i> ความปลอดภัย & กู้คืน</button>
+            </div>
+
+            <!-- Tab 1: Profile Info -->
+            <div id="tab-pane-profile-info" class="profile-pane">
+                <form id="form-update-profile">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ชื่อผู้ใช้ (Username)</label>
+                        <input type="text" id="profile-username" class="form-control" readonly style="opacity: 0.7; cursor: not-allowed;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.2rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ชื่อที่แสดงผล (Display Name) *</label>
+                        <input type="text" id="profile-display-name" class="form-control" placeholder="เช่น นัท, ส้ม, บอย" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width" style="padding: 0.75rem;">
+                        <i class="fa-solid fa-save"></i> บันทึกข้อมูลส่วนตัว
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tab 2: Change Password -->
+            <div id="tab-pane-profile-password" class="profile-pane hidden">
+                <form id="form-update-password">
+                    <div class="form-group" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">รหัสผ่านปัจจุบัน *</label>
+                        <input type="password" id="profile-current-password" class="form-control" placeholder="กรอกรหัสผ่านปัจจุบัน" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">รหัสผ่านใหม่ *</label>
+                        <input type="password" id="profile-new-password" class="form-control" placeholder="รหัสผ่านใหม่อย่างน้อย 4 ตัวอักษร" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.2rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ยืนยันรหัสผ่านใหม่ *</label>
+                        <input type="password" id="profile-confirm-password" class="form-control" placeholder="กรอกรหัสผ่านใหม่อีกครั้ง" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width" style="padding: 0.75rem;">
+                        <i class="fa-solid fa-key"></i> ยืนยันเปลี่ยนรหัสผ่าน
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tab 3: Match History -->
+            <div id="tab-pane-profile-history" class="profile-pane hidden">
+                <div id="profile-history-list" style="max-height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.7rem; padding-right: 0.3rem;">
+                    <div style="text-align: center; color: var(--text-muted); padding: 2rem 0;">กำลังโหลดประวัติ...</div>
+                </div>
+            </div>
+
+            <!-- Tab 4: Security & Recovery Settings -->
+            <div id="tab-pane-profile-security" class="profile-pane hidden">
+                <form id="form-update-security">
+                    <div class="form-group" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">
+                            <i class="fa-solid fa-envelope text-accent"></i> อีเมลสำหรับกู้คืนรหัสผ่าน (Email OTP)
+                        </label>
+                        <input type="email" id="profile-recovery-email" class="form-control" placeholder="เช่น yourname@gmail.com">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">
+                            <i class="fa-solid fa-question-circle text-accent"></i> คำถามความปลอดภัย
+                        </label>
+                        <select id="profile-recovery-question" class="form-control" style="background: rgba(255,255,255,0.08); color: var(--text-primary); font-size: 0.85rem;">
+                            <option value="" style="background: #170e33; color: #fff;">-- เลือกคำถามความปลอดภัย --</option>
+                            <option value="ชื่อสัตว์เลี้ยงตัวแรกของคุณคืออะไร?" style="background: #170e33; color: #fff;">ชื่อสัตว์เลี้ยงตัวแรกของคุณคืออะไร?</option>
+                            <option value="โรงเรียนประถมที่คุณเคยเรียนชื่ออะไร?" style="background: #170e33; color: #fff;">โรงเรียนประถมที่คุณเคยเรียนชื่ออะไร?</option>
+                            <option value="เมนูอาหารที่คุณชอบที่สุดคืออะไร?" style="background: #170e33; color: #fff;">เมนูอาหารที่คุณชอบที่สุดคืออะไร?</option>
+                            <option value="จังหวัดที่คุณเกิดคือจังหวัดอะไร?" style="background: #170e33; color: #fff;">จังหวัดที่คุณเกิดคือจังหวัดอะไร?</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">
+                            คำตอบคำถามความปลอดภัย (เว้นว่างหากไม่ต้องการเปลี่ยน)
+                        </label>
+                        <input type="text" id="profile-recovery-answer" class="form-control" placeholder="พิมพ์คำตอบใหม่ที่จำได้ง่าย">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.2rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">
+                            <i class="fa-solid fa-shield-halved text-accent"></i> Recovery PIN 4-6 หลัก (เว้นว่างหากไม่ต้องการเปลี่ยน)
+                        </label>
+                        <input type="password" id="profile-recovery-pin" maxlength="6" class="form-control" placeholder="เช่น 1234 หรือ 987654">
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width" style="padding: 0.75rem;">
+                        <i class="fa-solid fa-save"></i> บันทึกข้อมูลความปลอดภัย
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div id="modal-forgot-password" class="modal">
+        <div class="modal-content glass" style="max-width: 480px; width: 92%;">
+            <div class="modal-header">
+                <h3 id="forgot-modal-title"><i class="fa-solid fa-shield-halved text-accent"></i> กู้คืนรหัสผ่าน</h3>
+                <button id="btn-close-forgot-modal" class="btn-close-modal" type="button"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Tab Navigation (Method 3: Question/PIN vs Method 2: Email OTP) -->
+            <div style="display: flex; gap: 0.4rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem;">
+                <button id="tab-forgot-question" class="btn btn-sm btn-primary active" type="button" style="flex: 1; font-size: 0.8rem; padding: 0.45rem 0.6rem;">
+                    <i class="fa-solid fa-key"></i> คำถามลับ & PIN
+                </button>
+                <button id="tab-forgot-email" class="btn btn-sm btn-secondary" type="button" style="flex: 1; font-size: 0.8rem; padding: 0.45rem 0.6rem;">
+                    <i class="fa-solid fa-envelope"></i> รหัส OTP อีเมล
+                </button>
+            </div>
+
+            <!-- TAB 1: Security Question / PIN Reset (Method 3) -->
+            <div id="pane-forgot-question" class="forgot-pane">
+                <!-- Step 1: Find User -->
+                <div id="forgot-q-step-1">
+                    <div class="form-group" style="margin-bottom: 1.2rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ชื่อผู้ใช้ (Username) ที่ต้องการกู้คืน</label>
+                        <input type="text" id="forgot-q-username" class="form-control" placeholder="กรอกชื่อผู้ใช้ของคุณ" required>
+                    </div>
+                    <button type="button" id="btn-forgot-q-check" class="btn btn-primary full-width" style="padding: 0.75rem;">
+                        <i class="fa-solid fa-magnifying-glass"></i> ค้นหาบัญชี
+                    </button>
+                </div>
+
+                <!-- Step 2: Answer Question or PIN and Set New Password -->
+                <div id="forgot-q-step-2" class="hidden">
+                    <div style="background: rgba(255,255,255,0.04); border-radius: var(--border-radius-sm); padding: 0.8rem; margin-bottom: 1rem; border: 1px solid var(--glass-border);">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary); display: block;">บัญชี: <strong id="forgot-q-user-display" style="color: white;">-</strong></span>
+                        <span id="forgot-q-question-wrapper" style="font-size: 0.85rem; color: var(--accent-orange); margin-top: 0.2rem; display: block;">
+                            <i class="fa-solid fa-circle-question"></i> <span id="forgot-q-question-text">คำถามความปลอดภัย</span>
+                        </span>
+                    </div>
+
+                    <div class="form-group" id="group-forgot-q-answer" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">คำตอบของคุณ *</label>
+                        <input type="text" id="forgot-q-answer" class="form-control" placeholder="กรอกคำตอบที่เคยตั้งไว้">
+                    </div>
+
+                    <div class="form-group" id="group-forgot-q-pin" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">หรือกรอก Recovery PIN 4-6 หลัก</label>
+                        <input type="password" id="forgot-q-pin" maxlength="6" class="form-control" placeholder="กรอก Recovery PIN">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">รหัสผ่านใหม่ *</label>
+                        <input type="password" id="forgot-q-new-password" class="form-control" placeholder="ตั้งรหัสผ่านใหม่อย่างน้อย 4 ตัวอักษร" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1.2rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ยืนยันรหัสผ่านใหม่ *</label>
+                        <input type="password" id="forgot-q-confirm-password" class="form-control" placeholder="กรอกรหัสผ่านใหม่อีกครั้ง" required>
+                    </div>
+
+                    <div style="display: flex; gap: 0.6rem;">
+                        <button type="button" id="btn-forgot-q-back" class="btn btn-secondary" style="flex: 1; padding: 0.75rem;">ย้อนกลับ</button>
+                        <button type="button" id="btn-forgot-q-submit" class="btn btn-primary" style="flex: 2; padding: 0.75rem;">
+                            <i class="fa-solid fa-check"></i> บันทึกรหัสผ่านใหม่
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: Email OTP Reset (Method 2) -->
+            <div id="pane-forgot-email" class="forgot-pane hidden">
+                <!-- Step 1: Send OTP -->
+                <div id="forgot-e-step-1">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ชื่อผู้ใช้ (Username) หรืออีเมลที่ผูกไว้</label>
+                        <input type="text" id="forgot-e-input" class="form-control" placeholder="กรอกชื่อผู้ใช้ หรืออีเมลของคุณ" required>
+                    </div>
+                    <button type="button" id="btn-forgot-e-send-otp" class="btn btn-primary full-width" style="padding: 0.75rem;">
+                        <i class="fa-solid fa-paper-plane"></i> ส่งรหัส OTP ไปที่อีเมล
+                    </button>
+                </div>
+
+                <!-- Step 2: Verify OTP & Reset Password -->
+                <div id="forgot-e-step-2" class="hidden">
+                    <div style="background: rgba(255,255,255,0.04); border-radius: var(--border-radius-sm); padding: 0.8rem; margin-bottom: 1rem; border: 1px solid var(--glass-border);">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary); display: block;">ส่งรหัสไปยัง: <strong id="forgot-e-masked-email" style="color: var(--accent-orange);">-</strong></span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; display: block;">* รหัสมีอายุ 15 นาที</span>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">รหัส OTP 6 หลัก *</label>
+                        <input type="text" id="forgot-e-otp" maxlength="6" class="form-control" placeholder="เช่น 123456" style="text-align: center; font-size: 1.3rem; letter-spacing: 4px; font-weight: 700;" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.9rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">รหัสผ่านใหม่ *</label>
+                        <input type="password" id="forgot-e-new-password" class="form-control" placeholder="ตั้งรหัสผ่านใหม่อย่างน้อย 4 ตัวอักษร" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1.2rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ยืนยันรหัสผ่านใหม่ *</label>
+                        <input type="password" id="forgot-e-confirm-password" class="form-control" placeholder="กรอกรหัสผ่านใหม่อีกครั้ง" required>
+                    </div>
+
+                    <div style="display: flex; gap: 0.6rem;">
+                        <button type="button" id="btn-forgot-e-back" class="btn btn-secondary" style="flex: 1; padding: 0.75rem;">ย้อนกลับ</button>
+                        <button type="button" id="btn-forgot-e-submit" class="btn btn-primary" style="flex: 2; padding: 0.75rem;">
+                            <i class="fa-solid fa-check"></i> ยืนยันรหัสผ่านใหม่
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEEDBACK & SUGGESTION MODAL -->
+    <div id="modal-feedback" class="modal">
+        <div class="modal-content glass" style="max-width: 480px; width: 92%;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-comment-dots text-accent"></i> ติดต่อเรา / เสนอแนะร้าน</h3>
+                <button id="btn-close-feedback-modal" class="btn-close-modal" type="button"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-feedback">
+                <div class="form-group" style="margin-bottom: 0.9rem;">
+                    <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ประเภทข้อความ</label>
+                    <select id="feedback-type" class="form-control" style="background: rgba(255,255,255,0.08); color: var(--text-primary);">
+                        <option value="suggest_restaurant" style="background: #1a162b; color: #fff;">💡 เสนอแนะร้านอาหารใหม่</option>
+                        <option value="bug_report" style="background: #1a162b; color: #fff;">🐛 แจ้งปัญหาการใช้งาน / บั๊ก</option>
+                        <option value="general" style="background: #1a162b; color: #fff;">💬 ข้อเสนอแนะทั่วไป / ชื่นชม</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0.9rem;">
+                    <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">หัวข้อ *</label>
+                    <input type="text" id="feedback-title" class="form-control" placeholder="เช่น แนะนำร้านส้มตำป้าณี ใกล้ ม.หาดใหญ่" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0.9rem;">
+                    <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">รายละเอียด *</label>
+                    <textarea id="feedback-desc" class="form-control" rows="4" placeholder="ระบุชื่อร้าน เมนูเด็ด พิกัดคร่าวๆ หรือรายละเอียดปัญหาที่พบ..." required style="resize: vertical;"></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.2rem;">
+                    <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ช่องทางติดต่อกลับ (อีเมล / เบอร์ / LINE ไม่บังคับ)</label>
+                    <input type="text" id="feedback-contact" class="form-control" placeholder="เช่น name@email.com หรือ Line ID">
+                </div>
+                <button type="submit" class="btn btn-primary full-width" style="padding: 0.8rem;">
+                    <i class="fa-solid fa-paper-plane"></i> ส่งข้อความถึงผู้ดูแล
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script imports -->
+    <!-- Confetti client side -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Socket.IO library client side -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+    <!-- QRious QR generator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <!-- App entry logic -->
+    <script src="/static/app.js"></script>
+</body>
+
+</html>

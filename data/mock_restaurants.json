@@ -1,0 +1,2015 @@
+[
+  {
+    "id": "rest_001",
+    "name": "ครัวบ้านใต้ ข้าวแกงนครศรี",
+    "rating": 4.4,
+    "price_range": "$",
+    "avg_price": 60,
+    "distance": 0.4,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+    "description": "แกงไตปลา คั่วกลิ้งหมูรสเด็ด รสชาติปักษ์ใต้แท้ เครื่องแกงเข้มข้น ผักสดเติมฟรีไม่อั้น",
+    "address": "ซอยสุขุมวิท 23 แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.72,
+    "longitude": 100.53
+  },
+  {
+    "id": "rest_002",
+    "name": "ข้าวแกงปักษ์ใต้ พัทลุงแท้",
+    "rating": 4.4,
+    "price_range": "$",
+    "avg_price": 55,
+    "distance": 0.7,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=600&auto=format&fit=crop&q=80",
+    "description": "แกงส้มปลากะพงยอดมะพร้าว หมูทอดขมิ้นหอมกรอบ น้ำพริกกะปิรสเด็ด",
+    "address": "ถนนพระราม 4 แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.725,
+    "longitude": 100.533
+  },
+  {
+    "id": "rest_003",
+    "name": "ครัวสะตอหวาน เมืองคอน",
+    "rating": 4.5,
+    "price_range": "$",
+    "avg_price": 70,
+    "distance": 1.1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format&fit=crop&q=80",
+    "description": "สะตอผัดกะปิกุ้งสด หมูฮ้องเมืองตรัง รสชาติกลมกล่อมเข้มข้นตามตำรับชาวใต้",
+    "address": "ถนนสาทรใต้ แขวงทุ่งมหาเมฆ เขตสาทร กรุงเทพฯ",
+    "latitude": 13.73,
+    "longitude": 100.536
+  },
+  {
+    "id": "rest_004",
+    "name": "ส้มตำอมรพันธ์ แซ่บนัวตำนาน",
+    "rating": 4.6,
+    "price_range": "$",
+    "avg_price": 65,
+    "distance": 1.5,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "ไข่",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80",
+    "description": "ส้มตำปูปลาร้าแซ่บถึงใจ ลาบหมูคั่วหอมข้าวคั่ว ไก่ย่างเตาถ่านหนังกรอบ",
+    "address": "ซอยอโศกมนตรี แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.735,
+    "longitude": 100.539
+  },
+  {
+    "id": "rest_005",
+    "name": "พริกแกงหอม ข้าวแกงคุณยาย",
+    "rating": 4.6,
+    "price_range": "$",
+    "avg_price": 50,
+    "distance": 2,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1562967914-608f82629710?w=600&auto=format&fit=crop&q=80",
+    "description": "พะแนงหมูโบราณ ต้มจืดมะระยัดไส้ ไข่พะโล้โบราณเคี่ยวน้ำตาลปี๊บ",
+    "address": "ถนนสีลม แขวงสุริยวาส เขตบางรัก กรุงเทพฯ",
+    "latitude": 13.74,
+    "longitude": 100.542
+  },
+  {
+    "id": "rest_006",
+    "name": "ครัวกระบี่ รสเด็ดสะท้านทุ่ง",
+    "rating": 4.7,
+    "price_range": "$",
+    "avg_price": 80,
+    "distance": 3.2,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80",
+    "description": "คั่วกลิ้งเนื้อสับ แกงพุงปลาสูตรเด็ด ผักเหนาะปลอดสารพิษสดกรอบ",
+    "address": "ถนนเจริญกรุง แขวงยานนาวา เขตสาทร กรุงเทพฯ",
+    "latitude": 13.745,
+    "longitude": 100.545
+  },
+  {
+    "id": "rest_007",
+    "name": "สำรับไทย เรสเตอรองต์",
+    "rating": 4.8,
+    "price_range": "$$",
+    "avg_price": 220,
+    "distance": 0.4,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+    "description": "ต้มยำกุ้งโบราณ มัสมั่นไก่สูตรชาววัง ผัดไทยกุ้งสด หอมกลิ่นกระทะ เสิร์ฟในบรรยากาศร่วมสมัย",
+    "address": "ซอยสุขุมวิท 23 แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.72,
+    "longitude": 100.53
+  },
+  {
+    "id": "rest_008",
+    "name": "ทองหล่อ อาหารไทยร่วมสมัย",
+    "rating": 4.9,
+    "price_range": "$$",
+    "avg_price": 260,
+    "distance": 0.7,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=600&auto=format&fit=crop&q=80",
+    "description": "แกงรัญจวนซี่โครงหมู หลนปูม้า ยำส้มโอกุ้งสด เมนูอาหารไทยโบราณหากินยาก",
+    "address": "ถนนพระราม 4 แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.725,
+    "longitude": 100.533
+  },
+  {
+    "id": "rest_009",
+    "name": "จันทร์ผา อาหารไทยสไตล์โมเดิร์น",
+    "rating": 4.9,
+    "price_range": "$$",
+    "avg_price": 190,
+    "distance": 1.1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format&fit=crop&q=80",
+    "description": "ปลากะพงสองใจ ปูนิ่มผัดผงกะหรี่ ต้มข่าไก่บ้านใส่เห็ดนางฟ้า รสละมุน",
+    "address": "ถนนสาทรใต้ แขวงทุ่งมหาเมฆ เขตสาทร กรุงเทพฯ",
+    "latitude": 13.73,
+    "longitude": 100.536
+  },
+  {
+    "id": "rest_010",
+    "name": "เสน่ห์ปลายจวัก อาหารชาววัง",
+    "rating": 4.3,
+    "price_range": "$$",
+    "avg_price": 240,
+    "distance": 1.5,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "ไข่",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80",
+    "description": "ห่อหมกทะเลมะพร้าวอ่อน กุ้งแม่น้ำซอสมะขาม หมี่กรอบชาววังสูตรดั้งเดิม",
+    "address": "ซอยอโศกมนตรี แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.735,
+    "longitude": 100.539
+  },
+  {
+    "id": "rest_011",
+    "name": "กินข้าวนอกบ้าน Thai Dining",
+    "rating": 4.4,
+    "price_range": "$$",
+    "avg_price": 180,
+    "distance": 2,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1562967914-608f82629710?w=600&auto=format&fit=crop&q=80",
+    "description": "ผัดพริกขิงหมูกรอบ ต้มยำเห็ดโคนกุ้งแม่น้ำ ยำถั่วพลูกุ้งสดไข่ต้มยางมะตูม",
+    "address": "ถนนสีลม แขวงสุริยวาส เขตบางรัก กรุงเทพฯ",
+    "latitude": 13.74,
+    "longitude": 100.542
+  },
+  {
+    "id": "rest_012",
+    "name": "ระเบียงพุทธรักษา สาทร",
+    "rating": 4.5,
+    "price_range": "$$",
+    "avg_price": 250,
+    "distance": 3.2,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80",
+    "description": "แกงปูใบชะพลูเส้นหมี่ขาว ทอดมันกุ้งอัลมอนด์ ไก่ผัดเม็ดมะม่วงหิมพานต์",
+    "address": "ถนนเจริญกรุง แขวงยานนาวา เขตสาทร กรุงเทพฯ",
+    "latitude": 13.745,
+    "longitude": 100.545
+  },
+  {
+    "id": "rest_013",
+    "name": "เรือนเสน่ห์จันทร์ ศิลป์อาหารไทย",
+    "rating": 4.6,
+    "price_range": "$$$",
+    "avg_price": 550,
+    "distance": 0.4,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+    "description": "อาหารไทยไฟน์ไดน์นิ่ง คัดสรรวัตถุดิบพรีเมียมจากทั่วประเทศ บรรยากาศบ้านสวนเรือนไทยร่มรื่น",
+    "address": "ซอยสุขุมวิท 23 แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.72,
+    "longitude": 100.53
+  },
+  {
+    "id": "rest_014",
+    "name": "พิจิตรการมณฑล อาหารไทยโบราณ",
+    "rating": 4.6,
+    "price_range": "$$$",
+    "avg_price": 620,
+    "distance": 0.7,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=600&auto=format&fit=crop&q=80",
+    "description": "แกงระแวงเนื้อน่องลาย ซี่โครงเนื้อวากิวอบยอดผัก คอร์สอาหารไทยร่วมสมัยสุดประณีต",
+    "address": "ถนนพระราม 4 แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.725,
+    "longitude": 100.533
+  },
+  {
+    "id": "rest_015",
+    "name": "สุวรรณภูมิ เฮอริเทจ เรสเตอรองต์",
+    "rating": 4.7,
+    "price_range": "$$$",
+    "avg_price": 480,
+    "distance": 1.1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format&fit=crop&q=80",
+    "description": "เซ็ตสำรับไทยราชสำนัก แกงเหลืองปลากะพงแดงธรรมชาติ กุ้งนางทอดกระเทียมพริกไทย",
+    "address": "ถนนสาทรใต้ แขวงทุ่งมหาเมฆ เขตสาทร กรุงเทพฯ",
+    "latitude": 13.73,
+    "longitude": 100.536
+  },
+  {
+    "id": "rest_016",
+    "name": "มณีจันทร์ ไพรเวทไดน์นิ่ง",
+    "rating": 4.8,
+    "price_range": "$$$",
+    "avg_price": 680,
+    "distance": 1.5,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "ไข่",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80",
+    "description": "อาหารไทยโมเดิร์นทวิสต์ เสิร์ฟแบบ Chef's Table บรรยากาศริมแม่น้ำเจ้าพระยา",
+    "address": "ซอยอโศกมนตรี แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.735,
+    "longitude": 100.539
+  },
+  {
+    "id": "rest_017",
+    "name": "สยามวิสดอม คราฟต์ไดนิ่ง",
+    "rating": 4.8,
+    "price_range": "$$$",
+    "avg_price": 520,
+    "distance": 2,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1562967914-608f82629710?w=600&auto=format&fit=crop&q=80",
+    "description": "อาหารไทยชั้นสูงตามรอยกาพย์เห่ชมเครื่องคาวหวาน รังสรรค์โดยเชฟมิชลินสตาร์",
+    "address": "ถนนสีลม แขวงสุริยวาส เขตบางรัก กรุงเทพฯ",
+    "latitude": 13.74,
+    "longitude": 100.542
+  },
+  {
+    "id": "rest_018",
+    "name": "รัตนโกสินทร์ แกรนด์ไดน์",
+    "rating": 4.9,
+    "price_range": "$$$",
+    "avg_price": 750,
+    "distance": 3.2,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80",
+    "description": "ต้มยำกุ้งมังกรภูเก็ต ปูไข่นึ่งนมสด ซี่โครงแกะย่างซอสมะขามคั่วพริกแห้ง",
+    "address": "ถนนเจริญกรุง แขวงยานนาวา เขตสาทร กรุงเทพฯ",
+    "latitude": 13.745,
+    "longitude": 100.545
+  },
+  {
+    "id": "rest_019",
+    "name": "ก๋วยเตี๋ยวเรืออยุธยา สูตรโบราณเตาถ่าน",
+    "rating": 4.3,
+    "price_range": "$",
+    "avg_price": 50,
+    "distance": 0.4,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80",
+    "description": "น้ำซุปเนื้อตุ๋น-หมูตุ๋นเข้มข้น หอมเครื่องเทศพะโล้ กากหมูเจียวสดใหม่กรอบฟินทุกชาม",
+    "address": "ซอยอโศกมนตรี แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.727,
+    "longitude": 100.539
+  },
+  {
+    "id": "rest_020",
+    "name": "ข้าวมันไก่ตอนสิงคโปร์ นายฉ่อย",
+    "rating": 4.4,
+    "price_range": "$",
+    "avg_price": 75,
+    "distance": 0.7,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1552611052-33e04de081de?w=600&auto=format&fit=crop&q=80",
+    "description": "ไก่ตอนต้มเนื้อฉ่ำนุ่ม ข้าวหอมมะลิหุงน้ำซุปไก่หอมกรุ่น น้ำจิ้มเต้าเจี้ยวพริกขิงรสเด็ด",
+    "address": "ถนนสีลม แขวงสุริยวาส เขตบางรัก กรุงเทพฯ",
+    "latitude": 13.732,
+    "longitude": 100.542
+  },
+  {
+    "id": "rest_021",
+    "name": "ก๋วยเตี๋ยวต้มยำมะนาวสด ป้าศรี",
+    "rating": 4.5,
+    "price_range": "$",
+    "avg_price": 60,
+    "distance": 1.1,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&auto=format&fit=crop&q=80",
+    "description": "น้ำซุปต้มยำปรุงชามต่อชามด้วยมะนาวแท้ 100% พริกป่นคั่วเอง ถั่วลิสงคั่วหอมกรอบ",
+    "address": "ถนนเจริญกรุง แขวงยานนาวา เขตสาทร กรุงเทพฯ",
+    "latitude": 13.737,
+    "longitude": 100.545
+  },
+  {
+    "id": "rest_022",
+    "name": "ก๋วยจั๊บน้ำใสนายเล็ก เยาวราช",
+    "rating": 4.5,
+    "price_range": "$",
+    "avg_price": 70,
+    "distance": 1.5,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80",
+    "description": "พริกไทยดำเน้นๆ ซดน้ำซุปร้อนโล่งคอ หมูกรอบเด็ด หมูชิ้นนุ่มลิ้น เส้นก๋วยจั๊บเหนียวนุ่ม",
+    "address": "ถนนพระราม 3 แขวงบางโพงพาง เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.742,
+    "longitude": 100.548
+  },
+  {
+    "id": "rest_023",
+    "name": "ข้าวหมูแดงสีมรกต ซอยสุกร",
+    "rating": 4.6,
+    "price_range": "$",
+    "avg_price": 65,
+    "distance": 2,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1594998893017-36147cbcae05?w=600&auto=format&fit=crop&q=80",
+    "description": "น้ำราดสีเข้มกลมกล่อมไม่หวานเลี่ยน หมูแดงย่างหอมเตาถ่าน กุนเชียงทอดกรอบนุ่ม",
+    "address": "ถนนนราธิวาสราชนครินทร์ แขวงช่องนนทรี เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.747,
+    "longitude": 100.551
+  },
+  {
+    "id": "rest_024",
+    "name": "ราดหน้ายอดผัก ชูเกียรติ",
+    "rating": 4.7,
+    "price_range": "$",
+    "avg_price": 55,
+    "distance": 3.2,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80",
+    "description": "เส้นใหญ่ผัดหอมกลิ่นกระทะไหม้ น้ำราดหน้าข้นเหนียวกำลังดี คะน้าฮ่องกงกรอบหวาน",
+    "address": "ถนนเจริญนคร แขวงคลองต้นไทร เขตคลองสาน กรุงเทพฯ",
+    "latitude": 13.752,
+    "longitude": 100.554
+  },
+  {
+    "id": "rest_025",
+    "name": "บะหมี่หมูแดงหมูกรอบเตาถ่าน เจริญกรุง",
+    "rating": 4.8,
+    "price_range": "$$",
+    "avg_price": 140,
+    "distance": 0.4,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80",
+    "description": "เส้นบะหมี่ไข่โฮมเมด หมูกรอบหนังพองฟูกรอบสะท้าน เกี๊ยวกุ้งคำโตเนื้อแน่นเต็มปากเต็มคำ",
+    "address": "ซอยอโศกมนตรี แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.727,
+    "longitude": 100.539
+  },
+  {
+    "id": "rest_026",
+    "name": "ผัดไทยไฟทะลุ ถนนดินสอ",
+    "rating": 4.8,
+    "price_range": "$$",
+    "avg_price": 180,
+    "distance": 0.7,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1552611052-33e04de081de?w=600&auto=format&fit=crop&q=80",
+    "description": "ผัดไทยเส้นจันท์เหนียวนุ่ม ผัดไฟแรงหอมควันกระทะ คลุกเคล้าซอสมะขามสูตรพิเศษกุ้งลายเสือ",
+    "address": "ถนนสีลม แขวงสุริยวาส เขตบางรัก กรุงเทพฯ",
+    "latitude": 13.732,
+    "longitude": 100.542
+  },
+  {
+    "id": "rest_027",
+    "name": "บะหมี่เกี๊ยวกุ้งจักรพรรดิ์ สีลม",
+    "rating": 4.9,
+    "price_range": "$$",
+    "avg_price": 160,
+    "distance": 1.1,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&auto=format&fit=crop&q=80",
+    "description": "เกี๊ยวกุ้งล้วนตัวโต เนื้อกุ้งเด้งกรอบ น้ำซุปกระดูกหมูหวานธรรมชาติสไตล์ฮ่องกง",
+    "address": "ถนนเจริญกรุง แขวงยานนาวา เขตสาทร กรุงเทพฯ",
+    "latitude": 13.737,
+    "longitude": 100.545
+  },
+  {
+    "id": "rest_028",
+    "name": "ข้าวหน้าเป็ดย่างฮ่องกง สาทร",
+    "rating": 4.3,
+    "price_range": "$$",
+    "avg_price": 190,
+    "distance": 1.5,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80",
+    "description": "เป็ดย่างหนังกรอบสีทอง เนื้อนุ่มชุ่มฉ่ำ ราดซอสเป็ดย่างรสหวานเค็มกลมกล่อม",
+    "address": "ถนนพระราม 3 แขวงบางโพงพาง เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.742,
+    "longitude": 100.548
+  },
+  {
+    "id": "rest_029",
+    "name": "ก๋วยเตี๋ยวคั่วไก่ เตาถ่านวรจักร",
+    "rating": 4.4,
+    "price_range": "$$",
+    "avg_price": 120,
+    "distance": 2,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1594998893017-36147cbcae05?w=600&auto=format&fit=crop&q=80",
+    "description": "คั่วไก่กระทะเหล็กไฟลุก กรอบนอกนุ่มใน หอมกลิ่นกระทะไหม้ เสิร์ฟพร้อมปาท่องโก๋กรอบ",
+    "address": "ถนนนราธิวาสราชนครินทร์ แขวงช่องนนทรี เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.747,
+    "longitude": 100.551
+  },
+  {
+    "id": "rest_030",
+    "name": "ข้าวขาหมูตรอกซุง บางรัก",
+    "rating": 4.5,
+    "price_range": "$$",
+    "avg_price": 150,
+    "distance": 3.2,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80",
+    "description": "ขาหมูต้มสมุนไพรจีนสูตรลับ เนื้อนุ่มละลายในปาก คอลลาเจนเน้นๆ ไข่ต้มยางมะตูม",
+    "address": "ถนนเจริญนคร แขวงคลองต้นไทร เขตคลองสาน กรุงเทพฯ",
+    "latitude": 13.752,
+    "longitude": 100.554
+  },
+  {
+    "id": "rest_031",
+    "name": "ราเมงทรัฟเฟิล พรีเมียมสเตชั่น",
+    "rating": 4.5,
+    "price_range": "$$$",
+    "avg_price": 420,
+    "distance": 0.4,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80",
+    "description": "ราเมงซุปกระดูกหมูเข้มข้นผสมน้ำมันทรัฟเฟิลขาว ชาชูพรีเมียมตุ๋น 24 ชั่วโมง",
+    "address": "ซอยอโศกมนตรี แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.727,
+    "longitude": 100.539
+  },
+  {
+    "id": "rest_032",
+    "name": "บะหมี่ล็อบสเตอร์ เป็ดย่างจักรพรรดิ์",
+    "rating": 4.6,
+    "price_range": "$$$",
+    "avg_price": 580,
+    "distance": 0.7,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1552611052-33e04de081de?w=600&auto=format&fit=crop&q=80",
+    "description": "บะหมี่เส้นสดราดซอสล็อบสเตอร์และเป็ดย่างรมควันไม้ชาเขียว เมนูสุดอลังการ",
+    "address": "ถนนสีลม แขวงสุริยวาส เขตบางรัก กรุงเทพฯ",
+    "latitude": 13.732,
+    "longitude": 100.542
+  },
+  {
+    "id": "rest_033",
+    "name": "ก๋วยเตี๋ยวเนื้อวากิวริบอาย ทองหล่อ",
+    "rating": 4.7,
+    "price_range": "$$$",
+    "avg_price": 490,
+    "distance": 1.1,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&auto=format&fit=crop&q=80",
+    "description": "เนื้อวากิว A5 เบิร์นไฟหอมกรุ่น โปะบนเส้นเล็กน้ำตกเข้มข้น น้ำซุปตุ๋นยาจีน 18 ชนิด",
+    "address": "ถนนเจริญกรุง แขวงยานนาวา เขตสาทร กรุงเทพฯ",
+    "latitude": 13.737,
+    "longitude": 100.545
+  },
+  {
+    "id": "rest_034",
+    "name": "อุด้งเส้นสด ซุปปูอลาสก้า",
+    "rating": 4.7,
+    "price_range": "$$$",
+    "avg_price": 380,
+    "distance": 1.5,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80",
+    "description": "อุด้งนวดมือสดใหม่เส้นเหนียวหนึบ น้ำซุปดาชิปูอลาสก้าหวานละมุนลิ้น",
+    "address": "ถนนพระราม 3 แขวงบางโพงพาง เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.742,
+    "longitude": 100.548
+  },
+  {
+    "id": "rest_035",
+    "name": "ราดหน้าเป๋าฮื้อสด เจริญนคร",
+    "rating": 4.8,
+    "price_range": "$$$",
+    "avg_price": 650,
+    "distance": 2,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1594998893017-36147cbcae05?w=600&auto=format&fit=crop&q=80",
+    "description": "เป๋าฮื้อสดตัวโตคะน้าฮ่องกงคัดเกรด ราดบนเส้นใหญ่ทอดกรอบฟูสไตล์ภัตตาคารกวางตุ้ง",
+    "address": "ถนนนราธิวาสราชนครินทร์ แขวงช่องนนทรี เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.747,
+    "longitude": 100.551
+  },
+  {
+    "id": "rest_036",
+    "name": "ก๋วยเตี๋ยวต้มยำกุ้งมังกรภูเก็ต ซุปเปอร์",
+    "rating": 4.9,
+    "price_range": "$$$",
+    "avg_price": 550,
+    "distance": 3.2,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600&auto=format&fit=crop&q=80",
+    "description": "ต้มยำน้ำข้นใส่นมสด กุ้งมังกรไซส์ยักษ์ เห็ดออรินจิสด รสแซ่บจัดจ้านถึงใจ",
+    "address": "ถนนเจริญนคร แขวงคลองต้นไทร เขตคลองสาน กรุงเทพฯ",
+    "latitude": 13.752,
+    "longitude": 100.554
+  },
+  {
+    "id": "rest_037",
+    "name": "ข้าวต้มปลา & ทะเลลวกจิ้ม เจ๊หงส์",
+    "rating": 4.9,
+    "price_range": "$",
+    "avg_price": 90,
+    "distance": 0.4,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600&auto=format&fit=crop&q=80",
+    "description": "เนื้อปลากะพงสดหวาน หมึกกรอบ กุ้งขาวสดตัวโต เสิร์ฟพร้อมน้ำจิ้มซีฟู้ดมะนาวแท้รสจัดจ้าน",
+    "address": "ถนนพระราม 3 แขวงบางโพงพาง เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.734,
+    "longitude": 100.548
+  },
+  {
+    "id": "rest_038",
+    "name": "หอยทอดกระทะร้อน ป้ามาลี",
+    "rating": 4.4,
+    "price_range": "$",
+    "avg_price": 75,
+    "distance": 0.7,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1553618551-fba689030290?w=600&auto=format&fit=crop&q=80",
+    "description": "หอยนางรมแป้งกรอบฟู หอยแมลงภู่สด ถั่วงอกผัดกรอบ น้ำจิ้มซอสพริกสูตรเฉพาะ",
+    "address": "ถนนนราธิวาสราชนครินทร์ แขวงช่องนนทรี เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.739,
+    "longitude": 100.551
+  },
+  {
+    "id": "rest_039",
+    "name": "ยำทะเลเดือด สะท้านคลอง",
+    "rating": 4.4,
+    "price_range": "$",
+    "avg_price": 85,
+    "distance": 1.1,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=600&auto=format&fit=crop&q=80",
+    "description": "ยำรวมมิตรทะเล กุ้งสด หมึกสาย หอยแครงลวก น้ำยำปลาร้านัวกลมกล่อม",
+    "address": "ถนนเจริญนคร แขวงคลองต้นไทร เขตคลองสาน กรุงเทพฯ",
+    "latitude": 13.744,
+    "longitude": 100.554
+  },
+  {
+    "id": "rest_040",
+    "name": "ข้าวหน้าปลาแกะ ทอดน้ำปลา",
+    "rating": 4.5,
+    "price_range": "$",
+    "avg_price": 70,
+    "distance": 1.5,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=600&auto=format&fit=crop&q=80",
+    "description": "ปลานิลทอดแกะเนื้อไร้ก้าง ทอดเหลืองทองกรอบนอกนุ่มใน น้ำปลาพริกมะนาวซอย",
+    "address": "ซอยเพชรบุรี 15 แขวงถนนพญาไท เขตราชเทวี กรุงเทพฯ",
+    "latitude": 13.749,
+    "longitude": 100.557
+  },
+  {
+    "id": "rest_041",
+    "name": "ปลาหมึกย่างเตาถ่าน น้ำจิ้มแซ่บ",
+    "rating": 4.6,
+    "price_range": "$",
+    "avg_price": 65,
+    "distance": 2,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&auto=format&fit=crop&q=80",
+    "description": "หมึกกระดอง หมึกกล้วยสด ย่างเตาถ่านกลิ่นหอมฟุ้ง น้ำจิ้มซีฟู้ดมะนาวสดแท้",
+    "address": "ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.754,
+    "longitude": 100.56
+  },
+  {
+    "id": "rest_042",
+    "name": "ต้มยำหัวปลาหม้อไฟ ริมทาง",
+    "rating": 4.6,
+    "price_range": "$",
+    "avg_price": 95,
+    "distance": 3.2,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "หัวปลากะพงสดต้มยำน้ำใส พริกขี้หนูสวนทุบสด เผ็ดเปรี้ยวจี๊ดถึงใจ",
+    "address": "ซอยทองหล่อ 10 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.759,
+    "longitude": 100.563
+  },
+  {
+    "id": "rest_043",
+    "name": "แหลมทอง ซีฟู้ด ตลาดประมงสด",
+    "rating": 4.7,
+    "price_range": "$$",
+    "avg_price": 280,
+    "distance": 0.4,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600&auto=format&fit=crop&q=80",
+    "description": "ปลากะพงทอดราดน้ำปลา กุ้งเผาเนยกระเทียม หอยเชลล์อบเนย วัตถุดิบส่งตรงจากแพวันต่อวัน",
+    "address": "ถนนพระราม 3 แขวงบางโพงพาง เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.734,
+    "longitude": 100.548
+  },
+  {
+    "id": "rest_044",
+    "name": "อบอร่อย ซีฟู้ด ทาวน์อินทาวน์",
+    "rating": 4.8,
+    "price_range": "$$",
+    "avg_price": 260,
+    "distance": 0.7,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1553618551-fba689030290?w=600&auto=format&fit=crop&q=80",
+    "description": "กุ้งอบวุ้นเส้นหม้อดิน ปูอบวุ้นเส้น หอยแมลงภู่อบสมุนไพรสด หอมพริกไทยดำ",
+    "address": "ถนนนราธิวาสราชนครินทร์ แขวงช่องนนทรี เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.739,
+    "longitude": 100.551
+  },
+  {
+    "id": "rest_045",
+    "name": "สมพงษ์ ซีฟู้ด เกษตร-นวมินทร์",
+    "rating": 4.8,
+    "price_range": "$$",
+    "avg_price": 290,
+    "distance": 1.1,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=600&auto=format&fit=crop&q=80",
+    "description": "ต้มยำโป๊ะแตกทะเลรวมมิตร ปลาหมึกผัดไข่เค็ม ปลากะพงนึ่งมะนาวเนื้อหวานฉ่ำ",
+    "address": "ถนนเจริญนคร แขวงคลองต้นไทร เขตคลองสาน กรุงเทพฯ",
+    "latitude": 13.744,
+    "longitude": 100.554
+  },
+  {
+    "id": "rest_046",
+    "name": "มหาชัยซีฟู้ด สาขาบรรทัดทอง",
+    "rating": 4.9,
+    "price_range": "$$",
+    "avg_price": 220,
+    "distance": 1.5,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=600&auto=format&fit=crop&q=80",
+    "description": "กุ้งแม่น้ำเผาขนาดกลาง หอยหวานเผา ปูม้านึ่งแกะพร้อมทาน สดจากท่าเรือมหาชัย",
+    "address": "ซอยเพชรบุรี 15 แขวงถนนพญาไท เขตราชเทวี กรุงเทพฯ",
+    "latitude": 13.749,
+    "longitude": 100.557
+  },
+  {
+    "id": "rest_047",
+    "name": "ปูเป็น ซีฟู้ด สดจากอ่าวไทย",
+    "rating": 4.3,
+    "price_range": "$$",
+    "avg_price": 270,
+    "distance": 2,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&auto=format&fit=crop&q=80",
+    "description": "ปูม้าถอดเสื้อนึ่งจิ้มน้ำจิ้มซีฟู้ด ทอดมันปลากรายแท้ แกงส้มไข่ปลาริวกิวยอดมะพร้าว",
+    "address": "ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.754,
+    "longitude": 100.56
+  },
+  {
+    "id": "rest_048",
+    "name": "ครัวเจ๊ไข่ ซีฟู้ด ประชาชื่น",
+    "rating": 4.4,
+    "price_range": "$$",
+    "avg_price": 250,
+    "distance": 3.2,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "หอยนางรมสุราษฎร์ทรงเครื่อง กุ้งแช่น้ำปลาพริกสด ปลากะพงทอดสามรสจัดจ้าน",
+    "address": "ซอยทองหล่อ 10 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.759,
+    "longitude": 100.563
+  },
+  {
+    "id": "rest_049",
+    "name": "กุ้งแม่น้ำเผาอยุธยา พรีเมียมริเวอร์ไซด์",
+    "rating": 4.5,
+    "price_range": "$$$",
+    "avg_price": 680,
+    "distance": 0.4,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600&auto=format&fit=crop&q=80",
+    "description": "กุ้งแม่น้ำธรรมชาติไซส์ยักษ์ มันกุ้งเยิ้มทะลัก ปูทะเลไข่นึ่งนมสด วิวริมแม่น้ำเจ้าพระยาสุดโรแมนติก",
+    "address": "ถนนพระราม 3 แขวงบางโพงพาง เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.734,
+    "longitude": 100.548
+  },
+  {
+    "id": "rest_050",
+    "name": "บลูมารีน ซีฟู้ด บาร์ แอนด์ กริลล์",
+    "rating": 4.5,
+    "price_range": "$$$",
+    "avg_price": 550,
+    "distance": 0.7,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1553618551-fba689030290?w=600&auto=format&fit=crop&q=80",
+    "description": "โอเชียนแพลตเตอร์รวมหอยเชลล์ฮอกไกโด ล็อบสเตอร์ย่างเนยกระเทียม และคาเวียร์",
+    "address": "ถนนนราธิวาสราชนครินทร์ แขวงช่องนนทรี เขตยานนาวา กรุงเทพฯ",
+    "latitude": 13.739,
+    "longitude": 100.551
+  },
+  {
+    "id": "rest_051",
+    "name": "ศรทองโภชนา ปูอบพรีเมียม สาทร",
+    "rating": 4.6,
+    "price_range": "$$$",
+    "avg_price": 520,
+    "distance": 1.1,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=600&auto=format&fit=crop&q=80",
+    "description": "ปูเนื้อยักษ์อบวุ้นเส้นหม้อดิน ก้ามปูแน่นหวาน ข้าวผัดปูเนื้อก้อนจัมโบ้เน้นๆ",
+    "address": "ถนนเจริญนคร แขวงคลองต้นไทร เขตคลองสาน กรุงเทพฯ",
+    "latitude": 13.744,
+    "longitude": 100.554
+  },
+  {
+    "id": "rest_052",
+    "name": "โอเชี่ยน พาราไดซ์ ซีฟู้ด บุฟเฟต์",
+    "rating": 4.7,
+    "price_range": "$$$",
+    "avg_price": 790,
+    "distance": 1.5,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=600&auto=format&fit=crop&q=80",
+    "description": "บุฟเฟต์ซีฟู้ดพรีเมียมไม่อั้น ปูอลาสก้า กุ้งลายเสือ ซาชิมิปลาฮามาจิสดไม่อั้น",
+    "address": "ซอยเพชรบุรี 15 แขวงถนนพญาไท เขตราชเทวี กรุงเทพฯ",
+    "latitude": 13.749,
+    "longitude": 100.557
+  },
+  {
+    "id": "rest_053",
+    "name": "เดอะ ล็อบสเตอร์ เลานจ์ สุขุมวิท",
+    "rating": 4.8,
+    "price_range": "$$$",
+    "avg_price": 650,
+    "distance": 2,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&auto=format&fit=crop&q=80",
+    "description": "แคนาเดียนล็อบสเตอร์นึ่งเนยเลมอน หอยนางรมฝรั่งเศส Fine de Claire เสิร์ฟบนถาดน้ำแข็ง",
+    "address": "ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.754,
+    "longitude": 100.56
+  },
+  {
+    "id": "rest_054",
+    "name": "อันดามัน ไพรเวท ซีฟู้ด คลับ",
+    "rating": 4.8,
+    "price_range": "$$$",
+    "avg_price": 720,
+    "distance": 3.2,
+    "type": [
+      "อาหารทะเล / ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "ปลาเก๋าแดงนึ่งซีอิ๊ว กุ้งมังกร 7 สีซาชิมิ กั้งทอดกระเทียมพริกไทยสด",
+    "address": "ซอยทองหล่อ 10 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.759,
+    "longitude": 100.563
+  },
+  {
+    "id": "rest_055",
+    "name": "หมูกระทะ ชั่งกิโลนายอาร์ต",
+    "rating": 4.9,
+    "price_range": "$",
+    "avg_price": 99,
+    "distance": 0.4,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "หมูหมักนุ่มสูตรงาขาว หมูสามชั้นสไลด์ น้ำจิ้มหมูกระทะพริกกระเทียมรสเด็ด ตักทานไม่อั้นคิดตามน้ำหนัก",
+    "address": "ซอยเพชรบุรี 15 แขวงถนนพญาไท เขตราชเทวี กรุงเทพฯ",
+    "latitude": 13.741,
+    "longitude": 100.557
+  },
+  {
+    "id": "rest_056",
+    "name": "หมูสองชั้น หมูกระทะ ดาดฟ้า",
+    "rating": 4.3,
+    "price_range": "$",
+    "avg_price": 85,
+    "distance": 0.7,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&auto=format&fit=crop&q=80",
+    "description": "หมูกระทะบรรยากาศรับลมชิวๆ หมูหมักซอสบาร์บีคิว น้ำจิ้มสุกี้รสเด็ด ผักบุ้งสดไม่อั้น",
+    "address": "ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.746,
+    "longitude": 100.56
+  },
+  {
+    "id": "rest_057",
+    "name": "สุกี้โบราณ เตาถ่านท่าน้ำนนท์",
+    "rating": 4.4,
+    "price_range": "$",
+    "avg_price": 75,
+    "distance": 1.1,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80",
+    "description": "สุกี้แห้งผัดหอมกลิ่นกระทะ น้ำจิ้มเต้าหู้ยี้สูตรดั้งเดิม หมูหมักน้ำมันหอยนุ่มลิ้น",
+    "address": "ซอยทองหล่อ 10 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.751,
+    "longitude": 100.563
+  },
+  {
+    "id": "rest_058",
+    "name": "จิ้มจุ่มหม้อดิน อีสานแซ่บ",
+    "rating": 4.5,
+    "price_range": "$",
+    "avg_price": 90,
+    "distance": 1.5,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=600&auto=format&fit=crop&q=80",
+    "description": "น้ำซุปสมุนไพรไทย ข่า ตะไคร้ ใบมะกรูด หอมฟุ้ง เนื้อหมูหมักไข่ไก่สด น้ำจิ้มแจ่วรสจัด",
+    "address": "ถนนเยาวราช แขวงสัมพันธวงศ์ เขตสัมพันธวงศ์ กรุงเทพฯ",
+    "latitude": 13.756,
+    "longitude": 100.566
+  },
+  {
+    "id": "rest_059",
+    "name": "หมูกระทะคุณย่า บรรทัดทอง",
+    "rating": 4.5,
+    "price_range": "$",
+    "avg_price": 95,
+    "distance": 2,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&auto=format&fit=crop&q=80",
+    "description": "สามชั้นย่างเกรียมกรอบ น้ำจิ้มหมูกระทะพริกสดมะนาวแท้ ข้าวผัดกระเทียมหอมเนย",
+    "address": "ซอยเอกมัย 12 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.721,
+    "longitude": 100.569
+  },
+  {
+    "id": "rest_060",
+    "name": "ชาบูเสียบไม้ หมาล่าทั่ง",
+    "rating": 4.6,
+    "price_range": "$",
+    "avg_price": 65,
+    "distance": 3.2,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "ชาบูเสียบไม้ต้มซุปหมาล่าเผ็ดชา เลือกหยิบตามใจชอบ น้ำซุปเข้มข้นรสเด็ด",
+    "address": "ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.726,
+    "longitude": 100.532
+  },
+  {
+    "id": "rest_061",
+    "name": "ชิบูย่า ชาบู & ซูชิบุฟเฟต์",
+    "rating": 4.7,
+    "price_range": "$$",
+    "avg_price": 299,
+    "distance": 0.4,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "น้ำซุปดำสุกี้ยากี้และซุปทงคตสึเข้มข้น หมูคุโรบูตะสไลด์บาง ซูชิแซลมอนเบิร์นไฟและไอศกรีมมัทฉะ",
+    "address": "ซอยเพชรบุรี 15 แขวงถนนพญาไท เขตราชเทวี กรุงเทพฯ",
+    "latitude": 13.741,
+    "longitude": 100.557
+  },
+  {
+    "id": "rest_062",
+    "name": "สุกี้จินดา สายพานหมาล่า",
+    "rating": 4.7,
+    "price_range": "$$",
+    "avg_price": 240,
+    "distance": 0.7,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&auto=format&fit=crop&q=80",
+    "description": "ซุปหมาล่าเผ็ดชาถึงใจสายพานหยิบสะดวก น้ำจิ้มสูตรงาผสมถั่วเข้มข้นกลมกล่อม",
+    "address": "ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.746,
+    "longitude": 100.56
+  },
+  {
+    "id": "rest_063",
+    "name": "ฮงแด ปิ้งย่างเกาหลี สยาม",
+    "rating": 4.8,
+    "price_range": "$$",
+    "avg_price": 280,
+    "distance": 1.1,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80",
+    "description": "หมูสามชั้นสไตล์เกาหลีย่างกรอบ ห่อผักกาดแก้ว กิมจิโฮมเมด และซอสซัมจังสูตรต้นตำรับ",
+    "address": "ซอยทองหล่อ 10 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.751,
+    "longitude": 100.563
+  },
+  {
+    "id": "rest_064",
+    "name": "อากิโยชิ ชาบูสุกี้ เอกมัย",
+    "rating": 4.9,
+    "price_range": "$$",
+    "avg_price": 290,
+    "distance": 1.5,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=600&auto=format&fit=crop&q=80",
+    "description": "สุกี้ยากี้ญี่ปุ่นดั้งเดิม ผัดเนื้อกับหอมใหญ่ในกระทะเหล็ก เติมน้ำซุปดำหวานหอม จุ่มไข่ดิบ",
+    "address": "ถนนเยาวราช แขวงสัมพันธวงศ์ เขตสัมพันธวงศ์ กรุงเทพฯ",
+    "latitude": 13.756,
+    "longitude": 100.566
+  },
+  {
+    "id": "rest_065",
+    "name": "คิมจู ปิ้งย่างบุฟเฟต์ อโศก",
+    "rating": 4.3,
+    "price_range": "$$",
+    "avg_price": 260,
+    "distance": 2,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&auto=format&fit=crop&q=80",
+    "description": "ซี่โครงหมูหมักซอสเกาหลี คอหมูย่าง นุ่มหอมกลิ่นควันถ่าน เสิร์ฟเครื่องเคียงเติมฟรีไม่อั้น",
+    "address": "ซอยเอกมัย 12 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.721,
+    "longitude": 100.569
+  },
+  {
+    "id": "rest_066",
+    "name": "ซูโม ชาบู สุกี้ยากี้ ทาวน์อินทาวน์",
+    "rating": 4.4,
+    "price_range": "$$",
+    "avg_price": 210,
+    "distance": 3.2,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "ชาบูหมูคุโรบูตะ สันคอสไลด์บางเฉียบ ซุปต้มยำน้ำข้นและซุปใสปลาแห้ง ผักสดออร์แกนิก",
+    "address": "ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.726,
+    "longitude": 100.532
+  },
+  {
+    "id": "rest_067",
+    "name": "วากิว ยากินิกุ คาเงะ (Kage)",
+    "rating": 4.4,
+    "price_range": "$$$",
+    "avg_price": 650,
+    "distance": 0.4,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "เนื้อวากิว A5 ลายหินอ่อนนำเข้าจากญี่ปุ่น ย่างบนเตาถ่านบินโจตัน น้ำจิ้มทาเระสูตรลับกว่า 30 ปี",
+    "address": "ซอยเพชรบุรี 15 แขวงถนนพญาไท เขตราชเทวี กรุงเทพฯ",
+    "latitude": 13.741,
+    "longitude": 100.557
+  },
+  {
+    "id": "rest_068",
+    "name": "กิวคาขุ พรีเมียม ยากินิกุ ทองหล่อ",
+    "rating": 4.5,
+    "price_range": "$$$",
+    "avg_price": 580,
+    "distance": 0.7,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&auto=format&fit=crop&q=80",
+    "description": "เนื้อคารูบิวากิวนุ่มฉ่ำ ลิ้นวัวหั่นหนาย่างเกลือมะนาว หอมฟุ้งทุกคำบนเตาถ่าน",
+    "address": "ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.746,
+    "longitude": 100.56
+  },
+  {
+    "id": "rest_069",
+    "name": "โมโม พาราไดซ์ โกลด์ ซีเล็คชั่น",
+    "rating": 4.6,
+    "price_range": "$$$",
+    "avg_price": 520,
+    "distance": 1.1,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80",
+    "description": "บุฟเฟต์ชาบูเนื้อวากิวออสเตรเลียพรีเมียม สันคอนุ่มละมุน ลิ้นวัวสไลด์บาง ไอศกรีมไดฟูกุ",
+    "address": "ซอยทองหล่อ 10 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.751,
+    "longitude": 100.563
+  },
+  {
+    "id": "rest_070",
+    "name": "ฮิดะ บีฟ ยากินิกุ คลับ เอกมัย",
+    "rating": 4.7,
+    "price_range": "$$$",
+    "avg_price": 750,
+    "distance": 1.5,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=600&auto=format&fit=crop&q=80",
+    "description": "เนื้อฮิดะกิวเกรด A5 นำเข้าจากจังหวัดกิฟุ ญี่ปุ่น รสสัมผัสนุ่มละลายในปากอย่างแท้จริง",
+    "address": "ถนนเยาวราช แขวงสัมพันธวงศ์ เขตสัมพันธวงศ์ กรุงเทพฯ",
+    "latitude": 13.756,
+    "longitude": 100.566
+  },
+  {
+    "id": "rest_071",
+    "name": "ดรายเอจ สเต็กแอนด์กริลล์ สาทร",
+    "rating": 4.7,
+    "price_range": "$$$",
+    "avg_price": 680,
+    "distance": 2,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&auto=format&fit=crop&q=80",
+    "description": "เนื้อโทมาฮอว์กดรายเอจ 45 วัน ย่างเตาถ่านหอมกลิ่นไม้แอปเปิ้ล ซอสพริกไทยดำสด",
+    "address": "ซอยเอกมัย 12 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.721,
+    "longitude": 100.569
+  },
+  {
+    "id": "rest_072",
+    "name": "โตเกียว ยากินิกุ โอมากาเสะ",
+    "rating": 4.8,
+    "price_range": "$$$",
+    "avg_price": 720,
+    "distance": 3.2,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "คอร์สปิ้งย่างเนื้อวากิว 9 ส่วนพิเศษ เสิร์ฟพร้อมเกลือทรัฟเฟิลและวาซาบิสดขูดมือ",
+    "address": "ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.726,
+    "longitude": 100.532
+  },
+  {
+    "id": "rest_073",
+    "name": "ปังปิ้งเตาถ่าน นมสดเยาวราช",
+    "rating": 4.9,
+    "price_range": "$",
+    "avg_price": 55,
+    "distance": 0.4,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80",
+    "description": "ขนมปังปิ้งกรอบนอกนุ่มใน ไส้สังขยาใบเตยทะลัก นมสดร้อนแท้ 100% หอมมันละมุนลิ้น",
+    "address": "ถนนเยาวราช แขวงสัมพันธวงศ์ เขตสัมพันธวงศ์ กรุงเทพฯ",
+    "latitude": 13.748,
+    "longitude": 100.566
+  },
+  {
+    "id": "rest_074",
+    "name": "บัวลอยปริญญา ลาวาเยิ้ม",
+    "rating": 4.9,
+    "price_range": "$",
+    "avg_price": 60,
+    "distance": 0.7,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1507133750040-4a8f57021571?w=600&auto=format&fit=crop&q=80",
+    "description": "บัวลอยไส้งาดำ ลาวาคัสตาร์ด เผือกมันม่วง แป้งเหนียวนุ่ม เสิร์ฟในน้ำขิงแก่เผ็ดร้อน",
+    "address": "ซอยเอกมัย 12 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.753,
+    "longitude": 100.569
+  },
+  {
+    "id": "rest_075",
+    "name": "มิลค์บาร์ โบราณสะพานควาย",
+    "rating": 4.4,
+    "price_range": "$",
+    "avg_price": 45,
+    "distance": 1.1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1587314168485-3236d6710814?w=600&auto=format&fit=crop&q=80",
+    "description": "นมสดชมพูเย็น ปังเย็นภูเขาไฟราดโอวัลตินครันชี่ ขนมปังนึ่งสังขยาไข่โบราณ",
+    "address": "ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.758,
+    "longitude": 100.532
+  },
+  {
+    "id": "rest_076",
+    "name": "ไอศกรีมโบราณ ลุงชู ตลาดน้อย",
+    "rating": 4.4,
+    "price_range": "$",
+    "avg_price": 40,
+    "distance": 1.5,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80",
+    "description": "ไอศกรีมกะทิสดรวมมิตร ใส่ถั่วลิสงคั่ว ข้าวเหนียวมูน ลูกชิด ขนมปังปอนด์หอมมัน",
+    "address": "ถนนพัฒนาการ แขวงสวนหลวง เขตสวนหลวง กรุงเทพฯ",
+    "latitude": 13.723,
+    "longitude": 100.535
+  },
+  {
+    "id": "rest_077",
+    "name": "โกปี้เฮี้ยะไถ่กี่ สภากาแฟโบราณ",
+    "rating": 4.5,
+    "price_range": "$",
+    "avg_price": 65,
+    "distance": 2,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80",
+    "description": "กาแฟโบราณคั่วเข้ม ชาดำเย็นหอมกรุ่น ไข่ลวกสองฟอง ขนมปังสังขยาสูตรแต้จิ๋ว",
+    "address": "ถนนพระอาทิตย์ แขวงชนะสงคราม เขตพระนคร กรุงเทพฯ",
+    "latitude": 13.728,
+    "longitude": 100.538
+  },
+  {
+    "id": "rest_078",
+    "name": "เต้าทึงน้ำลำไย เยาวราช",
+    "rating": 4.6,
+    "price_range": "$",
+    "avg_price": 50,
+    "distance": 3.2,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&auto=format&fit=crop&q=80",
+    "description": "น้ำลำไยหวานชื่นใจ เครื่องเต้าทึง 10 อย่าง แปะก๊วย รากบัว พุทราจีน ลูกเดือย",
+    "address": "ซอยศูนย์วิจัย ถนนเพชรบุรีตัดใหม่ แขวงบางกะปิ เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.733,
+    "longitude": 100.541
+  },
+  {
+    "id": "rest_079",
+    "name": "มัทฉะ การ์เด้น คราฟต์คาเฟ่",
+    "rating": 4.6,
+    "price_range": "$$",
+    "avg_price": 180,
+    "distance": 0.4,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80",
+    "description": "ชาเขียวมัทฉะเกรดพิธีชงชาจากอุจิ บิงซูบัวลอยลาวา คานาเล่ และครัวซองต์เนยฝรั่งเศสสดใหม่",
+    "address": "ถนนเยาวราช แขวงสัมพันธวงศ์ เขตสัมพันธวงศ์ กรุงเทพฯ",
+    "latitude": 13.748,
+    "longitude": 100.566
+  },
+  {
+    "id": "rest_080",
+    "name": "อาฟเตอร์ยู เดสเสิร์ท สยาม",
+    "rating": 4.7,
+    "price_range": "$$",
+    "avg_price": 220,
+    "distance": 0.7,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1507133750040-4a8f57021571?w=600&auto=format&fit=crop&q=80",
+    "description": "ชิบูย่าฮันนี่โทสต์ ขนมปังกรอบนอกนุ่มฉ่ำเนยสด เสิร์ฟพร้อมไอศกรีมวานิลลาและวิปครีม",
+    "address": "ซอยเอกมัย 12 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.753,
+    "longitude": 100.569
+  },
+  {
+    "id": "rest_081",
+    "name": "ครัวซองต์ การ์นิเย่ ฝรั่งเศส",
+    "rating": 4.8,
+    "price_range": "$$",
+    "avg_price": 160,
+    "distance": 1.1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1587314168485-3236d6710814?w=600&auto=format&fit=crop&q=80",
+    "description": "ครัวซองต์เนยสด AOP กรอบร่วนเป็นเลเยอร์ หอมกลิ่นเนยแท้ ไส้อัลมอนด์ครีมหวานละมุน",
+    "address": "ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.758,
+    "longitude": 100.532
+  },
+  {
+    "id": "rest_082",
+    "name": "ชีสเค้ก ทอร์เต้ สไตล์โตเกียว",
+    "rating": 4.8,
+    "price_range": "$$",
+    "avg_price": 190,
+    "distance": 1.5,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80",
+    "description": "ชีสเค้กหน้าไหม้สไตล์บาสก์ เนื้อเนียนนุ่มละลายในปาก ชีสนำเข้าจากฮอกไกโด",
+    "address": "ถนนพัฒนาการ แขวงสวนหลวง เขตสวนหลวง กรุงเทพฯ",
+    "latitude": 13.723,
+    "longitude": 100.535
+  },
+  {
+    "id": "rest_083",
+    "name": "สลีปปี้ แบร์ สเปเชียลตี้คอฟฟี่",
+    "rating": 4.9,
+    "price_range": "$$",
+    "avg_price": 150,
+    "distance": 2,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80",
+    "description": "กาแฟดริปเมล็ดเอธิโอเปียและแม่ตอนหลวง เค้กแครอทครีมชีส เลมอนทาร์ตเมอแรงค์",
+    "address": "ถนนพระอาทิตย์ แขวงชนะสงคราม เขตพระนคร กรุงเทพฯ",
+    "latitude": 13.728,
+    "longitude": 100.538
+  },
+  {
+    "id": "rest_084",
+    "name": "บิงซู เมล่อนสโนว์ ชิดลม",
+    "rating": 4.3,
+    "price_range": "$$",
+    "avg_price": 250,
+    "distance": 3.2,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&auto=format&fit=crop&q=80",
+    "description": "บิงซูเมล่อนญี่ปุ่นสดหวานฉ่ำ เกล็ดหิมะรสนมสด ไอศกรีมวานิลลาและชีสเค้กคิวบ์",
+    "address": "ซอยศูนย์วิจัย ถนนเพชรบุรีตัดใหม่ แขวงบางกะปิ เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.733,
+    "longitude": 100.541
+  },
+  {
+    "id": "rest_085",
+    "name": "ลา ปาตีเซอรี่ เล็กซ์ควิส",
+    "rating": 4.4,
+    "price_range": "$$$",
+    "avg_price": 380,
+    "distance": 0.4,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80",
+    "description": "ขนมหวานฝรั่งเศสสไตล์โมเดิร์น ช็อคโกแลตซูเฟล่ และเซ็ต High Tea ยามบ่ายสุดหรู",
+    "address": "ถนนเยาวราช แขวงสัมพันธวงศ์ เขตสัมพันธวงศ์ กรุงเทพฯ",
+    "latitude": 13.748,
+    "longitude": 100.566
+  },
+  {
+    "id": "rest_086",
+    "name": "ช็อคโกแลต แฟคทอรี่ สาทร",
+    "rating": 4.5,
+    "price_range": "$$$",
+    "avg_price": 420,
+    "distance": 0.7,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1507133750040-4a8f57021571?w=600&auto=format&fit=crop&q=80",
+    "description": "ช็อคโกแลตอาร์ทิซานนำเข้าจากสวิตเซอร์แลนด์และเบลเยียม ฟองดูว์ผลไม้สดพรีเมียม",
+    "address": "ซอยเอกมัย 12 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.753,
+    "longitude": 100.569
+  },
+  {
+    "id": "rest_087",
+    "name": "ทีเฮาส์ พระยา เฮอริเทจ",
+    "rating": 4.5,
+    "price_range": "$$$",
+    "avg_price": 490,
+    "distance": 1.1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1587314168485-3236d6710814?w=600&auto=format&fit=crop&q=80",
+    "description": "ชาขาวและชาอู่หลงจักรพรรดิ์ ขนมเปี๊ยะอบควันเทียนสูตรโบราณ เสิร์ฟในบรรยากาศคฤหาสน์เก่า",
+    "address": "ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.758,
+    "longitude": 100.532
+  },
+  {
+    "id": "rest_088",
+    "name": "มาการอง เดอ ลุกซ์ เอ็มควอเทียร์",
+    "rating": 4.6,
+    "price_range": "$$$",
+    "avg_price": 360,
+    "distance": 1.5,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80",
+    "description": "มาการองสไตล์ปารีเซียง ไส้ทรัฟเฟิลขาว ราสเบอร์รี่กุหลาบ และพิสตาชิโอเข้มข้น",
+    "address": "ถนนพัฒนาการ แขวงสวนหลวง เขตสวนหลวง กรุงเทพฯ",
+    "latitude": 13.723,
+    "longitude": 100.535
+  },
+  {
+    "id": "rest_089",
+    "name": "เดอะ เบเกอรี่ เลานจ์ โรงแรมสยาม",
+    "rating": 4.7,
+    "price_range": "$$$",
+    "avg_price": 450,
+    "distance": 2,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80",
+    "description": "เซ็ตอาฟเตอร์นูนทีสไตล์อังกฤษ สโคนเนยสด คลอตเต็ดครีม แยมสตรอว์เบอร์รีป่า",
+    "address": "ถนนพระอาทิตย์ แขวงชนะสงคราม เขตพระนคร กรุงเทพฯ",
+    "latitude": 13.728,
+    "longitude": 100.538
+  },
+  {
+    "id": "rest_090",
+    "name": "ปารีส มิลล์เฟย บูทีค สุขุมวิท",
+    "rating": 4.8,
+    "price_range": "$$$",
+    "avg_price": 390,
+    "distance": 3.2,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&auto=format&fit=crop&q=80",
+    "description": "มิลล์เฟยแป้งกรอบบาง 1,000 ชั้น ครีมวานิลลาตาฮิติแท้ คาราเมลเค็มสูตรฝรั่งเศส",
+    "address": "ซอยศูนย์วิจัย ถนนเพชรบุรีตัดใหม่ แขวงบางกะปิ เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.733,
+    "longitude": 100.541
+  },
+  {
+    "id": "rest_091",
+    "name": "ข้าวหมกไก่สยาม ฮาลาล 100%",
+    "rating": 4.8,
+    "price_range": "$",
+    "avg_price": 70,
+    "distance": 0.4,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80",
+    "description": "ข้าวหมกไก่สูตรเครื่องเทศแท้ เม็ดข้าวยาวร่วนหอมกรุ่น เสิร์ฟคู่ซุปหางวัวและน้ำจิ้มสะระแหน่รสเด็ด",
+    "address": "ถนนพัฒนาการ แขวงสวนหลวง เขตสวนหลวง กรุงเทพฯ",
+    "latitude": 13.755,
+    "longitude": 100.535
+  },
+  {
+    "id": "rest_092",
+    "name": "โรตีมะตะบะ ท่าพระจันทร์ ฮาลาล",
+    "rating": 4.9,
+    "price_range": "$",
+    "avg_price": 60,
+    "distance": 0.7,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80",
+    "description": "โรตีทอดเนยหอมกรอบ มะตะบะไก่และเนื้อไส้แน่น อาจาดแตงกวารสเปรี้ยวหวานชื่นใจ",
+    "address": "ถนนพระอาทิตย์ แขวงชนะสงคราม เขตพระนคร กรุงเทพฯ",
+    "latitude": 13.72,
+    "longitude": 100.538
+  },
+  {
+    "id": "rest_093",
+    "name": "ไก่ทอดหาดใหญ่ บังเดช รามคำแหง",
+    "rating": 4.3,
+    "price_range": "$",
+    "avg_price": 65,
+    "distance": 1.1,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "ไก่ทอดหาดใหญ่หนังกรอบเนื้อฉ่ำ หอมเจียวทอดกรอบล้นจาน ข้าวเหนียวนุ่มร้อนๆ",
+    "address": "ซอยศูนย์วิจัย ถนนเพชรบุรีตัดใหม่ แขวงบางกะปิ เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.725,
+    "longitude": 100.541
+  },
+  {
+    "id": "rest_094",
+    "name": "ครัวมัสยิดฮารูน อาหารมุสลิม",
+    "rating": 4.4,
+    "price_range": "$",
+    "avg_price": 75,
+    "distance": 1.5,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "ไข่",
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80",
+    "description": "ข้าวแกงกะหรี่ไก่สูตรดั้งเดิม มัสมั่นเนื้อนุ่มละลายในปาก อาจาดอาจาดสดชื่น",
+    "address": "ซอยอารีย์สัมพันธ์ แขวงสามเสนใน เขตพญาไท กรุงเทพฯ",
+    "latitude": 13.73,
+    "longitude": 100.544
+  },
+  {
+    "id": "rest_095",
+    "name": "ก๋วยเตี๋ยวเนื้อตุ๋นฮาลาล พระราม 9",
+    "rating": 4.5,
+    "price_range": "$",
+    "avg_price": 80,
+    "distance": 2,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&auto=format&fit=crop&q=80",
+    "description": "เนื้อเปื่อยตุ๋นยาจีน เอ็นแก้วหนึบ น้ำซุปเนื้อหอมหวานกลมกล่อม ฮาลาลรับรอง",
+    "address": "ถนนบรรทัดทอง แขวงวังใหม่ เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.735,
+    "longitude": 100.547
+  },
+  {
+    "id": "rest_096",
+    "name": "ซุปเนื้อแซ่บ บังรอน คลองตัน",
+    "rating": 4.5,
+    "price_range": "$",
+    "avg_price": 85,
+    "distance": 3.2,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80",
+    "description": "ซุปเนื้อตุ๋นรสเปรี้ยวแซ่บจี๊ดจ๊าด หอมหอมเจียวและพริกสด มะนาวคั้นสดทุกชาม",
+    "address": "ซอยสุขุมวิท 23 แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.74,
+    "longitude": 100.55
+  },
+  {
+    "id": "rest_097",
+    "name": "อามีนะห์ ครัวมุสลิม & โรตีมะตะบะ",
+    "rating": 4.6,
+    "price_range": "$$",
+    "avg_price": 160,
+    "distance": 0.4,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80",
+    "description": "โรตีแกงมัสมั่นเนื้อนุ่มละลายในปาก มะตะบะไก่ไส้แน่น ชาชักฟองนุ่มหวานมันกลมกล่อม",
+    "address": "ถนนพัฒนาการ แขวงสวนหลวง เขตสวนหลวง กรุงเทพฯ",
+    "latitude": 13.755,
+    "longitude": 100.535
+  },
+  {
+    "id": "rest_098",
+    "name": "เบรุต อาหารเลบานอนแท้ สีลม",
+    "rating": 4.7,
+    "price_range": "$$",
+    "avg_price": 280,
+    "distance": 0.7,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80",
+    "description": "เคบับไก่ย่างถ่าน ฮัมมุสถั่วลูกไก่ แป้งพิต้าอบสดใหม่ สลัดทาบูลีหอมสดชื่น",
+    "address": "ถนนพระอาทิตย์ แขวงชนะสงคราม เขตพระนคร กรุงเทพฯ",
+    "latitude": 13.72,
+    "longitude": 100.538
+  },
+  {
+    "id": "rest_099",
+    "name": "สเต็กบังโต พัฒนาการ 53",
+    "rating": 4.7,
+    "price_range": "$$",
+    "avg_price": 220,
+    "distance": 1.1,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "สเต็กเนื้อโคขุนดรายเอจฮาลาล เบอร์เกอร์เนื้อย่างเตาถ่าน ซอสพริกไทยดำรสเข้ม",
+    "address": "ซอยศูนย์วิจัย ถนนเพชรบุรีตัดใหม่ แขวงบางกะปิ เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.725,
+    "longitude": 100.541
+  },
+  {
+    "id": "rest_100",
+    "name": "ฮาลาล ชาบู & ปิ้งย่าง สุขุมวิท",
+    "rating": 4.8,
+    "price_range": "$$",
+    "avg_price": 299,
+    "distance": 1.5,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "ไข่",
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80",
+    "description": "บุฟเฟต์ชาบูฮาลาล เนื้อสไลด์พรีเมียม ซุปเนื้อตุ๋นและซุปต้มยำ น้ำจิ้มแจ่วรสแซ่บ",
+    "address": "ซอยอารีย์สัมพันธ์ แขวงสามเสนใน เขตพญาไท กรุงเทพฯ",
+    "latitude": 13.73,
+    "longitude": 100.544
+  },
+  {
+    "id": "rest_101",
+    "name": "นานแอนด์เคอร์รี่ อินเดียนฮาลาล",
+    "rating": 4.9,
+    "price_range": "$$",
+    "avg_price": 240,
+    "distance": 2,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&auto=format&fit=crop&q=80",
+    "description": "แกงไก่เนยบัตเตอร์ชิกเก้น หอมมันเข้มข้น ทานคู่กับแป้งนานอบโอ่งกระเทียมหอมฟุ้ง",
+    "address": "ถนนบรรทัดทอง แขวงวังใหม่ เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.735,
+    "longitude": 100.547
+  },
+  {
+    "id": "rest_102",
+    "name": "ครัวฟาตีมะห์ รามคำแหง คาเฟ่",
+    "rating": 4.9,
+    "price_range": "$$",
+    "avg_price": 180,
+    "distance": 3.2,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80",
+    "description": "ข้าวหมกแพะเครื่องเทศนำเข้า ไร้กลิ่นสาบ เสิร์ฟพร้อมซุปหางวัวแซ่บถึงใจ",
+    "address": "ซอยสุขุมวิท 23 แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.74,
+    "longitude": 100.55
+  },
+  {
+    "id": "rest_103",
+    "name": "อัล ซาราย เลบานอน & อินเดียน",
+    "rating": 4.4,
+    "price_range": "$$$",
+    "avg_price": 450,
+    "distance": 0.4,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80",
+    "description": "เคบับเนื้อแกะย่างเตาถ่าน แป้งนานอบโอ่งกระเทียม ฮัมมุสและสลัดสไตล์เมดิเตอร์เรเนียนรับรองฮาลาลสากล",
+    "address": "ถนนพัฒนาการ แขวงสวนหลวง เขตสวนหลวง กรุงเทพฯ",
+    "latitude": 13.755,
+    "longitude": 100.535
+  },
+  {
+    "id": "rest_104",
+    "name": "เดอะ ฮาลาล บิสโทร สาทร",
+    "rating": 4.4,
+    "price_range": "$$$",
+    "avg_price": 520,
+    "distance": 0.7,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80",
+    "description": "ไฟน์ไดน์นิ่งฮาลาล สเต็กเนื้อวากิวออสเตรเลีย ซุปเห็ดทรัฟเฟิล พาสต้าเส้นสดซีฟู้ด",
+    "address": "ถนนพระอาทิตย์ แขวงชนะสงคราม เขตพระนคร กรุงเทพฯ",
+    "latitude": 13.72,
+    "longitude": 100.538
+  },
+  {
+    "id": "rest_105",
+    "name": "เปรซิเดนท์ ฮาลาล ไดน์ สุขุมวิท",
+    "rating": 4.5,
+    "price_range": "$$$",
+    "avg_price": 580,
+    "distance": 1.1,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    "description": "ซี่โครงแกะย่างเครื่องเทศโมร็อกโก ข้าวอบหญ้าฝรั่นสีทอง อาหารอาหรับชั้นสูง",
+    "address": "ซอยศูนย์วิจัย ถนนเพชรบุรีตัดใหม่ แขวงบางกะปิ เขตห้วยขวาง กรุงเทพฯ",
+    "latitude": 13.725,
+    "longitude": 100.541
+  },
+  {
+    "id": "rest_106",
+    "name": "ชาห์ราซาด อาราเบียน ไนท์ นานา",
+    "rating": 4.6,
+    "price_range": "$$$",
+    "avg_price": 480,
+    "distance": 1.5,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "ไข่",
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80",
+    "description": "เซ็ตมิกซ์กริลล์เนื้อและแกะย่างเตาถ่านสไตล์เปอร์เซีย คูร์มะไก่หอมมัน แป้งลาวาช",
+    "address": "ซอยอารีย์สัมพันธ์ แขวงสามเสนใน เขตพญาไท กรุงเทพฯ",
+    "latitude": 13.73,
+    "longitude": 100.544
+  },
+  {
+    "id": "rest_107",
+    "name": "มีราจ รูฟท็อป ฮาลาล เรสเตอรองต์",
+    "rating": 4.6,
+    "price_range": "$$$",
+    "avg_price": 650,
+    "distance": 2,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&auto=format&fit=crop&q=80",
+    "description": "ดินเนอร์ฮาลาลวิวพาโนรามา อาหารเมดิเตอร์เรเนียนฟิวชั่น ซีฟู้ดย่างเนยสมุนไพร",
+    "address": "ถนนบรรทัดทอง แขวงวังใหม่ เขตปทุมวัน กรุงเทพฯ",
+    "latitude": 13.735,
+    "longitude": 100.547
+  },
+  {
+    "id": "rest_108",
+    "name": "สุลต่าน พาเลซ ออตโตมัน ฮาลาล",
+    "rating": 4.7,
+    "price_range": "$$$",
+    "avg_price": 590,
+    "distance": 3.2,
+    "type": [
+      "อาหารฮาลาล"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80",
+    "description": "เคบับสุลต่านสูตรราชสำนักตุรกี ขนมบาคลาวาไส้พิสตาชิโอ ชาตุรกีหอมละมุน",
+    "address": "ซอยสุขุมวิท 23 แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพฯ",
+    "latitude": 13.74,
+    "longitude": 100.55
+  }
+]
