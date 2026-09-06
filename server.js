@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'kinder_secret_key_12345!',
+    secret: process.env.SESSION_SECRET || 'ginder_secret_key_12345!',
     resave: false,
     saveUninitialized: true
 }));
@@ -162,13 +162,13 @@ async function sendRecoveryEmail(toEmail, username, otp) {
     if (mailTransporter && toEmail) {
         try {
             await mailTransporter.sendMail({
-                from: `"KINDER Support" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
+                from: `"GINDER Support" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
                 to: toEmail,
-                subject: "รหัส OTP สำหรับกู้คืนรหัสผ่าน KINDER",
+                subject: "รหัส OTP สำหรับกู้คืนรหัสผ่าน GINDER",
                 html: `
                     <div style="font-family: 'Mitr', sans-serif, Arial; max-width: 500px; margin: 0 auto; padding: 24px; background: #170e33; color: #ffffff; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
                         <div style="text-align: center; margin-bottom: 20px;">
-                            <h2 style="color: #FF3377; margin: 0; font-size: 26px;">KINDER</h2>
+                            <h2 style="color: #FF3377; margin: 0; font-size: 26px;">GINDER</h2>
                             <p style="color: #b6afcc; margin-top: 4px; font-size: 13px;">ระบบกู้คืนรหัสผ่าน</p>
                         </div>
                         <p style="font-size: 15px;">สวัสดีคุณ <strong>${username}</strong>,</p>

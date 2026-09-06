@@ -1,5 +1,5 @@
-# Kinder 🍽️
-**Kinder Restaurant Matchmaking Platform**
+# Ginder 🍽️
+**Ginder Restaurant Matchmaking Platform**
 
 ระบบจับคู่และค้นหาร้านอาหารแบบ Interactive Matching พร้อมระบบ Admin Dashboard, User Account, และ Real-time Collaboration
 

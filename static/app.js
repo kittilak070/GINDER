@@ -1061,7 +1061,7 @@ function startQRScanner() {
             showView('join');
             document.getElementById('join-room-id').value = roomId;
         } else {
-            alert("QR Code ไม่ถูกต้อง สำหรับเข้าร่วมห้อง KINDER");
+            alert("QR Code ไม่ถูกต้อง สำหรับเข้าร่วมห้อง GINDER");
         }
     };
 

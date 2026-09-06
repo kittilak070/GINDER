@@ -1,7 +1,7 @@
 {
-  "name": "kinder-node",
+  "name": "ginder-node",
   "version": "1.0.0",
-  "description": "Kinder Restaurant Matchmaking Backend",
+  "description": "Ginder Restaurant Matchmaking Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
