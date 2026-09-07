@@ -6,6 +6,8 @@ const state = {
     userId: null,
     roomId: null,
     targetRoomId: null,
+    autoJoin: false,
+    networkBaseUrl: null,
     isCreator: false,
     users: [],
     restaurants: [],
@@ -51,6 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const roomIdParam = urlParams.get('roomId');
     if (roomIdParam) {
         state.targetRoomId = roomIdParam.trim().toUpperCase();
+        state.autoJoin = true;
         const joinInput = document.getElementById('join-room-id');
         if (joinInput) joinInput.value = state.targetRoomId;
     }
@@ -387,6 +390,19 @@ function setupEventListeners() {
         socket.connect();
     });
 
+    // Quick Guest / Tester Login
+    const btnQuickGuest = document.getElementById('btn-quick-guest-login');
+    if (btnQuickGuest) {
+        btnQuickGuest.addEventListener('click', () => {
+            btnQuickGuest.disabled = true;
+            btnQuickGuest.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเข้าสู่ระบบ...';
+            triggerQuickGuestLogin(() => {
+                btnQuickGuest.disabled = false;
+                btnQuickGuest.innerHTML = '<i class="fa-solid fa-bolt" style="color: #fde047;"></i> เข้าใช้งานทันที (สำหรับทดสอบ / Guest)';
+            });
+        });
+    }
+
     // Auth View Toggles
     const toggleLoginBtn = document.getElementById('auth-toggle-login');
     const toggleSignupBtn = document.getElementById('auth-toggle-signup');
@@ -503,6 +519,7 @@ function updatePreferencesState() {
 // --- SOCKET EVENTS ---
 socket.on('room_created', (data) => {
     state.roomId = data.roomId;
+    if (data.networkUrl) state.networkBaseUrl = data.networkUrl;
     state.isCreator = true;
 
     // Host automatically joins their own room immediately
@@ -521,8 +538,12 @@ socket.on('join_success', (data) => {
     showView('lobby');
     document.getElementById('lobby-room-id').innerText = data.roomId;
 
-    // Draw QR Code
-    const joinUrl = `${window.location.origin}/?roomId=${data.roomId}`;
+    // Draw QR Code using LAN IP so mobile cameras connect directly
+    let baseUrl = window.location.origin;
+    if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && state.networkBaseUrl) {
+        baseUrl = state.networkBaseUrl;
+    }
+    const joinUrl = `${baseUrl}/?roomId=${data.roomId}&autoJoin=1`;
     new QRious({
         element: document.getElementById('lobby-qr'),
         value: joinUrl,
@@ -530,10 +551,26 @@ socket.on('join_success', (data) => {
         background: '#ffffff',
         foreground: '#100923'
     });
+
+    const qrHelp = document.querySelector('.qr-help');
+    if (qrHelp) {
+        qrHelp.innerHTML = `<i class="fa-solid fa-camera text-accent"></i> เปิดกล้องมือถือสแกน QR Code เพื่อเข้ากลุ่มได้ทันที!`;
+    }
 });
 
 socket.on('join_error', (data) => {
+    if (data.message && data.message.includes('ชื่อนี้มีผู้ใช้งาน') && state.targetRoomId) {
+        // Auto resolve name duplicate by appending suffix
+        state.name = `${state.name} (${Math.floor(10 + Math.random() * 90)})`;
+        socket.emit('join_room', {
+            roomId: state.targetRoomId,
+            name: state.name,
+            allergies: state.allergies
+        });
+        return;
+    }
     alert(data.message);
+    showView('landing');
 });
 
 socket.on('kicked', (data) => {
@@ -585,17 +622,38 @@ socket.on('room_state', (data) => {
             }
         }
 
+        let myNameHtml = user.name;
+        if (isMe) {
+            myNameHtml = `<span>${user.name} (คุณ)</span> <button class="btn-edit-my-name" style="background: none; border: none; color: var(--accent-orange); cursor: pointer; padding: 0.1rem 0.3rem; font-size: 0.85rem;" title="แก้ไขชื่อเล่นของคุณ"><i class="fa-solid fa-pen-to-square"></i></button>`;
+        }
+
         row.innerHTML = `
             <div class="member-info">
                 <div class="member-avatar">${user.name.charAt(0)}</div>
                 <div>
-                    <div class="member-name">${user.name} ${isMe ? '(คุณ)' : ''}</div>
+                    <div class="member-name" style="display: flex; align-items: center; gap: 0.3rem;">${myNameHtml}</div>
                     ${user.allergies.length ? `<span class="member-status">แพ้: ${user.allergies.join(', ')}</span>` : ''}
                 </div>
             </div>
             ${rightSideHtml}
         `;
         membersList.appendChild(row);
+
+        if (isMe) {
+            const editBtn = row.querySelector('.btn-edit-my-name');
+            if (editBtn) {
+                editBtn.addEventListener('click', () => {
+                    const newName = prompt('แก้ไขชื่อเล่นที่คุณต้องการให้เพื่อนเห็นในห้อง:', user.name);
+                    if (newName && newName.trim() && newName.trim() !== user.name) {
+                        state.name = newName.trim();
+                        socket.emit('update_member', {
+                            roomId: state.roomId,
+                            name: state.name
+                        });
+                    }
+                });
+            }
+        }
     });
 
     // Attach kick event listeners
@@ -1105,15 +1163,69 @@ function routeAfterAuth() {
     updateHeaderUI();
     prefillUserPreferences();
     if (state.targetRoomId) {
-        showView('join');
-        const joinInput = document.getElementById('join-room-id');
-        if (joinInput) {
-            joinInput.value = state.targetRoomId;
-            joinInput.readOnly = false;
-        }
+        // Scanned QR code with native phone camera -> Auto join group immediately!
+        attemptAutoJoinRoom();
     } else if (views.auth.classList.contains('active')) {
         showView('landing');
     }
+}
+
+function attemptAutoJoinRoom() {
+    if (!state.targetRoomId) return;
+
+    let displayName = (state.currentUser && state.currentUser.displayName) 
+        ? state.currentUser.displayName 
+        : `เพื่อนนักชิม ${Math.floor(100 + Math.random() * 900)}`;
+    const userAllergies = (state.currentUser && state.currentUser.allergies) 
+        ? state.currentUser.allergies 
+        : [];
+
+    state.name = displayName;
+    state.allergies = userAllergies;
+
+    showView('lobby');
+    document.getElementById('lobby-room-id').innerText = state.targetRoomId;
+    const membersList = document.getElementById('members-list');
+    if (membersList) {
+        membersList.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2.5rem 0;"><i class="fa-solid fa-spinner fa-spin text-accent" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>กำลังเชื่อมต่อเข้าห้องกลุ่มอัตโนมัติ...</div>';
+    }
+
+    const emitJoin = () => {
+        socket.emit('join_room', {
+            roomId: state.targetRoomId,
+            name: state.name,
+            allergies: state.allergies
+        });
+    };
+
+    if (socket.connected) {
+        emitJoin();
+    } else {
+        socket.once('connect', emitJoin);
+    }
+}
+
+function triggerQuickGuestLogin(callback) {
+    fetch('/api/guest-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (callback) callback();
+            if (data.logged_in) {
+                state.currentUser = data;
+                if (data.networkBaseUrl) state.networkBaseUrl = data.networkBaseUrl;
+                routeAfterAuth();
+            } else {
+                showView('auth');
+            }
+        })
+        .catch(err => {
+            if (callback) callback();
+            console.error("Guest login failed:", err);
+            showView('auth');
+        });
 }
 
 function checkCurrentUser() {
@@ -1122,16 +1234,22 @@ function checkCurrentUser() {
         .then(data => {
             if (data.logged_in) {
                 state.currentUser = data;
+                if (data.networkBaseUrl) state.networkBaseUrl = data.networkBaseUrl;
                 routeAfterAuth();
             } else {
-                state.currentUser = null;
-                showView('auth');
-                updateHeaderUI();
+                // If user was invited via link/QR with roomId, auto-login immediately
+                if (state.targetRoomId) {
+                    triggerQuickGuestLogin();
+                } else {
+                    state.currentUser = null;
+                    showView('auth');
+                    updateHeaderUI();
+                }
             }
         })
         .catch(err => {
             console.error("Error checking auth status:", err);
-            showView('auth');
+            triggerQuickGuestLogin();
         });
 }
 

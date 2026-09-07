@@ -9,6 +9,19 @@ const fs = require('fs');
 const crypto = require('crypto');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const os = require('os');
+
+function getLocalNetworkIp() {
+    const nets = os.networkInterfaces();
+    for (const name of Object.keys(nets)) {
+        for (const net of nets[name]) {
+            if (net.family === 'IPv4' && !net.internal && !net.address.startsWith('169.254')) {
+                return net.address;
+            }
+        }
+    }
+    return 'localhost';
+}
 
 const app = express();
 const server = http.createServer(app);
@@ -258,14 +271,48 @@ async function getAllRestaurants() {
     }
 }
 
+const localUsers = new Map();
+
+function createGuestUser(customName) {
+    const randomNum = Math.floor(100 + Math.random() * 900);
+    const guestId = 'guest_' + Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
+    const guestName = customName ? customName.trim() : `เพื่อนนักชิม ${randomNum}`;
+    const guestUser = {
+        id: guestId,
+        username: guestId,
+        display_name: guestName,
+        role: 'user',
+        allergies: ''
+    };
+    localUsers.set(guestId, guestUser);
+    return guestUser;
+}
+
 async function findUserById(id) {
-    const { data } = await supabase.from('users').select('*').eq('id', id).single();
-    return data;
+    if (!id) return null;
+    if (localUsers.has(id)) return localUsers.get(id);
+    try {
+        const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
+        if (error) return null;
+        return data;
+    } catch (e) {
+        return null;
+    }
 }
 
 async function findUserByUsername(username) {
-    const { data } = await supabase.from('users').select('*').eq('username', username).single();
-    return data;
+    if (!username) return null;
+    const lower = username.toLowerCase();
+    for (const [_, u] of localUsers.entries()) {
+        if (u.username && u.username.toLowerCase() === lower) return u;
+    }
+    try {
+        const { data, error } = await supabase.from('users').select('*').eq('username', username).single();
+        if (error) return null;
+        return data;
+    } catch (e) {
+        return null;
+    }
 }
 
 async function getUserRole(req) {
@@ -341,7 +388,23 @@ app.post('/api/signup', async (req, res) => {
     res.json({ logged_in: true, username, displayName, role, allergies });
 });
 
+app.post('/api/guest-login', (req, res) => {
+    delete req.session.manualLogout;
+    const displayName = (req.body && req.body.displayName) ? req.body.displayName.trim() : null;
+    const guest = createGuestUser(displayName);
+    req.session.userId = guest.id;
+    res.json({
+        logged_in: true,
+        username: guest.username,
+        displayName: guest.display_name,
+        role: guest.role,
+        allergies: [],
+        isGuest: true
+    });
+});
+
 app.post('/api/login', async (req, res) => {
+    delete req.session.manualLogout;
     const username = (req.body.username || '').trim().toLowerCase();
     const password = req.body.password || '';
     
@@ -365,19 +428,34 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.post('/api/logout', (req, res) => {
-    req.session.destroy();
+    req.session.manualLogout = true;
+    req.session.userId = null;
     res.json({ success: true });
 });
 
 app.get('/api/me', async (req, res) => {
-    const user = await findUserById(req.session.userId);
-    if (!user) {
-        req.session.userId = null;
+    // If user explicitly clicked logout, respect it unless auto is forced or roomId is targeted
+    if (req.session.manualLogout && req.query.auto !== 'true') {
         return res.json({ logged_in: false });
+    }
+
+    let user = await findUserById(req.session.userId);
+    if (!user) {
+        // Auto-provision test guest user for seamless instant access!
+        user = createGuestUser();
+        req.session.userId = user.id;
     }
     const algStr = user.allergies || '';
     const allergies = algStr ? algStr.split(',').map(x => x.trim()).filter(Boolean) : [];
-    res.json({ logged_in: true, username: user.username, displayName: user.display_name, role: user.role, allergies });
+    res.json({
+        logged_in: true,
+        username: user.username,
+        displayName: user.display_name,
+        role: user.role,
+        allergies,
+        isGuest: !!String(user.id).startsWith('guest_'),
+        networkBaseUrl: `http://${getLocalNetworkIp()}:${PORT}`
+    });
 });
 
 app.get('/api/admin/restaurants', async (req, res) => {
@@ -435,6 +513,14 @@ app.put('/api/user/profile', async (req, res) => {
 
     const allergies = req.body.allergies || [];
     const allergiesStr = Array.isArray(allergies) ? allergies.join(',') : String(allergies);
+
+    // Support guest user updating profile in memory
+    if (localUsers.has(req.session.userId)) {
+        const u = localUsers.get(req.session.userId);
+        u.display_name = displayName;
+        u.allergies = allergiesStr;
+        return res.json({ success: true, displayName: u.display_name, allergies });
+    }
 
     const { data, error } = await supabase
         .from('users')
@@ -960,7 +1046,10 @@ io.on('connection', (socket) => {
         
         console.log(`[Room Created] ID: ${roomId} by ${socket.id} with preferences`, preferences);
         socket.join(roomId);
-        socket.emit('room_created', { roomId });
+        socket.emit('room_created', {
+            roomId,
+            networkUrl: `http://${getLocalNetworkIp()}:${PORT}`
+        });
     });
     
     socket.on('join_room', (data) => {
@@ -991,6 +1080,25 @@ io.on('connection', (socket) => {
         });
         
         socket.emit('join_success', { userId: socket.id, roomId, creatorId: room.creatorId });
+    });
+    
+    socket.on('update_member', (data) => {
+        const roomId = data.roomId;
+        const room = rooms[roomId];
+        if (room && room.users[socket.id]) {
+            if (data.name && data.name.trim()) {
+                room.users[socket.id].name = data.name.trim();
+            }
+            if (Array.isArray(data.allergies)) {
+                room.users[socket.id].allergies = data.allergies;
+            }
+            io.to(roomId).emit('room_state', {
+                roomId,
+                creatorId: room.creatorId,
+                users: Object.entries(room.users).map(([sid, u]) => ({ id: sid, name: u.name, progress: u.progress, allergies: u.allergies })),
+                started: room.started
+            });
+        }
     });
     
     socket.on('kick_user', (data) => {
