@@ -515,6 +515,119 @@
             flex-direction: column;
             gap: 0.5rem;
         }
+
+        /* Report & Export Specific Styling */
+        .export-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .export-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-md);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .export-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .export-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.88rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .export-btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 51, 119, 0.25);
+        }
+
+        .export-btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .export-btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .export-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .match-badge-unanimous {
+            background: rgba(0, 255, 38, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 255, 38, 0.3);
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .match-badge-fallback {
+            background: rgba(238, 120, 22, 0.15);
+            color: var(--accent-orange);
+            border: 1px solid rgba(238, 120, 22, 0.3);
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .bg-glow, header, .admin-nav-tabs, .search-bar, .export-grid, .modal, .btn-print-hide {
+                display: none !important;
+            }
+            .container {
+                max-width: 100% !important;
+                background: white !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+            .admin-section {
+                display: block !important;
+            }
+            table {
+                color: black !important;
+                border-collapse: collapse !important;
+            }
+            th, td {
+                border: 1px solid #ccc !important;
+                color: black !important;
+            }
+        }
     </style>
 </head>
 
@@ -541,6 +654,7 @@
             <button id="tab-nav-users" class="admin-nav-tab" type="button"><i class="fa-solid fa-users-gear"></i> จัดการผู้ใช้งาน</button>
             <button id="tab-nav-analytics" class="admin-nav-tab" type="button"><i class="fa-solid fa-chart-pie"></i> รายงานสถิติ</button>
             <button id="tab-nav-feedback" class="admin-nav-tab" type="button"><i class="fa-solid fa-inbox"></i> ข้อความเสนอแนะ</button>
+            <button id="tab-nav-reports" class="admin-nav-tab" type="button"><i class="fa-solid fa-file-invoice"></i> รายงาน & ส่งออกข้อมูล</button>
         </div>
 
         <!-- SECTION 1: RESTAURANTS -->
@@ -667,6 +781,199 @@
             </div>
             <div id="feedback-list-container">
                 <!-- Feedback loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- SECTION 5: REPORTS & DATA EXPORT -->
+        <div id="section-reports" class="admin-section hidden">
+            <!-- Header bar for Reports -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 0.6rem;">
+                        <i class="fa-solid fa-file-invoice text-accent"></i> ศูนย์รายงานและส่งออกข้อมูล (Reports & Export)
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">
+                        สรุปประสิทธิภาพการแมตช์ ตรวจสอบประวัติเชิงลึก และดาวน์โหลดข้อมูล CSV รองรับภาษาไทย 100%
+                    </p>
+                </div>
+                <button class="btn btn-secondary btn-print-hide" onclick="window.print()" type="button">
+                    <i class="fa-solid fa-print"></i> พิมพ์หน้านี้
+                </button>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="analytics-grid" style="margin-bottom: 1.5rem;">
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(0, 255, 38, 0.15); color: var(--accent-green);">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="report-kpi-unanimous-rate">0%</div>
+                        <div class="analytics-label">อัตราถูกใจ 100% (Unanimous)</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(255, 51, 119, 0.15); color: var(--accent-pink);">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="report-kpi-total-matches">0</div>
+                        <div class="analytics-label">การแมตช์สำเร็จทั้งหมด</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(50, 132, 255, 0.15); color: var(--accent-purple);">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="report-kpi-total-users">0</div>
+                        <div class="analytics-label">ผู้ใช้งานทั้งหมดในระบบ</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(238, 120, 22, 0.15); color: var(--accent-orange);">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="report-kpi-total-feedbacks">0</div>
+                        <div class="analytics-label">ข้อเสนอแนะ & แจ้งปัญหา</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXPORT CENTER (DOWNLOAD CSVs) -->
+            <div style="margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem;">
+                    <h3 style="font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-download text-accent"></i> ศูนย์ส่งออกไฟล์ข้อมูล (1-Click CSV Export)
+                    </h3>
+                    <span style="font-size: 0.75rem; color: var(--accent-green); background: rgba(0,255,38,0.1); border: 1px solid rgba(0,255,38,0.2); padding: 0.2rem 0.6rem; border-radius: 10px;">
+                        <i class="fa-solid fa-check"></i> UTF-8 BOM สำหรับ Excel & Sheets ภาษาไทย
+                    </span>
+                </div>
+
+                <div class="export-grid">
+                    <div class="export-card">
+                        <div>
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--accent-pink);">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem;">ประวัติการแมตช์อาหาร</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                                บันทึกทุกห้อง, ร้านที่ชนะ, ผู้ร่วมโต๊ะ, มติเอกฉันท์ vs Fallback, และเวลาที่เลือก
+                            </p>
+                        </div>
+                        <a href="/api/admin/reports/export/matches" class="export-btn export-btn-primary" target="_blank">
+                            <i class="fa-solid fa-file-csv"></i> ดาวน์โหลด CSV แมตช์
+                        </a>
+                    </div>
+
+                    <div class="export-card">
+                        <div>
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--accent-orange);">
+                                <i class="fa-solid fa-utensils"></i>
+                            </div>
+                            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem;">ข้อมูลร้านอาหารทั้งหมด</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                                ฐานข้อมูลร้าน รายการราคา หมวดหมู่อาหาร สารก่อภูมิแพ้ พิกัด GPS และที่อยู่
+                            </p>
+                        </div>
+                        <a href="/api/admin/reports/export/restaurants" class="export-btn export-btn-secondary" target="_blank">
+                            <i class="fa-solid fa-file-csv"></i> ดาวน์โหลด CSV ร้าน
+                        </a>
+                    </div>
+
+                    <div class="export-card">
+                        <div>
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--accent-purple);">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem;">ข้อมูลผู้ใช้งาน</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                                บัญชีผู้ใช้งาน สิทธิ์ Role ข้อมูลภูมิแพ้ที่บันทึกไว้ และวันที่ลงทะเบียน
+                            </p>
+                        </div>
+                        <a href="/api/admin/reports/export/users" class="export-btn export-btn-secondary" target="_blank">
+                            <i class="fa-solid fa-file-csv"></i> ดาวน์โหลด CSV ผู้ใช้
+                        </a>
+                    </div>
+
+                    <div class="export-card">
+                        <div>
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--accent-green);">
+                                <i class="fa-solid fa-inbox"></i>
+                            </div>
+                            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem;">ข้อเสนอแนะ & แจ้งปัญหา</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                                ฟีดแบ็ก แนะนำร้านอาหาร และรายงานปัญหาจากผู้ใช้งานพร้อมช่องทางติดต่อ
+                            </p>
+                        </div>
+                        <a href="/api/admin/reports/export/feedbacks" class="export-btn export-btn-secondary" target="_blank">
+                            <i class="fa-solid fa-file-csv"></i> ดาวน์โหลด CSV ฟีดแบ็ก
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TWO COLUMN SECTION: ALLERGY INSIGHTS + MATCH TYPE BREAKDOWN -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); padding: 1.4rem;">
+                    <h3 style="font-size: 1.05rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-shield-virus text-accent"></i> สถิติสารก่อภูมิแพ้ของผู้ใช้ (User Allergies)
+                    </h3>
+                    <div id="report-allergy-list" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <!-- Dynamically loaded -->
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); padding: 1.4rem;">
+                    <h3 style="font-size: 1.05rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-sliders text-accent"></i> สัดส่วนผลลัพธ์การตัดสินใจในห้อง
+                    </h3>
+                    <div id="report-match-types-breakdown" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Dynamically loaded -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- DETAILED MATCH AUDIT LOG TABLE -->
+            <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); padding: 1.4rem; box-shadow: var(--glass-shadow);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h3 style="font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-clock-rotate-left text-accent"></i> ประวัติการแมตช์อาหารล่าสุด (Match History Audit)
+                        </h3>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                            แสดงผลการแมตช์ 100 รายการล่าสุด พร้อมรายละเอียดผู้เข้าร่วมและสถานะ
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+                        <select id="report-match-filter" class="form-control" style="width: auto; padding: 0.45rem 0.8rem; font-size: 0.85rem;">
+                            <option value="all">ผลลัพธ์ทั้งหมด</option>
+                            <option value="unanimous">มติเอกฉันท์ (Unanimous)</option>
+                            <option value="fallback">ตัวสำรอง (Fallback)</option>
+                        </select>
+                        <input type="text" id="report-match-search" placeholder="ค้นหาชื่อร้าน หรือ รหัสห้อง..." class="form-control" style="width: 220px; padding: 0.45rem 0.8rem; font-size: 0.85rem;">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 140px;">วัน-เวลา</th>
+                                <th style="width: 90px;">ห้อง</th>
+                                <th>ร้านอาหารที่เลือก</th>
+                                <th style="width: 130px;">ผลการตัดสิน</th>
+                                <th>ผู้ร่วมโต๊ะ</th>
+                                <th>หมายเหตุ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="report-matches-table-body">
+                            <!-- Loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -796,7 +1103,8 @@
                 { btn: document.getElementById('tab-nav-restaurants'), section: document.getElementById('section-restaurants'), onOpen: () => loadRestaurants() },
                 { btn: document.getElementById('tab-nav-users'), section: document.getElementById('section-users'), onOpen: () => loadUsers() },
                 { btn: document.getElementById('tab-nav-analytics'), section: document.getElementById('section-analytics'), onOpen: () => loadAnalytics() },
-                { btn: document.getElementById('tab-nav-feedback'), section: document.getElementById('section-feedback'), onOpen: () => loadFeedback() }
+                { btn: document.getElementById('tab-nav-feedback'), section: document.getElementById('section-feedback'), onOpen: () => loadFeedback() },
+                { btn: document.getElementById('tab-nav-reports'), section: document.getElementById('section-reports'), onOpen: () => loadReports() }
             ];
 
             tabs.forEach(tab => {
@@ -978,6 +1286,16 @@
                         alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
                     });
             });
+
+            // Report Match Search & Filter listeners
+            const reportSearchInput = document.getElementById('report-match-search');
+            const reportFilterSelect = document.getElementById('report-match-filter');
+            if (reportSearchInput) {
+                reportSearchInput.addEventListener('input', () => filterAndRenderReportMatches());
+            }
+            if (reportFilterSelect) {
+                reportFilterSelect.addEventListener('change', () => filterAndRenderReportMatches());
+            }
         }
 
         // Global functions for restaurant edit/delete
@@ -1312,6 +1630,170 @@
                     alert('เกิดข้อผิดพลาดในการลบ');
                 });
         };
+
+        // ---------------- REPORTS & DATA EXPORT ----------------
+        let allReportMatches = [];
+
+        function loadReports() {
+            const tableBody = document.getElementById('report-matches-table-body');
+            if (tableBody) {
+                tableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;"><i class="fa-solid fa-spinner fa-spin"></i> กำลังรวบรวมข้อมูลรายงาน...</td></tr>`;
+            }
+
+            fetch('/api/admin/reports/summary')
+                .then(res => res.json())
+                .then(data => {
+                    const metrics = data.metrics || {};
+                    const unanimousRateEl = document.getElementById('report-kpi-unanimous-rate');
+                    const totalMatchesEl = document.getElementById('report-kpi-total-matches');
+                    const totalUsersEl = document.getElementById('report-kpi-total-users');
+                    const totalFeedbacksEl = document.getElementById('report-kpi-total-feedbacks');
+
+                    if (unanimousRateEl) unanimousRateEl.innerText = `${metrics.unanimousRate || 0}%`;
+                    if (totalMatchesEl) totalMatchesEl.innerText = metrics.totalMatches || 0;
+                    if (totalUsersEl) totalUsersEl.innerText = metrics.totalUsers || 0;
+                    if (totalFeedbacksEl) totalFeedbacksEl.innerText = metrics.totalFeedbacks || 0;
+
+                    // Match type breakdown visual
+                    const breakdownEl = document.getElementById('report-match-types-breakdown');
+                    if (breakdownEl) {
+                        const total = metrics.totalMatches || 0;
+                        const unanimous = metrics.unanimousMatches || 0;
+                        const fallback = metrics.fallbackMatches || 0;
+                        const uPct = total > 0 ? Math.round((unanimous / total) * 100) : 0;
+                        const fPct = total > 0 ? Math.round((fallback / total) * 100) : 0;
+
+                        breakdownEl.innerHTML = `
+                            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.88rem;">
+                                    <span style="color: var(--accent-green);"><i class="fa-solid fa-check-double"></i> มติเอกฉันท์ 100%</span>
+                                    <span style="font-weight: 600;">${unanimous} ครั้ง (${uPct}%)</span>
+                                </div>
+                                <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.06); border-radius: 5px; overflow: hidden;">
+                                    <div style="width: ${uPct}%; height: 100%; background: var(--accent-green); border-radius: 5px;"></div>
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.88rem;">
+                                    <span style="color: var(--accent-orange);"><i class="fa-solid fa-rotate"></i> ผลโหวตตัวสำรอง (Fallback)</span>
+                                    <span style="font-weight: 600;">${fallback} ครั้ง (${fPct}%)</span>
+                                </div>
+                                <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.06); border-radius: 5px; overflow: hidden;">
+                                    <div style="width: ${fPct}%; height: 100%; background: var(--accent-orange); border-radius: 5px;"></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.5rem; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+                                * เมื่อคนในห้องกดถูกใจไม่ตรงกัน ระบบจะสุ่มเลือกจากร้านที่มีคนถูกใจมากที่สุด เพื่อไม่ให้เสียเวลา
+                            </div>
+                        `;
+                    }
+
+                    // Allergies breakdown
+                    const allergyListEl = document.getElementById('report-allergy-list');
+                    if (allergyListEl) {
+                        allergyListEl.innerHTML = '';
+                        const allergies = data.topAllergies || [];
+                        if (allergies.length === 0) {
+                            allergyListEl.innerHTML = `<div style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 1rem;">ไม่มีข้อมูลการแพ้อาหารของผู้ใช้</div>`;
+                        } else {
+                            const maxAllergy = Math.max(...allergies.map(a => a.count), 1);
+                            allergies.forEach(a => {
+                                const pct = Math.round((a.count / maxAllergy) * 100);
+                                const row = document.createElement('div');
+                                row.style.cssText = 'display: flex; flex-direction: column; gap: 0.3rem;';
+                                row.innerHTML = `
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.88rem;">
+                                        <span style="font-weight: 500;">🚫 ${escapeHtml(a.name)}</span>
+                                        <span style="color: var(--text-secondary); font-weight: 600;">${a.count} บัญชี</span>
+                                    </div>
+                                    <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+                                        <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #FF3377, #EE7816); border-radius: 4px;"></div>
+                                    </div>
+                                `;
+                                allergyListEl.appendChild(row);
+                            });
+                        }
+                    }
+
+                    // Matches table
+                    allReportMatches = data.recentMatches || [];
+                    filterAndRenderReportMatches();
+                })
+                .catch(err => {
+                    console.error('Error loading reports summary:', err);
+                    if (tableBody) {
+                        tableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--accent-pink); padding: 1.5rem;">เกิดข้อผิดพลาดในการโหลดรายงาน</td></tr>`;
+                    }
+                });
+        }
+
+        function filterAndRenderReportMatches() {
+            const searchInput = document.getElementById('report-match-search');
+            const filterSelect = document.getElementById('report-match-filter');
+            const q = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const filter = filterSelect ? filterSelect.value : 'all';
+
+            const filtered = allReportMatches.filter(m => {
+                const restName = (m.restaurant && m.restaurant.name) ? m.restaurant.name.toLowerCase() : '';
+                const roomId = (m.roomId || '').toLowerCase();
+                const matchesSearch = !q || restName.includes(q) || roomId.includes(q);
+
+                let matchesType = true;
+                if (filter === 'unanimous') matchesType = !m.isFallback;
+                else if (filter === 'fallback') matchesType = !!m.isFallback;
+
+                return matchesSearch && matchesType;
+            });
+
+            renderReportMatchesTable(filtered);
+        }
+
+        function renderReportMatchesTable(matches) {
+            const tableBody = document.getElementById('report-matches-table-body');
+            if (!tableBody) return;
+            tableBody.innerHTML = '';
+
+            if (matches.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">ไม่พบข้อมูลประวัติการแมตช์ที่ตรงกับเงื่อนไข</td></tr>`;
+                return;
+            }
+
+            matches.forEach(m => {
+                const tr = document.createElement('tr');
+                const rest = m.restaurant || {};
+                const dateStr = m.matchedAt ? new Date(m.matchedAt).toLocaleDateString('th-TH', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) : '-';
+
+                const badgeHtml = m.isFallback ?
+                    `<span class="match-badge-fallback"><i class="fa-solid fa-rotate"></i> Fallback</span>` :
+                    `<span class="match-badge-unanimous"><i class="fa-solid fa-check-double"></i> เอกฉันท์ 100%</span>`;
+
+                const participantsStr = Array.isArray(m.participants) && m.participants.length > 0 ?
+                    m.participants.map(p => `<span style="display:inline-block; background:rgba(255,255,255,0.06); padding:0.15rem 0.45rem; border-radius:6px; font-size:0.75rem; margin:0.1rem;">${escapeHtml(p)}</span>`).join('') :
+                    '<span style="color:var(--text-muted); font-size:0.8rem;">ไม่ระบุ</span>';
+
+                const reason = m.fallbackReason || '-';
+
+                tr.innerHTML = `
+                    <td style="font-size: 0.85rem; color: var(--text-secondary);"><i class="fa-regular fa-clock"></i> ${dateStr}</td>
+                    <td><span style="font-family: monospace; font-weight: 600; color: var(--accent-purple);">${escapeHtml(m.roomId || '-')}</span></td>
+                    <td>
+                        <div style="font-weight: 600; font-size: 0.95rem;">${escapeHtml(rest.name || 'ไม่ระบุร้าน')}</div>
+                        <div style="font-size: 0.78rem; color: var(--text-secondary);">
+                            <span style="color: var(--accent-orange);"><i class="fa-solid fa-star"></i> ${rest.rating || '4.0'}</span> • ~${rest.avgPrice || 100}฿
+                        </div>
+                    </td>
+                    <td>${badgeHtml}</td>
+                    <td><div style="display: flex; flex-wrap: wrap; gap: 0.2rem; max-width: 200px;">${participantsStr}</div></td>
+                    <td style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(reason)}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
     </script>
 </body>
 

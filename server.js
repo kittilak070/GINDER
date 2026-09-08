@@ -1087,6 +1087,170 @@ app.delete('/api/admin/feedback/:id', async (req, res) => {
     res.json({ success: true });
 });
 
+// --- ADMIN REPORTING & DATA EXPORT ROUTES ---
+function csvEscape(val) {
+    if (val === null || val === undefined) return '""';
+    const str = String(val).replace(/"/g, '""');
+    return `"${str}"`;
+}
+
+app.get('/api/admin/reports/summary', async (req, res) => {
+    if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
+
+    try {
+        const history = await getHistory();
+        const feedbacks = await getFeedback();
+        const restaurants = await getAllRestaurants();
+        const { data: users } = await supabase.from('users').select('id, username, display_name, allergies, role, created_at');
+
+        const totalMatches = history.length;
+        const unanimousMatches = history.filter(h => !h.isFallback).length;
+        const fallbackMatches = history.filter(h => !!h.isFallback).length;
+        const unanimousRate = totalMatches > 0 ? Math.round((unanimousMatches / totalMatches) * 100) : 0;
+
+        // User allergies aggregation
+        const allergyCounts = {};
+        (users || []).forEach(u => {
+            let list = u.allergies || [];
+            if (typeof list === 'string') {
+                list = list.split(',').map(x => x.trim()).filter(x => x);
+            }
+            if (Array.isArray(list)) {
+                list.forEach(a => {
+                    if (a) allergyCounts[a] = (allergyCounts[a] || 0) + 1;
+                });
+            }
+        });
+
+        const topAllergies = Object.entries(allergyCounts)
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count);
+
+        // Feedback type breakdown
+        const feedbackTypeCounts = {};
+        feedbacks.forEach(f => {
+            const t = f.type || 'general';
+            feedbackTypeCounts[t] = (feedbackTypeCounts[t] || 0) + 1;
+        });
+
+        res.json({
+            metrics: {
+                totalMatches,
+                unanimousMatches,
+                fallbackMatches,
+                unanimousRate,
+                totalRestaurants: restaurants.length,
+                totalUsers: (users || []).length,
+                totalFeedbacks: feedbacks.length
+            },
+            recentMatches: history.slice(0, 100),
+            topAllergies,
+            feedbackTypeCounts
+        });
+    } catch (err) {
+        console.error("Error generating reports summary:", err);
+        res.status(500).json({ message: "เกิดข้อผิดพลาดในการดึงข้อมูลรายงาน" });
+    }
+});
+
+app.get('/api/admin/reports/export/:type', async (req, res) => {
+    if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
+
+    const exportType = req.params.type;
+    const nowStr = new Date().toISOString().slice(0, 10);
+    let filename = `GINDER_Report_${nowStr}.csv`;
+    let rows = [];
+
+    try {
+        if (exportType === 'matches') {
+            filename = `GINDER_Match_History_${nowStr}.csv`;
+            const history = await getHistory();
+            rows.push(['รหัสประวัติ', 'รหัสห้อง', 'ชื่อร้านอาหาร', 'คะแนนรีวิว', 'ราคาเฉลี่ยต่อคน', 'หมวดหมู่อาหาร', 'ที่อยู่ร้าน', 'รายชื่อผู้ร่วมโต๊ะ', 'ประเภทผลลัพธ์', 'เหตุผลประกอบ', 'วันที่-เวลาที่แมตช์']);
+            history.forEach(h => {
+                const rest = h.restaurant || {};
+                const typeStr = Array.isArray(rest.type) ? rest.type.join(', ') : (rest.type || '');
+                const membersStr = Array.isArray(h.participants) ? h.participants.join(', ') : '';
+                const matchType = h.isFallback ? 'ตัวสำรอง (Fallback)' : 'มติเอกฉันท์ 100%';
+                rows.push([
+                    h.id || '',
+                    h.roomId || '',
+                    rest.name || '',
+                    rest.rating || '',
+                    rest.avgPrice || '',
+                    typeStr,
+                    rest.address || '',
+                    membersStr,
+                    matchType,
+                    h.fallbackReason || '',
+                    h.matchedAt || ''
+                ]);
+            });
+        } else if (exportType === 'restaurants') {
+            filename = `GINDER_Restaurants_${nowStr}.csv`;
+            const restaurants = await getAllRestaurants();
+            rows.push(['รหัสร้าน', 'ชื่อร้านอาหาร', 'คะแนนรีวิว', 'ระดับราคา', 'ราคาเฉลี่ย (บาท)', 'ระยะทาง (กม.)', 'หมวดหมู่อาหาร', 'สารก่อภูมิแพ้', 'ที่อยู่', 'ละติจูด', 'ลองจิจูด']);
+            restaurants.forEach(r => {
+                const typeStr = Array.isArray(r.type) ? r.type.join(', ') : (r.type || '');
+                const allergenStr = Array.isArray(r.allergens) ? r.allergens.join(', ') : (r.allergens || '');
+                rows.push([
+                    r.id || '',
+                    r.name || '',
+                    r.rating || '',
+                    r.priceRange || '',
+                    r.avgPrice || '',
+                    r.distance || '',
+                    typeStr,
+                    allergenStr,
+                    r.address || '',
+                    r.latitude || '',
+                    r.longitude || ''
+                ]);
+            });
+        } else if (exportType === 'feedbacks') {
+            filename = `GINDER_Feedbacks_${nowStr}.csv`;
+            const feedbacks = await getFeedback();
+            rows.push(['รหัสฟีดแบ็ก', 'ประเภท', 'หัวข้อ', 'รายละเอียด', 'ข้อมูลติดต่อ', 'วันที่ส่ง']);
+            feedbacks.forEach(f => {
+                rows.push([
+                    f.id || '',
+                    f.type || '',
+                    f.title || '',
+                    f.description || '',
+                    f.contact || f.contactInfo || '',
+                    f.createdAt || ''
+                ]);
+            });
+        } else if (exportType === 'users') {
+            filename = `GINDER_Users_${nowStr}.csv`;
+            const { data: users } = await supabase.from('users').select('id, username, display_name, role, allergies, created_at');
+            rows.push(['รหัสผู้ใช้ (UUID)', 'ชื่อผู้ใช้ (Username)', 'ชื่อแสดงผล', 'สิทธิ์ (Role)', 'สารก่อภูมิแพ้', 'วันที่สมัคร']);
+            (users || []).forEach(u => {
+                const allergyStr = Array.isArray(u.allergies) ? u.allergies.join(', ') : (u.allergies || '');
+                rows.push([
+                    u.id || '',
+                    u.username || '',
+                    u.display_name || '',
+                    u.role || '',
+                    allergyStr,
+                    u.created_at || ''
+                ]);
+            });
+        } else {
+            return res.status(400).json({ message: "ประเภทรายงานไม่ถูกต้อง" });
+        }
+
+        // Build CSV string with UTF-8 BOM so Excel on Windows renders Thai correctly
+        const csvContent = '\uFEFF' + rows.map(r => r.map(csvEscape).join(',')).join('\r\n');
+
+        res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.send(csvContent);
+    } catch (err) {
+        console.error("Error exporting report CSV:", err);
+        res.status(500).json({ message: "เกิดข้อผิดพลาดในการสร้างไฟล์รายงาน" });
+    }
+});
+
 function recordMatchHistory(room, restaurant, isFallback) {
     if (!room || !restaurant) return;
     const historyItem = {
