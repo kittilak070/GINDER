@@ -209,7 +209,7 @@ const soundFx = (() => {
     };
 })();
 
-// --- PARTICLE BURST GENERATOR (GENTLE MICRO-INTERACTION) ---
+// --- PARTICLE BURST GENERATOR ---
 function spawnParticleBurst(x, y, type = 'heart') {
     let container = document.querySelector('.particle-burst-container');
     if (!container) {
@@ -218,30 +218,30 @@ function spawnParticleBurst(x, y, type = 'heart') {
         document.body.appendChild(container);
     }
 
-    const icons = type === 'heart' ? ['❤️', '✨'] : ['✨', '⭐'];
-    const count = 3; // Reduced from 7 to 3 subtle particles
+    const icons = type === 'heart' ? ['❤️', '💖', '✨', '🔥'] : ['✨', '⭐', '🌟'];
+    const count = 7;
 
     for (let i = 0; i < count; i++) {
         const p = document.createElement('div');
         p.className = 'micro-particle';
         p.innerText = icons[Math.floor(Math.random() * icons.length)];
-        p.style.fontSize = `${Math.random() * 4 + 11}px`;
+        p.style.fontSize = `${Math.random() * 8 + 14}px`;
         p.style.left = `${x}px`;
         p.style.top = `${y}px`;
 
         // Radial dispersion with slight upward bias
-        const angle = (Math.PI * 2 * i) / count + (Math.random() * 0.3 - 0.15);
-        const distance = Math.random() * 30 + 15;
+        const angle = (Math.PI * 2 * i) / count + (Math.random() * 0.4 - 0.2);
+        const distance = Math.random() * 65 + 35;
         const dx = Math.cos(angle) * distance;
-        const dy = Math.sin(angle) * distance - 20;
-        const rot = (Math.random() * 40 - 20) + 'deg';
+        const dy = Math.sin(angle) * distance - 35;
+        const rot = (Math.random() * 60 - 30) + 'deg';
 
         p.style.setProperty('--dx', `${dx}px`);
         p.style.setProperty('--dy', `${dy}px`);
         p.style.setProperty('--rot', rot);
 
         container.appendChild(p);
-        setTimeout(() => p.remove(), 500);
+        setTimeout(() => p.remove(), 900);
     }
 }
 
@@ -1117,17 +1117,19 @@ socket.on('match_found', (data) => {
 
     // Wait 350ms for the swipe animation to finish before showing the results screen
     setTimeout(() => {
-        // Play subtle celebratory confetti burst
+        // Play confetti explosion!
         triggerConfettiExplosion();
 
         // Play celebratory sound & vibrations
         soundFx.playMatch();
-        if (navigator.vibrate) navigator.vibrate([40, 60]);
+        if (navigator.vibrate) navigator.vibrate([50, 70, 50, 70, 100]);
 
-        // Single gentle particle puff at center
+        // Particle bursts from center of result screen
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight * 0.35;
         spawnParticleBurst(centerX, centerY, 'heart');
+        setTimeout(() => spawnParticleBurst(centerX - 60, centerY + 25, 'star'), 180);
+        setTimeout(() => spawnParticleBurst(centerX + 60, centerY + 25, 'star'), 360);
 
         showView('result');
 
@@ -1499,22 +1501,32 @@ function updateTimerUI(timeLeft) {
     }
 }
 
-// --- CELEBRATORY CONFETTI (SUBTLE & REFINED) ---
+// --- CELEBRATORY CONFETTI ---
 function triggerConfettiExplosion() {
     if (typeof confetti !== 'function') return;
+    const duration = 3 * 1000;
+    const end = Date.now() + duration;
 
-    // Single graceful, soft burst centered on the result area
-    confetti({
-        particleCount: 24,
-        spread: 55,
-        origin: { y: 0.62 },
-        colors: ['#FF3377', '#EE7816', '#3284FF', '#00FF26'],
-        ticks: 100,
-        gravity: 0.95,
-        scalar: 0.8,
-        shapes: ['circle', 'square'],
-        disableForReducedMotion: true
-    });
+    (function frame() {
+        confetti({
+            particleCount: 3,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ['#FF3377', '#EE7816', '#00FF26']
+        });
+        confetti({
+            particleCount: 3,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ['#FF3377', '#EE7816', '#00FF26']
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    }());
 }
 
 // --- QR SCANNER FUNCTIONALITY ---

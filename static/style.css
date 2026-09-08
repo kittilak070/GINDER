@@ -67,14 +67,14 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Background Glow Effects (Subtle Ambiance) */
+/* Background Glow Effects */
 .bg-glow {
     position: fixed;
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.12;
+    filter: blur(100px);
+    opacity: 0.25;
     z-index: -1;
     pointer-events: none;
 }
@@ -83,25 +83,25 @@ body {
     background-color: var(--accent-pink);
     top: -50px;
     left: -50px;
-    animation: pulse-glow 12s infinite alternate;
+    animation: pulse-glow 8s infinite alternate;
 }
 
 .bg-glow-2 {
     background-color: var(--accent-purple);
     bottom: -50px;
     right: -50px;
-    animation: pulse-glow 14s infinite alternate-reverse;
+    animation: pulse-glow 10s infinite alternate-reverse;
 }
 
 @keyframes pulse-glow {
     0% {
         transform: scale(1) translate(0, 0);
-        opacity: 0.08;
+        opacity: 0.2;
     }
 
     100% {
-        transform: scale(1.15) translate(15px, 15px);
-        opacity: 0.15;
+        transform: scale(1.4) translate(30px, 30px);
+        opacity: 0.3;
     }
 }
 
@@ -2058,25 +2058,29 @@ body {
 
 @keyframes micro-particle-anim {
     0% {
-        transform: translate3d(0, 0, 0) scale(0.4) rotate(0deg);
-        opacity: 0.85;
+        transform: translate3d(0, 0, 0) scale(0.3) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
     }
     100% {
-        transform: translate3d(var(--dx), var(--dy), 0) scale(0.95) rotate(var(--rot));
+        transform: translate3d(var(--dx), var(--dy), 0) scale(1.15) rotate(var(--rot));
         opacity: 0;
     }
 }
 
-/* Refined Subtle Spring Animations */
+/* Dynamic Spring Animations */
 @keyframes pill-pop {
-    0% { transform: scale(0.97); }
-    50% { transform: scale(1.03); }
+    0% { transform: scale(0.92); }
+    50% { transform: scale(1.08); }
     100% { transform: scale(1); }
 }
 
 @keyframes btn-spring-bounce {
-    0% { transform: scale(0.95); }
-    50% { transform: scale(1.03); }
+    0% { transform: scale(0.85); }
+    40% { transform: scale(1.15); }
+    70% { transform: scale(0.95); }
     100% { transform: scale(1); }
 }
 
@@ -2091,15 +2095,15 @@ body {
 
 @keyframes ring-pulse {
     0% {
-        transform: translate(-50%, -50%) scale(0.98);
-        opacity: 0.45;
+        transform: translate(-50%, -50%) scale(0.95);
+        opacity: 0.85;
     }
     70% {
-        transform: translate(-50%, -50%) scale(1.18, 1.22);
+        transform: translate(-50%, -50%) scale(1.5, 1.7);
         opacity: 0;
     }
     100% {
-        transform: translate(-50%, -50%) scale(1.18, 1.22);
+        transform: translate(-50%, -50%) scale(1.5, 1.7);
         opacity: 0;
     }
 }
