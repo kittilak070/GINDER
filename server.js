@@ -50,11 +50,12 @@ function calculateHaversine(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-// History & Feedback File Storage Helpers
+// History & Feedback Storage Helpers (Dual-storage: Supabase with Local JSON fallback)
 const HISTORY_FILE = path.join(__dirname, 'data', 'history.json');
 const FEEDBACK_FILE = path.join(__dirname, 'data', 'feedback.json');
+const USER_RECOVERY_FILE = path.join(__dirname, 'data', 'user_recovery.json');
 
-function getHistory() {
+function getLocalHistory() {
     try {
         if (!fs.existsSync(HISTORY_FILE)) return [];
         return JSON.parse(fs.readFileSync(HISTORY_FILE, 'utf8'));
@@ -63,20 +64,57 @@ function getHistory() {
     }
 }
 
-function saveHistoryItem(item) {
+async function getHistory() {
     try {
-        const list = getHistory();
+        const { data, error } = await supabase
+            .from('match_history')
+            .select('*')
+            .order('matched_at', { ascending: false })
+            .limit(200);
+        if (!error && data && data.length > 0) {
+            return data.map(item => ({
+                id: item.id,
+                roomId: item.room_id,
+                restaurant: item.restaurant,
+                participants: item.participants,
+                isFallback: !!item.is_fallback,
+                fallbackReason: item.fallback_reason,
+                matchedAt: item.matched_at
+            }));
+        }
+    } catch (e) {}
+    return getLocalHistory();
+}
+
+async function saveHistoryItem(item) {
+    // 1. Local backup
+    try {
+        const list = getLocalHistory();
         list.unshift(item);
-        if (list.length > 200) list.pop(); // keep last 200 items
+        if (list.length > 200) list.pop();
         const dir = path.dirname(HISTORY_FILE);
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(HISTORY_FILE, JSON.stringify(list, null, 2), 'utf8');
     } catch (e) {
-        console.error("Error saving history item:", e);
+        console.error("Error saving local history:", e);
     }
+
+    // 2. Supabase storage
+    try {
+        await supabase.from('match_history').upsert({
+            id: item.id || ('hist_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4)),
+            room_id: item.roomId || null,
+            restaurant_id: item.restaurant ? item.restaurant.id : null,
+            restaurant: item.restaurant || {},
+            participants: item.participants || [],
+            is_fallback: !!item.isFallback,
+            fallback_reason: item.fallbackReason || null,
+            matched_at: item.matchedAt || new Date().toISOString()
+        });
+    } catch (e) {}
 }
 
-function getFeedback() {
+function getLocalFeedback() {
     try {
         if (!fs.existsSync(FEEDBACK_FILE)) return [];
         return JSON.parse(fs.readFileSync(FEEDBACK_FILE, 'utf8'));
@@ -85,33 +123,69 @@ function getFeedback() {
     }
 }
 
-function saveFeedback(item) {
+async function getFeedback() {
     try {
-        const list = getFeedback();
+        const { data, error } = await supabase
+            .from('feedbacks')
+            .select('*')
+            .order('created_at', { ascending: false });
+        if (!error && data && data.length > 0) {
+            return data.map(item => ({
+                id: item.id,
+                type: item.type,
+                title: item.title,
+                description: item.description,
+                contact: item.contact_info,
+                contactInfo: item.contact_info,
+                createdAt: item.created_at
+            }));
+        }
+    } catch (e) {}
+    return getLocalFeedback();
+}
+
+async function saveFeedback(item) {
+    // 1. Local backup
+    try {
+        const list = getLocalFeedback();
         list.unshift(item);
         const dir = path.dirname(FEEDBACK_FILE);
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(FEEDBACK_FILE, JSON.stringify(list, null, 2), 'utf8');
     } catch (e) {
-        console.error("Error saving feedback:", e);
+        console.error("Error saving local feedback:", e);
     }
+
+    // 2. Supabase storage
+    try {
+        await supabase.from('feedbacks').upsert({
+            id: item.id || ('fb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4)),
+            type: item.type || 'general',
+            title: item.title || 'ข้อเสนอแนะทั่วไป',
+            description: item.description || '',
+            contact_info: item.contactInfo || item.contact || '',
+            created_at: item.createdAt || new Date().toISOString()
+        });
+    } catch (e) {}
 }
 
-function deleteFeedback(id) {
+async function deleteFeedback(id) {
+    // 1. Local deletion
     try {
-        let list = getFeedback();
+        let list = getLocalFeedback();
         list = list.filter(x => String(x.id) !== String(id));
         fs.writeFileSync(FEEDBACK_FILE, JSON.stringify(list, null, 2), 'utf8');
-        return true;
-    } catch (e) {
-        return false;
-    }
+    } catch (e) {}
+
+    // 2. Supabase deletion
+    try {
+        await supabase.from('feedbacks').delete().eq('id', id);
+    } catch (e) {}
+    return true;
 }
 
-// User Security & Recovery File Storage Helpers
-const USER_RECOVERY_FILE = path.join(__dirname, 'data', 'user_recovery.json');
-
-function getUserRecoveryMap() {
+// User Security & Recovery Storage Helpers (Supabase + Local Fallback)
+function getLocalUserRecoveryMap() {
     try {
         if (!fs.existsSync(USER_RECOVERY_FILE)) return {};
         return JSON.parse(fs.readFileSync(USER_RECOVERY_FILE, 'utf8'));
@@ -120,18 +194,74 @@ function getUserRecoveryMap() {
     }
 }
 
-function saveUserRecoveryRecord(username, record) {
+async function getUserRecoveryRecord(username) {
+    const key = (username || '').toLowerCase().trim();
+    if (!key) return {};
+
+    // 1. Try Supabase
     try {
-        const map = getUserRecoveryMap();
-        const key = (username || '').toLowerCase().trim();
-        if (!key) return;
+        const { data, error } = await supabase
+            .from('user_security')
+            .select('*')
+            .ilike('username', key)
+            .maybeSingle();
+        if (!error && data) {
+            return {
+                email: data.recovery_email,
+                securityQuestion: data.security_question,
+                securityAnswerHash: data.security_answer_hash,
+                securityAnswerSalt: data.security_answer_salt,
+                recoveryPinHash: data.recovery_pin_hash,
+                recoveryPinSalt: data.recovery_pin_salt,
+                updatedAt: data.updated_at
+            };
+        }
+    } catch (e) {}
+
+    // 2. Fallback to local
+    const map = getLocalUserRecoveryMap();
+    return map[key] || {};
+}
+
+async function saveUserRecoveryRecord(username, record) {
+    const key = (username || '').toLowerCase().trim();
+    if (!key) return;
+
+    // 1. Local backup
+    try {
+        const map = getLocalUserRecoveryMap();
         map[key] = { ...(map[key] || {}), ...record, updatedAt: new Date().toISOString() };
         const dir = path.dirname(USER_RECOVERY_FILE);
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(USER_RECOVERY_FILE, JSON.stringify(map, null, 2), 'utf8');
     } catch (e) {
-        console.error("Error saving user recovery record:", e);
+        console.error("Error saving local user recovery:", e);
     }
+
+    // 2. Supabase storage
+    try {
+        const { data: user } = await supabase
+            .from('users')
+            .select('id, username')
+            .ilike('username', key)
+            .maybeSingle();
+
+        if (user) {
+            const payload = {
+                user_id: user.id,
+                username: user.username,
+                updated_at: new Date().toISOString()
+            };
+            if (record.email !== undefined) payload.recovery_email = record.email;
+            if (record.securityQuestion !== undefined) payload.security_question = record.securityQuestion;
+            if (record.securityAnswerHash !== undefined) payload.security_answer_hash = record.securityAnswerHash;
+            if (record.securityAnswerSalt !== undefined) payload.security_answer_salt = record.securityAnswerSalt;
+            if (record.recoveryPinHash !== undefined) payload.recovery_pin_hash = record.recoveryPinHash;
+            if (record.recoveryPinSalt !== undefined) payload.recovery_pin_salt = record.recoveryPinSalt;
+
+            await supabase.from('user_security').upsert(payload);
+        }
+    } catch (e) {}
 }
 
 function hashSecurityValue(val, salt) {
@@ -381,7 +511,7 @@ app.post('/api/signup', async (req, res) => {
             recoveryData.recoveryPinHash = h.hash;
             recoveryData.recoveryPinSalt = h.salt;
         }
-        saveUserRecoveryRecord(username, recoveryData);
+        await saveUserRecoveryRecord(username, recoveryData);
     }
     
     req.session.userId = data.id;
@@ -579,8 +709,7 @@ app.get('/api/user/security', async (req, res) => {
     const user = await findUserById(req.session.userId);
     if (!user) return res.status(404).json({ message: "ไม่พบผู้ใช้" });
 
-    const recoveryMap = getUserRecoveryMap();
-    const rec = recoveryMap[user.username.toLowerCase()] || {};
+    const rec = await getUserRecoveryRecord(user.username);
 
     res.json({
         email: rec.email || '',
@@ -616,7 +745,7 @@ app.put('/api/user/security', async (req, res) => {
         updateData.recoveryPinSalt = hashedPin.salt;
     }
 
-    saveUserRecoveryRecord(user.username, updateData);
+    await saveUserRecoveryRecord(user.username, updateData);
     res.json({ success: true, message: "บันทึกข้อมูลความปลอดภัยเรียบร้อยแล้ว" });
 });
 
@@ -632,8 +761,7 @@ app.post('/api/auth/forgot/check-user', async (req, res) => {
         return res.status(404).json({ message: "ไม่พบชื่อผู้ใช้นี้ในระบบ" });
     }
 
-    const recoveryMap = getUserRecoveryMap();
-    const rec = recoveryMap[username] || {};
+    const rec = await getUserRecoveryRecord(user.username);
 
     res.json({
         success: true,
@@ -662,9 +790,8 @@ app.post('/api/auth/forgot/verify-question', async (req, res) => {
     const user = await findUserByUsername(username);
     if (!user) return res.status(404).json({ message: "ไม่พบผู้ใช้นี้ในระบบ" });
 
-    const recoveryMap = getUserRecoveryMap();
-    const rec = recoveryMap[username];
-    if (!rec) {
+    const rec = await getUserRecoveryRecord(user.username);
+    if (!rec || (!rec.securityAnswerHash && !rec.recoveryPinHash)) {
         return res.status(400).json({ message: "บัญชีนี้ยังไม่ได้ตั้งค่าคำถามลับหรือ PIN กู้คืน กรุณาใช้วิธีอื่นหรือติดต่อแอดมิน" });
     }
 
@@ -710,17 +837,40 @@ app.post('/api/auth/forgot/send-email-otp', async (req, res) => {
     const input = (req.body.username || req.body.email || '').trim().toLowerCase();
     if (!input) return res.status(400).json({ message: "กรุณาระบุชื่อผู้ใช้หรืออีเมล" });
 
-    // Look up user
+    // Look up user by username or recovery email
     let user = await findUserByUsername(input);
-    const recoveryMap = getUserRecoveryMap();
-    let rec = user ? recoveryMap[user.username] : null;
+    let rec = null;
+    if (user) {
+        rec = await getUserRecoveryRecord(user.username);
+    } else {
+        // Try looking up by email in Supabase user_security
+        try {
+            const { data } = await supabase
+                .from('user_security')
+                .select('*')
+                .ilike('recovery_email', input)
+                .maybeSingle();
+            if (data) {
+                user = await findUserByUsername(data.username);
+                rec = {
+                    email: data.recovery_email,
+                    securityQuestion: data.security_question,
+                    securityAnswerHash: data.security_answer_hash,
+                    securityAnswerSalt: data.security_answer_salt,
+                    recoveryPinHash: data.recovery_pin_hash,
+                    recoveryPinSalt: data.recovery_pin_salt,
+                    updatedAt: data.updated_at
+                };
+            }
+        } catch (e) {}
 
-    if (!rec) {
-        // Search by email in recoveryMap
-        const found = Object.entries(recoveryMap).find(([_, r]) => r.email && r.email.toLowerCase() === input);
-        if (found) {
-            rec = found[1];
-            user = await findUserByUsername(found[0]);
+        if (!rec) {
+            const recoveryMap = getLocalUserRecoveryMap();
+            const found = Object.entries(recoveryMap).find(([_, r]) => r.email && r.email.toLowerCase() === input);
+            if (found) {
+                rec = found[1];
+                user = await findUserByUsername(found[0]);
+            }
         }
     }
 
@@ -802,8 +952,8 @@ app.post('/api/auth/forgot/verify-otp', async (req, res) => {
     res.json({ success: true, message: "ตั้งรหัสผ่านใหม่สำเร็จแล้ว สามารถเข้าสู่ระบบได้ทันที" });
 });
 
-app.get('/api/user/history', (req, res) => {
-    const history = getHistory();
+app.get('/api/user/history', async (req, res) => {
+    const history = await getHistory();
     res.json(history.slice(0, 50));
 });
 
@@ -860,8 +1010,8 @@ app.get('/api/admin/analytics', async (req, res) => {
 
     const allRestaurants = await getAllRestaurants();
     const { data: users } = await supabase.from('users').select('id, role');
-    const history = getHistory();
-    const feedbacks = getFeedback();
+    const history = await getHistory();
+    const feedbacks = await getFeedback();
 
     const totalUsers = users ? users.length : 0;
     const adminCount = users ? users.filter(u => u.role === 'admin').length : 0;
@@ -909,7 +1059,7 @@ app.get('/api/admin/analytics', async (req, res) => {
 });
 
 // --- FEEDBACK & SUGGESTIONS ROUTES ---
-app.post('/api/feedback', (req, res) => {
+app.post('/api/feedback', async (req, res) => {
     const { type, title, description, contactInfo } = req.body;
     if (!title || !description) {
         return res.status(400).json({ message: "กรุณากรอกหัวข้อและรายละเอียดข้อความ" });
@@ -922,18 +1072,18 @@ app.post('/api/feedback', (req, res) => {
         contactInfo: (contactInfo || '').trim(),
         createdAt: new Date().toISOString()
     };
-    saveFeedback(item);
+    await saveFeedback(item);
     res.json({ success: true, message: "ขอบคุณสำหรับข้อเสนอแนะของคุณ ข้อมูลถูกส่งถึงผู้ดูแลเรียบร้อยแล้ว!" });
 });
 
 app.get('/api/admin/feedback', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
-    res.json(getFeedback());
+    res.json(await getFeedback());
 });
 
 app.delete('/api/admin/feedback/:id', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
-    deleteFeedback(req.params.id);
+    await deleteFeedback(req.params.id);
     res.json({ success: true });
 });
 
