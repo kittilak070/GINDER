@@ -62,20 +62,34 @@ const soundFx = (() => {
         return audioCtx;
     }
 
-    // Unlock AudioContext on first user gesture
+    // Comprehensive mobile audio unlock for iOS Safari and Android Chrome
     const unlockAudio = () => {
-        getContext();
-        window.removeEventListener('pointerdown', unlockAudio);
-        window.removeEventListener('keydown', unlockAudio);
+        const ctx = getContext();
+        if (ctx) {
+            if (ctx.state === 'suspended') {
+                ctx.resume();
+            }
+            // Warm up mobile speaker pipeline with a 1-sample buffer (iOS Safari standard)
+            try {
+                const buffer = ctx.createBuffer(1, 1, 22050);
+                const source = ctx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(ctx.destination);
+                source.start(0);
+            } catch (e) {}
+        }
     };
-    window.addEventListener('pointerdown', unlockAudio);
-    window.addEventListener('keydown', unlockAudio);
 
-    function playTone(freq, type, duration, gainStart = 0.15, gainEnd = 0.001) {
+    ['touchstart', 'touchend', 'click', 'pointerdown', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, unlockAudio, { passive: true });
+    });
+
+    function emitTone(freq, type, duration, gainStart = 0.35, gainEnd = 0.001) {
         if (isMuted) return;
         const ctx = getContext();
         if (!ctx) return;
         try {
+            if (ctx.state === 'suspended') ctx.resume();
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = type;
@@ -96,6 +110,10 @@ const soundFx = (() => {
         toggleMute() {
             isMuted = !isMuted;
             localStorage.setItem('ginder_sound_muted', isMuted);
+            if (!isMuted) {
+                unlockAudio();
+                this.playPop();
+            }
             return isMuted;
         },
         playPop() {
@@ -103,17 +121,18 @@ const soundFx = (() => {
             const ctx = getContext();
             if (!ctx) return;
             try {
+                if (ctx.state === 'suspended') ctx.resume();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(540, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(260, ctx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.12, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                osc.frequency.setValueAtTime(560, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(280, ctx.currentTime + 0.09);
+                gain.gain.setValueAtTime(0.35, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.09);
                 osc.connect(gain);
                 gain.connect(ctx.destination);
                 osc.start();
-                osc.stop(ctx.currentTime + 0.08);
+                osc.stop(ctx.currentTime + 0.09);
             } catch (e) {}
         },
         playLike() {
@@ -121,6 +140,7 @@ const soundFx = (() => {
             const ctx = getContext();
             if (!ctx) return;
             try {
+                if (ctx.state === 'suspended') ctx.resume();
                 // Harmonic two-note chime (C5 & E5) with sparkle
                 [523.25, 659.25].forEach((freq, idx) => {
                     const osc = ctx.createOscillator();
@@ -128,7 +148,7 @@ const soundFx = (() => {
                     osc.type = 'triangle';
                     const startTime = ctx.currentTime + (idx * 0.035);
                     osc.frequency.setValueAtTime(freq, startTime);
-                    gain.gain.setValueAtTime(0.12, startTime);
+                    gain.gain.setValueAtTime(0.32, startTime);
                     gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.22);
                     osc.connect(gain);
                     gain.connect(ctx.destination);
@@ -142,12 +162,13 @@ const soundFx = (() => {
             const ctx = getContext();
             if (!ctx) return;
             try {
+                if (ctx.state === 'suspended') ctx.resume();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(280, ctx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(130, ctx.currentTime + 0.12);
-                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.setValueAtTime(0.30, ctx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
                 osc.connect(gain);
                 gain.connect(ctx.destination);
@@ -160,6 +181,7 @@ const soundFx = (() => {
             const ctx = getContext();
             if (!ctx) return;
             try {
+                if (ctx.state === 'suspended') ctx.resume();
                 // Triumphant Fanfare Arpeggio: C5 -> E5 -> G5 -> C6
                 const notes = [523.25, 659.25, 783.99, 1046.50];
                 notes.forEach((freq, idx) => {
@@ -169,7 +191,7 @@ const soundFx = (() => {
                     const startTime = ctx.currentTime + (idx * 0.08);
                     const dur = idx === 3 ? 0.45 : 0.18;
                     osc.frequency.setValueAtTime(freq, startTime);
-                    gain.gain.setValueAtTime(0.15, startTime);
+                    gain.gain.setValueAtTime(0.38, startTime);
                     gain.gain.exponentialRampToValueAtTime(0.001, startTime + dur);
                     osc.connect(gain);
                     gain.connect(ctx.destination);
@@ -178,8 +200,11 @@ const soundFx = (() => {
                 });
             } catch (e) {}
         },
+        playTone(freq, type, duration, gainStart, gainEnd) {
+            emitTone(freq, type, duration, gainStart, gainEnd);
+        },
         playCopy() {
-            playTone(880, 'sine', 0.06, 0.1, 0.001);
+            emitTone(880, 'sine', 0.08, 0.35, 0.001);
         }
     };
 })();
