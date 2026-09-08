@@ -29,13 +29,24 @@
     <div class="bg-glow bg-glow-2"></div>
 
     <div class="app-container">
+        <!-- Desktop Mobile Speaker / Dynamic Island -->
+        <div class="phone-dynamic-island">
+            <span class="phone-camera-dot"></span>
+        </div>
+
         <!-- HEADER -->
         <header class="app-header">
             <div class="logo">
                 <span class="logo-icon"><i class="fa-solid fa-fire-flame-curved"></i></span>
                 <span class="logo-text">GINDER</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 0.8rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <button id="btn-desktop-mobile-qr" class="btn btn-icon-glass" title="เปิดบนโทรศัพท์มือถือ (สแกน QR)" aria-label="เปิดบนมือถือ" type="button">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </button>
+                <button id="btn-sound-toggle" class="btn btn-icon-glass" title="เปิด/ปิดเสียงเอฟเฟกต์" aria-label="สลับเสียงเอฟเฟกต์" type="button">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
                 <div id="room-badge" class="room-badge hidden">
                     <i class="fa-solid fa-users"></i> ห้อง: <span id="badge-room-id">0000</span>
                 </div>
@@ -175,12 +186,14 @@
             <!-- VIEW 1: LANDING SCREEN -->
             <section id="view-landing" class="view-section">
                 <div class="hero-section">
-                    <h1 class="hero-title animate-gradient">วันนี้กินอะไรดี?</h1>
+                    <h1 class="hero-title animate-gradient">
+                        วันนี้กินอะไรดี? <span id="hero-food-badge" class="hero-food-badge" role="button" tabindex="0" title="แตะเพื่อเปลี่ยนเมนูอาหาร">🍜</span>
+                    </h1>
                     <p class="hero-subtitle">เบื่อไหมกับการเลือกของกินไม่ลงตัว? ชวนกลุ่มเพื่อนมา "ปัดหาร้านเด็ด"
                         ที่มติเอกฉันท์กัน!</p>
                 </div>
                 <div class="menu-actions">
-                    <button id="btn-goto-create" class="btn btn-primary btn-lg">
+                    <button id="btn-goto-create" class="btn btn-primary btn-lg btn-glow-pulse">
                         <i class="fa-solid fa-plus-circle"></i> สร้างกลุ่มใหม่
                     </button>
 
@@ -466,8 +479,14 @@
             <!-- VIEW 6: RESULT / MATCH SCREEN -->
             <section id="view-result" class="view-section">
                 <div class="result-header">
-                    <div class="match-stamp animate-bounce" id="result-stamp">
-                        <i class="fa-solid fa-heart"></i> MATCHED!
+                    <div class="match-stamp-wrapper">
+                        <div class="match-stamp animate-bounce" id="result-stamp">
+                            <i class="fa-solid fa-heart"></i> MATCHED!
+                        </div>
+                        <div class="match-ring-wave"></div>
+                    </div>
+                    <div class="match-consensus-badge" id="match-consensus-badge">
+                        <i class="fa-solid fa-fire text-accent"></i> <span id="match-consensus-percent">100</span>% มติเอกฉันท์
                     </div>
                     <p id="result-subtitle" class="result-subtitle">ทุกคนปัดขวาใจตรงกันที่ร้านนี้!</p>
                 </div>
@@ -486,6 +505,39 @@
                 </div>
             </section>
         </main>
+    </div>
+
+    <!-- MOBILE APP ACCESS MODAL -->
+    <div id="mobile-app-modal" class="qr-modal hidden">
+        <div class="qr-modal-content glass" style="max-width: 340px; text-align: center;">
+            <div class="qr-modal-header"
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem; margin-bottom: 0.8rem;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.4rem;">
+                    <i class="fa-solid fa-mobile-screen-button text-accent"></i> <span>เปิดใช้งานบนมือถือ</span>
+                </h3>
+                <button id="btn-close-mobile-qr"
+                    style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; padding: 0.2rem;"><i
+                        class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="qr-container" style="display: flex; justify-content: center; margin: 0.8rem 0;">
+                <canvas id="mobile-app-qr-canvas" style="border-radius: var(--border-radius-sm); background: #ffffff; padding: 8px; width: 180px; height: 180px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);"></canvas>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem; line-height: 1.4;">
+                เปิดกล้องโทรศัพท์สแกน QR Code ด้านบน<br>เพื่อเข้าใช้งานหน้าแอปบนมือถือทันที
+            </p>
+            <div style="display: flex; gap: 0.4rem; align-items: center; background: rgba(0,0,0,0.3); border-radius: var(--border-radius-sm); padding: 0.4rem 0.6rem; border: 1px solid var(--glass-border);">
+                <input id="mobile-app-url-input" type="text" readonly
+                    style="flex: 1; background: none; border: none; color: var(--text-primary); font-size: 0.75rem; outline: none; font-family: monospace;"
+                    value="http://10.59.0.72:5000">
+                <button id="btn-copy-mobile-url" class="btn btn-secondary btn-sm"
+                    style="padding: 0.3rem 0.6rem; font-size: 0.75rem; border-radius: 4px;" type="button">
+                    <i class="fa-solid fa-copy"></i> คัดลอก
+                </button>
+            </div>
+            <div id="mobile-url-copied-msg" style="color: var(--accent-green); font-size: 0.75rem; margin-top: 0.4rem; min-height: 1.1rem; opacity: 0; transition: opacity 0.2s;">
+                คัดลอกลิงก์สำเร็จแล้ว!
+            </div>
+        </div>
     </div>
 
     <!-- QR SCANNER OVERLAY MODAL -->

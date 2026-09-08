@@ -40,6 +40,203 @@ const badge = {
     id: document.getElementById('badge-room-id')
 };
 
+// --- ZERO-ASSET WEB AUDIO SOUND SYNTHESIZER ---
+const soundFx = (() => {
+    let audioCtx = null;
+    let isMuted = localStorage.getItem('ginder_sound_muted') === 'true';
+
+    function getContext() {
+        try {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        } catch (e) {
+            console.warn('AudioContext initialization deferred:', e);
+        }
+        return audioCtx;
+    }
+
+    // Unlock AudioContext on first user gesture
+    const unlockAudio = () => {
+        getContext();
+        window.removeEventListener('pointerdown', unlockAudio);
+        window.removeEventListener('keydown', unlockAudio);
+    };
+    window.addEventListener('pointerdown', unlockAudio);
+    window.addEventListener('keydown', unlockAudio);
+
+    function playTone(freq, type, duration, gainStart = 0.15, gainEnd = 0.001) {
+        if (isMuted) return;
+        const ctx = getContext();
+        if (!ctx) return;
+        try {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            gain.gain.setValueAtTime(gainStart, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(Math.max(gainEnd, 0.0001), ctx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + duration);
+        } catch (e) {}
+    }
+
+    return {
+        get isMuted() {
+            return isMuted;
+        },
+        toggleMute() {
+            isMuted = !isMuted;
+            localStorage.setItem('ginder_sound_muted', isMuted);
+            return isMuted;
+        },
+        playPop() {
+            if (isMuted) return;
+            const ctx = getContext();
+            if (!ctx) return;
+            try {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(540, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(260, ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.12, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.08);
+            } catch (e) {}
+        },
+        playLike() {
+            if (isMuted) return;
+            const ctx = getContext();
+            if (!ctx) return;
+            try {
+                // Harmonic two-note chime (C5 & E5) with sparkle
+                [523.25, 659.25].forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    const startTime = ctx.currentTime + (idx * 0.035);
+                    osc.frequency.setValueAtTime(freq, startTime);
+                    gain.gain.setValueAtTime(0.12, startTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.22);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(startTime);
+                    osc.stop(startTime + 0.24);
+                });
+            } catch (e) {}
+        },
+        playPass() {
+            if (isMuted) return;
+            const ctx = getContext();
+            if (!ctx) return;
+            try {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(280, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(130, ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.12);
+            } catch (e) {}
+        },
+        playMatch() {
+            if (isMuted) return;
+            const ctx = getContext();
+            if (!ctx) return;
+            try {
+                // Triumphant Fanfare Arpeggio: C5 -> E5 -> G5 -> C6
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    const startTime = ctx.currentTime + (idx * 0.08);
+                    const dur = idx === 3 ? 0.45 : 0.18;
+                    osc.frequency.setValueAtTime(freq, startTime);
+                    gain.gain.setValueAtTime(0.15, startTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, startTime + dur);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(startTime);
+                    osc.stop(startTime + dur);
+                });
+            } catch (e) {}
+        },
+        playCopy() {
+            playTone(880, 'sine', 0.06, 0.1, 0.001);
+        }
+    };
+})();
+
+// --- PARTICLE BURST GENERATOR (GENTLE MICRO-INTERACTION) ---
+function spawnParticleBurst(x, y, type = 'heart') {
+    let container = document.querySelector('.particle-burst-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'particle-burst-container';
+        document.body.appendChild(container);
+    }
+
+    const icons = type === 'heart' ? ['❤️', '✨'] : ['✨', '⭐'];
+    const count = 3; // Reduced from 7 to 3 subtle particles
+
+    for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'micro-particle';
+        p.innerText = icons[Math.floor(Math.random() * icons.length)];
+        p.style.fontSize = `${Math.random() * 4 + 11}px`;
+        p.style.left = `${x}px`;
+        p.style.top = `${y}px`;
+
+        // Radial dispersion with slight upward bias
+        const angle = (Math.PI * 2 * i) / count + (Math.random() * 0.3 - 0.15);
+        const distance = Math.random() * 30 + 15;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance - 20;
+        const rot = (Math.random() * 40 - 20) + 'deg';
+
+        p.style.setProperty('--dx', `${dx}px`);
+        p.style.setProperty('--dy', `${dy}px`);
+        p.style.setProperty('--rot', rot);
+
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 500);
+    }
+}
+
+// --- COUNT-UP NUMBER ANIMATION ---
+function animateCountUp(element, start, end, duration = 1200) {
+    if (!element) return;
+    const startTime = performance.now();
+    function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(start + (end - start) * easeOut);
+        element.innerText = current;
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+    requestAnimationFrame(update);
+}
+
 // --- INITIALIZE & ROUTING ---
 window.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
@@ -140,29 +337,174 @@ function resetApplicationState() {
 
 // --- EVENT LISTENERS ---
 function setupEventListeners() {
-    // Landing View Actions
-    document.getElementById('btn-goto-create').addEventListener('click', () => {
-        showView('preferences');
-    });
+    // Sound Effect Toggle
+    const soundToggleBtn = document.getElementById('btn-sound-toggle');
+    if (soundToggleBtn) {
+        const updateSoundBtnUI = (muted) => {
+            soundToggleBtn.innerHTML = muted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+            soundToggleBtn.classList.toggle('muted', muted);
+            soundToggleBtn.title = muted ? 'เปิดเสียงเอฟเฟกต์' : 'ปิดเสียงเอฟเฟกต์';
+        };
+        updateSoundBtnUI(soundFx.isMuted);
 
-    // Landing View Actions
-    document.getElementById('btn-landing-join').addEventListener('click', () => {
-        const roomId = document.getElementById('landing-room-id').value.trim().toUpperCase();
-        if (!roomId || roomId.length !== 4) {
-            alert('กรุณากรอกรหัสห้อง 4 หลักให้ถูกต้อง');
-            return;
+        soundToggleBtn.addEventListener('click', () => {
+            soundToggleBtn.classList.add('btn-clicked');
+            setTimeout(() => soundToggleBtn.classList.remove('btn-clicked'), 320);
+            const muted = soundFx.toggleMute();
+            updateSoundBtnUI(muted);
+            if (!muted) soundFx.playPop();
+        });
+    }
+
+    // Mobile View QR Modal Toggle
+    const mobileQrBtn = document.getElementById('btn-desktop-mobile-qr');
+    const mobileAppModal = document.getElementById('mobile-app-modal');
+    const closeMobileQrBtn = document.getElementById('btn-close-mobile-qr');
+    const copyMobileUrlBtn = document.getElementById('btn-copy-mobile-url');
+    const mobileUrlInput = document.getElementById('mobile-app-url-input');
+    const mobileCopiedMsg = document.getElementById('mobile-url-copied-msg');
+
+    if (mobileQrBtn && mobileAppModal) {
+        mobileQrBtn.addEventListener('click', () => {
+            soundFx.playPop();
+            mobileAppModal.classList.remove('hidden');
+
+            const targetUrl = state.networkBaseUrl || `${window.location.protocol}//10.59.0.72:${window.location.port || 5000}`;
+            if (mobileUrlInput) mobileUrlInput.value = targetUrl;
+
+            // Render QR Code on canvas
+            const qrCanvas = document.getElementById('mobile-app-qr-canvas');
+            if (qrCanvas && typeof QRious === 'function') {
+                new QRious({
+                    element: qrCanvas,
+                    value: targetUrl,
+                    size: 180,
+                    background: '#ffffff',
+                    foreground: '#100923'
+                });
+            }
+        });
+
+        if (closeMobileQrBtn) {
+            closeMobileQrBtn.addEventListener('click', () => {
+                mobileAppModal.classList.add('hidden');
+            });
         }
-        showView('join');
-        document.getElementById('join-room-id').value = roomId;
-    });
 
-    document.getElementById('btn-landing-scan-qr').addEventListener('click', () => {
-        startQRScanner();
-    });
+        mobileAppModal.addEventListener('click', (e) => {
+            if (e.target === mobileAppModal) {
+                mobileAppModal.classList.add('hidden');
+            }
+        });
 
-    document.getElementById('btn-close-scanner').addEventListener('click', () => {
-        stopQRScanner();
-    });
+        if (copyMobileUrlBtn && mobileUrlInput) {
+            copyMobileUrlBtn.addEventListener('click', () => {
+                soundFx.playCopy();
+                navigator.clipboard.writeText(mobileUrlInput.value).then(() => {
+                    if (mobileCopiedMsg) {
+                        mobileCopiedMsg.style.opacity = '1';
+                        setTimeout(() => { mobileCopiedMsg.style.opacity = '0'; }, 2000);
+                    }
+                }).catch(() => {
+                    mobileUrlInput.select();
+                    document.execCommand('copy');
+                });
+            });
+        }
+    }
+
+    // --- LANDING VIEW MICRO-INTERACTIONS ---
+    const heroFoodBadge = document.getElementById('hero-food-badge');
+    if (heroFoodBadge) {
+        const foods = ['🍜', '🍕', '🍔', '🍣', '🌮', '🍲', '🍨', '🍗', '🍛', '🍱', '🥞', '🥐'];
+        let foodIdx = 0;
+        const handleFoodBadgeClick = () => {
+            foodIdx = (foodIdx + 1) % foods.length;
+            heroFoodBadge.innerText = foods[foodIdx];
+            heroFoodBadge.classList.remove('jelly-pop');
+            void heroFoodBadge.offsetWidth;
+            heroFoodBadge.classList.add('jelly-pop');
+            soundFx.playPop();
+            if (navigator.vibrate) navigator.vibrate(15);
+            const rect = heroFoodBadge.getBoundingClientRect();
+            spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'heart');
+        };
+        heroFoodBadge.addEventListener('click', handleFoodBadgeClick);
+        heroFoodBadge.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleFoodBadgeClick();
+            }
+        });
+    }
+
+    const btnGotoCreate = document.getElementById('btn-goto-create');
+    if (btnGotoCreate) {
+        btnGotoCreate.addEventListener('click', () => {
+            soundFx.playPop();
+            btnGotoCreate.classList.add('btn-clicked');
+            setTimeout(() => btnGotoCreate.classList.remove('btn-clicked'), 300);
+            showView('preferences');
+        });
+    }
+
+    const landingRoomInput = document.getElementById('landing-room-id');
+    const btnLandingJoin = document.getElementById('btn-landing-join');
+
+    if (landingRoomInput) {
+        landingRoomInput.addEventListener('input', () => {
+            landingRoomInput.value = landingRoomInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 4);
+            const len = landingRoomInput.value.length;
+            if (len > 0) {
+                soundFx.playTone(550 + len * 70, 'sine', 0.03, 0.04);
+            }
+            if (len === 4) {
+                landingRoomInput.classList.add('input-ready');
+                if (btnLandingJoin) btnLandingJoin.classList.add('btn-ready');
+                soundFx.playTone(880, 'triangle', 0.06, 0.06);
+                if (navigator.vibrate) navigator.vibrate(20);
+            } else {
+                landingRoomInput.classList.remove('input-ready');
+                if (btnLandingJoin) btnLandingJoin.classList.remove('btn-ready');
+            }
+        });
+    }
+
+    if (btnLandingJoin) {
+        btnLandingJoin.addEventListener('click', () => {
+            const roomId = landingRoomInput ? landingRoomInput.value.trim().toUpperCase() : '';
+            if (!roomId || roomId.length !== 4) {
+                soundFx.playTone(220, 'sawtooth', 0.12, 0.08);
+                if (landingRoomInput) {
+                    landingRoomInput.classList.remove('input-shake');
+                    void landingRoomInput.offsetWidth;
+                    landingRoomInput.classList.add('input-shake');
+                    landingRoomInput.focus();
+                }
+                if (navigator.vibrate) navigator.vibrate([40, 40, 40]);
+                return;
+            }
+            soundFx.playPop();
+            showView('join');
+            const joinRoomIdEl = document.getElementById('join-room-id');
+            if (joinRoomIdEl) joinRoomIdEl.value = roomId;
+        });
+    }
+
+    const btnLandingScanQr = document.getElementById('btn-landing-scan-qr');
+    if (btnLandingScanQr) {
+        btnLandingScanQr.addEventListener('click', () => {
+            soundFx.playPop();
+            startQRScanner();
+        });
+    }
+
+    const btnCloseScanner = document.getElementById('btn-close-scanner');
+    if (btnCloseScanner) {
+        btnCloseScanner.addEventListener('click', () => {
+            stopQRScanner();
+        });
+    }
 
     // Leave Room Handler
     const handleLeaveRoom = () => {
@@ -193,6 +535,9 @@ function setupEventListeners() {
     // Copy Room ID to Clipboard with feedback
     document.getElementById('btn-copy-room-id').addEventListener('click', () => {
         if (!state.roomId) return;
+
+        soundFx.playCopy();
+        if (navigator.vibrate) navigator.vibrate(12);
 
         const copyText = state.roomId;
         const btn = document.getElementById('btn-copy-room-id');
@@ -257,6 +602,8 @@ function setupEventListeners() {
     // Multi-select for Food Types in Preferences
     document.querySelectorAll('.food-type-selector .type-pill').forEach(pill => {
         pill.addEventListener('click', () => {
+            soundFx.playPop();
+            if (navigator.vibrate) navigator.vibrate(8);
             pill.classList.toggle('active');
             updatePreferencesState();
         });
@@ -265,6 +612,8 @@ function setupEventListeners() {
     // Selectors for Budget in Preferences
     document.querySelectorAll('.budget-selector .budget-pill').forEach(pill => {
         pill.addEventListener('click', () => {
+            soundFx.playPop();
+            if (navigator.vibrate) navigator.vibrate(8);
             document.querySelectorAll('.budget-selector .budget-pill').forEach(p => p.classList.remove('active'));
             pill.classList.add('active');
             updatePreferencesState();
@@ -288,8 +637,8 @@ function setupEventListeners() {
         }
 
         // Prepend Host label for consistent display
-        if (!name.startsWith('')) {
-            name = '' + name;
+        if (!name.startsWith('👑 ')) {
+            name = '👑 ' + name;
         }
 
         const allergies = [];
@@ -298,9 +647,18 @@ function setupEventListeners() {
         });
 
         state.name = name;
+        state.isCreator = true;
         state.allergies = allergies;
 
-        socket.emit('create_room', state.preferences);
+        // Clear targets from QR before creating new
+        state.targetRoomId = null;
+        state.autoJoin = false;
+
+        socket.emit('create_room', {
+            hostName: name,
+            preferences: state.preferences,
+            allergies: allergies
+        });
     });
 
     // Join View Actions
@@ -318,9 +676,11 @@ function setupEventListeners() {
         showView('landing');
     });
 
-    // Multi-select for Allergies
-    document.querySelectorAll('.allergy-selector .allergy-pill').forEach(pill => {
+    // Multi-select for Allergies (Join and Host)
+    document.querySelectorAll('.allergy-selector .allergy-pill, .host-allergy-selector .allergy-pill').forEach(pill => {
         pill.addEventListener('click', () => {
+            soundFx.playPop();
+            if (navigator.vibrate) navigator.vibrate(8);
             pill.classList.toggle('active');
         });
     });
@@ -370,14 +730,26 @@ function setupEventListeners() {
 
     // Swipe Control Button Actions
     document.getElementById('btn-swipe-left').addEventListener('click', () => {
+        const btn = document.getElementById('btn-swipe-left');
+        btn.classList.add('btn-clicked');
+        setTimeout(() => btn.classList.remove('btn-clicked'), 320);
         swipeTopCard('left');
     });
 
     document.getElementById('btn-swipe-right').addEventListener('click', () => {
+        const btn = document.getElementById('btn-swipe-right');
+        btn.classList.add('btn-clicked');
+        setTimeout(() => btn.classList.remove('btn-clicked'), 320);
+        const rect = btn.getBoundingClientRect();
+        spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'heart');
         swipeTopCard('right');
     });
 
     document.getElementById('btn-toggle-info').addEventListener('click', () => {
+        const btn = document.getElementById('btn-toggle-info');
+        btn.classList.add('btn-clicked');
+        setTimeout(() => btn.classList.remove('btn-clicked'), 320);
+        soundFx.playPop();
         toggleTopCardDrawer();
     });
 
@@ -720,22 +1092,38 @@ socket.on('match_found', (data) => {
 
     // Wait 350ms for the swipe animation to finish before showing the results screen
     setTimeout(() => {
-        // Play confetti explosion!
+        // Play subtle celebratory confetti burst
         triggerConfettiExplosion();
+
+        // Play celebratory sound & vibrations
+        soundFx.playMatch();
+        if (navigator.vibrate) navigator.vibrate([40, 60]);
+
+        // Single gentle particle puff at center
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight * 0.35;
+        spawnParticleBurst(centerX, centerY, 'heart');
 
         showView('result');
 
         const stamp = document.getElementById('result-stamp');
         const subtitle = document.getElementById('result-subtitle');
+        const badgeEl = document.getElementById('match-consensus-badge');
+        const percentEl = document.getElementById('match-consensus-percent');
 
         if (isFallback) {
             stamp.innerText = "DECIDED! 🎲";
             stamp.className = "match-stamp fallback animate-bounce";
             subtitle.innerHTML = `<i class="fa-solid fa-clock"></i> ${data.reason}`;
+            if (badgeEl) badgeEl.style.display = 'none';
         } else {
             stamp.innerHTML = "<i class='fa-solid fa-heart'></i> MATCHED!";
             stamp.className = "match-stamp animate-bounce";
             subtitle.innerText = "ใจตรงกันเป็นมติเอกฉันท์! ทานให้อร่อยนะครับ";
+            if (badgeEl) {
+                badgeEl.style.display = 'inline-flex';
+                animateCountUp(percentEl, 0, 100, 1200);
+            }
         }
 
         const cardContainer = document.getElementById('matched-restaurant-card');
@@ -995,6 +1383,20 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
     }
     card.classList.add('swiped');
 
+    // Audio & Haptic feedback + Particles
+    if (direction === 'right') {
+        soundFx.playLike();
+        if (navigator.vibrate) navigator.vibrate([15, 30, 20]);
+        // Trigger celebratory particles from card position
+        const rect = card.getBoundingClientRect();
+        const burstX = rect.left + rect.width / 2;
+        const burstY = rect.top + rect.height * 0.35;
+        spawnParticleBurst(burstX, burstY, 'heart');
+    } else {
+        soundFx.playPass();
+        if (navigator.vibrate) navigator.vibrate(10);
+    }
+
     // Animation out
     const rotate = dX / 15;
     const flyX = direction === 'right' ? window.innerWidth + 200 : -window.innerWidth - 200;
@@ -1002,6 +1404,14 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
     card.style.transition = 'transform 0.3s ease-in, opacity 0.3s ease-in';
     card.style.transform = `translate3d(${flyX}px, ${dY * 2}px, 0) rotate(${rotate}deg)`;
     card.style.opacity = 0;
+
+    // Smoothly scale up the next card in deck
+    const nextCard = card.previousElementSibling;
+    if (nextCard && nextCard.classList.contains('swipe-card')) {
+        nextCard.style.transition = 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+        nextCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
+        nextCard.style.opacity = 1;
+    }
 
     const rId = card.dataset.id;
 
@@ -1064,31 +1474,22 @@ function updateTimerUI(timeLeft) {
     }
 }
 
-// --- CELEBRATORY CONFETTI ---
+// --- CELEBRATORY CONFETTI (SUBTLE & REFINED) ---
 function triggerConfettiExplosion() {
-    const duration = 3 * 1000;
-    const end = Date.now() + duration;
+    if (typeof confetti !== 'function') return;
 
-    (function frame() {
-        confetti({
-            particleCount: 3,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: ['#FF3377', '#EE7816', '#00FF26']
-        });
-        confetti({
-            particleCount: 3,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: ['#FF3377', '#EE7816', '#00FF26']
-        });
-
-        if (Date.now() < end) {
-            requestAnimationFrame(frame);
-        }
-    }());
+    // Single graceful, soft burst centered on the result area
+    confetti({
+        particleCount: 24,
+        spread: 55,
+        origin: { y: 0.62 },
+        colors: ['#FF3377', '#EE7816', '#3284FF', '#00FF26'],
+        ticks: 100,
+        gravity: 0.95,
+        scalar: 0.8,
+        shapes: ['circle', 'square'],
+        disableForReducedMotion: true
+    });
 }
 
 // --- QR SCANNER FUNCTIONALITY ---
