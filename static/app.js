@@ -21,8 +21,76 @@ const state = {
     },
     allergies: [],
     name: '',
-    timerInterval: null
+    timerInterval: null,
+    isSolo: false,
+    soloLiked: [],
+    comboCount: 0,
+    comboTimer: null
 };
+
+// --- NON-BLOCKING TOAST NOTIFICATIONS (ERROR PREVENTION & USABILITY) ---
+function showToast(message, type = 'info', duration = 3200) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+
+    let iconHtml = '<i class="fa-solid fa-circle-info toast-icon"></i>';
+    if (type === 'success') iconHtml = '<i class="fa-solid fa-circle-check toast-icon"></i>';
+    else if (type === 'error') iconHtml = '<i class="fa-solid fa-circle-exclamation toast-icon"></i>';
+    else if (type === 'warning') iconHtml = '<i class="fa-solid fa-triangle-exclamation toast-icon"></i>';
+
+    toast.innerHTML = `
+        ${iconHtml}
+        <span class="toast-msg">${message}</span>
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('toast-hide');
+        setTimeout(() => toast.remove(), 260);
+    }, duration);
+}
+
+// Upgrade browser alert() to elegant non-blocking toasts across the app
+window.alert = function(message) {
+    let type = 'info';
+    if (/ผิดพลาด|ไม่สำเร็จ|ไม่ถูกต้อง|ล้มเหลว|error|fail/i.test(message)) type = 'error';
+    else if (/สำเร็จ|เรียบร้อย|success/i.test(message)) type = 'success';
+    else if (/ระวัง|เตือน|กรุณา|โปรด/i.test(message)) type = 'warning';
+    showToast(message, type);
+};
+
+// --- AUTO NICKNAME GENERATOR (ZERO-FRICTION ONBOARDING) ---
+const FOOD_NICKNAMES = [
+    'นักชิมสายกิน 🍜', 'กูรูหมูกระทะ 🥩', 'สายหวานตาลเรียกพี่ 🍰',
+    'ตัวตึงส้มตำ 🌶️', 'กัปตันชาบู 🍲', 'นักล่าของอร่อย 🍣',
+    'เชฟสายลุย 🍳', 'สายกินดึก 🍔', 'นักชิมตัวยง 🍕', 'อร่อยบอกต่อ 🧋',
+    'สายบุฟเฟต์ฟินๆ 🍱', 'ตัวมัมยำแซ่บ 🥗', 'นักซดต้มยำ 🍲', 'สายแซลมอน 🍣',
+    'เจ้าสำนักชาบู 🥢', 'นักรีวิวปากหวาน 🧇', 'เด็กอ้วนชวนหิว 🍩', 'นักหม่ำตัวท็อป 🥟'
+];
+
+function getRandomFoodNickname() {
+    return FOOD_NICKNAMES[Math.floor(Math.random() * FOOD_NICKNAMES.length)];
+}
+
+// --- ROOM EXISTENCE VERIFIER (ERROR PREVENTION & USABILITY) ---
+async function verifyRoomExists(roomId) {
+    if (!roomId || roomId.length !== 4) {
+        return { exists: false, message: 'กรุณากรอกรหัสห้อง 4 หลัก' };
+    }
+    try {
+        const res = await fetch(`/api/rooms/${encodeURIComponent(roomId)}/check`);
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.error('Error verifying room existence:', err);
+        return { exists: false, message: 'เกิดข้อผิดพลาดในการตรวจสอบห้อง' };
+    }
+}
+
 
 // DOM Cache
 const views = {
@@ -200,11 +268,102 @@ const soundFx = (() => {
                 });
             } catch (e) {}
         },
+        playGameStart() {
+            if (isMuted) return;
+            const ctx = getContext();
+            if (!ctx) return;
+            try {
+                if (ctx.state === 'suspended') ctx.resume();
+                // Energetic ascending game start chime: E5 -> G5 -> B5 -> E6
+                const notes = [659.25, 783.99, 987.77, 1318.51];
+                notes.forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    const startTime = ctx.currentTime + (idx * 0.065);
+                    const dur = idx === 3 ? 0.4 : 0.16;
+                    osc.frequency.setValueAtTime(freq, startTime);
+                    gain.gain.setValueAtTime(0.35, startTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, startTime + dur);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(startTime);
+                    osc.stop(startTime + dur);
+                });
+            } catch (e) {}
+        },
         playTone(freq, type, duration, gainStart, gainEnd) {
             emitTone(freq, type, duration, gainStart, gainEnd);
         },
         playCopy() {
             emitTone(880, 'sine', 0.08, 0.35, 0.001);
+        },
+        playTick() {
+            if (isMuted) return;
+            const ctx = getContext();
+            if (!ctx) return;
+            try {
+                if (ctx.state === 'suspended') ctx.resume();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(850, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(320, ctx.currentTime + 0.03);
+                gain.gain.setValueAtTime(0.22, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.03);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.03);
+            } catch (e) {}
+        },
+        playFanfare() {
+            if (isMuted) return;
+            const ctx = getContext();
+            if (!ctx) return;
+            try {
+                if (ctx.state === 'suspended') ctx.resume();
+                const chords = [
+                    { f: 523.25, t: 0, d: 0.15 },
+                    { f: 659.25, t: 0.12, d: 0.15 },
+                    { f: 783.99, t: 0.24, d: 0.18 },
+                    { f: 1046.50, t: 0.40, d: 0.45 }
+                ];
+                chords.forEach(c => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    const st = ctx.currentTime + c.t;
+                    osc.frequency.setValueAtTime(c.f, st);
+                    gain.gain.setValueAtTime(0.35, st);
+                    gain.gain.exponentialRampToValueAtTime(0.001, st + c.d);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(st);
+                    osc.stop(st + c.d);
+                });
+            } catch (e) {}
+        },
+
+        playCombo(streak) {
+            if (isMuted) return;
+            const ctx = getContext();
+            if (!ctx) return;
+            try {
+                if (ctx.state === 'suspended') ctx.resume();
+                const baseF = Math.min(440 + (streak * 60), 920);
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(baseF, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(baseF * 1.3, ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.32, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.15);
+            } catch (e) {}
         }
     };
 })();
@@ -267,6 +426,8 @@ window.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     setupProfileAndFeedback();
     setupForgotPasswordModal();
+    setupPdpaSystem();
+    setupWelcomeModal();
     checkCurrentUser();
     requestUserLocation();
 
@@ -281,12 +442,84 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function setupWelcomeModal() {
+    const welcomeModal = document.getElementById('welcome-intro-modal');
+    const btnStart = document.getElementById('btn-start-from-welcome');
+    const btnClose = document.getElementById('btn-close-welcome-modal');
+    const chkSkip = document.getElementById('chk-skip-welcome-forever');
+    const btnOpen = document.getElementById('btn-open-welcome-modal');
+
+    function openModal() {
+        if (!welcomeModal) return;
+        welcomeModal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        if (!welcomeModal) return;
+        welcomeModal.classList.add('hidden');
+    }
+
+    if (btnStart) {
+        btnStart.addEventListener('click', () => {
+            soundFx.playGameStart();
+            if (chkSkip && chkSkip.checked) {
+                localStorage.setItem('ginder_skip_intro', 'true');
+            }
+            closeModal();
+        });
+    }
+
+    if (btnClose) {
+        btnClose.addEventListener('click', () => {
+            soundFx.playPop();
+            if (chkSkip && chkSkip.checked) {
+                localStorage.setItem('ginder_skip_intro', 'true');
+            }
+            closeModal();
+        });
+    }
+
+    if (btnOpen) {
+        btnOpen.addEventListener('click', () => {
+            soundFx.playPop();
+            openModal();
+        });
+    }
+
+    if (welcomeModal) {
+        welcomeModal.addEventListener('click', (e) => {
+            if (e.target === welcomeModal) {
+                closeModal();
+            }
+        });
+    }
+
+    // Auto display welcome pop-up modal on first visit (unless user checked skip or roomId is in URL)
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceIntro = urlParams.get('intro') === '1';
+    const isSkipped = localStorage.getItem('ginder_skip_intro') === 'true';
+
+    if (welcomeModal) {
+        if (forceIntro || (!isSkipped && !state.targetRoomId)) {
+            // Smoothly display after DOM renders
+            setTimeout(() => {
+                openModal();
+            }, 300);
+        }
+    }
+}
+
 function showView(viewName) {
-    if (!state.currentUser && viewName !== 'auth') {
-        viewName = 'auth';
+    if (!state.currentUser && viewName !== 'landing' && viewName !== 'auth') {
+        // Silently complete guest login so user is never blocked by login screen
+        triggerQuickGuestLogin(() => {
+            showView(viewName);
+        });
+        return;
     }
 
     Object.keys(views).forEach(key => {
+        if (!views[key]) return;
         if (key === viewName) {
             views[key].classList.add('active');
         } else {
@@ -301,6 +534,79 @@ function showView(viewName) {
     } else {
         badge.room.classList.add('hidden');
     }
+
+    // Toggle footer during swipe view to give maximum screen space and let reaction bar dock cleanly at bottom
+    const appFooter = document.querySelector('.app-footer');
+    if (appFooter) {
+        if (viewName === 'swipe') {
+            appFooter.style.display = 'none';
+            document.body.classList.add('in-swipe-game');
+        } else {
+            appFooter.style.display = '';
+            document.body.classList.remove('in-swipe-game');
+        }
+    }
+
+    // Adapt UI components based on mode (Solo vs Group)
+    const swipeModeBadge = document.getElementById('swipe-mode-badge');
+    const groupProgressWidget = document.querySelector('.group-progress-widget');
+    const btnSoloRetry = document.getElementById('btn-solo-retry');
+
+    if (viewName === 'swipe') {
+        const roomReactionEl = document.getElementById('room-reaction-bar');
+
+        if (state.isSolo) {
+            // ในตอนปัดการ์ดคนเดียว ปฏิกิริยาเอาออกเลย เพราะปัดคนเดียว
+            if (roomReactionEl) {
+                roomReactionEl.classList.add('hidden');
+                roomReactionEl.style.display = 'none';
+            }
+            if (swipeModeBadge) {
+                swipeModeBadge.className = 'swipe-mode-badge';
+                const typeText = state.preferences && state.preferences.foodTypes && state.preferences.foodTypes.length > 0 
+                    ? state.preferences.foodTypes.join(', ')
+                    : 'ทั้งหมด';
+                const safeTypeText = String(typeText).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                swipeModeBadge.innerHTML = `<i class="fa-solid fa-user text-accent"></i> <span class="swipe-mode-text">คนเดียว • <strong class="swipe-mode-type">${safeTypeText}</strong></span>`;
+                swipeModeBadge.style.display = 'inline-flex';
+            }
+            if (groupProgressWidget) groupProgressWidget.style.display = 'none';
+            const timerContainer = document.getElementById('swipe-timer-container');
+            if (timerContainer) {
+                timerContainer.style.display = 'none'; // ซ่อนในโหมดเดี่ยว เพื่อไม่ให้บังปุ่มกรองและจำนวนการ์ด
+            }
+        } else {
+            // โหมดกลุ่ม: มีเพื่อนในห้อง สามารถส่งปฏิกิริยาหากันได้
+            if (roomReactionEl) {
+                roomReactionEl.classList.remove('hidden');
+                roomReactionEl.style.display = '';
+            }
+            if (swipeModeBadge) {
+                swipeModeBadge.className = 'swipe-mode-badge group-mode';
+                swipeModeBadge.innerHTML = '<i class="fa-solid fa-users"></i> <span class="swipe-mode-text">โหมดกลุ่ม</span>';
+                swipeModeBadge.style.display = 'inline-flex';
+            }
+            if (groupProgressWidget) groupProgressWidget.style.display = '';
+            const timerContainer = document.getElementById('swipe-timer-container');
+            if (timerContainer) {
+                timerContainer.style.display = 'flex';
+            }
+        }
+    } else {
+        const roomReactionEl = document.getElementById('room-reaction-bar');
+        if (roomReactionEl) {
+            roomReactionEl.classList.add('hidden');
+            roomReactionEl.style.display = 'none';
+        }
+    }
+
+    if (viewName === 'result') {
+        if (state.isSolo) {
+            if (btnSoloRetry) btnSoloRetry.classList.remove('hidden');
+        } else {
+            if (btnSoloRetry) btnSoloRetry.classList.add('hidden');
+        }
+    }
 }
 
 function resetApplicationState() {
@@ -312,6 +618,14 @@ function resetApplicationState() {
     state.restaurants = [];
     state.currentIndex = 0;
     state.votes = {};
+    state.isSolo = false;
+    state.soloLiked = [];
+    state.comboCount = 0;
+    if (state.comboTimer) clearTimeout(state.comboTimer);
+    const comboEl = document.getElementById('combo-streak-container');
+    if (comboEl) comboEl.classList.add('hidden');
+    const roomReactionEl = document.getElementById('room-reaction-bar');
+    if (roomReactionEl) roomReactionEl.classList.add('hidden');
 
     // Clear HTML fields
     document.getElementById('landing-room-id').value = '';
@@ -319,41 +633,60 @@ function resetApplicationState() {
     document.getElementById('lobby-room-id').innerText = '----';
     document.getElementById('pref-name').value = '';
 
-    // Clear selected allergy pills for both host and guest selectors
-    document.querySelectorAll('.allergy-selector .allergy-pill').forEach(pill => {
+    const btnStartSoloSwipe = document.getElementById('btn-start-solo-swipe');
+    if (btnStartSoloSwipe) btnStartSoloSwipe.classList.add('hidden');
+    const btnCreateRoom = document.getElementById('btn-create-room');
+    if (btnCreateRoom) btnCreateRoom.classList.remove('hidden');
+    const btnSoloRetry = document.getElementById('btn-solo-retry');
+    if (btnSoloRetry) btnSoloRetry.classList.add('hidden');
+
+    // Clear selected allergy pills for guest join selectors
+    document.querySelectorAll('#view-join .allergy-selector .allergy-pill').forEach(pill => {
         pill.classList.remove('active');
     });
 
-    // Reset selected food type pills to default (only the first one is active)
-    document.querySelectorAll('.food-type-selector .type-pill').forEach((pill, idx) => {
-        if (idx === 0) {
-            pill.classList.add('active');
-        } else {
-            pill.classList.remove('active');
-        }
+    document.querySelectorAll('.join-food-type-selector .type-pill').forEach(pill => {
+        pill.classList.add('active');
     });
 
-    // Reset budget pills to default (only the first one is active)
-    document.querySelectorAll('.budget-selector .budget-pill').forEach((pill, idx) => {
-        if (idx === 0) {
-            pill.classList.add('active');
-        } else {
-            pill.classList.remove('active');
-        }
+    // Reset Group Preferences Filter Box to defaults
+    const groupAllergyChips = document.querySelectorAll('#group-allergy-chips .host-allergy-chip');
+    groupAllergyChips.forEach(c => {
+        if (c.dataset.allergen === '') c.classList.add('active');
+        else c.classList.remove('active');
     });
 
-    // Reset distance slider to default (2.0)
-    const distSlider = document.getElementById('pref-distance');
-    if (distSlider) distSlider.value = 2.0;
-    const distVal = document.getElementById('distance-val');
-    if (distVal) distVal.innerText = '2.0 กม.';
+    const groupFoodChips = document.querySelectorAll('#group-food-chips .solo-chip');
+    groupFoodChips.forEach(c => {
+        if (c.dataset.type === '') c.classList.add('active');
+        else c.classList.remove('active');
+    });
+
+    const groupDistSliderEl = document.getElementById('pref-distance');
+    if (groupDistSliderEl) groupDistSliderEl.value = 20.0;
+    const groupDistValEl = document.getElementById('group-distance-val');
+    if (groupDistValEl) groupDistValEl.innerText = 'ไม่จำกัด (ทุกระยะ)';
+    document.querySelectorAll('#group-dist-pills .solo-dist-pill').forEach(p => {
+        if (p.dataset.dist === '') p.classList.add('active');
+        else p.classList.remove('active');
+    });
+
+    document.querySelectorAll('#group-budget-pills .solo-budget-pill').forEach(p => {
+        if (p.dataset.min === '0' && p.dataset.max === '9999') p.classList.add('active');
+        else p.classList.remove('active');
+    });
+
+    if (typeof updateGroupFilterBadge === 'function') {
+        updateGroupFilterBadge();
+    }
 
     // Reset JS state variables
+    state.allergies = [];
     state.preferences = {
         minPrice: 0,
-        maxPrice: 99,
-        maxDistance: 2.0,
-        foodTypes: ['อาหารไทย / อาหารใต้']
+        maxPrice: 9999,
+        maxDistance: null,
+        foodTypes: []
     };
 
     // Remove query params from address bar
@@ -381,62 +714,7 @@ function setupEventListeners() {
         });
     }
 
-    // Mobile View QR Modal Toggle
-    const mobileQrBtn = document.getElementById('btn-desktop-mobile-qr');
-    const mobileAppModal = document.getElementById('mobile-app-modal');
-    const closeMobileQrBtn = document.getElementById('btn-close-mobile-qr');
-    const copyMobileUrlBtn = document.getElementById('btn-copy-mobile-url');
-    const mobileUrlInput = document.getElementById('mobile-app-url-input');
-    const mobileCopiedMsg = document.getElementById('mobile-url-copied-msg');
 
-    if (mobileQrBtn && mobileAppModal) {
-        mobileQrBtn.addEventListener('click', () => {
-            soundFx.playPop();
-            mobileAppModal.classList.remove('hidden');
-
-            const targetUrl = state.networkBaseUrl || `${window.location.protocol}//10.59.0.72:${window.location.port || 5000}`;
-            if (mobileUrlInput) mobileUrlInput.value = targetUrl;
-
-            // Render QR Code on canvas
-            const qrCanvas = document.getElementById('mobile-app-qr-canvas');
-            if (qrCanvas && typeof QRious === 'function') {
-                new QRious({
-                    element: qrCanvas,
-                    value: targetUrl,
-                    size: 180,
-                    background: '#ffffff',
-                    foreground: '#100923'
-                });
-            }
-        });
-
-        if (closeMobileQrBtn) {
-            closeMobileQrBtn.addEventListener('click', () => {
-                mobileAppModal.classList.add('hidden');
-            });
-        }
-
-        mobileAppModal.addEventListener('click', (e) => {
-            if (e.target === mobileAppModal) {
-                mobileAppModal.classList.add('hidden');
-            }
-        });
-
-        if (copyMobileUrlBtn && mobileUrlInput) {
-            copyMobileUrlBtn.addEventListener('click', () => {
-                soundFx.playCopy();
-                navigator.clipboard.writeText(mobileUrlInput.value).then(() => {
-                    if (mobileCopiedMsg) {
-                        mobileCopiedMsg.style.opacity = '1';
-                        setTimeout(() => { mobileCopiedMsg.style.opacity = '0'; }, 2000);
-                    }
-                }).catch(() => {
-                    mobileUrlInput.select();
-                    document.execCommand('copy');
-                });
-            });
-        }
-    }
 
     // --- LANDING VIEW MICRO-INTERACTIONS ---
     const heroFoodBadge = document.getElementById('hero-food-badge');
@@ -463,56 +741,719 @@ function setupEventListeners() {
         });
     }
 
+    // Mode Selection Actions on Landing Screen
+    const setPreferencesMode = (isSolo) => {
+        state.isSolo = isSolo;
+        const titleEl = document.getElementById('pref-header-title');
+        const descEl = document.getElementById('pref-header-desc');
+        const btnCreateRoom = document.getElementById('btn-create-room');
+        const btnStartSoloSwipe = document.getElementById('btn-start-solo-swipe');
+        const nameInput = document.getElementById('pref-name');
+
+        if (isSolo) {
+            if (titleEl) titleEl.innerHTML = '<i class="fa-solid fa-user text-accent"></i> ตั้งค่าสำหรับกินคนเดียว';
+            if (descEl) descEl.innerText = 'กำหนดงบประมาณ ระยะทาง และประเภทอาหารที่คุณอยากทานมื้อนี้';
+            if (btnCreateRoom) btnCreateRoom.classList.add('hidden');
+            if (btnStartSoloSwipe) btnStartSoloSwipe.classList.remove('hidden');
+            if (nameInput && !nameInput.value.trim()) {
+                nameInput.value = state.currentUser ? (state.currentUser.displayName || state.currentUser.username) : 'นักชิมเดี่ยว';
+            }
+        } else {
+            if (titleEl) titleEl.innerHTML = '<i class="fa-solid fa-sliders text-accent"></i> ตั้งค่าการค้นหา';
+            if (descEl) descEl.innerText = 'กำหนดเงื่อนไขร้านอาหารสำหรับทุกคนในห้อง';
+            if (btnCreateRoom) btnCreateRoom.classList.remove('hidden');
+            if (btnStartSoloSwipe) btnStartSoloSwipe.classList.add('hidden');
+            if (nameInput) {
+                nameInput.value = getRandomFoodNickname();
+            }
+        }
+    };
+
     const btnGotoCreate = document.getElementById('btn-goto-create');
     if (btnGotoCreate) {
         btnGotoCreate.addEventListener('click', () => {
             soundFx.playPop();
+            setPreferencesMode(false);
+            const nameInput = document.getElementById('pref-name');
+            if (nameInput) {
+                nameInput.value = getRandomFoodNickname();
+            }
             btnGotoCreate.classList.add('btn-clicked');
             setTimeout(() => btnGotoCreate.classList.remove('btn-clicked'), 300);
             showView('preferences');
         });
     }
 
+    // Setup Food, Distance & Budget Filters for Solo Mode
+    const soloFilterBadge = document.getElementById('solo-filter-badge');
+
+    function updateSoloFilterBadge() {
+        if (!soloFilterBadge) return;
+        const parts = [];
+
+        // 0. Allergy
+        const activeAllergies = document.querySelectorAll('#solo-allergy-chips .solo-allergy-chip.active:not([data-allergen=""])');
+        if (activeAllergies.length > 0) {
+            const allergyNames = Array.from(activeAllergies).map(c => c.innerText.trim());
+            if (allergyNames.length === 1) {
+                parts.push(`ไม่เอา: ${allergyNames[0]}`);
+            } else {
+                parts.push(`แพ้ ${allergyNames.length} อย่าง`);
+            }
+        }
+
+        // 1. Food craving types
+        const activeChips = document.querySelectorAll('#solo-food-chips .solo-chip.active');
+        const selectedFood = [];
+        activeChips.forEach(c => {
+            if (c.dataset.type) {
+                selectedFood.push(c.innerText.trim());
+            }
+        });
+        if (selectedFood.length === 1) {
+            parts.push(selectedFood[0]);
+        } else if (selectedFood.length > 1) {
+            parts.push(`${selectedFood[0]} +${selectedFood.length - 1}`);
+        }
+
+        // 2. Distance
+        const distSlider = document.getElementById('solo-pref-distance');
+        const activeDistPill = document.querySelector('#solo-dist-pills .solo-dist-pill.active');
+        if (activeDistPill && activeDistPill.dataset.dist) {
+            parts.push(`< ${activeDistPill.dataset.dist} กม.`);
+        } else if (distSlider && parseFloat(distSlider.value) < 20.0) {
+            parts.push(`< ${parseFloat(distSlider.value)} กม.`);
+        }
+
+        // 3. Budget
+        const activeBudget = document.querySelector('#solo-budget-pills .solo-budget-pill.active');
+        if (activeBudget && !(activeBudget.dataset.min === '0' && activeBudget.dataset.max === '9999')) {
+            const min = parseInt(activeBudget.dataset.min, 10);
+            const max = parseInt(activeBudget.dataset.max, 10);
+            if (max < 100) parts.push('< 100฿');
+            else if (min >= 300) parts.push('> 300฿');
+            else parts.push('100-300฿');
+        }
+
+        if (parts.length === 0) {
+            soloFilterBadge.innerText = 'ทั้งหมด';
+        } else {
+            soloFilterBadge.innerText = parts.join(' • ');
+        }
+    }
+
+    function initFoodChipSelector(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const allChip = container.querySelector('.solo-chip[data-type=""]');
+        const specificChips = container.querySelectorAll('.solo-chip:not([data-type=""])');
+
+        if (allChip) {
+            allChip.addEventListener('click', () => {
+                soundFx.playPop();
+                allChip.classList.add('active');
+                specificChips.forEach(c => c.classList.remove('active'));
+                if (containerId === 'solo-food-chips') updateSoloFilterBadge();
+                if (containerId === 'group-food-chips' && typeof updateGroupFilterBadge === 'function') updateGroupFilterBadge();
+            });
+        }
+
+        specificChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                soundFx.playPop();
+                chip.classList.toggle('active');
+                if (allChip) allChip.classList.remove('active');
+
+                // If none selected, re-activate "All"
+                const anyActive = Array.from(specificChips).some(c => c.classList.contains('active'));
+                if (!anyActive && allChip) {
+                    allChip.classList.add('active');
+                }
+                if (containerId === 'solo-food-chips') updateSoloFilterBadge();
+                if (containerId === 'group-food-chips' && typeof updateGroupFilterBadge === 'function') updateGroupFilterBadge();
+            });
+        });
+    }
+
+    initFoodChipSelector('solo-food-chips');
+    initFoodChipSelector('quick-food-chips');
+    initFoodChipSelector('group-food-chips');
+
+    // Distance controls for Solo Mode
+    const soloDistSlider = document.getElementById('solo-pref-distance');
+    const soloDistValLabel = document.getElementById('solo-distance-val');
+    const soloDistPills = document.querySelectorAll('#solo-dist-pills .solo-dist-pill');
+
+    function syncSoloDistanceUI(val, fromPill = false) {
+        const numVal = parseFloat(val);
+        if (soloDistValLabel) {
+            if (numVal >= 20.0) {
+                soloDistValLabel.innerText = 'ไม่จำกัด (ทุกระยะ)';
+            } else {
+                soloDistValLabel.innerText = `< ${numVal} กม.`;
+            }
+        }
+        if (!fromPill && soloDistPills.length > 0) {
+            soloDistPills.forEach(pill => {
+                const pDist = pill.dataset.dist;
+                if (numVal >= 20.0 && pDist === '') {
+                    pill.classList.add('active');
+                } else if (pDist && parseFloat(pDist) === numVal) {
+                    pill.classList.add('active');
+                } else {
+                    pill.classList.remove('active');
+                }
+            });
+        }
+        updateSoloFilterBadge();
+    }
+
+    if (soloDistSlider) {
+        soloDistSlider.addEventListener('input', (e) => {
+            syncSoloDistanceUI(e.target.value, false);
+        });
+    }
+
+    if (soloDistPills.length > 0) {
+        soloDistPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                soundFx.playPop();
+                soloDistPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                const targetDist = pill.dataset.dist === '' ? 20.0 : parseFloat(pill.dataset.dist);
+                if (soloDistSlider) {
+                    soloDistSlider.value = targetDist;
+                }
+                syncSoloDistanceUI(targetDist, true);
+            });
+        });
+    }
+
+    // Budget controls for Solo Mode
+    const soloBudgetPills = document.querySelectorAll('#solo-budget-pills .solo-budget-pill');
+    if (soloBudgetPills.length > 0) {
+        soloBudgetPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                soundFx.playPop();
+                soloBudgetPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                updateSoloFilterBadge();
+            });
+        });
+    }
+
+    // Collapsible Solo Food Filter Toggle (Open/Close or Hide/Show)
+    const btnToggleSoloFilter = document.getElementById('btn-toggle-solo-filter');
+    const soloFilterBox = document.querySelector('.solo-filter-box');
+    const soloFilterContent = document.getElementById('solo-filter-content');
+    const soloToggleText = document.getElementById('solo-toggle-text');
+
+    if (btnToggleSoloFilter && soloFilterContent && soloFilterBox) {
+        btnToggleSoloFilter.addEventListener('click', () => {
+            soundFx.playPop();
+            const isCollapsed = soloFilterContent.classList.contains('collapsed');
+            if (isCollapsed) {
+                soloFilterContent.classList.remove('collapsed');
+                soloFilterBox.classList.add('expanded');
+                btnToggleSoloFilter.setAttribute('aria-expanded', 'true');
+                if (soloToggleText) soloToggleText.innerText = 'ซ่อนตัวกรอง';
+            } else {
+                soloFilterContent.classList.add('collapsed');
+                soloFilterBox.classList.remove('expanded');
+                btnToggleSoloFilter.setAttribute('aria-expanded', 'false');
+                if (soloToggleText) soloToggleText.innerText = 'เปิดตัวกรอง';
+            }
+        });
+    }
+
+    // Solo allergy chips logic
+    const soloAllergyContainer = document.getElementById('solo-allergy-chips');
+    if (soloAllergyContainer) {
+        const noneChip = soloAllergyContainer.querySelector('.solo-allergy-chip[data-allergen=""]');
+        const specificAllergyChips = soloAllergyContainer.querySelectorAll('.solo-allergy-chip:not([data-allergen=""])');
+
+        if (noneChip) {
+            noneChip.addEventListener('click', () => {
+                soundFx.playPop();
+                noneChip.classList.add('active');
+                specificAllergyChips.forEach(c => c.classList.remove('active'));
+                updateSoloFilterBadge();
+            });
+        }
+
+        specificAllergyChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                soundFx.playPop();
+                chip.classList.toggle('active');
+                if (noneChip) noneChip.classList.remove('active');
+
+                // If no specific allergies selected, re-activate "ไม่มีแพ้เลย"
+                const anyActive = Array.from(specificAllergyChips).some(c => c.classList.contains('active'));
+                if (!anyActive && noneChip) {
+                    noneChip.classList.add('active');
+                }
+                updateSoloFilterBadge();
+            });
+        });
+    }
+
+    // Reset button inside solo filter box (Reset all: Allergy, Food, Distance, Budget)
+    const btnResetSoloChips = document.getElementById('btn-reset-solo-chips');
+    if (btnResetSoloChips) {
+        btnResetSoloChips.addEventListener('click', () => {
+            soundFx.playPop();
+            // Reset allergy chips
+            const soloAllergyChips = document.querySelectorAll('#solo-allergy-chips .solo-allergy-chip');
+            soloAllergyChips.forEach(c => {
+                if (c.dataset.allergen === '') c.classList.add('active');
+                else c.classList.remove('active');
+            });
+            // Reset food chips
+            const chips = document.querySelectorAll('#solo-food-chips .solo-chip');
+            chips.forEach(c => {
+                if (c.dataset.type === '') c.classList.add('active');
+                else c.classList.remove('active');
+            });
+            // Reset distance
+            if (soloDistSlider) soloDistSlider.value = 20.0;
+            if (soloDistValLabel) soloDistValLabel.innerText = 'ไม่จำกัด (ทุกระยะ)';
+            soloDistPills.forEach(p => {
+                if (p.dataset.dist === '') p.classList.add('active');
+                else p.classList.remove('active');
+            });
+            // Reset budget
+            soloBudgetPills.forEach(p => {
+                if (p.dataset.min === '0' && p.dataset.max === '9999') p.classList.add('active');
+                else p.classList.remove('active');
+            });
+            updateSoloFilterBadge();
+        });
+    }
+
+    // ==========================================================================
+    // UNIFIED GROUP PREFERENCES FILTER BOX (MATCHING SOLO MODE)
+    // ==========================================================================
+    const groupFilterBadge = document.getElementById('group-filter-badge');
+
+    function updateGroupFilterBadge() {
+        if (!groupFilterBadge) return;
+        const parts = [];
+
+        // 1. Allergies
+        const activeAllergies = document.querySelectorAll('#group-allergy-chips .host-allergy-chip.active:not([data-allergen=""])');
+        if (activeAllergies.length === 1) {
+            parts.push(`แพ้: ${activeAllergies[0].innerText.trim()}`);
+        } else if (activeAllergies.length > 1) {
+            parts.push(`แพ้: ${activeAllergies[0].innerText.trim()} +${activeAllergies.length - 1}`);
+        }
+
+        // 2. Food craving types
+        const activeFoodChips = document.querySelectorAll('#group-food-chips .solo-chip.active:not([data-type=""])');
+        if (activeFoodChips.length === 1) {
+            parts.push(activeFoodChips[0].innerText.trim());
+        } else if (activeFoodChips.length > 1) {
+            parts.push(`${activeFoodChips[0].innerText.trim()} +${activeFoodChips.length - 1}`);
+        }
+
+        // 3. Distance
+        const distSliderEl = document.getElementById('pref-distance');
+        const activeDistPill = document.querySelector('#group-dist-pills .solo-dist-pill.active');
+        if (activeDistPill && activeDistPill.dataset.dist) {
+            parts.push(`< ${activeDistPill.dataset.dist} กม.`);
+        } else if (distSliderEl && parseFloat(distSliderEl.value) < 20.0) {
+            parts.push(`< ${parseFloat(distSliderEl.value).toFixed(1)} กม.`);
+        }
+
+        // 4. Budget
+        const activeBudget = document.querySelector('#group-budget-pills .solo-budget-pill.active');
+        if (activeBudget && !(activeBudget.dataset.min === '0' && activeBudget.dataset.max === '9999')) {
+            const min = parseInt(activeBudget.dataset.min, 10);
+            const max = parseInt(activeBudget.dataset.max, 10);
+            if (max < 100) parts.push('< 100฿');
+            else if (min >= 300) parts.push('> 300฿');
+            else parts.push('100-300฿');
+        }
+
+        if (parts.length === 0) {
+            groupFilterBadge.innerText = 'ทั้งหมด';
+        } else {
+            groupFilterBadge.innerText = parts.join(' • ');
+        }
+    }
+
+    // Group allergy chips logic
+    const groupAllergyContainer = document.getElementById('group-allergy-chips');
+    if (groupAllergyContainer) {
+        const noneChip = groupAllergyContainer.querySelector('.host-allergy-chip[data-allergen=""]');
+        const specificAllergyChips = groupAllergyContainer.querySelectorAll('.host-allergy-chip:not([data-allergen=""])');
+
+        if (noneChip) {
+            noneChip.addEventListener('click', () => {
+                soundFx.playPop();
+                noneChip.classList.add('active');
+                specificAllergyChips.forEach(c => c.classList.remove('active'));
+                updateGroupFilterBadge();
+            });
+        }
+
+        specificAllergyChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                soundFx.playPop();
+                chip.classList.toggle('active');
+                if (noneChip) noneChip.classList.remove('active');
+
+                // If no specific allergies selected, re-activate "ไม่มีแพ้เลย"
+                const anyActive = Array.from(specificAllergyChips).some(c => c.classList.contains('active'));
+                if (!anyActive && noneChip) {
+                    noneChip.classList.add('active');
+                }
+                updateGroupFilterBadge();
+            });
+        });
+    }
+
+    // Distance controls for Group Mode
+    const groupDistSlider = document.getElementById('pref-distance');
+    const groupDistValLabel = document.getElementById('group-distance-val');
+    const groupDistPills = document.querySelectorAll('#group-dist-pills .solo-dist-pill');
+
+    function syncGroupDistanceUI(val, fromPill = false) {
+        const numVal = parseFloat(val);
+        if (groupDistValLabel) {
+            if (numVal >= 20.0) {
+                groupDistValLabel.innerText = 'ไม่จำกัด (ทุกระยะ)';
+            } else {
+                groupDistValLabel.innerText = `< ${numVal.toFixed(1)} กม.`;
+            }
+        }
+        if (!fromPill && groupDistPills.length > 0) {
+            groupDistPills.forEach(pill => {
+                const pDist = pill.dataset.dist;
+                if (numVal >= 20.0 && pDist === '') {
+                    pill.classList.add('active');
+                } else if (pDist && parseFloat(pDist) === numVal) {
+                    pill.classList.add('active');
+                } else {
+                    pill.classList.remove('active');
+                }
+            });
+        }
+        updateGroupFilterBadge();
+    }
+
+    if (groupDistSlider) {
+        groupDistSlider.addEventListener('input', (e) => {
+            syncGroupDistanceUI(e.target.value, false);
+        });
+    }
+
+    if (groupDistPills.length > 0) {
+        groupDistPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                soundFx.playPop();
+                groupDistPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                const targetDist = pill.dataset.dist === '' ? 20.0 : parseFloat(pill.dataset.dist);
+                if (groupDistSlider) {
+                    groupDistSlider.value = targetDist;
+                }
+                syncGroupDistanceUI(targetDist, true);
+            });
+        });
+    }
+
+    // Budget controls for Group Mode
+    const groupBudgetPills = document.querySelectorAll('#group-budget-pills .solo-budget-pill');
+    if (groupBudgetPills.length > 0) {
+        groupBudgetPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                soundFx.playPop();
+                groupBudgetPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                updateGroupFilterBadge();
+            });
+        });
+    }
+
+    // Collapsible Group Filter Toggle (Open/Close or Hide/Show)
+    const btnToggleGroupFilter = document.getElementById('btn-toggle-group-filter');
+    const groupFilterBox = document.querySelector('.group-pref-filter-box');
+    const groupFilterContent = document.getElementById('group-filter-content');
+    const groupToggleText = document.getElementById('group-toggle-text');
+
+    if (btnToggleGroupFilter && groupFilterContent && groupFilterBox) {
+        btnToggleGroupFilter.addEventListener('click', () => {
+            soundFx.playPop();
+            const isCollapsed = groupFilterContent.classList.contains('collapsed');
+            if (isCollapsed) {
+                groupFilterContent.classList.remove('collapsed');
+                groupFilterBox.classList.add('expanded');
+                btnToggleGroupFilter.setAttribute('aria-expanded', 'true');
+                if (groupToggleText) groupToggleText.innerText = 'ซ่อนตัวกรอง';
+            } else {
+                groupFilterContent.classList.add('collapsed');
+                groupFilterBox.classList.remove('expanded');
+                btnToggleGroupFilter.setAttribute('aria-expanded', 'false');
+                if (groupToggleText) groupToggleText.innerText = 'เปิดตัวกรอง';
+            }
+        });
+    }
+
+    // Reset button inside group filter box (Reset all: Allergy, Food, Distance, Budget)
+    const btnResetGroupFilters = document.getElementById('btn-reset-group-filters');
+    if (btnResetGroupFilters) {
+        btnResetGroupFilters.addEventListener('click', () => {
+            soundFx.playPop();
+            // Reset allergies to "ไม่มีแพ้เลย"
+            const allergyChips = document.querySelectorAll('#group-allergy-chips .host-allergy-chip');
+            allergyChips.forEach(c => {
+                if (c.dataset.allergen === '') c.classList.add('active');
+                else c.classList.remove('active');
+            });
+
+            // Reset food chips to "ทั้งหมด"
+            const foodChips = document.querySelectorAll('#group-food-chips .solo-chip');
+            foodChips.forEach(c => {
+                if (c.dataset.type === '') c.classList.add('active');
+                else c.classList.remove('active');
+            });
+
+            // Reset distance to "ทุกระยะทาง" / 20.0
+            if (groupDistSlider) groupDistSlider.value = 20.0;
+            if (groupDistValLabel) groupDistValLabel.innerText = 'ไม่จำกัด (ทุกระยะ)';
+            groupDistPills.forEach(p => {
+                if (p.dataset.dist === '') p.classList.add('active');
+                else p.classList.remove('active');
+            });
+
+            // Reset budget to "ทุกราคา"
+            groupBudgetPills.forEach(p => {
+                if (p.dataset.min === '0' && p.dataset.max === '9999') p.classList.add('active');
+                else p.classList.remove('active');
+            });
+
+            updateGroupFilterBadge();
+        });
+    }
+
+    // 1-Click Instant Swipe Hub (Ultra-frictionless)
+    const btnSoloInstantSwipe = document.getElementById('btn-solo-instant-swipe');
+    if (btnSoloInstantSwipe) {
+        btnSoloInstantSwipe.addEventListener('click', () => {
+            soundFx.playPop();
+            btnSoloInstantSwipe.classList.add('btn-clicked');
+            setTimeout(() => btnSoloInstantSwipe.classList.remove('btn-clicked'), 320);
+            startSoloSwipe();
+        });
+    }
+
+    const btnStartSoloSwipe = document.getElementById('btn-start-solo-swipe');
+    if (btnStartSoloSwipe) {
+        btnStartSoloSwipe.addEventListener('click', startSoloSwipe);
+    }
+
+    const btnSoloRetry = document.getElementById('btn-solo-retry');
+    if (btnSoloRetry) {
+        btnSoloRetry.addEventListener('click', () => {
+            soundFx.playPop();
+            startSoloSwipe();
+        });
+    }
+
     const landingRoomInput = document.getElementById('landing-room-id');
     const btnLandingJoin = document.getElementById('btn-landing-join');
+    const landingRoomStatus = document.getElementById('landing-room-status');
+    let checkRoomDebounceTimer = null;
 
     if (landingRoomInput) {
-        landingRoomInput.addEventListener('input', () => {
+        landingRoomInput.value = '';
+        landingRoomInput.addEventListener('focus', () => {
+            landingRoomInput.removeAttribute('readonly');
+        });
+        landingRoomInput.addEventListener('pointerdown', () => {
+            landingRoomInput.removeAttribute('readonly');
+        });
+
+        // Anti-Autofill: purge any browser-injected username 'kitti' / 'kitt' on startup
+        const purgeAutofill = () => {
+            if (landingRoomInput && !landingRoomInput.dataset.userHasTyped) {
+                const val = (landingRoomInput.value || '').trim().toLowerCase();
+                if (val === 'kitt' || val === 'kitti') {
+                    landingRoomInput.value = '';
+                    if (landingRoomStatus) {
+                        landingRoomStatus.classList.add('hidden');
+                        landingRoomStatus.innerHTML = '';
+                    }
+                    landingRoomInput.style.borderColor = '';
+                    landingRoomInput.style.boxShadow = '';
+                }
+            }
+        };
+
+        window.addEventListener('load', purgeAutofill);
+        window.addEventListener('pageshow', purgeAutofill);
+        setTimeout(purgeAutofill, 50);
+        setTimeout(purgeAutofill, 150);
+        setTimeout(purgeAutofill, 400);
+        setTimeout(purgeAutofill, 800);
+    }
+
+    async function handleRoomCheckAndJoin(isAutoTrigger = false) {
+        const roomId = landingRoomInput ? landingRoomInput.value.trim().toUpperCase() : '';
+        if (!roomId || roomId.length !== 4) {
+            soundFx.playTone(220, 'sawtooth', 0.12, 0.08);
+            if (landingRoomInput) {
+                landingRoomInput.classList.remove('input-shake');
+                void landingRoomInput.offsetWidth;
+                landingRoomInput.classList.add('input-shake');
+                landingRoomInput.focus();
+            }
+            if (landingRoomStatus) {
+                landingRoomStatus.classList.remove('hidden');
+                landingRoomStatus.innerHTML = '<span style="color: var(--accent-pink);"><i class="fa-solid fa-circle-exclamation"></i> กรุณากรอกรหัสห้อง 4 หลัก</span>';
+            }
+            if (navigator.vibrate) navigator.vibrate([40, 40, 40]);
+            return;
+        }
+
+        // Show verifying indicator
+        if (landingRoomStatus) {
+            landingRoomStatus.classList.remove('hidden');
+            landingRoomStatus.innerHTML = '<span style="color: var(--text-muted);"><i class="fa-solid fa-spinner fa-spin text-accent"></i> กำลังตรวจสอบรหัสห้อง...</span>';
+        }
+        if (btnLandingJoin) {
+            btnLandingJoin.disabled = true;
+            btnLandingJoin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+        }
+
+        const check = await verifyRoomExists(roomId);
+
+        // Discard if user changed input while fetching
+        if (landingRoomInput && landingRoomInput.value.trim().toUpperCase() !== roomId) {
+            if (btnLandingJoin) {
+                btnLandingJoin.disabled = false;
+                btnLandingJoin.innerHTML = 'เข้าร่วม';
+            }
+            return;
+        }
+
+        if (btnLandingJoin) {
+            btnLandingJoin.disabled = false;
+            btnLandingJoin.innerHTML = 'เข้าร่วม';
+        }
+
+        if (!check.exists) {
+            // Room does NOT exist (Error Prevention)
+            soundFx.playTone(220, 'sawtooth', 0.15, 0.08);
+            if (navigator.vibrate) navigator.vibrate([40, 40, 40]);
+            if (landingRoomInput) {
+                landingRoomInput.classList.remove('input-ready');
+                landingRoomInput.classList.remove('input-shake');
+                void landingRoomInput.offsetWidth;
+                landingRoomInput.classList.add('input-shake');
+                landingRoomInput.style.borderColor = 'var(--accent-pink)';
+                landingRoomInput.style.boxShadow = '0 0 14px rgba(255, 51, 119, 0.4)';
+            }
+            if (landingRoomStatus) {
+                landingRoomStatus.classList.remove('hidden');
+                landingRoomStatus.innerHTML = `<span style="color: var(--accent-pink); font-weight: 600;"><i class="fa-solid fa-circle-xmark"></i> ${check.message}</span>`;
+            }
+            showToast(check.message, 'error');
+            return;
+        }
+
+        if (check.started) {
+            // Room has already started voting
+            soundFx.playTone(330, 'sawtooth', 0.12, 0.08);
+            if (landingRoomInput) {
+                landingRoomInput.classList.remove('input-ready');
+                landingRoomInput.style.borderColor = 'var(--accent-orange)';
+                landingRoomInput.style.boxShadow = '0 0 14px rgba(238, 120, 22, 0.4)';
+            }
+            if (landingRoomStatus) {
+                landingRoomStatus.classList.remove('hidden');
+                landingRoomStatus.innerHTML = `<span style="color: var(--accent-orange); font-weight: 600;"><i class="fa-solid fa-triangle-exclamation"></i> ${check.message}</span>`;
+            }
+            showToast(check.message, 'warning');
+            return;
+        }
+
+        // Room is valid and waiting for members!
+        soundFx.playTone(880, 'triangle', 0.08, 0.08);
+        if (landingRoomInput) {
+            landingRoomInput.classList.add('input-ready');
+            landingRoomInput.style.borderColor = 'var(--accent-green)';
+            landingRoomInput.style.boxShadow = '0 0 14px rgba(0, 255, 38, 0.4)';
+        }
+        if (landingRoomStatus) {
+            landingRoomStatus.classList.remove('hidden');
+            landingRoomStatus.innerHTML = `<span style="color: var(--accent-green); font-weight: 600;"><i class="fa-solid fa-circle-check"></i> ${check.message}</span>`;
+        }
+        showToast(check.message, 'success');
+
+        setTimeout(() => {
+            if (views.landing && views.landing.classList.contains('active')) {
+                showView('join');
+                const joinRoomIdEl = document.getElementById('join-room-id');
+                if (joinRoomIdEl) joinRoomIdEl.value = roomId;
+
+                const joinNameInput = document.getElementById('join-name');
+                if (joinNameInput && !joinNameInput.value.trim()) {
+                    joinNameInput.value = state.currentUser ? (state.currentUser.displayName || state.currentUser.username) : getRandomFoodNickname();
+                }
+            }
+        }, isAutoTrigger ? 450 : 200);
+    }
+
+    if (landingRoomInput) {
+        landingRoomInput.addEventListener('input', (e) => {
+            const rawVal = (landingRoomInput.value || '').trim().toLowerCase();
+            // Block untrusted synthetic autofill of "kitt" / "kitti"
+            if (!landingRoomInput.dataset.userHasTyped && (rawVal === 'kitt' || rawVal === 'kitti') && !e.isTrusted) {
+                landingRoomInput.value = '';
+                return;
+            }
+
+            landingRoomInput.dataset.userHasTyped = 'true';
             landingRoomInput.value = landingRoomInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 4);
+            landingRoomInput.style.borderColor = '';
+            landingRoomInput.style.boxShadow = '';
             const len = landingRoomInput.value.length;
+            if (len === 0) {
+                landingRoomInput.dataset.userHasTyped = '';
+            }
+
             if (len > 0) {
                 soundFx.playTone(550 + len * 70, 'sine', 0.03, 0.04);
             }
+
+            if (checkRoomDebounceTimer) {
+                clearTimeout(checkRoomDebounceTimer);
+            }
+
             if (len === 4) {
-                landingRoomInput.classList.add('input-ready');
                 if (btnLandingJoin) btnLandingJoin.classList.add('btn-ready');
-                soundFx.playTone(880, 'triangle', 0.06, 0.06);
                 if (navigator.vibrate) navigator.vibrate(20);
+
+                // Debounce check for seamless typing
+                checkRoomDebounceTimer = setTimeout(() => {
+                    handleRoomCheckAndJoin(true);
+                }, 280);
             } else {
                 landingRoomInput.classList.remove('input-ready');
                 if (btnLandingJoin) btnLandingJoin.classList.remove('btn-ready');
+                if (landingRoomStatus) {
+                    landingRoomStatus.classList.add('hidden');
+                    landingRoomStatus.innerHTML = '';
+                }
             }
         });
     }
 
     if (btnLandingJoin) {
         btnLandingJoin.addEventListener('click', () => {
-            const roomId = landingRoomInput ? landingRoomInput.value.trim().toUpperCase() : '';
-            if (!roomId || roomId.length !== 4) {
-                soundFx.playTone(220, 'sawtooth', 0.12, 0.08);
-                if (landingRoomInput) {
-                    landingRoomInput.classList.remove('input-shake');
-                    void landingRoomInput.offsetWidth;
-                    landingRoomInput.classList.add('input-shake');
-                    landingRoomInput.focus();
-                }
-                if (navigator.vibrate) navigator.vibrate([40, 40, 40]);
-                return;
-            }
-            soundFx.playPop();
-            showView('join');
-            const joinRoomIdEl = document.getElementById('join-room-id');
-            if (joinRoomIdEl) joinRoomIdEl.value = roomId;
+            handleRoomCheckAndJoin(false);
         });
     }
 
@@ -606,15 +1547,15 @@ function setupEventListeners() {
 
     // Preferences View Actions
     document.getElementById('btn-back-to-landing').addEventListener('click', () => {
-        const activeBudget = document.querySelector('.budget-selector .budget-pill.active');
-        const maxPrice = activeBudget ? parseInt(activeBudget.dataset.max) : 99;
-        const maxDistance = parseFloat(document.getElementById('pref-distance').value);
-        const selectedTypes = [];
-        document.querySelectorAll('.food-type-selector .type-pill.active').forEach(pill => {
-            selectedTypes.push(pill.dataset.type);
-        });
+        const activeAllergies = document.querySelectorAll('#group-allergy-chips .host-allergy-chip.active:not([data-allergen=""])');
+        const activeFood = document.querySelectorAll('#group-food-chips .solo-chip.active:not([data-type=""])');
+        const distSliderEl = document.getElementById('pref-distance');
+        const activeBudget = document.querySelector('#group-budget-pills .solo-budget-pill.active');
 
-        const hasChanged = maxPrice !== 99 || maxDistance !== 2.0 || selectedTypes.length !== 1;
+        const hasChanged = activeAllergies.length > 0 ||
+                           activeFood.length > 0 ||
+                           (distSliderEl && parseFloat(distSliderEl.value) < 20.0) ||
+                           (activeBudget && !(activeBudget.dataset.min === '0' && activeBudget.dataset.max === '9999'));
 
         if (hasChanged) {
             if (!confirm('คุณต้องการยกเลิกการตั้งค่าและย้อนกลับใช่หรือไม่?')) {
@@ -624,41 +1565,61 @@ function setupEventListeners() {
         showView('landing');
     });
 
-    // Multi-select for Food Types in Preferences
-    document.querySelectorAll('.food-type-selector .type-pill').forEach(pill => {
-        pill.addEventListener('click', () => {
-            soundFx.playPop();
-            if (navigator.vibrate) navigator.vibrate(8);
-            pill.classList.toggle('active');
-            updatePreferencesState();
-        });
-    });
+    // Food Type Selectors (with "Select All" support for Join view)
+    function initFoodTypeSelector(containerSelector) {
+        const container = document.querySelector(containerSelector);
+        if (!container) return;
 
-    // Selectors for Budget in Preferences
-    document.querySelectorAll('.budget-selector .budget-pill').forEach(pill => {
-        pill.addEventListener('click', () => {
-            soundFx.playPop();
-            if (navigator.vibrate) navigator.vibrate(8);
-            document.querySelectorAll('.budget-selector .budget-pill').forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
-            updatePreferencesState();
-        });
-    });
+        const allPill = container.querySelector('.type-pill[data-type="all"]');
+        const specificPills = Array.from(container.querySelectorAll('.type-pill:not([data-type="all"])'));
 
-    // Distance Slider changes
-    const distSlider = document.getElementById('pref-distance');
-    const distVal = document.getElementById('distance-val');
-    distSlider.addEventListener('input', (e) => {
-        distVal.innerText = `${parseFloat(e.target.value).toFixed(1)} กม.`;
-        updatePreferencesState();
-    });
+        if (allPill) {
+            allPill.addEventListener('click', () => {
+                soundFx.playPop();
+                if (navigator.vibrate) navigator.vibrate(8);
+
+                const allActive = specificPills.every(p => p.classList.contains('active'));
+                if (allActive || allPill.classList.contains('active')) {
+                    allPill.classList.remove('active');
+                    specificPills.forEach(p => p.classList.remove('active'));
+                } else {
+                    allPill.classList.add('active');
+                    specificPills.forEach(p => p.classList.add('active'));
+                }
+                if (typeof updatePreferencesState === 'function') updatePreferencesState();
+            });
+        }
+
+        specificPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                soundFx.playPop();
+                if (navigator.vibrate) navigator.vibrate(8);
+
+                pill.classList.toggle('active');
+
+                // If all specific pills are active, mark "Select All" as active too
+                const allActive = specificPills.every(p => p.classList.contains('active'));
+                if (allPill) {
+                    allPill.classList.toggle('active', allActive);
+                }
+
+                if (typeof updatePreferencesState === 'function') updatePreferencesState();
+            });
+        });
+    }
+
+    initFoodTypeSelector('.pref-food-type-selector');
+    initFoodTypeSelector('.join-food-type-selector');
 
     // Create Room Request
     document.getElementById('btn-create-room').addEventListener('click', () => {
         let name = document.getElementById('pref-name').value.trim();
         if (!name) {
-            alert('กรุณากรอกชื่อของคุณก่อนสร้างห้อง');
-            return;
+            name = (state.currentUser && (state.currentUser.displayName || state.currentUser.username))
+                   ? (state.currentUser.displayName || state.currentUser.username)
+                   : getRandomFoodNickname();
+            document.getElementById('pref-name').value = name;
+            showToast(`ตั้งชื่อให้เป็น "${name}" เรียบร้อยแล้ว`, 'info');
         }
 
         // Prepend Host label for consistent display
@@ -666,14 +1627,43 @@ function setupEventListeners() {
             name = '👑 ' + name;
         }
 
+        // 1. Allergies (exclude empty "ไม่มีแพ้เลย")
         const allergies = [];
-        document.querySelectorAll('.host-allergy-selector .allergy-pill.active').forEach(pill => {
-            allergies.push(pill.dataset.allergen);
+        document.querySelectorAll('#group-allergy-chips .host-allergy-chip.active').forEach(pill => {
+            if (pill.dataset.allergen) {
+                allergies.push(pill.dataset.allergen);
+            }
         });
+
+        // 2. Food craving types (exclude empty "ทั้งหมด")
+        const selectedFood = [];
+        document.querySelectorAll('#group-food-chips .solo-chip.active').forEach(pill => {
+            if (pill.dataset.type) {
+                selectedFood.push(pill.dataset.type);
+            }
+        });
+
+        // 3. Distance
+        const distSliderEl = document.getElementById('pref-distance');
+        let selectedMaxDistance = null;
+        if (distSliderEl && parseFloat(distSliderEl.value) < 20.0) {
+            selectedMaxDistance = parseFloat(distSliderEl.value);
+        }
+
+        // 4. Budget
+        const activeBudget = document.querySelector('#group-budget-pills .solo-budget-pill.active');
+        const minPrice = activeBudget ? parseInt(activeBudget.dataset.min, 10) : 0;
+        const maxPrice = activeBudget ? parseInt(activeBudget.dataset.max, 10) : 9999;
 
         state.name = name;
         state.isCreator = true;
         state.allergies = allergies;
+        state.preferences = {
+            minPrice: minPrice,
+            maxPrice: maxPrice,
+            maxDistance: selectedMaxDistance,
+            foodTypes: selectedFood
+        };
 
         // Clear targets from QR before creating new
         state.targetRoomId = null;
@@ -685,6 +1675,31 @@ function setupEventListeners() {
             allergies: allergies
         });
     });
+
+    // Random Nickname Generator Buttons (Quick Roll)
+    const btnRandomPrefName = document.getElementById('btn-random-pref-name');
+    if (btnRandomPrefName) {
+        btnRandomPrefName.addEventListener('click', () => {
+            soundFx.playPop();
+            const nameInput = document.getElementById('pref-name');
+            if (nameInput) {
+                nameInput.value = getRandomFoodNickname();
+                showToast(`สุ่มชื่อ: "${nameInput.value}"`, 'info');
+            }
+        });
+    }
+
+    const btnRandomJoinName = document.getElementById('btn-random-join-name');
+    if (btnRandomJoinName) {
+        btnRandomJoinName.addEventListener('click', () => {
+            soundFx.playPop();
+            const joinNameInput = document.getElementById('join-name');
+            if (joinNameInput) {
+                joinNameInput.value = getRandomFoodNickname();
+                showToast(`สุ่มชื่อ: "${joinNameInput.value}"`, 'info');
+            }
+        });
+    }
 
     // Join View Actions
     document.getElementById('btn-back-to-landing-join').addEventListener('click', () => {
@@ -702,32 +1717,71 @@ function setupEventListeners() {
     });
 
     // Multi-select for Allergies (Join and Host)
-    document.querySelectorAll('.allergy-selector .allergy-pill, .host-allergy-selector .allergy-pill').forEach(pill => {
+    document.querySelectorAll('#view-join .allergy-selector .allergy-pill, .host-allergy-selector .allergy-pill').forEach(pill => {
         pill.addEventListener('click', () => {
             soundFx.playPop();
             if (navigator.vibrate) navigator.vibrate(8);
             pill.classList.toggle('active');
+            if (typeof updatePrefAccordionBadges === 'function') {
+                updatePrefAccordionBadges();
+            }
         });
     });
 
     // Submit Join Request
-    document.getElementById('btn-submit-join').addEventListener('click', () => {
+    document.getElementById('btn-submit-join').addEventListener('click', async () => {
         const roomId = document.getElementById('join-room-id').value.trim().toUpperCase();
-        const name = document.getElementById('join-name').value.trim();
+        let name = document.getElementById('join-name').value.trim();
 
         if (!roomId || roomId.length !== 4) {
-            alert('กรุณากรอกรหัสห้อง 4 หลักให้ถูกต้อง');
+            showToast('กรุณากรอกรหัสห้อง 4 หลักให้ถูกต้อง', 'warning');
             return;
         }
-        if (!name) {
-            alert('กรุณากรอกชื่อของคุณ');
+
+        // Verify room existence before socket emit (Error Prevention)
+        const btnSubmit = document.getElementById('btn-submit-join');
+        if (btnSubmit) {
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบห้อง...';
+        }
+
+        const check = await verifyRoomExists(roomId);
+
+        if (btnSubmit) {
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = 'เข้าห้องโหวต <i class="fa-solid fa-arrow-right"></i>';
+        }
+
+        if (!check.exists) {
+            showToast(check.message || `ไม่พบห้อง "${roomId}" หรือห้องอาจถูกปิดไปแล้ว`, 'error');
             return;
+        }
+
+        if (check.started) {
+            showToast(check.message || `ห้อง "${roomId}" เริ่มการโหวตไปแล้ว ไม่สามารถเข้าร่วมได้`, 'warning');
+            return;
+        }
+
+        if (!name) {
+            name = (state.currentUser && (state.currentUser.displayName || state.currentUser.username))
+                   ? (state.currentUser.displayName || state.currentUser.username)
+                   : getRandomFoodNickname();
+            document.getElementById('join-name').value = name;
+            showToast(`ตั้งชื่อให้เป็น "${name}" เรียบร้อยแล้ว`, 'info');
         }
 
         // Get selected allergies
         const allergies = [];
-        document.querySelectorAll('.allergy-selector .allergy-pill.active').forEach(pill => {
+        document.querySelectorAll('#view-join .allergy-selector .allergy-pill.active').forEach(pill => {
             allergies.push(pill.dataset.allergen);
+        });
+
+        // Get selected food craving types
+        const memberFoodTypes = [];
+        document.querySelectorAll('.join-food-type-selector .type-pill.active').forEach(pill => {
+            if (pill.dataset.type && pill.dataset.type !== 'all') {
+                memberFoodTypes.push(pill.dataset.type);
+            }
         });
 
         state.name = name;
@@ -736,12 +1790,22 @@ function setupEventListeners() {
         socket.emit('join_room', {
             roomId: roomId,
             name: name,
-            allergies: allergies
+            allergies: allergies,
+            preferences: {
+                foodTypes: memberFoodTypes
+            }
         });
     });
 
-    // Host - Start Game
+    // Host - Start Game (Enforce > 1 member for group mode)
     document.getElementById('btn-start-game').addEventListener('click', () => {
+        if (!state.isCreator) return;
+        const userCount = state.users ? state.users.length : 0;
+        if (userCount < 2) {
+            soundFx.playPop();
+            showToast('โหมดกลุ่มต้องมีสมาชิกมากกว่า 1 คนขึ้นไป กรุณารอเพื่อนเข้าห้องก่อนนะ!', 'warning');
+            return;
+        }
         if (state.roomId) {
             socket.emit('start_game', {
                 roomId: state.roomId,
@@ -770,6 +1834,16 @@ function setupEventListeners() {
         swipeTopCard('right');
     });
 
+    // Gamification: Live Room Emote Reactions 💬
+    document.querySelectorAll('.btn-reaction').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const emoji = btn.dataset.emoji;
+            if (emoji) {
+                sendRoomReaction(emoji);
+            }
+        });
+    });
+
     document.getElementById('btn-toggle-info').addEventListener('click', () => {
         const btn = document.getElementById('btn-toggle-info');
         btn.classList.add('btn-clicked');
@@ -777,6 +1851,10 @@ function setupEventListeners() {
         soundFx.playPop();
         toggleTopCardDrawer();
     });
+
+
+
+
 
     // Restart Application
     document.getElementById('btn-restart').addEventListener('click', () => {
@@ -787,7 +1865,7 @@ function setupEventListeners() {
         socket.connect();
     });
 
-    // Quick Guest / Tester Login
+    // Quick Guest / Return to Main App
     const btnQuickGuest = document.getElementById('btn-quick-guest-login');
     if (btnQuickGuest) {
         btnQuickGuest.addEventListener('click', () => {
@@ -795,8 +1873,17 @@ function setupEventListeners() {
             btnQuickGuest.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเข้าสู่ระบบ...';
             triggerQuickGuestLogin(() => {
                 btnQuickGuest.disabled = false;
-                btnQuickGuest.innerHTML = '<i class="fa-solid fa-bolt" style="color: #fde047;"></i> เข้าใช้งานทันที (สำหรับทดสอบ / Guest)';
+                btnQuickGuest.innerHTML = '<i class="fa-solid fa-bolt" style="color: #fde047;"></i> เข้าใช้งานทันทีโดยไม่ต้องล็อกอิน (โหมดทั่วไป)';
+                showView('landing');
+                showToast('เข้าใช้งานในโหมดทั่วไป สามารถปัดเลือกร้านได้ทันที 🍜', 'info');
             });
+        });
+    }
+
+    const btnAuthBack = document.getElementById('btn-auth-back-to-app');
+    if (btnAuthBack) {
+        btnAuthBack.addEventListener('click', () => {
+            showView('landing');
         });
     }
 
@@ -857,11 +1944,24 @@ function setupEventListeners() {
         const securityQuestion = (document.getElementById('view-signup-question')?.value || '').trim();
         const securityAnswer = (document.getElementById('view-signup-answer')?.value || '').trim();
         const recoveryPin = (document.getElementById('view-signup-pin')?.value || '').trim();
+        const pdpaConsent = document.getElementById('view-signup-pdpa-consent')?.checked;
+        const marketingConsent = document.getElementById('view-signup-marketing-consent')?.checked || false;
 
         if (password !== confirmPassword) {
             alert('รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกัน');
             return;
         }
+
+        if (!pdpaConsent) {
+            alert('กรุณายินยอมรับข้อกำหนดและนโยบายความเป็นส่วนตัว (PDPA) ก่อนสมัครสมาชิก');
+            return;
+        }
+
+        // Get allergy tags selected in signup form
+        const checkedAllergens = [];
+        document.querySelectorAll('#view-signup-form .signup-allergy-selector .allergy-pill.active').forEach(pill => {
+            if (pill.dataset.allergen) checkedAllergens.push(pill.dataset.allergen);
+        });
 
         fetch('/api/signup', {
             method: 'POST',
@@ -870,11 +1970,13 @@ function setupEventListeners() {
                 username,
                 password,
                 displayName: username,
-                allergies: [],
+                allergies: checkedAllergens,
                 email,
                 securityQuestion,
                 securityAnswer,
-                recoveryPin
+                recoveryPin,
+                pdpaConsent,
+                marketingConsent
             })
         })
             .then(res => {
@@ -885,6 +1987,8 @@ function setupEventListeners() {
             })
             .then(data => {
                 state.currentUser = data;
+                updateHeaderUI();
+                prefillUserPreferences();
                 routeAfterAuth();
                 alert('ลงทะเบียนสำเร็จ! ยินดีต้อนรับ ' + data.displayName);
             })
@@ -894,10 +1998,93 @@ function setupEventListeners() {
     });
 }
 
+function updatePrefAccordionBadges() {
+    // 1. Allergies Badge
+    const badgeAllergies = document.getElementById('badge-pref-allergies');
+    if (badgeAllergies) {
+        const activeAllergies = document.querySelectorAll('.host-allergy-selector .allergy-pill.active');
+        if (activeAllergies.length === 0) {
+            badgeAllergies.innerText = 'ไม่แพ้ / ทานได้หมด';
+        } else if (activeAllergies.length === 1) {
+            badgeAllergies.innerText = activeAllergies[0].innerText.trim();
+        } else {
+            badgeAllergies.innerText = `${activeAllergies[0].innerText.trim()} +${activeAllergies.length - 1}`;
+        }
+    }
+
+    // 2. Food Types Badge
+    const badgeFood = document.getElementById('badge-pref-food-types');
+    if (badgeFood) {
+        const allPill = document.getElementById('pref-food-type-all');
+        const activeTypes = document.querySelectorAll('.pref-food-type-selector .type-pill.active:not(#pref-food-type-all)');
+        if (allPill && allPill.classList.contains('active')) {
+            badgeFood.innerText = 'เลือกทั้งหมด';
+        } else if (activeTypes.length === 0) {
+            badgeFood.innerText = 'เลือกทั้งหมด';
+        } else if (activeTypes.length === 1) {
+            badgeFood.innerText = activeTypes[0].innerText.trim();
+        } else {
+            badgeFood.innerText = `${activeTypes[0].innerText.trim()} +${activeTypes.length - 1}`;
+        }
+    }
+
+    // 3. Budget Badge
+    const badgeBudget = document.getElementById('badge-pref-budget');
+    if (badgeBudget) {
+        const activeBudget = document.querySelector('.budget-selector .budget-pill.active');
+        if (activeBudget) {
+            const span = activeBudget.querySelector('span');
+            badgeBudget.innerText = span ? span.innerText.trim() : activeBudget.innerText.trim();
+        } else {
+            badgeBudget.innerText = '< 100฿';
+        }
+    }
+
+    // 4. Distance Badge
+    const badgeDist = document.getElementById('badge-pref-distance');
+    const distInput = document.getElementById('pref-distance');
+    if (badgeDist && distInput) {
+        badgeDist.innerText = `${parseFloat(distInput.value).toFixed(1)} กม.`;
+    }
+}
+
+function initPrefAccordion() {
+    const accordion = document.getElementById('pref-accordion');
+    if (!accordion) return;
+
+    const items = accordion.querySelectorAll('.pref-accordion-item');
+    items.forEach(item => {
+        const header = item.querySelector('.pref-accordion-header');
+        if (!header) return;
+
+        header.addEventListener('click', () => {
+            soundFx.playPop();
+            const isOpen = item.classList.contains('open');
+
+            // Close all other items in accordion ("เปิดเลือกทีละอันๆ")
+            items.forEach(it => {
+                it.classList.remove('open');
+                const hdr = it.querySelector('.pref-accordion-header');
+                if (hdr) hdr.setAttribute('aria-expanded', 'false');
+            });
+
+            // If this item was closed, open it!
+            if (!isOpen) {
+                item.classList.add('open');
+                header.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+
+    updatePrefAccordionBadges();
+}
+
 function updatePreferencesState() {
     const selectedTypes = [];
-    document.querySelectorAll('.food-type-selector .type-pill.active').forEach(pill => {
-        selectedTypes.push(pill.dataset.type);
+    document.querySelectorAll('.pref-food-type-selector .type-pill.active').forEach(pill => {
+        if (pill.dataset.type && pill.dataset.type !== 'all' && !selectedTypes.includes(pill.dataset.type)) {
+            selectedTypes.push(pill.dataset.type);
+        }
     });
 
     const activeBudget = document.querySelector('.budget-selector .budget-pill.active');
@@ -911,9 +2098,119 @@ function updatePreferencesState() {
         maxDistance: maxDistance,
         foodTypes: selectedTypes
     };
+
+    updatePrefAccordionBadges();
 }
 
+// --- SOLO MODE HANDLERS ---
+async function startSoloSwipe() {
+    const btn = document.getElementById('btn-start-solo-swipe');
+    const btnInstant = document.getElementById('btn-solo-instant-swipe');
+
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเตรียมสำรับ...';
+    }
+    if (btnInstant) {
+        btnInstant.disabled = true;
+        btnInstant.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังจัดสำรับร้านเด็ด...';
+    }
+
+    // Read selected food craving types from solo filter chips
+    const activeSoloPills = document.querySelectorAll('#solo-food-chips .solo-chip.active');
+    const selectedTypes = [];
+    activeSoloPills.forEach(pill => {
+        if (pill.dataset.type) selectedTypes.push(pill.dataset.type);
+    });
+
+    // Read distance filter for solo mode
+    const soloDistSliderEl = document.getElementById('solo-pref-distance');
+    let selectedMaxDistance = null;
+    if (soloDistSliderEl && parseFloat(soloDistSliderEl.value) < 20.0) {
+        selectedMaxDistance = parseFloat(soloDistSliderEl.value);
+    }
+
+    // Read budget filter for solo mode
+    const activeSoloBudget = document.querySelector('#solo-budget-pills .solo-budget-pill.active');
+    const minPrice = activeSoloBudget ? (parseInt(activeSoloBudget.dataset.min, 10) || 0) : 0;
+    const maxPrice = activeSoloBudget ? (parseInt(activeSoloBudget.dataset.max, 10) || 9999) : 9999;
+
+    state.preferences = {
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        maxDistance: selectedMaxDistance,
+        foodTypes: selectedTypes
+    };
+    // Read allergy filter for solo mode
+    const activeSoloAllergies = [];
+    const soloNoneChip = document.querySelector('#solo-allergy-chips .solo-allergy-chip[data-allergen=""]');
+    const isNoneActive = soloNoneChip && soloNoneChip.classList.contains('active');
+
+    if (isNoneActive) {
+        state.allergies = [];
+    } else {
+        document.querySelectorAll('#solo-allergy-chips .solo-allergy-chip.active:not([data-allergen=""])').forEach(chip => {
+            if (chip.dataset.allergen) activeSoloAllergies.push(chip.dataset.allergen);
+        });
+        if (activeSoloAllergies.length > 0) {
+            state.allergies = activeSoloAllergies;
+        } else {
+            state.allergies = (state.currentUser && Array.isArray(state.currentUser.allergies)) ? [...state.currentUser.allergies] : [];
+        }
+    }
+    state.isSolo = true;
+
+    const coords = state.userLocation ? {
+        latitude: state.userLocation.lat,
+        longitude: state.userLocation.lng
+    } : null;
+
+    try {
+        const res = await fetch('/api/solo/deck', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                preferences: state.preferences,
+                allergies: state.allergies,
+                coords: coords
+            })
+        });
+
+        const data = await res.json();
+        if (!data.success || !data.restaurants || data.restaurants.length === 0) {
+            showToast('ไม่พบร้านอาหารที่ตรงเงื่อนไข ระบบจะลองขยายระยะทางให้', 'warning');
+            return;
+        }
+
+        state.restaurants = data.restaurants;
+        state.currentIndex = 0;
+        state.votes = {};
+        state.soloLiked = [];
+        state.isSolo = true;
+        state.roomId = null;
+
+        showView('swipe');
+        renderDeck();
+        updateProgressBar();
+        showToast(`พบร้านเด็ด ${data.restaurants.length} ร้าน! ปัดเลือกร้านที่ชอบได้เลย 🍜`, 'success');
+    } catch (err) {
+        console.error('Failed to start solo swipe:', err);
+        showToast('เกิดข้อผิดพลาดในการโหลดรายการร้านอาหาร', 'error');
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = 'เริ่มปัดเลย 🍽️ <i class="fa-solid fa-arrow-right"></i>';
+        }
+        if (btnInstant) {
+            btnInstant.disabled = false;
+            btnInstant.innerHTML = '<i class="fa-solid fa-bolt"></i> ปัดหาร้านกินเลย! (Instant Swipe)';
+        }
+    }
+}
+
+
 // --- SOCKET EVENTS ---
+
 socket.on('room_created', (data) => {
     state.roomId = data.roomId;
     if (data.networkUrl) state.networkBaseUrl = data.networkUrl;
@@ -1066,17 +2363,40 @@ socket.on('room_state', (data) => {
         });
     }
 
-    // Control Start Button visibility
+    // Control Start Button visibility & Minimum 2 members requirement for group
     const startBtn = document.getElementById('btn-start-game');
     const waitMsg = document.getElementById('host-wait-msg');
+    const userCount = data.users ? data.users.length : 0;
 
     if (state.isCreator) {
         startBtn.classList.remove('hidden');
         waitMsg.classList.add('hidden');
+
+        if (userCount < 2) {
+            startBtn.disabled = true;
+            startBtn.classList.add('btn-disabled');
+            startBtn.innerHTML = '<i class="fa-solid fa-users"></i> รอเพื่อนเข้าห้อง (ต้องการอย่างน้อย 2 คน)';
+            startBtn.title = 'โหมดกลุ่มต้องมีสมาชิกมากกว่า 1 คนเพื่อเริ่มปัดโหวต';
+        } else {
+            startBtn.disabled = false;
+            startBtn.classList.remove('btn-disabled');
+            startBtn.innerHTML = `<i class="fa-solid fa-play"></i> เริ่มการโหวตเลย! (${userCount} คนพร้อมแล้ว)`;
+            startBtn.title = 'กดเพื่อเริ่มการโหวตกลุ่ม';
+        }
     } else {
         startBtn.classList.add('hidden');
         waitMsg.classList.remove('hidden');
+        if (userCount < 2) {
+            waitMsg.innerHTML = '<div class="spinner"></div><span>รอเพื่อนเข้าร่วมห้องเพิ่ม (ต้องการอย่างน้อย 2 คนขึ้นไป)...</span>';
+        } else {
+            waitMsg.innerHTML = `<div class="spinner"></div><span>สมาชิกครบ ${userCount} คนแล้ว รอหัวหน้าห้องกดเริ่มโหวต...</span>`;
+        }
     }
+});
+
+socket.on('start_game_error', (data) => {
+    soundFx.playPop();
+    showToast(data.message || 'ไม่สามารถเริ่มโหวตกลุ่มได้', 'warning');
 });
 
 socket.on('game_started', (data) => {
@@ -1108,6 +2428,18 @@ socket.on('user_progress', (data) => {
     }
 });
 
+// Gamification: Live Room Emote Event
+socket.on('room_reaction', (data) => {
+    if (data && data.emoji) {
+        spawnFloatingReaction(data.emoji, data.senderName || 'เพื่อน');
+        if (typeof soundFx !== 'undefined' && soundFx.playPop) {
+            soundFx.playPop();
+        }
+    }
+});
+
+
+
 socket.on('match_found', (data) => {
     const r = data.restaurant;
     const isFallback = data.isFallback;
@@ -1117,53 +2449,81 @@ socket.on('match_found', (data) => {
 
     // Wait 350ms for the swipe animation to finish before showing the results screen
     setTimeout(() => {
-        // Play confetti explosion!
-        triggerConfettiExplosion();
+        renderResultScreen(r, {
+            isSolo: false,
+            isFallback: isFallback,
+            reason: data.reason
+        });
+    }, 350);
+});
 
-        // Play celebratory sound & vibrations
-        soundFx.playMatch();
-        if (navigator.vibrate) navigator.vibrate([50, 70, 50, 70, 100]);
+// Render Match / Solo Result Screen
+function renderResultScreen(r, options = {}) {
+    // Play confetti explosion!
+    triggerConfettiExplosion();
 
-        // Particle bursts from center of result screen
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight * 0.35;
-        spawnParticleBurst(centerX, centerY, 'heart');
-        setTimeout(() => spawnParticleBurst(centerX - 60, centerY + 25, 'star'), 180);
-        setTimeout(() => spawnParticleBurst(centerX + 60, centerY + 25, 'star'), 360);
+    // Play celebratory sound & vibrations
+    soundFx.playMatch();
+    if (navigator.vibrate) navigator.vibrate([50, 70, 50, 70, 100]);
 
-        showView('result');
+    // Particle bursts from center of result screen
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight * 0.35;
+    spawnParticleBurst(centerX, centerY, 'heart');
+    setTimeout(() => spawnParticleBurst(centerX - 60, centerY + 25, 'star'), 180);
+    setTimeout(() => spawnParticleBurst(centerX + 60, centerY + 25, 'star'), 360);
 
-        const stamp = document.getElementById('result-stamp');
-        const subtitle = document.getElementById('result-subtitle');
-        const badgeEl = document.getElementById('match-consensus-badge');
-        const percentEl = document.getElementById('match-consensus-percent');
+    showView('result');
 
-        if (isFallback) {
-            stamp.innerText = "DECIDED! 🎲";
-            stamp.className = "match-stamp fallback animate-bounce";
-            subtitle.innerHTML = `<i class="fa-solid fa-clock"></i> ${data.reason}`;
+    const stamp = document.getElementById('result-stamp');
+    const subtitle = document.getElementById('result-subtitle');
+    const badgeEl = document.getElementById('match-consensus-badge');
+    const percentEl = document.getElementById('match-consensus-percent');
+    const retryBtn = document.getElementById('btn-solo-retry');
+
+    if (options.isSolo) {
+        if (retryBtn) retryBtn.classList.remove('hidden');
+        if (badgeEl) badgeEl.style.display = 'none';
+        if (stamp) {
+            stamp.innerHTML = options.stampText || "<i class='fa-solid fa-utensils'></i> SOLO WINNER!";
+            stamp.className = options.stampClass || "match-stamp animate-bounce";
+        }
+        if (subtitle) {
+            subtitle.innerHTML = options.subtitleHtml || "มื้อนี้เลือกร้านนี้เลย ทานให้อร่อยนะครับ! 🍽️";
+        }
+    } else {
+        if (retryBtn) retryBtn.classList.add('hidden');
+        if (options.isFallback) {
+            if (stamp) {
+                stamp.innerText = "DECIDED! 🎲";
+                stamp.className = "match-stamp fallback animate-bounce";
+            }
+            if (subtitle) subtitle.innerHTML = `<i class="fa-solid fa-clock"></i> ${options.reason || 'หมดเวลา'}`;
             if (badgeEl) badgeEl.style.display = 'none';
         } else {
-            stamp.innerHTML = "<i class='fa-solid fa-heart'></i> MATCHED!";
-            stamp.className = "match-stamp animate-bounce";
-            subtitle.innerText = "ใจตรงกันเป็นมติเอกฉันท์! ทานให้อร่อยนะครับ";
+            if (stamp) {
+                stamp.innerHTML = "<i class='fa-solid fa-heart'></i> MATCHED!";
+                stamp.className = "match-stamp animate-bounce";
+            }
+            if (subtitle) subtitle.innerText = "ใจตรงกันเป็นมติเอกฉันท์! ทานให้อร่อยนะครับ";
             if (badgeEl) {
                 badgeEl.style.display = 'inline-flex';
                 animateCountUp(percentEl, 0, 100, 1200);
             }
         }
+    }
 
-        const cardContainer = document.getElementById('matched-restaurant-card');
+    const cardContainer = document.getElementById('matched-restaurant-card');
 
-        if (r) {
-            const distNum = (r.distance !== null && r.distance !== undefined) ? parseFloat(r.distance) : NaN;
-            const distDisplay = !isNaN(distNum) ? `${distNum.toFixed(1)} กม.` : 'ไม่ระบุระยะทาง';
+    if (r) {
+        const distNum = (r.distance !== null && r.distance !== undefined) ? parseFloat(r.distance) : NaN;
+        const distDisplay = !isNaN(distNum) ? `${distNum.toFixed(1)} กม.` : 'ไม่ระบุระยะทาง';
 
-            cardContainer.innerHTML = `
-                <div class="matched-image-wrapper">
-                    <img src="${r.image}" alt="${r.name}" class="matched-image">
-                </div>
-                <div class="matched-details">
+        cardContainer.innerHTML = `
+            <div class="matched-image-wrapper">
+                <img src="${r.image}" alt="${r.name}" class="matched-image" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
+            </div>
+            <div class="matched-details">
                 <div class="matched-title-row">
                     <h2 class="matched-name">${r.name}</h2>
                     <div class="card-rating"><i class="fa-solid fa-star"></i> ${r.rating}</div>
@@ -1193,16 +2553,16 @@ socket.on('match_found', (data) => {
             <div class="matched-details" style="text-align: center; padding: 3rem 1rem;">
                 <i class="fa-solid fa-face-frown text-accent" style="font-size: 3rem; margin-bottom: 1rem;"></i>
                 <h2>ไม่พบร้านอาหารที่แมตช์</h2>
-                <p class="matched-desc">ไม่มีร้านที่ตรงกับความต้องการและข้อจำกัดของทุกคนในกลุ่ม</p>
+                <p class="matched-desc">ไม่มีร้านที่ตรงกับความต้องการและข้อจำกัด</p>
             </div>
         `;
         document.getElementById('btn-open-map').classList.add('hidden');
     }
-    }, 350);
-});
+}
 
 // --- RENDER DECK & CARDS ---
 function renderDeck() {
+
     const deck = document.getElementById('swipe-deck');
 
     // Save empty state element
@@ -1226,7 +2586,7 @@ function renderDeck() {
 
         card.innerHTML = `
             <div class="card-image-wrapper">
-                <img src="${r.image}" class="card-image" alt="${r.name}">
+                <img src="${r.image}" class="card-image" alt="${r.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
                 <div class="card-stamp card-stamp-like">อยากกิน</div>
                 <div class="card-stamp card-stamp-dislike">ไม่กิน</div>
                 <div class="card-info-badge"><i class="fa-solid fa-location-arrow"></i> ${distDisplay}</div>
@@ -1359,10 +2719,10 @@ function setupCardGestures(card) {
         card.style.transform = `translate3d(${dX}px, ${dY}px, 0) rotate(${rotate}deg)`;
 
         // Fade in Stamps
-        if (dX > 20) { // dragging right
+        if (dX > 20) { // dragging right -> Like
             likeStamp.style.opacity = Math.min((dX - 20) / 100, 0.9);
             dislikeStamp.style.opacity = 0;
-        } else if (dX < -20) { // dragging left
+        } else if (dX < -20) { // dragging left -> Dislike
             dislikeStamp.style.opacity = Math.min((-dX - 20) / 100, 0.9);
             likeStamp.style.opacity = 0;
         } else {
@@ -1441,10 +2801,63 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
     }
 
     const rId = card.dataset.id;
+    const currentR = state.restaurants.find(r => String(r.id) === String(rId));
+
+
 
     // Register vote
     state.votes[rId] = direction;
     state.currentIndex++;
+
+    // Gamification: Foodie Streak & Combo Counter
+    handleSwipeStreak(direction);
+
+    if (state.isSolo) {
+        if (direction === 'right' && currentR) {
+            state.soloLiked.push(currentR);
+        }
+
+        updateProgressBar();
+
+        setTimeout(() => {
+            card.remove();
+
+            // Check if deck is finished
+            const remainingCards = document.querySelectorAll('.swipe-card:not(.swiped)');
+            if (remainingCards.length === 0) {
+                setTimeout(() => {
+                    let winner = null;
+                    let subtitle = '';
+                    if (state.soloLiked.length > 0) {
+                        winner = state.soloLiked[Math.floor(Math.random() * state.soloLiked.length)];
+                        subtitle = `คัดสรรจาก ${state.soloLiked.length} ร้านที่คุณปัดถูกใจ! 🍽️`;
+                    } else {
+                        winner = state.restaurants[Math.floor(Math.random() * state.restaurants.length)];
+                        subtitle = `สุ่มร้านเด็ดให้จากสำรับทั้งหมด! 🍽️`;
+                    }
+                    renderResultScreen(winner, {
+                        isSolo: true,
+                        stampText: "<i class='fa-solid fa-utensils'></i> SOLO WINNER!",
+                        subtitleHtml: subtitle
+                    });
+
+                    // Record history
+                    if (winner) {
+                        fetch('/api/solo/record-match', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                restaurant: winner,
+                                isLuckyPick: false,
+                                userName: state.currentUser ? (state.currentUser.displayName || state.currentUser.username) : 'นักชิมเดี่ยว'
+                            })
+                        }).catch(() => {});
+                    }
+                }, 350);
+            }
+        }, 300);
+        return;
+    }
 
     // Submit swipe to backend server
     socket.emit('submit_swipe', {
@@ -1467,6 +2880,75 @@ function swipeTopCard(direction) {
         const topCard = cards[cards.length - 1];
         executeSwipeAction(topCard, direction, direction === 'right' ? 200 : -200);
     }
+}
+
+
+
+// Gamification: Foodie Streak & Combo Counter
+const COMBO_QUOTES = [
+    'อร่อยต่อเนื่อง 🤤', 'ปัดไฟลุกแล้ว 🔥', 'หิวไม่ไหวแล้ว ⚡',
+    'สายกินตัวจริง 👑', 'จานนี้ต้องโดน! 🌶️', 'เนื้อย่างเยียวยาทุกสิ่ง 🥩',
+    'หิวจนท้องร้อง 🍕', 'กระเพาะเรียกร้อง 💖'
+];
+
+function handleSwipeStreak(direction) {
+    const container = document.getElementById('combo-streak-container');
+    const textEl = document.getElementById('combo-text');
+    const quoteEl = document.getElementById('combo-quote');
+
+    if (direction === 'right') {
+        state.comboCount = (state.comboCount || 0) + 1;
+        if (state.comboCount >= 2) {
+            soundFx.playCombo(state.comboCount);
+            if (container && textEl && quoteEl) {
+                textEl.innerText = `COMBO x${state.comboCount}!`;
+                const quote = COMBO_QUOTES[Math.min(state.comboCount - 2, COMBO_QUOTES.length - 1)];
+                quoteEl.innerText = quote;
+                container.classList.remove('hidden');
+
+                if (state.comboTimer) clearTimeout(state.comboTimer);
+                state.comboTimer = setTimeout(() => {
+                    container.classList.add('hidden');
+                }, 2800);
+            }
+        }
+    } else {
+        state.comboCount = 0;
+        if (container) container.classList.add('hidden');
+        if (state.comboTimer) clearTimeout(state.comboTimer);
+    }
+}
+
+// Gamification: Live Room Emote Reactions
+function sendRoomReaction(emoji) {
+    if (!state.roomId) {
+        spawnFloatingReaction(emoji, state.name || 'คุณ');
+        soundFx.playPop();
+        return;
+    }
+    socket.emit('send_reaction', {
+        roomId: state.roomId,
+        emoji
+    });
+    soundFx.playPop();
+}
+
+function spawnFloatingReaction(emoji, senderName) {
+    const layer = document.getElementById('floating-reactions-layer');
+    if (!layer) return;
+
+    const bubble = document.createElement('div');
+    bubble.className = 'floating-reaction-bubble';
+    bubble.style.left = `${Math.random() * 70 + 15}%`;
+    bubble.innerHTML = `
+        <span class="floating-reaction-emoji">${emoji}</span>
+        <span class="floating-reaction-sender">${senderName}</span>
+    `;
+
+    layer.appendChild(bubble);
+    setTimeout(() => {
+        if (bubble.parentNode) bubble.parentNode.removeChild(bubble);
+    }, 2800);
 }
 
 function toggleTopCardDrawer() {
@@ -1553,11 +3035,24 @@ function startQRScanner() {
 
         if (roomId) {
             stopQRScanner();
-            // Fill Room ID and redirect to join config
-            showView('join');
-            document.getElementById('join-room-id').value = roomId;
+            showToast('กำลังตรวจสอบห้อง...', 'info');
+            verifyRoomExists(roomId).then(check => {
+                if (check.exists && !check.started) {
+                    showView('join');
+                    const joinRoomIdEl = document.getElementById('join-room-id');
+                    if (joinRoomIdEl) joinRoomIdEl.value = roomId;
+
+                    const joinNameInput = document.getElementById('join-name');
+                    if (joinNameInput && !joinNameInput.value.trim()) {
+                        joinNameInput.value = state.currentUser ? (state.currentUser.displayName || state.currentUser.username) : getRandomFoodNickname();
+                    }
+                    showToast(check.message, 'success');
+                } else {
+                    showToast(check.message || `ไม่พบห้อง "${roomId}" หรือห้องอาจถูกปิดไปแล้ว`, 'error');
+                }
+            });
         } else {
-            alert("QR Code ไม่ถูกต้อง สำหรับเข้าร่วมห้อง GINDER");
+            showToast("QR Code ไม่ถูกต้อง สำหรับเข้าร่วมห้อง GINDER", "warning");
         }
     };
 
@@ -1601,8 +3096,16 @@ function routeAfterAuth() {
     updateHeaderUI();
     prefillUserPreferences();
     if (state.targetRoomId) {
-        // Scanned QR code with native phone camera -> Auto join group immediately!
-        attemptAutoJoinRoom();
+        // Scanned QR code with native phone camera -> Verify room first before attempting join!
+        verifyRoomExists(state.targetRoomId).then(check => {
+            if (check.exists && !check.started) {
+                attemptAutoJoinRoom();
+            } else {
+                showToast(check.message || `ไม่พบห้อง "${state.targetRoomId}" ในระบบ`, 'error');
+                state.targetRoomId = null;
+                showView('landing');
+            }
+        });
     } else if (views.auth.classList.contains('active')) {
         showView('landing');
     }
@@ -1655,14 +3158,11 @@ function triggerQuickGuestLogin(callback) {
                 state.currentUser = data;
                 if (data.networkBaseUrl) state.networkBaseUrl = data.networkBaseUrl;
                 routeAfterAuth();
-            } else {
-                showView('auth');
             }
         })
         .catch(err => {
             if (callback) callback();
             console.error("Guest login failed:", err);
-            showView('auth');
         });
 }
 
@@ -1675,19 +3175,17 @@ function checkCurrentUser() {
                 if (data.networkBaseUrl) state.networkBaseUrl = data.networkBaseUrl;
                 routeAfterAuth();
             } else {
-                // If user was invited via link/QR with roomId, auto-login immediately
-                if (state.targetRoomId) {
-                    triggerQuickGuestLogin();
-                } else {
-                    state.currentUser = null;
-                    showView('auth');
+                // Frictionless Onboarding: Auto guest login silently in background
+                triggerQuickGuestLogin(() => {
                     updateHeaderUI();
-                }
+                });
             }
         })
         .catch(err => {
             console.error("Error checking auth status:", err);
-            triggerQuickGuestLogin();
+            triggerQuickGuestLogin(() => {
+                updateHeaderUI();
+            });
         });
 }
 
@@ -1695,27 +3193,33 @@ function updateHeaderUI() {
     const profileContainer = document.getElementById('user-header-profile');
     if (!profileContainer) return;
 
-    if (state.currentUser) {
+    const isMember = (state.currentUser && !state.currentUser.isGuest);
+
+    if (isMember) {
+        // --- LOGGED-IN REGISTERED MEMBER ---
         let adminBtn = '';
         if (state.currentUser.role === 'admin') {
-            adminBtn = `<a href="/admin" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.75rem; border-radius: var(--border-radius-sm); margin-right: 0.5rem; color: #fff; text-decoration: none;"><i class="fa-solid fa-crown"></i> จัดการระบบ</a>`;
+            adminBtn = `<a href="/admin" target="_blank" class="btn btn-primary btn-sm btn-header-admin" title="จัดการระบบ (Admin)"><i class="fa-solid fa-crown"></i> <span class="header-admin-label">จัดการ</span></a>`;
         }
 
+        const safeMemberName = (state.currentUser && (state.currentUser.displayName || state.currentUser.username))
+            ? String(state.currentUser.displayName || state.currentUser.username).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            : 'สมาชิก';
+
         profileContainer.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div class="user-profile-group">
                 ${adminBtn}
-                <div id="btn-header-profile" class="profile-info-badge" style="background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; transition: background 0.2s;" title="คลิกเพื่อจัดการโปรไฟล์">
-                    <i class="fa-solid fa-user-circle text-accent"></i>
-                    <span>${state.currentUser.displayName}</span>
-                    <i class="fa-solid fa-chevron-down" style="font-size: 0.65rem; opacity: 0.6;"></i>
+                <div id="btn-header-profile" class="profile-info-badge member-badge" title="คลิกเพื่อจัดการบัญชีสมาชิก">
+                    <i class="fa-solid fa-circle-user text-accent"></i>
+                    <span class="profile-name-text">${safeMemberName}</span>
+                    <i class="fa-solid fa-chevron-down profile-chevron"></i>
                 </div>
-                <button id="btn-logout" class="btn btn-secondary btn-sm" style="padding: 0.35rem; font-size: 0.75rem; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: var(--text-primary); cursor: pointer;" title="ออกจากระบบ">
-                    <i class="fa-solid fa-sign-out-alt"></i>
+                <button id="btn-logout" class="btn btn-header-logout" title="ออกจากระบบ" aria-label="ออกจากระบบ" type="button">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 </button>
             </div>
         `;
 
-        // Bind profile modal trigger
         const profileBtn = document.getElementById('btn-header-profile');
         if (profileBtn) {
             profileBtn.addEventListener('click', () => {
@@ -1723,25 +3227,61 @@ function updateHeaderUI() {
             });
         }
 
-        // Bind logout button
-        document.getElementById('btn-logout').addEventListener('click', () => {
-            if (confirm('คุณต้องการออกจากระบบใช่หรือไม่?')) {
-                fetch('/api/logout', { method: 'POST' })
-                    .then(res => res.json())
-                    .then(() => {
-                        state.currentUser = null;
-                        updateHeaderUI();
-                        // Clear prefilled fields
-                        document.getElementById('pref-name').value = '';
-                        document.getElementById('join-name').value = '';
-                        document.querySelectorAll('.allergy-selector .allergy-pill').forEach(p => p.classList.remove('active'));
-                        alert('ออกจากระบบแล้ว');
-                        showView('auth');
-                    });
-            }
-        });
+        const logoutBtn = document.getElementById('btn-logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                if (confirm('คุณต้องการออกจากระบบใช่หรือไม่?')) {
+                    fetch('/api/logout', { method: 'POST' })
+                        .then(res => res.json())
+                        .then(data => {
+                            state.currentUser = (data && data.isGuest) ? data : null;
+                            updateHeaderUI();
+                            prefillUserPreferences();
+                            showToast('ออกจากระบบแล้ว คุณยังคงใช้งานระบบแบบทั่วไป (Guest) ได้ตามปกติ 🍜', 'info');
+                            showView('landing');
+                        })
+                        .catch(err => {
+                            triggerQuickGuestLogin(() => {
+                                updateHeaderUI();
+                                showView('landing');
+                            });
+                        });
+                }
+            });
+        }
     } else {
-        profileContainer.innerHTML = '';
+        // --- GUEST / UNREGISTERED USER (USE FIRST, OPT-IN LOGIN ANYTIME) ---
+        const rawGuestName = (state.currentUser && state.currentUser.displayName)
+            ? state.currentUser.displayName
+            : 'ผู้ใช้งาน';
+        const safeGuestName = String(rawGuestName).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        profileContainer.innerHTML = `
+            <div class="user-profile-group">
+                <div id="btn-header-profile" class="profile-info-badge guest-badge" title="ผู้ใช้ทั่วไป (แตะเพื่อดูโปรไฟล์หรือเปลี่ยนชื่อ)">
+                    <i class="fa-solid fa-user-astronaut text-accent"></i>
+                    <span class="profile-name-text">${safeGuestName}</span>
+                </div>
+                <button id="btn-header-login" class="btn btn-header-login-highlight" type="button" title="เข้าสู่ระบบ หรือ สมัครสมาชิก">
+                    <i class="fa-solid fa-right-to-bracket text-accent"></i>
+                    <span class="header-login-btn-label">เข้าสู่ระบบ</span>
+                </button>
+            </div>
+        `;
+
+        const profileBtn = document.getElementById('btn-header-profile');
+        if (profileBtn) {
+            profileBtn.addEventListener('click', () => {
+                openProfileModal();
+            });
+        }
+
+        const headerLoginBtn = document.getElementById('btn-header-login');
+        if (headerLoginBtn) {
+            headerLoginBtn.addEventListener('click', () => {
+                openAuthModal();
+            });
+        }
     }
 }
 
@@ -1753,10 +3293,12 @@ function setupProfileAndFeedback() {
     const tabPasswordBtn = document.getElementById('tab-profile-password');
     const tabHistoryBtn = document.getElementById('tab-profile-history');
     const tabSecurityBtn = document.getElementById('tab-profile-security');
+    const tabPdpaBtn = document.getElementById('tab-profile-pdpa');
     const paneInfo = document.getElementById('tab-pane-profile-info');
     const panePassword = document.getElementById('tab-pane-profile-password');
     const paneHistory = document.getElementById('tab-pane-profile-history');
     const paneSecurity = document.getElementById('tab-pane-profile-security');
+    const panePdpa = document.getElementById('tab-pane-profile-pdpa');
 
     if (closeProfileBtn && profileModal) {
         closeProfileBtn.addEventListener('click', () => {
@@ -1768,13 +3310,13 @@ function setupProfileAndFeedback() {
     }
 
     function activateProfileTab(activeBtn, activePane) {
-        [tabInfoBtn, tabPasswordBtn, tabHistoryBtn, tabSecurityBtn].forEach(b => {
+        [tabInfoBtn, tabPasswordBtn, tabHistoryBtn, tabSecurityBtn, tabPdpaBtn].forEach(b => {
             if (b) {
                 b.classList.remove('btn-primary', 'active');
                 b.classList.add('btn-secondary');
             }
         });
-        [paneInfo, panePassword, paneHistory, paneSecurity].forEach(p => {
+        [paneInfo, panePassword, paneHistory, paneSecurity, panePdpa].forEach(p => {
             if (p) p.classList.add('hidden');
         });
 
@@ -1795,6 +3337,7 @@ function setupProfileAndFeedback() {
         activateProfileTab(tabSecurityBtn, paneSecurity);
         loadUserSecuritySettings();
     });
+    if (tabPdpaBtn) tabPdpaBtn.addEventListener('click', () => activateProfileTab(tabPdpaBtn, panePdpa));
 
     function loadUserSecuritySettings() {
         fetch('/api/user/security')
@@ -1854,15 +3397,21 @@ function setupProfileAndFeedback() {
             const displayName = document.getElementById('profile-display-name').value.trim();
             if (!displayName) return;
 
+            const selectedAllergies = [];
+            document.querySelectorAll('#profile-allergy-selector .allergy-pill.active').forEach(p => {
+                if (p.dataset.allergen) selectedAllergies.push(p.dataset.allergen);
+            });
+
             fetch('/api/user/profile', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ displayName })
+                body: JSON.stringify({ displayName, allergies: selectedAllergies })
             })
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
                         state.currentUser.displayName = data.displayName;
+                        state.currentUser.allergies = data.allergies || selectedAllergies;
                         updateHeaderUI();
                         prefillUserPreferences();
                         alert('บันทึกข้อมูลส่วนตัวเรียบร้อยแล้ว');
@@ -1955,6 +3504,80 @@ function setupProfileAndFeedback() {
                 .catch(err => alert('เกิดข้อผิดพลาด: ' + err.message));
         });
     }
+
+    // PDPA: Data Subject Rights (DSR) in Profile
+    const btnPdpaExport = document.getElementById('btn-pdpa-export-data');
+    if (btnPdpaExport) {
+        btnPdpaExport.addEventListener('click', () => {
+            btnPdpaExport.disabled = true;
+            btnPdpaExport.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังรวบรวมสำเนาข้อมูล...';
+            fetch('/api/pdpa/export-my-data')
+                .then(res => {
+                    if (!res.ok) throw new Error('ไม่สามารถดาวน์โหลดข้อมูลได้');
+                    return res.json();
+                })
+                .then(data => {
+                    btnPdpaExport.disabled = false;
+                    btnPdpaExport.innerHTML = '<i class="fa-solid fa-download"></i> ดาวน์โหลดสำเนาข้อมูลส่วนบุคคลของฉัน (JSON)';
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `ginder_personal_data_${data.user?.username || 'user'}_${new Date().toISOString().split('T')[0]}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    alert('ดาวน์โหลดสำเนาข้อมูลส่วนบุคคลตามสิทธิ PDPA (Right of Access) สำเร็จเรียบร้อย');
+                })
+                .catch(err => {
+                    btnPdpaExport.disabled = false;
+                    btnPdpaExport.innerHTML = '<i class="fa-solid fa-download"></i> ดาวน์โหลดสำเนาข้อมูลส่วนบุคคลของฉัน (JSON)';
+                    alert('เกิดข้อผิดพลาด: ' + err.message);
+                });
+        });
+    }
+
+    const btnPdpaDelete = document.getElementById('btn-pdpa-delete-account');
+    if (btnPdpaDelete) {
+        btnPdpaDelete.addEventListener('click', () => {
+            const passwordInput = document.getElementById('pdpa-delete-confirm-password');
+            const password = passwordInput ? passwordInput.value : '';
+            if (!password) {
+                alert('กรุณาป้อนรหัสผ่านปัจจุบันเพื่อยืนยันการลบบัญชีและทำลายข้อมูล');
+                if (passwordInput) passwordInput.focus();
+                return;
+            }
+            const confirmed = confirm('⚠️ คำเตือนสำคัญตาม PDPA:\n\nการดำเนินการนี้จะลบข้อมูลส่วนตัว การตั้งค่าความปลอดภัย และประวัติทั้งหมดของคุณอย่างถาวร (Right to Erasure)\n\nคุณแน่ใจหรือไม่ที่จะลบบัญชีนี้?');
+            if (!confirmed) return;
+
+            btnPdpaDelete.disabled = true;
+            btnPdpaDelete.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังลบข้อมูล...';
+
+            fetch('/api/pdpa/delete-my-account', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password })
+            })
+                .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                .then(({ ok, data }) => {
+                    btnPdpaDelete.disabled = false;
+                    btnPdpaDelete.innerHTML = '<i class="fa-solid fa-trash"></i> ขอลบข้อมูลและปิดบัญชีถาวร';
+                    if (!ok || !data.success) {
+                        alert(data.message || 'ไม่สามารถลบบัญชีได้');
+                        return;
+                    }
+                    alert(data.message || 'ลบบัญชีและข้อมูลส่วนบุคคลตามสิทธิ PDPA สำเร็จแล้ว');
+                    localStorage.removeItem('ginder_pdpa_consent');
+                    window.location.reload();
+                })
+                .catch(err => {
+                    btnPdpaDelete.disabled = false;
+                    btnPdpaDelete.innerHTML = '<i class="fa-solid fa-trash"></i> ขอลบข้อมูลและปิดบัญชีถาวร';
+                    alert('เกิดข้อผิดพลาด: ' + err.message);
+                });
+        });
+    }
 }
 
 function openProfileModal() {
@@ -1963,6 +3586,36 @@ function openProfileModal() {
     if (!modal) return;
     document.getElementById('profile-username').value = state.currentUser.username || '';
     document.getElementById('profile-display-name').value = state.currentUser.displayName || '';
+
+    const guestNotice = document.getElementById('profile-guest-notice');
+    const btnProfileToLogin = document.getElementById('btn-profile-to-login');
+    if (guestNotice) {
+        if (state.currentUser.isGuest) {
+            guestNotice.classList.remove('hidden');
+            if (btnProfileToLogin && !btnProfileToLogin._bound) {
+                btnProfileToLogin._bound = true;
+                btnProfileToLogin.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                    openAuthModal();
+                });
+            }
+        } else {
+            guestNotice.classList.add('hidden');
+        }
+    }
+
+    const pdpaDeletePassword = document.getElementById('pdpa-delete-confirm-password');
+    if (pdpaDeletePassword) pdpaDeletePassword.value = '';
+
+    // Prefill profile allergies
+    const userProfileAllergies = (state.currentUser && Array.isArray(state.currentUser.allergies)) ? state.currentUser.allergies : [];
+    document.querySelectorAll('#profile-allergy-selector .allergy-pill').forEach(pill => {
+        if (userProfileAllergies.includes(pill.dataset.allergen)) {
+            pill.classList.add('active');
+        } else {
+            pill.classList.remove('active');
+        }
+    });
 
     // Switch to info tab by default
     const tabInfo = document.getElementById('tab-profile-info');
@@ -2019,10 +3672,44 @@ function prefillUserPreferences() {
     if (joinNameInput) joinNameInput.value = state.currentUser.displayName;
 
     // Fill allergy selections
-    const userAllergies = state.currentUser.allergies || [];
+    const userAllergies = (state.currentUser && Array.isArray(state.currentUser.allergies)) ? state.currentUser.allergies : [];
+    state.allergies = [...userAllergies];
 
-    // Prefill both host & join allergy selectors
-    const selectors = ['.host-allergy-selector', '#view-join .allergy-selector'];
+    // Prefill profile allergy selector
+    document.querySelectorAll('#profile-allergy-selector .allergy-pill').forEach(pill => {
+        if (userAllergies.includes(pill.dataset.allergen)) {
+            pill.classList.add('active');
+        } else {
+            pill.classList.remove('active');
+        }
+    });
+
+    // Prefill solo allergy chips
+    const soloAllergyChips = document.querySelectorAll('#solo-allergy-chips .solo-allergy-chip');
+    if (soloAllergyChips.length > 0) {
+        if (userAllergies.length === 0) {
+            soloAllergyChips.forEach(c => {
+                if (c.dataset.allergen === '') c.classList.add('active');
+                else c.classList.remove('active');
+            });
+        } else {
+            soloAllergyChips.forEach(c => {
+                if (c.dataset.allergen === '') {
+                    c.classList.remove('active');
+                } else if (userAllergies.includes(c.dataset.allergen)) {
+                    c.classList.add('active');
+                } else {
+                    c.classList.remove('active');
+                }
+            });
+        }
+        if (typeof updateSoloFilterBadge === 'function') {
+            updateSoloFilterBadge();
+        }
+    }
+
+    // Prefill join allergy selectors
+    const selectors = ['#view-join .allergy-selector'];
     selectors.forEach(selectorPath => {
         const selector = document.querySelector(selectorPath);
         if (selector) {
@@ -2036,6 +3723,30 @@ function prefillUserPreferences() {
             });
         }
     });
+
+    // Prefill group allergy chips
+    const groupAllergyChips = document.querySelectorAll('#group-allergy-chips .host-allergy-chip');
+    if (groupAllergyChips.length > 0) {
+        if (userAllergies.length === 0) {
+            groupAllergyChips.forEach(c => {
+                if (c.dataset.allergen === '') c.classList.add('active');
+                else c.classList.remove('active');
+            });
+        } else {
+            groupAllergyChips.forEach(c => {
+                if (c.dataset.allergen === '') {
+                    c.classList.remove('active');
+                } else if (userAllergies.includes(c.dataset.allergen)) {
+                    c.classList.add('active');
+                } else {
+                    c.classList.remove('active');
+                }
+            });
+        }
+        if (typeof updateGroupFilterBadge === 'function') {
+            updateGroupFilterBadge();
+        }
+    }
 }
 
 // Modal actions
@@ -2084,9 +3795,27 @@ if (btnCloseAuth) btnCloseAuth.addEventListener('click', closeAuthModal);
 if (tabLogin) tabLogin.addEventListener('click', () => switchAuthTab('login'));
 if (tabSignup) tabSignup.addEventListener('click', () => switchAuthTab('signup'));
 
-// Handle allergy selector inside signup form
-document.querySelectorAll('.signup-allergy-selector .allergy-pill').forEach(pill => {
+const btnModalQuickGuest = document.getElementById('btn-modal-quick-guest');
+if (btnModalQuickGuest) {
+    btnModalQuickGuest.addEventListener('click', () => {
+        closeAuthModal();
+        showToast('ใช้งานต่อในโหมดทั่วไป สามารถปัดอาหารต่อได้ทันที 🍜', 'info');
+    });
+}
+
+if (authModal) {
+    authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) {
+            closeAuthModal();
+        }
+    });
+}
+
+// Handle allergy selector inside signup forms & profile modal
+document.querySelectorAll('.signup-allergy-selector .allergy-pill, #profile-allergy-selector .allergy-pill').forEach(pill => {
     pill.addEventListener('click', () => {
+        soundFx.playPop();
+        if (navigator.vibrate) navigator.vibrate(8);
         pill.classList.toggle('active');
     });
 });
@@ -2133,6 +3862,13 @@ if (signupForm) {
         const securityQuestion = (document.getElementById('signup-question')?.value || '').trim();
         const securityAnswer = (document.getElementById('signup-answer')?.value || '').trim();
         const recoveryPin = (document.getElementById('signup-pin')?.value || '').trim();
+        const pdpaConsent = document.getElementById('signup-pdpa-consent')?.checked;
+        const marketingConsent = document.getElementById('signup-marketing-consent')?.checked || false;
+
+        if (!pdpaConsent) {
+            alert('กรุณายินยอมรับข้อกำหนดและนโยบายความเป็นส่วนตัว (PDPA) ก่อนสมัครสมาชิก');
+            return;
+        }
 
         // Get allergy tags selected in signup form
         const checkedAllergens = [];
@@ -2151,7 +3887,9 @@ if (signupForm) {
                 email,
                 securityQuestion,
                 securityAnswer,
-                recoveryPin
+                recoveryPin,
+                pdpaConsent,
+                marketingConsent
             })
         })
             .then(res => {
@@ -2192,16 +3930,7 @@ function requestUserLocation() {
     }
 }
 
-function calculateHaversine(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Radius of the Earth in km
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    return R * c;
-}
+
 
 // --- FORGOT PASSWORD MODAL CONTROLS (METHODS 2 & 3) ---
 function setupForgotPasswordModal() {
@@ -2561,6 +4290,212 @@ function setupForgotPasswordModal() {
         });
     }
 }
+
+// ==============================================================================
+// PDPA & COOKIE CONSENT SYSTEM
+// ==============================================================================
+function setupPdpaSystem() {
+    const banner = document.getElementById('cookie-consent-banner');
+    const prefsModal = document.getElementById('modal-cookie-preferences');
+    const policyModal = document.getElementById('modal-privacy-policy');
+    const floatingBtn = document.getElementById('btn-floating-pdpa');
+
+    const btnAcceptAll = document.getElementById('btn-cookie-accept-all');
+    const btnReject = document.getElementById('btn-cookie-reject');
+    const btnCustomize = document.getElementById('btn-cookie-customize');
+
+    const btnClosePrefs = document.getElementById('btn-close-cookie-prefs') || document.getElementById('btn-close-cookie-modal');
+    const btnSavePrefs = document.getElementById('btn-cookie-save-prefs');
+    const btnAcceptAllModal = document.getElementById('btn-cookie-accept-all-modal');
+
+    const switchFunctional = document.getElementById('pref-cookie-functional');
+    const switchAnalytics = document.getElementById('pref-cookie-analytics');
+    const switchMarketing = document.getElementById('pref-cookie-marketing');
+
+    // Privacy & Terms Modal
+    const tabPolicyPrivacy = document.getElementById('tab-policy-privacy');
+    const tabPolicyTerms = document.getElementById('tab-policy-terms');
+    const panePolicyPrivacy = document.getElementById('pane-policy-privacy');
+    const panePolicyTerms = document.getElementById('pane-policy-terms');
+    const btnClosePolicy = document.getElementById('btn-close-privacy-policy') || document.getElementById('btn-close-privacy-modal');
+    const btnClosePolicyAction = document.getElementById('btn-close-privacy-policy-action');
+
+    function openPolicyModal(tab = 'privacy') {
+        if (!policyModal) return;
+        if (tab === 'privacy') {
+            if (tabPolicyPrivacy) {
+                tabPolicyPrivacy.classList.add('btn-primary', 'active');
+                tabPolicyPrivacy.classList.remove('btn-secondary');
+            }
+            if (tabPolicyTerms) {
+                tabPolicyTerms.classList.remove('btn-primary', 'active');
+                tabPolicyTerms.classList.add('btn-secondary');
+            }
+            if (panePolicyPrivacy) panePolicyPrivacy.classList.remove('hidden');
+            if (panePolicyTerms) panePolicyTerms.classList.add('hidden');
+        } else {
+            if (tabPolicyTerms) {
+                tabPolicyTerms.classList.add('btn-primary', 'active');
+                tabPolicyTerms.classList.remove('btn-secondary');
+            }
+            if (tabPolicyPrivacy) {
+                tabPolicyPrivacy.classList.remove('btn-primary', 'active');
+                tabPolicyPrivacy.classList.add('btn-secondary');
+            }
+            if (panePolicyTerms) panePolicyTerms.classList.remove('hidden');
+            if (panePolicyPrivacy) panePolicyPrivacy.classList.add('hidden');
+        }
+        policyModal.classList.add('active');
+    }
+
+    function closePolicyModal() {
+        if (policyModal) policyModal.classList.remove('active');
+    }
+
+    if (tabPolicyPrivacy) tabPolicyPrivacy.addEventListener('click', () => openPolicyModal('privacy'));
+    if (tabPolicyTerms) tabPolicyTerms.addEventListener('click', () => openPolicyModal('terms'));
+    if (btnClosePolicy) btnClosePolicy.addEventListener('click', closePolicyModal);
+    if (btnClosePolicyAction) btnClosePolicyAction.addEventListener('click', closePolicyModal);
+    if (policyModal) {
+        policyModal.addEventListener('click', (e) => {
+            if (e.target === policyModal) closePolicyModal();
+        });
+    }
+
+    document.querySelectorAll('.btn-trigger-privacy').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            openPolicyModal('privacy');
+        });
+    });
+    document.querySelectorAll('.btn-trigger-terms').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            openPolicyModal('terms');
+        });
+    });
+
+    function openPrefsModal() {
+        try {
+            const saved = JSON.parse(localStorage.getItem('ginder_pdpa_consent') || '{}');
+            if (saved && saved.consentChoices) {
+                if (switchFunctional) switchFunctional.checked = saved.consentChoices.functional !== false;
+                if (switchAnalytics) switchAnalytics.checked = !!saved.consentChoices.analytics;
+                if (switchMarketing) switchMarketing.checked = !!saved.consentChoices.marketing;
+            }
+        } catch (e) {}
+
+        if (prefsModal) prefsModal.classList.add('active');
+    }
+
+    function closePrefsModal() {
+        if (prefsModal) prefsModal.classList.remove('active');
+    }
+
+    if (btnClosePrefs) btnClosePrefs.addEventListener('click', closePrefsModal);
+    if (prefsModal) {
+        prefsModal.addEventListener('click', (e) => {
+            if (e.target === prefsModal) closePrefsModal();
+        });
+    }
+
+    if (btnCustomize) btnCustomize.addEventListener('click', openPrefsModal);
+    if (floatingBtn) floatingBtn.addEventListener('click', openPrefsModal);
+    document.querySelectorAll('.btn-trigger-cookie-prefs').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            openPrefsModal();
+        });
+    });
+    const btnProfileOpenCookie = document.getElementById('btn-profile-open-cookie-prefs');
+    if (btnProfileOpenCookie) {
+        btnProfileOpenCookie.addEventListener('click', () => {
+            const profileModal = document.getElementById('modal-profile');
+            if (profileModal) profileModal.classList.remove('active');
+            openPrefsModal();
+        });
+    }
+
+    function recordConsent(choices, consentType) {
+        const consentPayload = {
+            consentType: consentType || 'custom',
+            consentChoices: {
+                necessary: true,
+                functional: choices.functional !== false,
+                analytics: !!choices.analytics,
+                marketing: !!choices.marketing
+            },
+            privacyPolicyVersion: '1.0'
+        };
+
+        // Save locally for immediate offline/fast response
+        localStorage.setItem('ginder_pdpa_consent', JSON.stringify({
+            ...consentPayload,
+            timestamp: new Date().toISOString()
+        }));
+
+        // Hide banner & modal
+        if (banner) banner.classList.remove('active');
+        closePrefsModal();
+
+        // Send to server audit log
+        fetch('/api/pdpa/consent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(consentPayload)
+        }).catch(err => console.warn('Failed to sync consent to server:', err));
+    }
+
+    if (btnAcceptAll) {
+        btnAcceptAll.addEventListener('click', () => {
+            recordConsent({ functional: true, analytics: true, marketing: true }, 'accept_all');
+        });
+    }
+
+    if (btnAcceptAllModal) {
+        btnAcceptAllModal.addEventListener('click', () => {
+            if (switchFunctional) switchFunctional.checked = true;
+            if (switchAnalytics) switchAnalytics.checked = true;
+            if (switchMarketing) switchMarketing.checked = true;
+            recordConsent({ functional: true, analytics: true, marketing: true }, 'accept_all');
+        });
+    }
+
+    if (btnReject) {
+        btnReject.addEventListener('click', () => {
+            recordConsent({ functional: false, analytics: false, marketing: false }, 'reject_optional');
+        });
+    }
+
+    if (btnSavePrefs) {
+        btnSavePrefs.addEventListener('click', () => {
+            const choices = {
+                functional: switchFunctional ? switchFunctional.checked : true,
+                analytics: switchAnalytics ? switchAnalytics.checked : false,
+                marketing: switchMarketing ? switchMarketing.checked : false
+            };
+            recordConsent(choices, 'custom');
+        });
+    }
+
+    // Check if consent has already been recorded
+    const existingConsent = localStorage.getItem('ginder_pdpa_consent');
+    if (!existingConsent) {
+        fetch('/api/pdpa/my-consent')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.consentChoices) {
+                    localStorage.setItem('ginder_pdpa_consent', JSON.stringify(data));
+                } else {
+                    if (banner) banner.classList.add('active');
+                }
+            })
+            .catch(() => {
+                if (banner) banner.classList.add('active');
+            });
+    }
+}
+
 
 
 

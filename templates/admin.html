@@ -655,6 +655,7 @@
             <button id="tab-nav-analytics" class="admin-nav-tab" type="button"><i class="fa-solid fa-chart-pie"></i> รายงานสถิติ</button>
             <button id="tab-nav-feedback" class="admin-nav-tab" type="button"><i class="fa-solid fa-inbox"></i> ข้อความเสนอแนะ</button>
             <button id="tab-nav-reports" class="admin-nav-tab" type="button"><i class="fa-solid fa-file-invoice"></i> รายงาน & ส่งออกข้อมูล</button>
+            <button id="tab-nav-pdpa" class="admin-nav-tab" type="button"><i class="fa-solid fa-shield-halved"></i> การคุ้มครองข้อมูล (PDPA)</button>
         </div>
 
         <!-- SECTION 1: RESTAURANTS -->
@@ -976,6 +977,139 @@
                 </div>
             </div>
         </div>
+
+        <!-- SECTION 6: PDPA & DATA PRIVACY COMPLIANCE -->
+        <div id="section-pdpa" class="admin-section hidden">
+            <!-- HEADER & SUMMARY BANNER -->
+            <div style="background: rgba(238, 120, 22, 0.08); border: 1px solid rgba(238, 120, 22, 0.25); border-radius: var(--border-radius-md); padding: 1.4rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                        <i class="fa-solid fa-shield-halved text-accent"></i> ศูนย์บริหารจัดการข้อมูลส่วนบุคคล (PDPA Compliance Center)
+                    </h2>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4;">
+                        ระบบตรวจสอบการให้ความยินยอมคุกกี้ (Consent Logs) และคำร้องขอใช้สิทธิของเจ้าของข้อมูล (Data Subject Rights) ตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                    <a href="/api/admin/reports/export/pdpa-consents" class="export-btn export-btn-primary" target="_blank">
+                        <i class="fa-solid fa-file-csv"></i> ส่งออก Consent Logs CSV
+                    </a>
+                    <a href="/api/admin/reports/export/pdpa-dsr" class="export-btn export-btn-secondary" target="_blank">
+                        <i class="fa-solid fa-file-csv"></i> ส่งออก DSR Requests CSV
+                    </a>
+                </div>
+            </div>
+
+            <!-- ANALYTICS METRIC CARDS -->
+            <div class="analytics-grid" style="margin-bottom: 2rem;">
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(238, 120, 22, 0.15); color: var(--accent-orange);">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="pdpa-stat-total-consents">0</div>
+                        <div class="analytics-label">บันทึกความยินยอมทั้งหมด</div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(50, 132, 255, 0.15); color: var(--accent-purple);">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="pdpa-stat-analytics-rate">0%</div>
+                        <div class="analytics-label">อัตรายินยอมคุกกี้วิเคราะห์</div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(255, 51, 119, 0.15); color: var(--accent-pink);">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="pdpa-stat-marketing-rate">0%</div>
+                        <div class="analytics-label">อัตรายินยอมการตลาด</div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(0, 255, 38, 0.15); color: var(--accent-green);">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="pdpa-stat-total-dsr">0</div>
+                        <div class="analytics-label">คำร้องขอใช้สิทธิ (DSR)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLE 1: CONSENT AUDIT TRAIL -->
+            <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); padding: 1.4rem; margin-bottom: 2rem; box-shadow: var(--glass-shadow);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+                    <div>
+                        <h3 style="font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-list-check text-accent"></i> บันทึกประวัติการให้ความยินยอม (Consent Audit Trail)
+                        </h3>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                            ประวัติการยินยอมคุกกี้และการสมัครสมาชิก บันทึกพร้อม Version นโยบาย, IP และ User Agent
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 0.6rem; align-items: center;">
+                        <input type="text" id="pdpa-consent-search" placeholder="ค้นหาชื่อผู้ใช้, IP, หรือประเภท..." class="form-control" style="width: 260px; padding: 0.45rem 0.8rem; font-size: 0.85rem;">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 140px;">วัน-เวลา</th>
+                                <th>ผู้ใช้งาน / รหัสประจำตัว</th>
+                                <th style="width: 130px;">จุดยินยอม</th>
+                                <th>คุกกี้ที่ยินยอม</th>
+                                <th style="width: 80px;">Version</th>
+                                <th>IP Address & อุปกรณ์</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pdpa-consent-table-body">
+                            <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem 0;">กำลังโหลดบันทึกความยินยอม...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TABLE 2: DATA SUBJECT RIGHTS REQUESTS (DSR) -->
+            <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); padding: 1.4rem; box-shadow: var(--glass-shadow);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+                    <div>
+                        <h3 style="font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-user-lock text-accent"></i> คำร้องขอใช้สิทธิของเจ้าของข้อมูล (DSR Requests Log)
+                        </h3>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                            รายการคำร้องขอดาวน์โหลดสำเนาข้อมูล (Data Portability) หรือขอลบข้อมูลบัญชีถาวร (Right to Erasure)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 140px;">วัน-เวลา</th>
+                                <th>ผู้ใช้ (Username)</th>
+                                <th style="width: 160px;">ประเภทคำร้อง</th>
+                                <th style="width: 110px;">สถานะ</th>
+                                <th>รายละเอียดเพิ่มเติม</th>
+                                <th>IP Address</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pdpa-dsr-table-body">
+                            <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem 0;">กำลังโหลดรายการคำร้อง...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ADD/EDIT FORM MODAL -->
@@ -1104,7 +1238,8 @@
                 { btn: document.getElementById('tab-nav-users'), section: document.getElementById('section-users'), onOpen: () => loadUsers() },
                 { btn: document.getElementById('tab-nav-analytics'), section: document.getElementById('section-analytics'), onOpen: () => loadAnalytics() },
                 { btn: document.getElementById('tab-nav-feedback'), section: document.getElementById('section-feedback'), onOpen: () => loadFeedback() },
-                { btn: document.getElementById('tab-nav-reports'), section: document.getElementById('section-reports'), onOpen: () => loadReports() }
+                { btn: document.getElementById('tab-nav-reports'), section: document.getElementById('section-reports'), onOpen: () => loadReports() },
+                { btn: document.getElementById('tab-nav-pdpa'), section: document.getElementById('section-pdpa'), onOpen: () => loadPdpaData() }
             ];
 
             tabs.forEach(tab => {
@@ -1792,6 +1927,156 @@
                     <td style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(reason)}</td>
                 `;
                 tableBody.appendChild(tr);
+            });
+        }
+
+        // ==============================================================================
+        // PDPA DATA MANAGEMENT & AUDIT TRAIL LOGIC
+        // ==============================================================================
+        let allPdpaConsentLogs = [];
+        let allPdpaDsrRequests = [];
+
+        function loadPdpaData() {
+            fetch('/api/admin/pdpa/summary')
+                .then(res => res.json())
+                .then(data => {
+                    const m = data.metrics || {};
+                    // Update Stats Cards
+                    const statTotalConsents = document.getElementById('pdpa-stat-total-consents');
+                    const statAnalyticsRate = document.getElementById('pdpa-stat-analytics-rate');
+                    const statMarketingRate = document.getElementById('pdpa-stat-marketing-rate');
+                    const statTotalDsr = document.getElementById('pdpa-stat-total-dsr');
+
+                    if (statTotalConsents) statTotalConsents.innerText = m.totalConsents || 0;
+                    if (statAnalyticsRate) statAnalyticsRate.innerText = (m.analyticsRate || 0) + '%';
+                    if (statMarketingRate) statMarketingRate.innerText = (m.marketingRate || 0) + '%';
+                    if (statTotalDsr) statTotalDsr.innerText = m.totalDsrRequests || 0;
+
+                    allPdpaConsentLogs = data.recentLogs || [];
+                    allPdpaDsrRequests = data.recentDsrRequests || [];
+
+                    renderPdpaConsentTable(allPdpaConsentLogs);
+                    renderPdpaDsrTable(allPdpaDsrRequests);
+                })
+                .catch(err => {
+                    console.error('Error loading PDPA summary:', err);
+                });
+        }
+
+        function renderPdpaConsentTable(logs) {
+            const tbody = document.getElementById('pdpa-consent-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (!logs || logs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem 0;">ไม่พบบันทึกการให้ความยินยอม</td></tr>`;
+                return;
+            }
+
+            logs.forEach(item => {
+                const tr = document.createElement('tr');
+                const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleString('th-TH', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) : '-';
+
+                // Consent Badges
+                const necessaryBadge = `<span style="background: rgba(0, 255, 38, 0.15); color: var(--color-success); border: 1px solid rgba(0, 255, 38, 0.3); border-radius: 8px; padding: 0.15rem 0.45rem; font-size: 0.72rem; font-weight: 600; margin: 0.1rem;">จำเป็น</span>`;
+                const functionalBadge = item.functional ?
+                    `<span style="background: rgba(50, 132, 255, 0.15); color: var(--accent-purple); border: 1px solid rgba(50, 132, 255, 0.3); border-radius: 8px; padding: 0.15rem 0.45rem; font-size: 0.72rem; margin: 0.1rem;">ฟังก์ชัน</span>` : '';
+                const analyticsBadge = item.analytics ?
+                    `<span style="background: rgba(238, 120, 22, 0.15); color: var(--accent-orange); border: 1px solid rgba(238, 120, 22, 0.3); border-radius: 8px; padding: 0.15rem 0.45rem; font-size: 0.72rem; margin: 0.1rem;">วิเคราะห์</span>` :
+                    `<span style="color: var(--text-muted); font-size: 0.72rem; margin: 0.1rem;"><s>วิเคราะห์</s></span>`;
+                const marketingBadge = item.marketing ?
+                    `<span style="background: rgba(255, 51, 119, 0.15); color: var(--accent-pink); border: 1px solid rgba(255, 51, 119, 0.3); border-radius: 8px; padding: 0.15rem 0.45rem; font-size: 0.72rem; margin: 0.1rem;">การตลาด</span>` :
+                    `<span style="color: var(--text-muted); font-size: 0.72rem; margin: 0.1rem;"><s>การตลาด</s></span>`;
+
+                let consentTypeLabel = item.consentType || 'cookie_banner';
+                if (consentTypeLabel === 'signup') consentTypeLabel = '<span style="color: var(--accent-orange); font-weight: 600;"><i class="fa-solid fa-user-plus"></i> สมัครสมาชิก</span>';
+                else if (consentTypeLabel === 'cookie_banner') consentTypeLabel = '<span style="color: var(--accent-purple);"><i class="fa-solid fa-cookie-bite"></i> Cookie Banner</span>';
+                else if (consentTypeLabel === 'preference_center') consentTypeLabel = '<span style="color: var(--text-primary);"><i class="fa-solid fa-sliders"></i> ตั้งค่าส่วนตัว</span>';
+
+                tr.innerHTML = `
+                    <td style="font-size: 0.8rem; color: var(--text-secondary);"><i class="fa-regular fa-clock"></i> ${dateStr}</td>
+                    <td><strong style="color: var(--text-primary);">${escapeHtml(item.identifier || 'anonymous')}</strong></td>
+                    <td style="font-size: 0.82rem;">${consentTypeLabel}</td>
+                    <td><div style="display: flex; flex-wrap: wrap; gap: 0.2rem;">${necessaryBadge}${functionalBadge}${analyticsBadge}${marketingBadge}</div></td>
+                    <td style="font-size: 0.8rem; font-family: monospace; color: var(--accent-orange);">${escapeHtml(item.policyVersion || '1.0')}</td>
+                    <td style="font-size: 0.78rem; color: var(--text-secondary);">
+                        <div><code>${escapeHtml(item.ipAddress || '-')}</code></div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); max-width: 180px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(item.userAgent || '-')}</div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderPdpaDsrTable(requests) {
+            const tbody = document.getElementById('pdpa-dsr-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (!requests || requests.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem 0;">ยังไม่มีคำร้องขอใช้สิทธิ (DSR)</td></tr>`;
+                return;
+            }
+
+            requests.forEach(req => {
+                const tr = document.createElement('tr');
+                const dateStr = req.createdAt ? new Date(req.createdAt).toLocaleString('th-TH', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) : '-';
+
+                let typeBadge = req.requestType;
+                if (req.requestType === 'export_data') {
+                    typeBadge = `<span style="background: rgba(50, 132, 255, 0.15); color: var(--accent-purple); border: 1px solid rgba(50, 132, 255, 0.3); border-radius: 8px; padding: 0.2rem 0.55rem; font-size: 0.75rem; font-weight: 600;"><i class="fa-solid fa-download"></i> ขอรับสำเนา (Export)</span>`;
+                } else if (req.requestType === 'delete_account') {
+                    typeBadge = `<span style="background: rgba(255, 50, 50, 0.15); color: var(--color-danger); border: 1px solid rgba(255, 50, 50, 0.3); border-radius: 8px; padding: 0.2rem 0.55rem; font-size: 0.75rem; font-weight: 600;"><i class="fa-solid fa-trash"></i> ขอลบข้อมูล (Erasure)</span>`;
+                } else if (req.requestType === 'withdraw_consent') {
+                    typeBadge = `<span style="background: rgba(238, 120, 22, 0.15); color: var(--accent-orange); border: 1px solid rgba(238, 120, 22, 0.3); border-radius: 8px; padding: 0.2rem 0.55rem; font-size: 0.75rem;"><i class="fa-solid fa-ban"></i> ถอนความยินยอม</span>`;
+                }
+
+                const statusBadge = req.status === 'completed' ?
+                    `<span style="background: rgba(0, 255, 38, 0.15); color: var(--color-success); border: 1px solid rgba(0, 255, 38, 0.3); border-radius: 8px; padding: 0.15rem 0.45rem; font-size: 0.72rem; font-weight: 600;"><i class="fa-solid fa-check"></i> สำเร็จ</span>` :
+                    `<span style="background: rgba(242, 255, 0, 0.15); color: var(--color-warning); border: 1px solid rgba(242, 255, 0, 0.3); border-radius: 8px; padding: 0.15rem 0.45rem; font-size: 0.72rem;">รอดำเนินการ</span>`;
+
+                const detailsStr = typeof req.details === 'object' ? JSON.stringify(req.details) : (req.details || '-');
+
+                tr.innerHTML = `
+                    <td style="font-size: 0.8rem; color: var(--text-secondary);"><i class="fa-regular fa-clock"></i> ${dateStr}</td>
+                    <td><strong style="color: var(--text-primary);">${escapeHtml(req.username || 'guest')}</strong></td>
+                    <td>${typeBadge}</td>
+                    <td>${statusBadge}</td>
+                    <td style="font-size: 0.78rem; color: var(--text-muted); max-width: 250px;">${escapeHtml(detailsStr)}</td>
+                    <td style="font-size: 0.78rem; font-family: monospace;"><code>${escapeHtml(req.ipAddress || '-')}</code></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Search Filter for Consent Logs
+        const pdpaSearchInput = document.getElementById('pdpa-consent-search');
+        if (pdpaSearchInput) {
+            pdpaSearchInput.addEventListener('input', (e) => {
+                const q = (e.target.value || '').trim().toLowerCase();
+                if (!q) {
+                    renderPdpaConsentTable(allPdpaConsentLogs);
+                    return;
+                }
+                const filtered = allPdpaConsentLogs.filter(item => {
+                    const iden = (item.identifier || '').toLowerCase();
+                    const ip = (item.ipAddress || '').toLowerCase();
+                    const type = (item.consentType || '').toLowerCase();
+                    return iden.includes(q) || ip.includes(q) || type.includes(q);
+                });
+                renderPdpaConsentTable(filtered);
             });
         }
     </script>

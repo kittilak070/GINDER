@@ -35,20 +35,16 @@
                 <span class="logo-icon"><i class="fa-solid fa-fire-flame-curved"></i></span>
                 <span class="logo-text">GINDER</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <button id="btn-desktop-mobile-qr" class="btn btn-icon-glass" title="เปิดบนโทรศัพท์มือถือ (สแกน QR)" aria-label="เปิดบนมือถือ" type="button">
-                    <i class="fa-solid fa-mobile-screen-button"></i>
-                </button>
-                <button id="btn-sound-toggle" class="btn btn-icon-glass" title="เปิด/ปิดเสียงเอฟเฟกต์" aria-label="สลับเสียงเอฟเฟกต์" type="button">
+            <div class="header-actions">
+                <button id="btn-sound-toggle" class="btn-icon-glass" title="เปิด/ปิดเสียงเอฟเฟกต์" aria-label="สลับเสียงเอฟเฟกต์" type="button">
                     <i class="fa-solid fa-volume-high"></i>
                 </button>
                 <div id="room-badge" class="room-badge hidden">
                     <i class="fa-solid fa-users"></i> ห้อง: <span id="badge-room-id">0000</span>
                 </div>
                 <div id="user-header-profile" class="user-profile-header">
-                    <button id="btn-header-login" class="btn btn-secondary btn-sm"
-                        style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: var(--border-radius-sm);">
-                        <i class="fa-solid fa-user-circle"></i> เข้าสู่ระบบ
+                    <button id="btn-header-login" class="btn-header-login-highlight" type="button">
+                        <i class="fa-solid fa-user-circle"></i> <span>เข้าสู่ระบบ</span>
                     </button>
                 </div>
             </div>
@@ -56,8 +52,15 @@
 
         <main class="app-content">
             <!-- VIEW 0: AUTHENTICATION SCREEN -->
-            <section id="view-auth" class="view-section active">
+            <section id="view-auth" class="view-section">
                 <div class="auth-container glass">
+                    <!-- Back to Main App Button (Zero Pressure / Free To Use) -->
+                    <div style="margin-bottom: 1.2rem; display: flex; justify-content: flex-start;">
+                        <button type="button" id="btn-auth-back-to-app" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 20px; font-size: 0.85rem;">
+                            <i class="fa-solid fa-arrow-left"></i> กลับไปหน้าหลัก (ใช้งานต่อโดยไม่ล็อกอิน)
+                        </button>
+                    </div>
+
                     <!-- Logo or App Title -->
                     <div class="auth-logo" style="text-align: center; margin-bottom: 1.5rem;">
                         <span class="logo-icon" style="font-size: 3rem; display: inline-block;"><i
@@ -71,7 +74,7 @@
                     <div style="margin-bottom: 1.5rem;">
                         <button type="button" id="btn-quick-guest-login" class="btn full-width"
                             style="background: linear-gradient(135deg, #6366f1 0%, #f43f5e 100%); color: #ffffff; font-weight: 700; padding: 1rem; font-size: 1.05rem; border: none; border-radius: var(--border-radius); box-shadow: 0 4px 20px rgba(244, 63, 94, 0.35); display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; transition: all 0.2s ease;">
-                            <i class="fa-solid fa-bolt" style="color: #fde047;"></i> เข้าใช้งานทันที (สำหรับทดสอบ / Guest)
+                            <i class="fa-solid fa-bolt" style="color: #fde047;"></i> เข้าใช้งานทันทีโดยไม่ต้องล็อกอิน (โหมดทั่วไป)
                         </button>
                     </div>
 
@@ -163,14 +166,53 @@
                                 </label>
                                 <input type="text" id="view-signup-answer" class="form-control" placeholder="พิมพ์คำตอบที่คุณจำได้ง่าย">
                             </div>
-                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <div class="form-group" style="margin-bottom: 1.2rem;">
                                 <label for="view-signup-pin" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block; color: var(--text-secondary);">
                                     <i class="fa-solid fa-shield-halved text-accent"></i> Recovery PIN (รหัสกู้คืน 4-6 หลัก)
                                 </label>
                                 <input type="password" id="view-signup-pin" maxlength="6" class="form-control" placeholder="เช่น 1234 หรือ 987654">
                             </div>
+
+                            <!-- Allergy Preferences at Signup -->
+                            <div class="form-group" style="margin-bottom: 1.1rem;">
+                                <label style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block; color: var(--text-secondary);">
+                                    <i class="fa-solid fa-shield-halved text-accent"></i> ข้อมูลการแพ้อาหารเริ่มต้น (ระบบจะช่วยกรองร้านให้อัตโนมัติ)
+                                </label>
+                                <div class="allergy-selector signup-allergy-selector" style="grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.45rem;">
+                                    <div class="allergy-pill" data-allergen="แป้งสาลี/กลูเตน" style="padding: 0.45rem 0.65rem; font-size: 0.8rem;">
+                                        <i class="fa-solid fa-bread-slice"></i> แป้งสาลี
+                                    </div>
+                                    <div class="allergy-pill" data-allergen="นม/ชีส" style="padding: 0.45rem 0.65rem; font-size: 0.8rem;">
+                                        <i class="fa-solid fa-cheese"></i> นม/ชีส
+                                    </div>
+                                    <div class="allergy-pill" data-allergen="ไข่" style="padding: 0.45rem 0.65rem; font-size: 0.8rem;">
+                                        <i class="fa-solid fa-egg"></i> ไข่
+                                    </div>
+                                    <div class="allergy-pill" data-allergen="ถั่ว" style="padding: 0.45rem 0.65rem; font-size: 0.8rem;">
+                                        <i class="fa-solid fa-seedling"></i> ถั่ว
+                                    </div>
+                                    <div class="allergy-pill" data-allergen="อาหารทะเล" style="padding: 0.45rem 0.65rem; font-size: 0.8rem;">
+                                        <i class="fa-solid fa-shrimp"></i> ซีฟู้ด
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PDPA Consents -->
+                            <div style="background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 0.85rem; margin-bottom: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.8rem; line-height: 1.4;">
+                                <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; color: var(--text-primary);">
+                                    <input type="checkbox" id="view-signup-pdpa-consent" required style="margin-top: 0.2rem; accent-color: var(--accent-pink);">
+                                    <span>
+                                        ข้าพเจ้ายอมรับ <a href="javascript:void(0)" class="btn-trigger-terms text-accent" style="text-decoration: underline;">ข้อกำหนดการใช้งาน</a> และ <a href="javascript:void(0)" class="btn-trigger-privacy text-accent" style="text-decoration: underline;">นโยบายความเป็นส่วนตัว (PDPA)</a> รวมถึงยินยอมให้ประมวลผลข้อมูลการแพ้อาหารเพื่อความปลอดภัย *
+                                    </span>
+                                </label>
+                                <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; color: var(--text-secondary);">
+                                    <input type="checkbox" id="view-signup-marketing-consent" style="margin-top: 0.2rem; accent-color: var(--accent-pink);">
+                                    <span>ยินยอมรับข่าวสาร โปรโมชันส่วนลดร้านอาหาร และข้อเสนอพิเศษจาก GINDER</span>
+                                </label>
+                            </div>
+
                             <button type="submit" class="btn btn-primary full-width"
-                                style="padding: 0.9rem; font-size: 1rem; margin-top: 0.5rem;">
+                                style="padding: 0.9rem; font-size: 1rem; margin-top: 0.2rem;">
                                 <i class="fa-solid fa-user-plus"></i> สมัครสมาชิก & เข้าสู่ระบบ
                             </button>
                         </form>
@@ -179,147 +221,362 @@
             </section>
 
             <!-- VIEW 1: LANDING SCREEN -->
-            <section id="view-landing" class="view-section">
+            <section id="view-landing" class="view-section active">
                 <div class="hero-section">
                     <h1 class="hero-title animate-gradient">
                         วันนี้กินอะไรดี? <span id="hero-food-badge" class="hero-food-badge" role="button" tabindex="0" title="แตะเพื่อเปลี่ยนเมนูอาหาร">🍜</span>
                     </h1>
-                    <p class="hero-subtitle">เบื่อไหมกับการเลือกของกินไม่ลงตัว? ชวนกลุ่มเพื่อนมา "ปัดหาร้านเด็ด"
-                        ที่มติเอกฉันท์กัน!</p>
-                </div>
-                <div class="menu-actions">
-                    <button id="btn-goto-create" class="btn btn-primary btn-lg btn-glow-pulse">
-                        <i class="fa-solid fa-plus-circle"></i> สร้างกลุ่มใหม่
-                    </button>
-
-                    <div class="landing-join-box glass"
-                        style="margin-top: 1rem; padding: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem;">
-                        <h4
-                            style="font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); text-align: center;">
-                            <i class="fa-solid fa-users text-accent"></i> เข้าร่วมกลุ่มที่มีอยู่แล้ว
-                        </h4>
-                        <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem; align-items: center;">
-                            <input type="text" id="landing-room-id" placeholder="รหัสห้อง 4 หลัก" class="form-control"
-                                style="text-align: center; letter-spacing: 2px; font-weight: bold; font-size: 1.1rem; padding: 0.75rem 0.5rem; text-transform: uppercase;">
-                            <button id="btn-landing-join" class="btn btn-primary"
-                                style="padding: 0.75rem 1.2rem;">เข้าร่วม</button>
-                        </div>
-                        <div
-                            style="display: flex; align-items: center; justify-content: center; gap: 0.8rem; color: var(--text-muted); font-size: 0.75rem; margin: 0.1rem 0;">
-                            <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
-                            <span>หรือ</span>
-                            <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
-                        </div>
-                        <button id="btn-landing-scan-qr" class="btn btn-secondary full-width"
-                            style="padding: 0.75rem 1.2rem;">
-                            <i class="fa-solid fa-qrcode text-accent"></i> สแกน QR Code เข้ากลุ่มทันที
+                    <p class="hero-subtitle">ปัดหาร้านเด็ดโดนใจใน 1 นาที ไม่ต้องคิดเยอะ!</p>
+                    <div style="margin-top: 0.55rem;">
+                        <button type="button" id="btn-open-welcome-modal" class="btn-info-pill" title="วิธีเล่น GINDER">
+                            <i class="fa-solid fa-circle-question text-accent"></i> <span>แอปนี้คืออะไร? (ดูวิธีเล่น)</span>
                         </button>
                     </div>
                 </div>
-                <div class="app-info-card">
-                    <h3><i class="fa-solid fa-star text-accent"></i> จุดเด่นกติกา GINDER</h3>
-                    <ul>
-                        <li><i class="fa-solid fa-check text-success"></i> <strong>ปัดพร้อมกัน:</strong>
-                            เข้าห้องโหวตร่วมกันแบบเรียลไทม์</li>
-                        <li><i class="fa-solid fa-check text-success"></i> <strong>มติเอกฉันท์:</strong>
-                            หากทุกคนปัดขวาร้านเดียวกัน ล็อคเป้าทันที!</li>
-                        <li><i class="fa-solid fa-check text-success"></i> <strong>ระวังหมดเวลา:</strong>
-                            ถ้าไม่มีร้านที่มติเอกฉันท์ใน 3 นาที ระบบจะสุ่มจากร้านที่ยอดไลก์สูงสุดให้ทันที</li>
-                    </ul>
+
+                <!-- DUAL MODE SELECTION HUB -->
+                <div class="dual-mode-container">
+                    <!-- MODE 1: SOLO (MOST POPULAR / 1-CLICK INSTANT) -->
+                    <div class="mode-card glass solo-card">
+                        <div class="mode-badge solo"><i class="fa-solid fa-bolt"></i> แนะนำ • ปัดได้ทันที</div>
+                        <h3 class="mode-title"><i class="fa-solid fa-utensils text-accent"></i> ลุยเดี่ยว (Solo Mode)</h3>
+                        <p class="mode-desc">คิดไม่ออกว่าจะกินอะไร? แตะเลือกอาหารที่อยากกิน แล้วเริ่มปัดได้ทันที</p>
+                        
+                        <!-- SOLO FOOD, DISTANCE & BUDGET FILTER (COLLAPSIBLE / TOGGLE OPEN-CLOSE) -->
+                        <div class="solo-filter-box">
+                            <button type="button" id="btn-toggle-solo-filter" class="solo-filter-toggle" aria-expanded="false" aria-controls="solo-filter-content">
+                                <span class="toggle-left">
+                                    <i class="fa-solid fa-sliders text-accent"></i>
+                                    <span class="toggle-title">เลือกอาหาร • ระยะทาง • งบ</span>
+                                    <span id="solo-filter-badge" class="solo-filter-badge">ทั้งหมด</span>
+                                </span>
+                                <span class="toggle-right">
+                                    <span id="solo-toggle-text" class="toggle-action-text">เปิดตัวกรอง</span>
+                                    <i id="solo-toggle-icon" class="fa-solid fa-chevron-down toggle-icon"></i>
+                                </span>
+                            </button>
+                            
+                            <div id="solo-filter-content" class="solo-filter-content collapsed">
+                                <div class="solo-filter-chips-header">
+                                    <span class="solo-filter-hint"><i class="fa-solid fa-sliders text-accent"></i> ปรับแต่งตัวกรองก่อนปัด (เลือกหรือไม่เลือกก็ได้):</span>
+                                    <button type="button" id="btn-reset-solo-chips" class="btn-chip-reset">
+                                        <i class="fa-solid fa-rotate-left"></i> รีเซ็ตทั้งหมด
+                                    </button>
+                                </div>
+
+                                <!-- SUBSECTION 1: ALLERGY (ข้อมูลการแพ้อาหาร) -->
+                                <div class="solo-subfilter-section" style="margin-bottom: 0.85rem;">
+                                    <div class="solo-subfilter-label">
+                                        <i class="fa-solid fa-shield-halved text-accent"></i> ข้อมูลการแพ้อาหาร (กรองร้านที่มีส่วนผสมออก)
+                                    </div>
+                                    <div id="solo-allergy-chips" class="solo-food-chips">
+                                        <button type="button" class="solo-chip solo-allergy-chip active" data-allergen="">
+                                            <i class="fa-solid fa-check"></i> ไม่มีแพ้เลย
+                                        </button>
+                                        <button type="button" class="solo-chip solo-allergy-chip" data-allergen="แป้งสาลี/กลูเตน">
+                                            <i class="fa-solid fa-bread-slice"></i> แป้งสาลี/กลูเตน
+                                        </button>
+                                        <button type="button" class="solo-chip solo-allergy-chip" data-allergen="นม/ชีส">
+                                            <i class="fa-solid fa-cheese"></i> นม/ชีส
+                                        </button>
+                                        <button type="button" class="solo-chip solo-allergy-chip" data-allergen="ไข่">
+                                            <i class="fa-solid fa-egg"></i> ไข่
+                                        </button>
+                                        <button type="button" class="solo-chip solo-allergy-chip" data-allergen="ถั่ว">
+                                            <i class="fa-solid fa-seedling"></i> ถั่ว
+                                        </button>
+                                        <button type="button" class="solo-chip solo-allergy-chip" data-allergen="อาหารทะเล">
+                                            <i class="fa-solid fa-shrimp"></i> ซีฟู้ด
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- SUBSECTION 2: FOOD TYPE -->
+                                <div class="solo-subfilter-section" style="margin-bottom: 0.85rem;">
+                                    <div class="solo-subfilter-label">
+                                        <i class="fa-solid fa-utensils text-accent"></i> ประเภทอาหารที่อยากกิน
+                                    </div>
+                                    <div id="solo-food-chips" class="solo-food-chips">
+                                        <button type="button" class="solo-chip active" data-type="">
+                                            <i class="fa-solid fa-check"></i> ทั้งหมด
+                                        </button>
+                                        <button type="button" class="solo-chip" data-type="อาหารไทย / อาหารใต้">
+                                            <i class="fa-solid fa-bowl-food"></i> อาหารไทย/ใต้
+                                        </button>
+                                        <button type="button" class="solo-chip" data-type="จานด่วน / ก๋วยเตี๋ยว">
+                                            <i class="fa-solid fa-bowl-rice"></i> ก๋วยเตี๋ยว/จานด่วน
+                                        </button>
+                                        <button type="button" class="solo-chip" data-type="ปิ้งย่าง / ชาบู">
+                                            <i class="fa-solid fa-fire"></i> ปิ้งย่าง/ชาบู
+                                        </button>
+                                        <button type="button" class="solo-chip" data-type="อาหารทะเล / ซีฟู้ด">
+                                            <i class="fa-solid fa-shrimp"></i> ซีฟู้ด
+                                        </button>
+                                        <button type="button" class="solo-chip" data-type="คาเฟ่ / ของหวาน">
+                                            <i class="fa-solid fa-ice-cream"></i> คาเฟ่/ของหวาน
+                                        </button>
+                                        <button type="button" class="solo-chip" data-type="อาหารฮาลาล">
+                                            <i class="fa-solid fa-star-and-crescent"></i> ฮาลาล
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- SUBSECTION 2: DISTANCE (ระยะทาง) -->
+                                <div class="solo-subfilter-section" style="margin-bottom: 0.85rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                                        <div class="solo-subfilter-label">
+                                            <i class="fa-solid fa-location-dot text-accent"></i> ระยะทางสูงสุด
+                                        </div>
+                                        <span id="solo-distance-val" class="range-value" style="font-size: 0.82rem; color: var(--accent-orange); font-weight: 600;">ไม่จำกัด (ทุกระยะ)</span>
+                                    </div>
+                                    <div class="solo-dist-pills" id="solo-dist-pills" style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.45rem;">
+                                        <button type="button" class="solo-dist-pill active" data-dist="">
+                                            <i class="fa-solid fa-globe"></i> ทุกระยะทาง
+                                        </button>
+                                        <button type="button" class="solo-dist-pill" data-dist="1.0">
+                                            <i class="fa-solid fa-person-walking"></i> &lt; 1 กม.
+                                        </button>
+                                        <button type="button" class="solo-dist-pill" data-dist="2.0">
+                                            <i class="fa-solid fa-bicycle"></i> &lt; 2 กม.
+                                        </button>
+                                        <button type="button" class="solo-dist-pill" data-dist="5.0">
+                                            <i class="fa-solid fa-car"></i> &lt; 5 กม.
+                                        </button>
+                                    </div>
+                                    <input type="range" id="solo-pref-distance" min="0.5" max="20.0" step="0.5" value="20.0" class="slider" style="margin-top: 0.2rem;">
+                                </div>
+
+                                <!-- SUBSECTION 3: BUDGET (งบประมาณ) -->
+                                <div class="solo-subfilter-section">
+                                    <div class="solo-subfilter-label">
+                                        <i class="fa-solid fa-coins text-accent"></i> งบประมาณต่อคน
+                                    </div>
+                                    <div class="solo-budget-pills" id="solo-budget-pills" style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                                        <button type="button" class="solo-budget-pill active" data-min="0" data-max="9999">
+                                            <i class="fa-solid fa-check"></i> ทุกราคา
+                                        </button>
+                                        <button type="button" class="solo-budget-pill" data-min="0" data-max="99">
+                                            <strong>$</strong> &lt; 100฿
+                                        </button>
+                                        <button type="button" class="solo-budget-pill" data-min="100" data-max="300">
+                                            <strong>$$</strong> 100 - 300฿
+                                        </button>
+                                        <button type="button" class="solo-budget-pill" data-min="301" data-max="9999">
+                                            <strong>$$$</strong> &gt; 300฿
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mode-actions">
+                            <button id="btn-solo-instant-swipe" class="btn btn-primary btn-lg btn-glow-pulse full-width" style="padding: 0.95rem; font-size: 1.05rem;">
+                                <i class="fa-solid fa-bolt"></i> ปัดหาร้านกินเลย! (Instant Swipe)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MODE 2: GROUP (INVITE FRIENDS) -->
+                    <div class="mode-card glass group-card">
+                        <div class="mode-badge group"><i class="fa-solid fa-users"></i> กลุ่มหลายคน</div>
+                        <h3 class="mode-title"><i class="fa-solid fa-people-group text-accent"></i> ไปกับแก๊งเพื่อน (Group)</h3>
+                        <p class="mode-desc">สร้างห้อง ชวนเพื่อนมาช่วยกันปัดโหวต ล็อคเป้าเมื่อมติเอกฉันท์ 100%</p>
+                        <div class="mode-actions">
+                            <button id="btn-goto-create" class="btn btn-secondary btn-lg full-width" style="font-weight: 600;">
+                                <i class="fa-solid fa-plus-circle text-accent"></i> สร้างห้องกลุ่มใหม่
+                            </button>
+
+                            <div class="landing-join-box glass"
+                                style="margin-top: 0.4rem; padding: 0.85rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                                <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem; align-items: stretch;">
+                                    <input type="text" id="landing-room-id" name="ginder_room_pin_code" placeholder="รหัสห้อง 4 หลัก" class="form-control" maxlength="4"
+                                        autocomplete="one-time-code" autocorrect="off" autocapitalize="characters" spellcheck="false" readonly
+                                        onfocus="this.removeAttribute('readonly');" onpointerdown="this.removeAttribute('readonly');"
+                                        style="text-align: center; letter-spacing: 3px; font-weight: bold; font-size: 1.05rem; padding: 0.7rem 0.5rem; min-height: 48px; text-transform: uppercase;">
+                                    <button id="btn-landing-join" class="btn btn-primary btn-lg"
+                                        style="padding: 0.7rem 1.3rem; font-size: 1rem; font-weight: 600; min-height: 48px; white-space: nowrap;">เข้าร่วม</button>
+                                </div>
+                                <div id="landing-room-status" class="room-status-hint hidden" style="font-size: 0.78rem; text-align: center; min-height: 1rem; line-height: 1.3;"></div>
+                                <button id="btn-landing-scan-qr" class="btn btn-secondary full-width"
+                                    style="padding: 0.75rem 1.1rem; font-size: 0.95rem; font-weight: 500; min-height: 48px;">
+                                    <i class="fa-solid fa-qrcode text-accent"></i> สแกน QR Code เข้าห้อง
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- COLLAPSIBLE HOW-TO-PLAY GUIDE (USABILITY / REDUCED CLUTTER) -->
+                <details class="app-info-card-collapsible glass" style="margin-top: 0.5rem; border-radius: var(--border-radius-md); padding: 0.75rem 1rem; cursor: pointer; border: 1px solid var(--glass-border);">
+                    <summary style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; justify-content: space-between; user-select: none;">
+                        <span><i class="fa-solid fa-circle-question text-accent"></i> กติกาและวิธีเล่น GINDER</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
+                    </summary>
+                    <div style="margin-top: 0.8rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">
+                        <p><i class="fa-solid fa-bolt text-accent"></i> <strong>โหมดคนเดียว:</strong> ปัดขวาเพื่อถูกใจ หรือปัดซ้ายเพื่อผ่าน เมื่อถูกใจร้านไหน ผลลัพธ์จะแสดงทันที</p>
+                        <p><i class="fa-solid fa-users text-accent"></i> <strong>โหมดกลุ่ม:</strong> ปัดพร้อมเพื่อน หากทุกคนปัดขวาร้านเดียวกัน ล็อคเป้าทันที!</p>
+                        <p><i class="fa-solid fa-clock text-accent"></i> <strong>หมดเวลา:</strong> ถ้าไม่มีร้านที่มติเอกฉันท์ใน 3 นาที ระบบจะสุ่มร้านยอดไลก์สูงสุดให้</p>
+                    </div>
+                </details>
+
                 <div style="text-align: center; margin-top: 1.2rem;">
-                    <button id="btn-open-feedback" type="button" class="btn btn-secondary btn-sm" style="font-size: 0.8rem; padding: 0.45rem 1rem; border-radius: 20px;">
+                    <button id="btn-open-feedback" type="button" class="btn btn-secondary" style="font-size: 0.88rem; padding: 0.6rem 1.2rem; min-height: 42px; border-radius: 999px;">
                         <i class="fa-solid fa-comment-dots text-accent"></i> เสนอแนะร้านอาหาร / แจ้งปัญหา
                     </button>
                 </div>
             </section>
 
-            <!-- VIEW 2: PREFERENCES CONFIG (HOST ONLY) -->
+            <!-- VIEW 2: PREFERENCES CONFIG -->
             <section id="view-preferences" class="view-section">
                 <div class="section-title">
-                    <h2><i class="fa-solid fa-sliders text-accent"></i> ตั้งค่าการค้นหา</h2>
-                    <p>กำหนดเงื่อนไขร้านอาหารสำหรับทุกคนในห้อง</p>
+                    <h2 id="pref-header-title"><i class="fa-solid fa-sliders text-accent"></i> ตั้งค่าการค้นหา</h2>
+                    <p id="pref-header-desc">กำหนดเงื่อนไขร้านอาหารสำหรับทุกคนในห้อง</p>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="pref-name-group">
                     <label for="pref-name">ชื่อของคุณ</label>
-                    <input type="text" id="pref-name" placeholder="เช่น นัท, ส้ม, บอย" maxlength="15"
-                        class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label>ข้อมูลการแพ้อาหาร (เพื่อกรองร้านที่มีส่วนผสมออก)</label>
-                    <div class="allergy-selector host-allergy-selector">
-                        <div class="allergy-pill" data-allergen="อาหารทะเล">
-                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล
-                        </div>
-                        <div class="allergy-pill" data-allergen="แป้งสาลี/กลูเตน">
-                            <i class="fa-solid fa-bread-slice"></i> แป้งสาลี/กลูเตน
-                        </div>
-                        <div class="allergy-pill" data-allergen="นม/ชีส">
-                            <i class="fa-solid fa-cheese"></i> นม/ชีส
-                        </div>
-                        <div class="allergy-pill" data-allergen="ไข่">
-                            <i class="fa-solid fa-egg"></i> ไข่
-                        </div>
-                        <div class="allergy-pill" data-allergen="ถั่ว">
-                            <i class="fa-solid fa-seedling"></i> ถั่ว
-                        </div>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="text" id="pref-name" placeholder="เช่น นัท, ส้ม, บอย" maxlength="30"
+                            class="form-control" style="flex: 1;">
+                        <button type="button" id="btn-random-pref-name" class="btn btn-secondary" title="สุ่มชื่อใหม่" style="padding: 0.75rem 1rem; min-height: 48px; white-space: nowrap; font-size: 0.92rem; font-weight: 500;">
+                            <i class="fa-solid fa-dice text-accent"></i> สุ่มใหม่
+                        </button>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>ประเภทร้านอาหารที่ต้องการทาน</label>
-                    <div class="food-type-selector">
-                        <div class="type-pill active" data-type="อาหารไทย / อาหารใต้">
-                            <i class="fa-solid fa-bowl-food"></i> อาหารไทย / อาหารใต้
-                        </div>
-                        <div class="type-pill" data-type="จานด่วน / ก๋วยเตี๋ยว">
-                            <i class="fa-solid fa-bowl-rice"></i> จานด่วน / ก๋วยเตี๋ยว
-                        </div>
-                        <div class="type-pill" data-type="อาหารทะเล / ซีฟู้ด">
-                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล / ซีฟู้ด
-                        </div>
-                        <div class="type-pill" data-type="ปิ้งย่าง / ชาบู">
-                            <i class="fa-solid fa-fire"></i> ปิ้งย่าง / ชาบู
-                        </div>
-                        <div class="type-pill" data-type="คาเฟ่ / ของหวาน">
-                            <i class="fa-solid fa-ice-cream"></i> คาเฟ่ / ของหวาน
-                        </div>
-                        <div class="type-pill" data-type="อาหารฮาลาล">
-                            <i class="fa-solid fa-star-and-crescent"></i> อาหารฮาลาล
-                        </div>
-                    </div>
-                </div>
+                <!-- UNIFIED GROUP PREFERENCES FILTER BOX (MATCHING SOLO MODE) -->
+                <div class="solo-filter-box group-pref-filter-box expanded" style="margin-bottom: 1.25rem;">
+                    <button type="button" id="btn-toggle-group-filter" class="solo-filter-toggle" aria-expanded="true" aria-controls="group-filter-content">
+                        <span class="toggle-left">
+                            <i class="fa-solid fa-sliders text-accent"></i>
+                            <span class="toggle-title">เลือกอาหาร • ระยะทาง • งบ • แพ้อาหาร</span>
+                            <span id="group-filter-badge" class="solo-filter-badge">ทั้งหมด</span>
+                        </span>
+                        <span class="toggle-right">
+                            <span id="group-toggle-text" class="toggle-action-text">ซ่อนตัวกรอง</span>
+                            <i id="group-toggle-icon" class="fa-solid fa-chevron-down toggle-icon"></i>
+                        </span>
+                    </button>
 
-                <div class="form-group">
-                    <label>งบประมาณเริ่มต้นต่อคน</label>
-                    <div class="budget-selector">
-                        <div class="budget-pill active" data-min="0" data-max="99">
-                            <strong>$</strong><span>&lt; 100฿</span>
+                    <div id="group-filter-content" class="solo-filter-content">
+                        <div class="solo-filter-chips-header">
+                            <span class="solo-filter-hint"><i class="fa-solid fa-sliders text-accent"></i> ปรับแต่งตัวกรองก่อนสร้างห้อง (เลือกหรือไม่เลือกก็ได้):</span>
+                            <button type="button" id="btn-reset-group-filters" class="btn-chip-reset">
+                                <i class="fa-solid fa-rotate-left"></i> รีเซ็ตทั้งหมด
+                            </button>
                         </div>
-                        <div class="budget-pill" data-min="100" data-max="300">
-                            <strong>$$</strong><span>100 - 300฿</span>
-                        </div>
-                        <div class="budget-pill" data-min="301" data-max="9999">
-                            <strong>$$$</strong><span>&gt; 300฿</span>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="range-header">
-                        <label>ระยะทางสูงสุด</label>
-                        <span id="distance-val" class="range-value">2.0 กม.</span>
+                        <!-- SUBSECTION 1: ALLERGY -->
+                        <div class="solo-subfilter-section" style="margin-bottom: 0.85rem;">
+                            <div class="solo-subfilter-label">
+                                <i class="fa-solid fa-shield-halved text-accent"></i> ข้อมูลการแพ้อาหาร (เพื่อกรองร้านที่มีส่วนผสมออก)
+                            </div>
+                            <div id="group-allergy-chips" class="solo-food-chips">
+                                <button type="button" class="solo-chip host-allergy-chip active" data-allergen="">
+                                    <i class="fa-solid fa-check"></i> ไม่มีแพ้เลย
+                                </button>
+                                <button type="button" class="solo-chip host-allergy-chip" data-allergen="แป้งสาลี/กลูเตน">
+                                    <i class="fa-solid fa-bread-slice"></i> แป้งสาลี/กลูเตน
+                                </button>
+                                <button type="button" class="solo-chip host-allergy-chip" data-allergen="นม/ชีส">
+                                    <i class="fa-solid fa-cheese"></i> นม/ชีส
+                                </button>
+                                <button type="button" class="solo-chip host-allergy-chip" data-allergen="ไข่">
+                                    <i class="fa-solid fa-egg"></i> ไข่
+                                </button>
+                                <button type="button" class="solo-chip host-allergy-chip" data-allergen="ถั่ว">
+                                    <i class="fa-solid fa-seedling"></i> ถั่ว
+                                </button>
+                                <button type="button" class="solo-chip host-allergy-chip" data-allergen="อาหารทะเล">
+                                    <i class="fa-solid fa-shrimp"></i> ซีฟู้ด
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- SUBSECTION 2: FOOD TYPES -->
+                        <div class="solo-subfilter-section" style="margin-bottom: 0.85rem;">
+                            <div class="solo-subfilter-label">
+                                <i class="fa-solid fa-utensils text-accent"></i> ประเภทอาหารที่อยากกิน
+                            </div>
+                            <div id="group-food-chips" class="solo-food-chips">
+                                <button type="button" class="solo-chip active" data-type="">
+                                    <i class="fa-solid fa-check"></i> ทั้งหมด
+                                </button>
+                                <button type="button" class="solo-chip" data-type="อาหารไทย / อาหารใต้">
+                                    <i class="fa-solid fa-bowl-food"></i> อาหารไทย/ใต้
+                                </button>
+                                <button type="button" class="solo-chip" data-type="จานด่วน / ก๋วยเตี๋ยว">
+                                    <i class="fa-solid fa-bowl-rice"></i> ก๋วยเตี๋ยว/จานด่วน
+                                </button>
+                                <button type="button" class="solo-chip" data-type="ปิ้งย่าง / ชาบู">
+                                    <i class="fa-solid fa-fire"></i> ปิ้งย่าง/ชาบู
+                                </button>
+                                <button type="button" class="solo-chip" data-type="อาหารทะเล / ซีฟู้ด">
+                                    <i class="fa-solid fa-shrimp"></i> ซีฟู้ด
+                                </button>
+                                <button type="button" class="solo-chip" data-type="คาเฟ่ / ของหวาน">
+                                    <i class="fa-solid fa-ice-cream"></i> คาเฟ่/ของหวาน
+                                </button>
+                                <button type="button" class="solo-chip" data-type="อาหารฮาลาล">
+                                    <i class="fa-solid fa-star-and-crescent"></i> ฮาลาล
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- SUBSECTION 3: DISTANCE -->
+                        <div class="solo-subfilter-section" style="margin-bottom: 0.85rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                                <div class="solo-subfilter-label">
+                                    <i class="fa-solid fa-location-dot text-accent"></i> ระยะทางสูงสุด
+                                </div>
+                                <span id="group-distance-val" class="range-value" style="font-size: 0.82rem; color: var(--accent-orange); font-weight: 600;">ไม่จำกัด (ทุกระยะ)</span>
+                            </div>
+                            <div class="solo-dist-pills" id="group-dist-pills" style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.45rem;">
+                                <button type="button" class="solo-dist-pill active" data-dist="">
+                                    <i class="fa-solid fa-globe"></i> ทุกระยะทาง
+                                </button>
+                                <button type="button" class="solo-dist-pill" data-dist="1.0">
+                                    <i class="fa-solid fa-person-walking"></i> &lt; 1 กม.
+                                </button>
+                                <button type="button" class="solo-dist-pill" data-dist="2.0">
+                                    <i class="fa-solid fa-bicycle"></i> &lt; 2 กม.
+                                </button>
+                                <button type="button" class="solo-dist-pill" data-dist="5.0">
+                                    <i class="fa-solid fa-car"></i> &lt; 5 กม.
+                                </button>
+                            </div>
+                            <input type="range" id="pref-distance" min="0.5" max="20.0" step="0.5" value="20.0" class="slider" style="margin-top: 0.2rem;">
+                        </div>
+
+                        <!-- SUBSECTION 4: BUDGET -->
+                        <div class="solo-subfilter-section">
+                            <div class="solo-subfilter-label">
+                                <i class="fa-solid fa-coins text-accent"></i> งบประมาณต่อคน
+                            </div>
+                            <div class="solo-budget-pills" id="group-budget-pills" style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                                <button type="button" class="solo-budget-pill active" data-min="0" data-max="9999">
+                                    <i class="fa-solid fa-check"></i> ทุกราคา
+                                </button>
+                                <button type="button" class="solo-budget-pill" data-min="0" data-max="99">
+                                    <strong>$</strong> &lt; 100฿
+                                </button>
+                                <button type="button" class="solo-budget-pill" data-min="100" data-max="300">
+                                    <strong>$$</strong> 100 - 300฿
+                                </button>
+                                <button type="button" class="solo-budget-pill" data-min="301" data-max="9999">
+                                    <strong>$$$</strong> &gt; 300฿
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <input type="range" id="pref-distance" min="0.5" max="20.0" step="0.5" value="2.0" class="slider">
                 </div>
 
                 <div class="action-buttons">
-                    <button id="btn-back-to-landing" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i>
+                    <button id="btn-back-to-landing" class="btn btn-secondary btn-lg"><i class="fa-solid fa-arrow-left"></i>
                         ย้อนกลับ</button>
-                    <button id="btn-create-room" class="btn btn-primary">สร้างห้องเลย <i
+                    <button id="btn-create-room" class="btn btn-primary btn-lg">สร้างห้องเลย <i
+                            class="fa-solid fa-arrow-right"></i></button>
+                    <button id="btn-start-solo-swipe" class="btn btn-primary btn-lg hidden">เริ่มปัดเลย 🍽️ <i
                             class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </section>
@@ -333,23 +590,25 @@
 
                 <div class="form-group">
                     <label for="join-room-id">รหัสห้อง</label>
-                    <input type="text" id="join-room-id" class="form-control"
+                    <input type="text" id="join-room-id" class="form-control" autocomplete="off"
                         style="text-transform: uppercase; text-align: center; letter-spacing: 2px; font-weight: bold; color: var(--accent-orange); background: rgba(255, 255, 255, 0.02); cursor: default; border-color: rgba(255, 51, 119, 0.2);"
                         readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="join-name">ชื่อของคุณ</label>
-                    <input type="text" id="join-name" placeholder="เช่น นัท, ส้ม, บอย" maxlength="15"
-                        class="form-control">
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="text" id="join-name" placeholder="เช่น นัท, ส้ม, บอย" maxlength="30"
+                            class="form-control" style="flex: 1;">
+                        <button type="button" id="btn-random-join-name" class="btn btn-secondary" title="สุ่มชื่อใหม่" style="padding: 0.75rem 1rem; min-height: 48px; white-space: nowrap; font-size: 0.92rem; font-weight: 500;">
+                            <i class="fa-solid fa-dice text-accent"></i> สุ่มใหม่
+                        </button>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label>ข้อมูลการแพ้อาหาร (เพื่อกรองร้านที่มีส่วนผสมออก)</label>
                     <div class="allergy-selector">
-                        <div class="allergy-pill" data-allergen="อาหารทะเล">
-                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล
-                        </div>
                         <div class="allergy-pill" data-allergen="แป้งสาลี/กลูเตน">
                             <i class="fa-solid fa-bread-slice"></i> แป้งสาลี/กลูเตน
                         </div>
@@ -365,10 +624,37 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label><i class="fa-solid fa-utensils text-accent"></i> อาหารที่อยากกิน (กรองประเภทร้านที่ต้องการ)</label>
+                    <div class="food-type-selector join-food-type-selector">
+                        <div class="type-pill active" data-type="all" id="join-food-type-all">
+                            <i class="fa-solid fa-check-double"></i> เลือกทั้งหมด
+                        </div>
+                        <div class="type-pill active" data-type="อาหารไทย / อาหารใต้">
+                            <i class="fa-solid fa-bowl-food"></i> อาหารไทย / อาหารใต้
+                        </div>
+                        <div class="type-pill active" data-type="จานด่วน / ก๋วยเตี๋ยว">
+                            <i class="fa-solid fa-bowl-rice"></i> จานด่วน / ก๋วยเตี๋ยว
+                        </div>
+                        <div class="type-pill active" data-type="อาหารทะเล / ซีฟู้ด">
+                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล / ซีฟู้ด
+                        </div>
+                        <div class="type-pill active" data-type="ปิ้งย่าง / ชาบู">
+                            <i class="fa-solid fa-fire"></i> ปิ้งย่าง / ชาบู
+                        </div>
+                        <div class="type-pill active" data-type="คาเฟ่ / ของหวาน">
+                            <i class="fa-solid fa-ice-cream"></i> คาเฟ่ / ของหวาน
+                        </div>
+                        <div class="type-pill active" data-type="อาหารฮาลาล">
+                            <i class="fa-solid fa-star-and-crescent"></i> อาหารฮาลาล
+                        </div>
+                    </div>
+                </div>
+
                 <div class="action-buttons">
-                    <button id="btn-back-to-landing-join" class="btn btn-secondary"><i
+                    <button id="btn-back-to-landing-join" class="btn btn-secondary btn-lg"><i
                             class="fa-solid fa-arrow-left"></i> ย้อนกลับ</button>
-                    <button id="btn-submit-join" class="btn btn-primary">เข้าห้องโหวต <i
+                    <button id="btn-submit-join" class="btn btn-primary btn-lg">เข้าห้องโหวต <i
                             class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </section>
@@ -379,7 +665,7 @@
                     <div class="room-code-container">
                         <p class="lobby-label">รหัสห้องเข้าร่วม</p>
                         <h1 id="lobby-room-id" class="lobby-room-id">----</h1>
-                        <button id="btn-copy-room-id" class="btn-copy-code" title="คัดลอกรหัสห้อง">
+                        <button id="btn-copy-room-id" class="btn-copy-code" title="คัดลอกรหัสห้อง" style="min-height: 40px; padding: 0.5rem 1.2rem; font-size: 0.9rem;">
                             <i class="fa-regular fa-copy"></i> คัดลอกรหัสห้อง
                         </button>
                         <div class="qr-container">
@@ -404,8 +690,8 @@
                             <div class="spinner"></div>
                             <span>รอหัวหน้าห้องกดเริ่มโหวต...</span>
                         </div>
-                        <button id="btn-leave-lobby" class="btn btn-secondary full-width"
-                            style="margin-top: 0.8rem; padding: 0.8rem; font-size: 0.95rem;">
+                        <button id="btn-leave-lobby" class="btn btn-secondary btn-lg full-width"
+                            style="margin-top: 0.8rem;">
                             <i class="fa-solid fa-arrow-right-from-bracket text-accent"></i> ออกจากห้อง
                         </button>
                     </div>
@@ -415,13 +701,18 @@
             <!-- VIEW 5: SWIPE DECK (PLAYING) -->
             <section id="view-swipe" class="view-section">
                 <div class="game-status-bar">
-                    <button id="btn-leave-swipe" class="btn btn-secondary"
-                        style="padding: 0.5rem 0.8rem; font-size: 0.8rem; border-radius: var(--border-radius-sm);">
-                        <i class="fa-solid fa-arrow-left text-accent"></i> ออกห้อง
-                    </button>
+                    <div class="game-status-left">
+                        <button id="btn-leave-swipe" class="btn btn-secondary" title="ออกจากห้อง">
+                            <i class="fa-solid fa-arrow-left text-accent"></i> ออก
+                        </button>
 
-                    <!-- TIMER COMPONENT -->
-                    <div class="timer-wrapper">
+                        <div id="swipe-mode-badge" class="swipe-mode-badge">
+                            <i class="fa-solid fa-user text-accent"></i> <span class="swipe-mode-text">คนเดียว</span>
+                        </div>
+                    </div>
+
+                    <!-- TIMER COMPONENT (CENTERED) -->
+                    <div class="timer-wrapper" id="swipe-timer-container">
                         <svg class="timer-svg" viewBox="0 0 100 100">
                             <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
                             <circle class="timer-progress" id="timer-bar" cx="50" cy="50" r="45"></circle>
@@ -436,6 +727,15 @@
                     </div>
                 </div>
 
+                <!-- COMBO STREAK & REACTION HUD -->
+                <div id="combo-streak-container" class="combo-streak-container hidden">
+                    <div class="combo-badge animate-fire">
+                        <span class="combo-fire-icon">🔥</span>
+                        <span id="combo-text" class="combo-text">COMBO x2!</span>
+                        <span id="combo-quote" class="combo-quote">อร่อยต่อเนื่อง 🤤</span>
+                    </div>
+                </div>
+
                 <!-- CARDS DECK CONTAINER -->
                 <div class="deck-container">
                     <div id="swipe-deck" class="swipe-deck">
@@ -443,8 +743,8 @@
                         <div class="deck-empty-state">
                             <i class="fa-solid fa-circle-check text-success"
                                 style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                            <h3>คุณปัดครบแล้ว!</h3>
-                            <p>กำลังรอเพื่อนๆ ปัดจนครบ...</p>
+                            <h3 id="deck-empty-title">คุณปัดครบแล้ว!</h3>
+                            <p id="deck-empty-desc">กำลังรอเพื่อนๆ ปัดจนครบ...</p>
                         </div>
                     </div>
                 </div>
@@ -467,6 +767,20 @@
                     <h4><i class="fa-solid fa-chart-line text-accent"></i> ความคืบหน้าของกลุ่ม</h4>
                     <div id="group-progress-list" class="group-progress-list">
                         <!-- Progress of users in real time -->
+                    </div>
+                </div>
+
+                <!-- LIVE ROOM REACTION FLOATING BAR (DOCKED AT BOTTOM) -->
+                <div id="room-reaction-bar" class="room-reaction-bar hidden">
+                    <span class="reaction-label"><i class="fa-solid fa-face-smile text-accent"></i> ปฏิกิริยา:</span>
+                    <div class="reaction-emojis">
+                        <button type="button" class="btn-reaction" data-emoji="❤️">❤️</button>
+                        <button type="button" class="btn-reaction" data-emoji="🤤">🤤</button>
+                        <button type="button" class="btn-reaction" data-emoji="🔥">🔥</button>
+                        <button type="button" class="btn-reaction" data-emoji="🍕">🍕</button>
+                        <button type="button" class="btn-reaction" data-emoji="🍻">🍻</button>
+                        <button type="button" class="btn-reaction" data-emoji="🌶️">🌶️</button>
+                        <button type="button" class="btn-reaction" data-emoji="👏">👏</button>
                     </div>
                 </div>
             </section>
@@ -494,43 +808,83 @@
                     <a id="btn-open-map" href="#" target="_blank" class="btn btn-primary btn-lg full-width">
                         <i class="fa-solid fa-map-location-dot"></i> นำทางด้วย Google Maps
                     </a>
-                    <button id="btn-restart" class="btn btn-secondary full-width">
-                        <i class="fa-solid fa-rotate-left"></i> กลับหน้าหลัก/สร้างกลุ่มใหม่
+                    <button id="btn-solo-retry" class="btn btn-secondary btn-lg full-width hidden">
+                        <i class="fa-solid fa-rotate-right text-accent"></i> สุ่มใหม่ / ปัดใหม่อีกรอบ
+                    </button>
+                    <button id="btn-restart" class="btn btn-secondary btn-lg full-width">
+                        <i class="fa-solid fa-rotate-left"></i> กลับหน้าหลัก
                     </button>
                 </div>
             </section>
         </main>
+
+        <!-- APP FOOTER / PDPA LEGAL NOTICE -->
+        <footer class="app-footer" style="padding: 1.2rem 1rem 2rem; text-align: center; font-size: 0.76rem; color: var(--text-muted); border-top: 1px solid var(--glass-border); margin-top: 2rem;">
+            <div style="display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 0.6rem;">
+                <a href="javascript:void(0)" class="legal-link btn-trigger-privacy" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;"><i class="fa-solid fa-shield-halved text-accent"></i> นโยบายความเป็นส่วนตัว (PDPA)</a>
+                <a href="javascript:void(0)" class="legal-link btn-trigger-terms" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;"><i class="fa-solid fa-file-contract text-accent"></i> ข้อกำหนดการใช้งาน</a>
+                <a href="javascript:void(0)" class="legal-link btn-trigger-cookie-prefs" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;"><i class="fa-solid fa-cookie-bite text-accent"></i> จัดการคุกกี้</a>
+            </div>
+            <div>© 2026 GINDER Platform • คุ้มครองข้อมูลส่วนบุคคลตาม พ.ร.บ. PDPA พ.ศ. 2562</div>
+        </footer>
     </div>
 
-    <!-- MOBILE APP ACCESS MODAL -->
-    <div id="mobile-app-modal" class="qr-modal hidden">
-        <div class="qr-modal-content glass" style="max-width: 340px; text-align: center;">
-            <div class="qr-modal-header"
-                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem; margin-bottom: 0.8rem;">
-                <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.4rem;">
-                    <i class="fa-solid fa-mobile-screen-button text-accent"></i> <span>เปิดใช้งานบนมือถือ</span>
-                </h3>
-                <button id="btn-close-mobile-qr"
-                    style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; padding: 0.2rem;"><i
-                        class="fa-solid fa-times"></i></button>
+
+
+    <!-- ============================================================================== -->
+    <!-- WELCOME CARD POP-UP MODAL (STYLE 3: ป๊อปอัปต้อนรับสไตล์การ์ด) -->
+    <!-- ============================================================================== -->
+    <div id="welcome-intro-modal" class="welcome-modal-overlay hidden">
+        <div class="welcome-modal-card glass animate-scale-up">
+            <button type="button" id="btn-close-welcome-modal" class="welcome-close-btn" title="ปิดหน้าต่าง" aria-label="ปิด">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="welcome-hero-badge">
+                <span class="welcome-emoji">🍜</span>
+                <span class="welcome-flame-icon animate-fire">🔥</span>
             </div>
-            <div class="qr-container" style="display: flex; justify-content: center; margin: 0.8rem 0;">
-                <canvas id="mobile-app-qr-canvas" style="border-radius: var(--border-radius-sm); background: #ffffff; padding: 8px; width: 180px; height: 180px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);"></canvas>
+
+            <h2 class="welcome-modal-title">ยินดีต้อนรับสู่ <span class="animate-gradient">GINDER!</span></h2>
+            <p class="welcome-modal-tagline">แอปช่วยตัดสินใจเลือกร้านอาหาร ปัดสนุก ไม่ต้องคิดเยอะ</p>
+
+            <div class="welcome-bullets-list">
+                <div class="welcome-bullet-row">
+                    <div class="welcome-bullet-icon bg-orange-glow">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div class="welcome-bullet-text">
+                        <strong>เร็ว & ตรงใจ:</strong> สุ่มร้านเด็ดใกล้ตัวตามงบและประเภทอาหารที่อยากกินใน 1 นาที
+                    </div>
+                </div>
+
+                <div class="welcome-bullet-row">
+                    <div class="welcome-bullet-icon bg-pink-glow">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="welcome-bullet-text">
+                        <strong>มติเอกฉันท์ 100%:</strong> ชวนเพื่อนมาช่วยกันปัด ถ้าทุกคนชอบตรงกัน ล็อคเป้าทันที!
+                    </div>
+                </div>
+
+                <div class="welcome-bullet-row">
+                    <div class="welcome-bullet-icon bg-blue-glow">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="welcome-bullet-text">
+                        <strong>พร้อมพิกัดนำทาง:</strong> ได้ร้านที่แมตช์แล้ว กดเปิดแผนที่ Google Maps ไปกินได้เลย
+                    </div>
+                </div>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem; line-height: 1.4;">
-                เปิดกล้องโทรศัพท์สแกน QR Code ด้านบน<br>เพื่อเข้าใช้งานหน้าแอปบนมือถือทันที
-            </p>
-            <div style="display: flex; gap: 0.4rem; align-items: center; background: rgba(0,0,0,0.3); border-radius: var(--border-radius-sm); padding: 0.4rem 0.6rem; border: 1px solid var(--glass-border);">
-                <input id="mobile-app-url-input" type="text" readonly
-                    style="flex: 1; background: none; border: none; color: var(--text-primary); font-size: 0.75rem; outline: none; font-family: monospace;"
-                    value="http://10.59.0.72:5000">
-                <button id="btn-copy-mobile-url" class="btn btn-secondary btn-sm"
-                    style="padding: 0.3rem 0.6rem; font-size: 0.75rem; border-radius: 4px;" type="button">
-                    <i class="fa-solid fa-copy"></i> คัดลอก
+
+            <div class="welcome-action-wrap">
+                <button type="button" id="btn-start-from-welcome" class="btn-start-welcome animate-pulse-glow">
+                    <i class="fa-solid fa-rocket"></i> <span>เริ่มลุยเลย! (Start Game)</span>
                 </button>
-            </div>
-            <div id="mobile-url-copied-msg" style="color: var(--accent-green); font-size: 0.75rem; margin-top: 0.4rem; min-height: 1.1rem; opacity: 0; transition: opacity 0.2s;">
-                คัดลอกลิงก์สำเร็จแล้ว!
+                <label class="welcome-skip-label">
+                    <input type="checkbox" id="chk-skip-welcome-forever">
+                    <span>ไม่ต้องแสดงกล่องนี้อีกในครั้งถัดไป</span>
+                </label>
             </div>
         </div>
     </div>
@@ -657,10 +1011,6 @@
                         style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">ข้อมูลการแพ้อาหารเริ่มต้น</label>
                     <div class="allergy-selector signup-allergy-selector"
                         style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.4rem;">
-                        <div class="allergy-pill" data-allergen="อาหารทะเล"
-                            style="padding: 0.4rem 0.6rem; font-size: 0.75rem;">
-                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล
-                        </div>
                         <div class="allergy-pill" data-allergen="แป้งสาลี/กลูเตน"
                             style="padding: 0.4rem 0.6rem; font-size: 0.75rem;">
                             <i class="fa-solid fa-bread-slice"></i> แป้งสาลี
@@ -677,12 +1027,37 @@
                             style="padding: 0.4rem 0.6rem; font-size: 0.75rem;">
                             <i class="fa-solid fa-seedling"></i> ถั่ว
                         </div>
+                        <div class="allergy-pill" data-allergen="อาหารทะเล"
+                            style="padding: 0.4rem 0.6rem; font-size: 0.75rem;">
+                            <i class="fa-solid fa-shrimp"></i> ซีฟู้ด
+                        </div>
                     </div>
+                </div>
+
+                <!-- PDPA Consents in Auth Modal -->
+                <div style="background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 0.75rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.75rem; line-height: 1.4;">
+                    <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; color: var(--text-primary);">
+                        <input type="checkbox" id="signup-pdpa-consent" required style="margin-top: 0.15rem; accent-color: var(--accent-pink);">
+                        <span>
+                            ข้าพเจ้ายอมรับ <a href="javascript:void(0)" class="btn-trigger-terms text-accent" style="text-decoration: underline;">ข้อกำหนดการใช้งาน</a> และ <a href="javascript:void(0)" class="btn-trigger-privacy text-accent" style="text-decoration: underline;">นโยบายความเป็นส่วนตัว (PDPA)</a> *
+                        </span>
+                    </label>
+                    <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; color: var(--text-secondary);">
+                        <input type="checkbox" id="signup-marketing-consent" style="margin-top: 0.15rem; accent-color: var(--accent-pink);">
+                        <span>ยินยอมรับข่าวสาร โปรโมชันส่วนลดร้านอาหารพิเศษ</span>
+                    </label>
                 </div>
 
                 <button type="submit" class="btn btn-primary full-width" style="padding: 0.75rem;"><i
                         class="fa-solid fa-user-plus"></i> สมัครสมาชิก & เข้าสู่ระบบ</button>
             </form>
+
+            <!-- Voluntary Guest / Skip Option -->
+            <div style="margin-top: 1rem; text-align: center; border-top: 1px solid var(--glass-border); padding-top: 0.8rem;">
+                <button type="button" id="btn-modal-quick-guest" style="background: none; border: none; color: var(--accent-orange); font-size: 0.85rem; cursor: pointer; text-decoration: underline; padding: 0.3rem;">
+                    <i class="fa-solid fa-arrow-right"></i> ข้ามไปก่อน • ใช้งานต่อในฐานะ Guest
+                </button>
+            </div>
         </div>
     </div>
 
@@ -694,12 +1069,24 @@
                 <button id="btn-close-profile-modal" class="btn-close-modal" type="button"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
+            <!-- Guest Voluntary Login Invitation Banner -->
+            <div id="profile-guest-notice" class="guest-auth-invite-banner hidden" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(244, 63, 94, 0.15)); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: var(--border-radius-sm); padding: 0.85rem 1rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap;">
+                <div style="font-size: 0.85rem; color: var(--text-primary);">
+                    <strong style="display: block; margin-bottom: 0.2rem;"><i class="fa-solid fa-sparkles text-accent"></i> คุณกำลังใช้งานในโหมดผู้ใช้ทั่วไป (Guest)</strong>
+                    <span style="color: var(--text-secondary); font-size: 0.78rem;">ต้องการบันทึกประวัติการกินของคุณแบบถาวรหรือไม่?</span>
+                </div>
+                <button type="button" id="btn-profile-to-login" class="btn btn-primary btn-sm" style="padding: 0.45rem 0.9rem; font-size: 0.8rem; font-weight: 600; white-space: nowrap;">
+                    <i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ / สมัครสมาชิก
+                </button>
+            </div>
+
             <!-- Profile Navigation Tabs -->
             <div class="profile-tabs" style="display: flex; gap: 0.4rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem;">
                 <button id="tab-profile-info" class="btn btn-sm btn-primary active" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.7rem;"><i class="fa-solid fa-user"></i> ข้อมูลส่วนตัว</button>
                 <button id="tab-profile-password" class="btn btn-sm btn-secondary" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.7rem;"><i class="fa-solid fa-key"></i> เปลี่ยนรหัสผ่าน</button>
                 <button id="tab-profile-history" class="btn btn-sm btn-secondary" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.7rem;"><i class="fa-solid fa-clock-rotate-left"></i> ประวัติการแมตช์</button>
                 <button id="tab-profile-security" class="btn btn-sm btn-secondary" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.7rem;"><i class="fa-solid fa-shield-halved"></i> ความปลอดภัย & กู้คืน</button>
+                <button id="tab-profile-pdpa" class="btn btn-sm btn-secondary" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.7rem;"><i class="fa-solid fa-user-shield"></i> สิทธิข้อมูล (PDPA)</button>
             </div>
 
             <!-- Tab 1: Profile Info -->
@@ -712,6 +1099,29 @@
                     <div class="form-group" style="margin-bottom: 1.2rem;">
                         <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ชื่อที่แสดงผล (Display Name) *</label>
                         <input type="text" id="profile-display-name" class="form-control" placeholder="เช่น นัท, ส้ม, บอย" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1.2rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">
+                            <i class="fa-solid fa-shield-halved text-accent"></i> ข้อมูลการแพ้อาหารประจำตัว (ช่วยกรองร้านให้อัตโนมัติทุกโหมด)
+                        </label>
+                        <div id="profile-allergy-selector" class="allergy-selector signup-allergy-selector" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.4rem;">
+                            <div class="allergy-pill" data-allergen="แป้งสาลี/กลูเตน" style="padding: 0.45rem 0.65rem; font-size: 0.78rem;">
+                                <i class="fa-solid fa-bread-slice"></i> แป้งสาลี
+                            </div>
+                            <div class="allergy-pill" data-allergen="นม/ชีส" style="padding: 0.45rem 0.65rem; font-size: 0.78rem;">
+                                <i class="fa-solid fa-cheese"></i> นม/ชีส
+                            </div>
+                            <div class="allergy-pill" data-allergen="ไข่" style="padding: 0.45rem 0.65rem; font-size: 0.78rem;">
+                                <i class="fa-solid fa-egg"></i> ไข่
+                            </div>
+                            <div class="allergy-pill" data-allergen="ถั่ว" style="padding: 0.45rem 0.65rem; font-size: 0.78rem;">
+                                <i class="fa-solid fa-seedling"></i> ถั่ว
+                            </div>
+                            <div class="allergy-pill" data-allergen="อาหารทะเล" style="padding: 0.45rem 0.65rem; font-size: 0.78rem;">
+                                <i class="fa-solid fa-shrimp"></i> ซีฟู้ด
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary full-width" style="padding: 0.75rem;">
                         <i class="fa-solid fa-save"></i> บันทึกข้อมูลส่วนตัว
@@ -784,6 +1194,54 @@
                         <i class="fa-solid fa-save"></i> บันทึกข้อมูลความปลอดภัย
                     </button>
                 </form>
+            </div>
+
+            <!-- Tab 5: Data Subject Rights (PDPA) -->
+            <div id="tab-pane-profile-pdpa" class="profile-pane hidden">
+                <div style="margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 0.9rem;">
+                    <h4 style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.3rem;">
+                        <i class="fa-solid fa-file-export text-accent"></i> 1. สิทธิขอเข้าถึงและรับสำเนาข้อมูล (Right of Access & Portability)
+                    </h4>
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 0.8rem;">
+                        คุณสามารถดาวน์โหลดสำเนาข้อมูลส่วนบุคคลทั้งหมดของคุณที่จัดเก็บอยู่ใน GINDER ออกมาเป็นไฟล์ JSON ได้ตลอดเวลา
+                    </p>
+                    <button type="button" id="btn-pdpa-export-data" class="btn btn-secondary full-width" style="font-size: 0.82rem; padding: 0.55rem;">
+                        <i class="fa-solid fa-download"></i> ดาวน์โหลดสำเนาข้อมูลส่วนบุคคลของฉัน (JSON)
+                    </button>
+                </div>
+
+                <div style="margin-bottom: 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 0.9rem;">
+                    <h4 style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.3rem;">
+                        <i class="fa-solid fa-sliders text-accent"></i> 2. การจัดการความยินยอมคุกกี้ (Consent Preferences)
+                    </h4>
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 0.8rem;">
+                        คุณมีสิทธิในการเปลี่ยนหรือถอนความยินยอมในการใช้งานคุกกี้เพื่อการวิเคราะห์หรือการตลาดได้ตลอดเวลา
+                    </p>
+                    <button type="button" id="btn-profile-open-cookie-prefs" class="btn btn-secondary full-width" style="font-size: 0.82rem; padding: 0.55rem;">
+                        <i class="fa-solid fa-cookie-bite"></i> เปิดศูนย์จัดการความยินยอมคุกกี้
+                    </button>
+                </div>
+
+                <!-- Danger Zone: Right to Erasure -->
+                <div style="background: rgba(255, 50, 50, 0.05); border: 1px solid rgba(255, 50, 50, 0.25); border-radius: var(--border-radius-sm); padding: 0.9rem;">
+                    <h4 style="font-size: 0.9rem; font-weight: 600; color: var(--color-danger); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.3rem;">
+                        <i class="fa-solid fa-triangle-exclamation"></i> 3. สิทธิขอลบข้อมูลและทำลายบัญชี (Right to Erasure)
+                    </h4>
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 0.8rem;">
+                        การลบบัญชีจะลบข้อมูลส่วนตัว การตั้งค่าความปลอดภัย และสถิติทั้งหมดอย่างถาวร ไม่สามารถกู้คืนได้
+                    </p>
+                    <div id="pdpa-delete-account-box">
+                        <div class="form-group" style="margin-bottom: 0.8rem;">
+                            <label style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.3rem; display: block;">
+                                ป้อนรหัสผ่านปัจจุบันเพื่อยืนยันการลบ:
+                            </label>
+                            <input type="password" id="pdpa-delete-confirm-password" class="form-control" placeholder="รหัสผ่านของคุณ" style="font-size: 0.85rem;">
+                        </div>
+                        <button type="button" id="btn-pdpa-delete-account" class="btn full-width" style="background: var(--color-danger); color: white; font-size: 0.82rem; padding: 0.6rem; border: none; border-radius: var(--border-radius-sm); cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i> ขอลบข้อมูลและปิดบัญชีถาวร
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -937,6 +1395,196 @@
             </form>
         </div>
     </div>
+
+    <!-- ============================================================================== -->
+    <!-- PDPA: COOKIE CONSENT BANNER (แถบขอความยินยอมคุกกี้) -->
+    <!-- ============================================================================== -->
+    <div id="cookie-consent-banner" class="cookie-banner hidden">
+        <div class="cookie-banner-content glass">
+            <div class="cookie-banner-header">
+                <div class="cookie-banner-title">
+                    <i class="fa-solid fa-cookie-bite text-accent" style="font-size: 1.35rem;"></i>
+                    <span>การคุ้มครองข้อมูลส่วนบุคคลและนโยบายคุกกี้ (PDPA)</span>
+                </div>
+            </div>
+            <p class="cookie-banner-text">
+                GINDER มีการใช้งานคุกกี้ (Cookies) เพื่อพัฒนาประสิทธิภาพ มอบประสบการณ์ใช้งานที่ราบรื่น จดจำความชื่นชอบอาหาร และวิเคราะห์การใช้งานตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA) ท่านสามารถเลือกยอมรับทั้งหมด หรือกำหนดความยินยอมได้ตามต้องการ <a href="javascript:void(0)" class="btn-trigger-privacy" style="color: var(--color-primary); text-decoration: underline;">อ่านนโยบายความเป็นส่วนตัว</a>
+            </p>
+            <div class="cookie-banner-actions">
+                <button id="btn-cookie-customize" type="button" class="btn btn-secondary btn-sm"><i class="fa-solid fa-sliders"></i> ตั้งค่าคุกกี้</button>
+                <button id="btn-cookie-reject" type="button" class="btn btn-secondary btn-sm"><i class="fa-solid fa-xmark"></i> ปฏิเสธคุกกี้ที่ไม่จำเป็น</button>
+                <button id="btn-cookie-accept-all" type="button" class="btn btn-primary btn-sm"><i class="fa-solid fa-check"></i> ยอมรับทั้งหมด</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================== -->
+    <!-- PDPA: COOKIE PREFERENCES MODAL (ศูนย์จัดการความยินยอมคุกกี้) -->
+    <!-- ============================================================================== -->
+    <div id="modal-cookie-preferences" class="modal">
+        <div class="modal-content glass" style="max-width: 560px; width: 92%;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-sliders text-accent"></i> ศูนย์จัดการความยินยอมคุกกี้</h3>
+                <button id="btn-close-cookie-modal" class="btn-close-modal" type="button"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1.2rem;">
+                คุณสามารถเลือกเปิดหรือปิดการทำงานของคุกกี้แต่ละหมวดหมู่ได้ตามความประสงค์ (ยกเว้นคุกกี้ที่จำเป็นอย่างยิ่ง) โดยการตั้งค่าจะมีผลต่อการใช้งานบนเบราว์เซอร์นี้
+            </div>
+
+            <div class="cookie-category-list" style="display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.4rem; max-height: 380px; overflow-y: auto; padding-right: 0.3rem;">
+                <!-- 1. Strictly Necessary -->
+                <div class="cookie-cat-card" style="background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                        <span style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);"><i class="fa-solid fa-shield-halved text-accent"></i> 1. คุกกี้ที่จำเป็นอย่างยิ่ง (Strictly Necessary)</span>
+                        <span style="font-size: 0.72rem; background: rgba(0, 255, 38, 0.15); color: var(--color-success); border: 1px solid rgba(0, 255, 38, 0.3); border-radius: 12px; padding: 0.15rem 0.5rem; font-weight: 600;">เปิดเสมอ</span>
+                    </div>
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+                        จำเป็นต่อการทำงานหลักของระบบ เช่น การรักษาความปลอดภัย การเข้าสู่ระบบ และการเชื่อมต่อห้องจับคู่ ไม่สามารถปิดได้
+                    </p>
+                </div>
+
+                <!-- 2. Functional -->
+                <div class="cookie-cat-card" style="background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                        <span style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);"><i class="fa-solid fa-gear text-accent"></i> 2. คุกกี้เพื่อการทำงานของระบบ (Functional)</span>
+                        <label class="pdpa-switch">
+                            <input type="checkbox" id="pref-cookie-functional" checked>
+                            <span class="pdpa-slider"></span>
+                        </label>
+                    </div>
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+                        ช่วยจดจำการตั้งค่าส่วนบุคคล เช่น การเปิด/ปิดเสียงเอฟเฟกต์ หมวดหมู่อาหารที่เลือกไว้ล่าสุด และระยะทางที่ค้นหา
+                    </p>
+                </div>
+
+                <!-- 3. Analytics -->
+                <div class="cookie-cat-card" style="background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                        <span style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);"><i class="fa-solid fa-chart-line text-accent"></i> 3. คุกกี้เพื่อการวิเคราะห์และวัดผล (Analytics)</span>
+                        <label class="pdpa-switch">
+                            <input type="checkbox" id="pref-cookie-analytics">
+                            <span class="pdpa-slider"></span>
+                        </label>
+                    </div>
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+                        ช่วยรวบรวมข้อมูลสถิติการใช้งานแบบไม่ระบุตัวบุคคล (Anonymized) เพื่อนำมาปรับปรุงความเร็วและประสิทธิภาพของเว็บไซต์
+                    </p>
+                </div>
+
+                <!-- 4. Marketing -->
+                <div class="cookie-cat-card" style="background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                        <span style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);"><i class="fa-solid fa-bullhorn text-accent"></i> 4. คุกกี้เพื่อการตลาดและข้อเสนอพิเศษ (Marketing)</span>
+                        <label class="pdpa-switch">
+                            <input type="checkbox" id="pref-cookie-marketing">
+                            <span class="pdpa-slider"></span>
+                        </label>
+                    </div>
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
+                        ใช้สำหรับแนะนำโปรโมชันร้านอาหาร ส่วนลดพิเศษ และดีลอาหารที่ตรงกับพฤติกรรมความชอบของคุณ
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.6rem;">
+                <button type="button" id="btn-cookie-accept-all-modal" class="btn btn-secondary" style="flex: 1; padding: 0.75rem;">
+                    <i class="fa-solid fa-check-double"></i> ยอมรับทั้งหมด
+                </button>
+                <button type="button" id="btn-cookie-save-prefs" class="btn btn-primary" style="flex: 1; padding: 0.75rem;">
+                    <i class="fa-solid fa-save"></i> บันทึกการตั้งค่า
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================== -->
+    <!-- PDPA: PRIVACY POLICY & TERMS MODAL (นโยบายความเป็นส่วนตัวและข้อกำหนดฉบับละเอียด) -->
+    <!-- ============================================================================== -->
+    <div id="modal-privacy-policy" class="modal">
+        <div class="modal-content glass" style="max-width: 680px; width: 94%; max-height: 85vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="flex-shrink: 0;">
+                <h3 id="privacy-policy-modal-title"><i class="fa-solid fa-shield-halved text-accent"></i> นโยบายความเป็นส่วนตัว (Privacy Policy)</h3>
+                <button id="btn-close-privacy-modal" class="btn-close-modal" type="button"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Tab Switcher inside Policy Modal -->
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; flex-shrink: 0;">
+                <button id="tab-policy-privacy" class="btn btn-sm btn-primary active" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;"><i class="fa-solid fa-shield-halved"></i> นโยบายความเป็นส่วนตัว (PDPA)</button>
+                <button id="tab-policy-terms" class="btn btn-sm btn-secondary" type="button" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;"><i class="fa-solid fa-file-contract"></i> ข้อกำหนดการใช้งาน</button>
+            </div>
+
+            <!-- Content Scroll Area -->
+            <div id="policy-content-scroll" style="overflow-y: auto; flex: 1; padding-right: 0.5rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6;">
+                <!-- SECTION 1: PRIVACY POLICY -->
+                <div id="pane-policy-privacy">
+                    <div style="background: rgba(238, 120, 22, 0.1); border-left: 3px solid var(--color-primary); padding: 0.6rem 0.8rem; margin-bottom: 1rem; border-radius: 4px; color: #ffca99;">
+                        <strong>ประกาศการคุ้มครองข้อมูลส่วนบุคคล (PDPA Notice):</strong> เว็บไซต์ GINDER ให้ความสำคัญสูงสุดต่อการคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้บริการ และปฏิบัติตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 อย่างเคร่งครัด
+                    </div>
+
+                    <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-circle-info text-accent"></i> 1. วัตถุประสงค์ของการประมวลผลข้อมูล (Purposes)</h4>
+                    <p>เราเก็บรวบรวมและใช้ข้อมูลส่วนบุคคลเพื่อการให้บริการจับคู่ร้านอาหาร การยืนยันตัวตนและการเข้าสู่ระบบ การกู้คืนบัญชีผู้ใช้ และการติดต่อช่วยเหลือเมื่อเกิดปัญหาทางเทคนิค</p>
+
+                    <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-database text-accent"></i> 2. ข้อมูลส่วนบุคคลที่เราจัดเก็บ (Data Collected)</h4>
+                    <ul style="padding-left: 1.2rem; margin-bottom: 0.6rem;">
+                        <li><strong>ข้อมูลทั่วไป:</strong> ชื่อผู้ใช้ (Username), ชื่อที่แสดง (Display Name)</li>
+                        <li><strong>ข้อมูลสำหรับกู้คืนบัญชี:</strong> อีเมล (Email), คำถามและคำตอบความปลอดภัย (เข้ารหัส Salted Hash ไม่สามารถถอดรหัสได้), Recovery PIN</li>
+                        <li><strong>ข้อมูลความอ่อนไหว (Sensitive Data):</strong> ข้อมูลการแพ้อาหาร (Allergies) ซึ่งถือเป็นข้อมูลสุขภาพตามมาตรา 26 โดยเราจะประมวลผลเฉพาะเมื่อได้รับความยินยอมชัดแจ้งเพื่อกรองร้านอาหารที่ปลอดภัยต่อคุณ</li>
+                        <li><strong>ข้อมูลทางเทคนิคและพิกัด:</strong> พิกัด GPS (เพื่อค้นหาร้านอาหารใกล้คุณ จัดเก็บเฉพาะชั่วคราว), ข้อมูลการเข้าสู่ระบบ IP Address และ User Agent</li>
+                    </ul>
+
+                    <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-scale-balanced text-accent"></i> 3. ฐานทางกฎหมายในการประมวลผล (Lawful Bases)</h4>
+                    <p>เราประมวลผลข้อมูลภายใต้ฐานสัญญา (Contractual Basis) เพื่อให้บริการแพลตฟอร์ม, ฐานความยินยอม (Consent) สำหรับข้อมูลอ่อนไหวและคุกกี้การตลาด และฐานประโยชน์อันชอบธรรม (Legitimate Interest) สำหรับการรักษาความปลอดภัยของระบบ</p>
+
+                    <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-user-check text-accent"></i> 4. สิทธิของเจ้าของข้อมูลส่วนบุคคล (Data Subject Rights)</h4>
+                    <p>ภายใต้กฎหมาย PDPA คุณมีสิทธิดังต่อไปนี้:</p>
+                    <ul style="padding-left: 1.2rem; margin-bottom: 0.6rem;">
+                        <li><strong>สิทธิขอเข้าถึงและขอรับสำเนาข้อมูล (Right of Access & Portability):</strong> คุณสามารถกดดาวน์โหลดไฟล์สำเนาข้อมูลส่วนบุคคลของคุณทั้งหมดได้ทันทีในหน้าโปรไฟล์</li>
+                        <li><strong>สิทธิขอแก้ไขข้อมูล (Right to Rectification):</strong> แก้ไขชื่อแสดงผล ข้อมูลภูมิแพ้ และรหัสผ่านได้ตลอดเวลา</li>
+                        <li><strong>สิทธิขอลบข้อมูลหรือทำลาย (Right to Erasure / Right to be Forgotten):</strong> คุณสามารถใช้สิทธิขอลบข้อมูลและปิดบัญชีถาวรได้ในแท็บ PDPA ของหน้าโปรไฟล์</li>
+                        <li><strong>สิทธิในการถอนความยินยอม (Right to Withdraw Consent):</strong> สามารถปรับเปลี่ยนการยินยอมคุกกี้และการรับข้อเสนอได้ทุกเมื่อ</li>
+                    </ul>
+
+                    <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-lock text-accent"></i> 5. มาตรการรักษาความมั่นคงปลอดภัย (Security Measures)</h4>
+                    <p>ระบบใช้การเข้ารหัสผ่านแบบ Salted PBKDF2 (100,000 รอบ) และ SHA-256 ป้องกันการเข้าถึงข้อมูลโดยมิชอบ พร้อมสิทธิ์การควบคุมระดับฐานข้อมูล (Row Level Security - RLS)</p>
+
+                    <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-address-book text-accent"></i> 6. ช่องทางการติดต่อเจ้าหน้าที่คุ้มครองข้อมูล (DPO Contact)</h4>
+                    <p>หากมีข้อสงสัยเกี่ยวกับนโยบายหรือประสงค์จะใช้สิทธิของเจ้าของข้อมูล สามารถติดต่อเจ้าหน้าที่คุ้มครองข้อมูลได้ที่: <strong>support@ginder.app</strong> หรือผ่านแบบฟอร์ม "ติดต่อเรา" บนหน้าเว็บ</p>
+                </div>
+
+                <!-- SECTION 2: TERMS OF SERVICE -->
+                <div id="pane-policy-terms" class="hidden">
+                    <h4 style="color: var(--text-primary); margin: 0.6rem 0 0.3rem;">ข้อกำหนดและเงื่อนไขการใช้งานแพลตฟอร์ม GINDER</h4>
+                    <p>1. <strong>การยอมรับข้อกำหนด:</strong> การเข้าใช้งานหรือสมัครสมาชิกถือว่าคุณยอมรับข้อกำหนดเหล่านี้อย่างสมบูรณ์</p>
+                    <p>2. <strong>บัญชีผู้ใช้และความปลอดภัย:</strong> คุณมีหน้าที่รักษาความลับของรหัสผ่านและข้อมูลความปลอดภัยของบัญชีตนเอง</p>
+                    <p>3. <strong>การใช้งานที่เหมาะสม:</strong> ห้ามกระทำการใดๆ ที่เป็นการรบกวนการทำงานของระบบ ทำลายข้อมูล หรือใช้โปรแกรมอัตโนมัติในการโจมตีเซิร์ฟเวอร์</p>
+                    <p>4. <strong>การปฏิเสธความรับผิดชอบ (Disclaimer):</strong> ข้อมูลร้านอาหารและราคาอาหารเป็นการรวบรวมเพื่อความสะดวก โปรดตรวจสอบกับทางร้านก่อนสั่งซื้อจริงทุกครั้ง</p>
+                    <p>5. <strong>การระงับการให้บริการ:</strong> ผู้ดูแลระบบขอสงวนสิทธิ์ในการระงับบัญชีผู้ใช้งานที่ละเมิดข้อกำหนดหรือมีพฤติกรรมไม่เหมาะสม</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--glass-border); display: flex; justify-content: flex-end; flex-shrink: 0;">
+                <button type="button" id="btn-close-privacy-policy-action" class="btn btn-primary btn-sm" style="padding: 0.5rem 1.2rem;">
+                    <i class="fa-solid fa-check"></i> รับทราบและเข้าใจ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================== -->
+    <!-- PDPA: FLOATING SETTINGS BUTTON (ปุ่มลอยสำหรับเปิดตั้งค่าคุกกี้ได้ตลอดเวลา) -->
+    <!-- ============================================================================== -->
+    <button id="btn-floating-pdpa" class="btn-floating-pdpa" type="button" title="ตั้งค่าความเป็นส่วนตัว & คุกกี้ (PDPA)" aria-label="ตั้งค่าคุกกี้">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>PDPA & คุกกี้</span>
+    </button>
+
+
+
+    <!-- FLOATING REACTIONS OVERLAY LAYER -->
+    <div id="floating-reactions-layer" class="floating-reactions-layer"></div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
 
     <!-- Script imports -->
     <!-- Confetti client side -->

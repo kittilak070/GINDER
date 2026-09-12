@@ -21,6 +21,8 @@ scratch/
 data/user_recovery.json
 data/feedback.json
 data/history.json
+data/pdpa_consent_logs.json
+data/pdpa_dsr_requests.json
 
 # OS files
 .DS_Store
