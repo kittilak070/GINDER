@@ -795,6 +795,7 @@ function showView(viewName) {
             roomReactionEl.classList.add('hidden');
             roomReactionEl.style.display = 'none';
         }
+        clearSwipeAffordance();
     }
 
     if (viewName === 'result') {
@@ -822,10 +823,14 @@ function resetApplicationState() {
     if (roomReactionEl) roomReactionEl.classList.add('hidden');
 
     // Clear HTML fields
-    document.getElementById('landing-room-id').value = '';
-    document.getElementById('join-room-id').value = '';
-    document.getElementById('lobby-room-id').innerText = '----';
-    document.getElementById('pref-name').value = '';
+    const landingRoomEl = document.getElementById('landing-room-id');
+    if (landingRoomEl) landingRoomEl.value = '';
+    const joinRoomEl = document.getElementById('join-room-id');
+    if (joinRoomEl) joinRoomEl.value = '';
+    const lobbyRoomEl = document.getElementById('lobby-room-id');
+    if (lobbyRoomEl) lobbyRoomEl.innerText = '----';
+    const prefNameEl = document.getElementById('pref-name');
+    if (prefNameEl) prefNameEl.value = '';
 
     const btnStartSoloSwipe = document.getElementById('btn-start-solo-swipe');
     if (btnStartSoloSwipe) btnStartSoloSwipe.classList.add('hidden');
@@ -884,11 +889,13 @@ function resetApplicationState() {
     };
 
     // Remove query params from address bar
-    window.history.pushState({}, document.title, window.location.pathname);
-
-    if (viewName !== 'swipe') {
-        clearSwipeAffordance();
+    try {
+        window.history.pushState({}, document.title, window.location.pathname);
+    } catch (e) {
+        console.warn('pushState error:', e);
     }
+
+    clearSwipeAffordance();
 }
 
 // --- EVENT LISTENERS ---
@@ -2248,13 +2255,33 @@ function setupEventListeners() {
 
 
     // Restart Application
-    document.getElementById('btn-restart').addEventListener('click', () => {
-        socket.disconnect();
-        if (state.timerInterval) clearInterval(state.timerInterval);
-        resetApplicationState();
-        showView('landing');
-        socket.connect();
-    });
+    const btnRestart = document.getElementById('btn-restart');
+    if (btnRestart) {
+        btnRestart.addEventListener('click', () => {
+            if (typeof soundFx !== 'undefined' && soundFx.play) soundFx.play('click');
+            btnRestart.classList.add('btn-clicked');
+            setTimeout(() => btnRestart.classList.remove('btn-clicked'), 320);
+
+            try {
+                if (socket && typeof socket.disconnect === 'function') socket.disconnect();
+            } catch (e) {
+                console.warn('Socket disconnect error:', e);
+            }
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            try {
+                resetApplicationState();
+            } catch (e) {
+                console.error('resetApplicationState error:', e);
+            }
+            showView('landing');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            try {
+                if (socket && typeof socket.connect === 'function') socket.connect();
+            } catch (e) {
+                console.warn('Socket connect error:', e);
+            }
+        });
+    }
 
     // Quick Guest / Return to Main App
     const btnQuickGuest = document.getElementById('btn-quick-guest-login');

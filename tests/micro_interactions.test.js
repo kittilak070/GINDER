@@ -104,6 +104,14 @@ test('CSS: Async button loading state with dual-ring spinner defined', () => {
     assert(cssContent.includes('@keyframes btn-spin-kf'), 'Missing btn-spin-kf keyframe in style.css');
 });
 
+// Test 10: Restart & Return to Home Screen (#btn-restart) Defensive Execution
+test('JS: #btn-restart safely handles resetApplicationState and navigates to landing view', () => {
+    assert(jsContent.includes("document.getElementById('btn-restart')"), 'Missing btn-restart selector in app.js');
+    assert(jsContent.includes("showView('landing')"), 'btn-restart must call showView(landing)');
+    assert(!jsContent.includes("if (viewName !== 'swipe')"), 'resetApplicationState must not reference undeclared viewName variable');
+    assert(jsContent.includes('clearSwipeAffordance();'), 'clearSwipeAffordance must be called cleanly');
+});
+
 console.log('\n========================================');
 console.log(`  TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
 console.log('========================================\n');
