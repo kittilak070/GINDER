@@ -6,7 +6,22 @@
 const http = require('http');
 const assert = require('assert');
 
+let serverInstance = null;
 const BASE_URL = process.env.TEST_BASE_URL || 'http://localhost:5000';
+
+async function ensureServerRunning() {
+    try {
+        await makeRequest('/api/health');
+        return;
+    } catch (e) {
+        const s = require('../server.js');
+        serverInstance = s.server;
+        const port = new URL(BASE_URL).port || 5000;
+        await new Promise((resolve) => {
+            serverInstance.listen(port, '0.0.0.0', resolve);
+        });
+    }
+}
 
 function makeRequest(urlPath, options = {}, body = null) {
     return new Promise((resolve, reject) => {
@@ -125,7 +140,10 @@ async function runSuite() {
         let hitRateLimit = false;
         // Make up to 25 rapid requests to trigger limit of 20
         for (let i = 0; i < 25; i++) {
-            const res = await makeRequest('/api/login', { method: 'POST' }, {
+            const res = await makeRequest('/api/login', {
+                method: 'POST',
+                headers: { 'x-forwarded-for': '192.0.2.100' }
+            }, {
                 username: 'bruteforce_test',
                 password: 'wrong_password'
             });
@@ -159,16 +177,110 @@ async function runSuite() {
         assert.strictEqual(res.data.exists, false, 'Non-existent room should return false without crashing');
     });
 
+    // 9. Password Duplicate Prevention on Change (Skill 09: Credential Management)
+    await runTest('PUT /api/user/password rejects identical current and new password', async () => {
+        const pwdUser = `pwd_user_${Date.now()}`;
+        const pwd = 'TestSecretPassword123';
+        const signupRes = await makeRequest('/api/signup', { method: 'POST' }, {
+            username: pwdUser,
+            password: pwd,
+            displayName: 'PwdUser',
+            pdpaConsent: true,
+            securityQuestion: 'Pet?',
+            securityAnswer: 'cat'
+        });
+        assert.strictEqual(signupRes.statusCode, 200);
+        const cookie = signupRes.headers['set-cookie'] ? signupRes.headers['set-cookie'][0] : null;
+
+        const res = await makeRequest('/api/user/password', {
+            method: 'PUT',
+            headers: { 'Cookie': cookie }
+        }, {
+            currentPassword: pwd,
+            newPassword: pwd
+        });
+
+        assert.strictEqual(res.statusCode, 400, `Expected 400, got ${res.statusCode}`);
+        assert.strictEqual(res.data.message, 'รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม');
+    });
+
+    // 10. Password Duplicate Prevention on Recovery (Skill 09: Credential Management)
+    await runTest('POST /api/auth/forgot/verify-question rejects new password matching old password', async () => {
+        const pwdUser = `pwd_rec_${Date.now()}`;
+        const pwd = 'TestSecretPassword456';
+        await makeRequest('/api/signup', { method: 'POST' }, {
+            username: pwdUser,
+            password: pwd,
+            displayName: 'PwdRec',
+            pdpaConsent: true,
+            securityQuestion: 'Favorite color?',
+            securityAnswer: 'blue'
+        });
+
+        const res = await makeRequest('/api/auth/forgot/verify-question', { method: 'POST' }, {
+            username: pwdUser,
+            securityAnswer: 'blue',
+            newPassword: pwd
+        });
+
+        assert.strictEqual(res.statusCode, 400, `Expected 400, got ${res.statusCode}`);
+        assert.strictEqual(res.data.message, 'รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม');
+    });
+
+    // 11. Unique Email Constraint on Signup (1 Account per Email)
+    await runTest('POST /api/signup rejects duplicate email across accounts', async () => {
+        const uniqueEmail = `unique_${Date.now()}@ginder.test`;
+        const user1 = `email_u1_${Date.now()}`;
+        const user2 = `email_u2_${Date.now()}`;
+
+        // Signup first user with email
+        const res1 = await makeRequest('/api/signup', { method: 'POST' }, {
+            username: user1,
+            password: 'Password123',
+            email: uniqueEmail,
+            displayName: 'User1',
+            pdpaConsent: true
+        });
+        assert.strictEqual(res1.statusCode, 200, `First user signup failed: ${JSON.stringify(res1.data)}`);
+
+        // Attempt signup with same email for second user
+        const res2 = await makeRequest('/api/signup', { method: 'POST' }, {
+            username: user2,
+            password: 'Password123',
+            email: uniqueEmail,
+            displayName: 'User2',
+            pdpaConsent: true
+        });
+        assert.strictEqual(res2.statusCode, 400, `Expected 400, got ${res2.statusCode}`);
+        assert.strictEqual(res2.data.message, 'อีเมลนี้ถูกใช้งานในระบบแล้ว กรุณาใช้อีเมลอื่น');
+    });
+
+    // 12. Email Availability Endpoint Check
+    await runTest('GET /api/auth/check-email correctly indicates availability', async () => {
+        const takenEmail = `unique_${Date.now()}@ginder.test`; // Not taken yet
+        const resAvailable = await makeRequest(`/api/auth/check-email?email=${encodeURIComponent(takenEmail)}`);
+        assert.strictEqual(resAvailable.statusCode, 200);
+        assert.strictEqual(resAvailable.data.available, true);
+    });
+
     console.log(`\n========================================`);
     console.log(`  TEST RESULTS: ${passedCount} PASSED, ${failedCount} FAILED`);
     console.log(`========================================\n`);
-
-    if (failedCount > 0) {
-        process.exit(1);
-    }
 }
 
-runSuite().catch(err => {
-    console.error("Test execution failed:", err);
-    process.exit(1);
-});
+setTimeout(() => {
+    ensureServerRunning().then(() => {
+        return runSuite();
+    }).then(() => {
+        if (serverInstance) {
+            serverInstance.close(() => {
+                process.exit(failedCount > 0 ? 1 : 0);
+            });
+        } else {
+            process.exit(failedCount > 0 ? 1 : 0);
+        }
+    }).catch(err => {
+        console.error("Test execution failed:", err);
+        process.exit(1);
+    });
+}, 200);

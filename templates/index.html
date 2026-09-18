@@ -20,7 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
     <!-- Dynamic Theme Styling -->
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css?v=2.0.4">
 </head>
 
 <body>
@@ -144,9 +144,12 @@
                             </div>
                             <div class="form-group" style="margin-bottom: 1rem;">
                                 <label for="view-signup-email" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block; color: var(--text-secondary);">
-                                    <i class="fa-solid fa-envelope text-accent"></i> อีเมล (สำหรับกู้คืนรหัสผ่านทาง OTP)
+                                    <i class="fa-solid fa-envelope text-accent"></i> อีเมล (1 อีเมลสมัครได้ 1 บัญชีเท่านั้น)
                                 </label>
                                 <input type="email" id="view-signup-email" class="form-control" placeholder="เช่น yourname@gmail.com">
+                                <div id="view-signup-email-feedback" class="hidden" style="font-size: 0.8rem; color: #ef4444; margin-top: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> <span id="view-signup-email-feedback-text">อีเมลนี้ถูกใช้งานในระบบแล้ว</span>
+                                </div>
                             </div>
                             <div class="form-group" style="margin-bottom: 1rem;">
                                 <label for="view-signup-question" style="font-size: 0.85rem; margin-bottom: 0.4rem; display: block; color: var(--text-secondary);">
@@ -740,7 +743,7 @@
                 <div class="deck-container">
                     <div id="swipe-deck" class="swipe-deck">
                         <!-- Swipe Card dynamically loaded here -->
-                        <div class="deck-empty-state">
+                        <div class="deck-empty-state hidden">
                             <i class="fa-solid fa-circle-check text-success"
                                 style="font-size: 3rem; margin-bottom: 1rem;"></i>
                             <h3 id="deck-empty-title">คุณปัดครบแล้ว!</h3>
@@ -751,13 +754,13 @@
 
                 <!-- SWIPE CONTROLS -->
                 <div class="swipe-controls">
-                    <button id="btn-swipe-left" class="control-btn dislike-btn" title="ไม่กิน (ปัดซ้าย)">
+                    <button id="btn-swipe-left" class="control-btn dislike-btn" title="ไม่กิน (ปัดซ้าย / ลูกศรซ้าย)" aria-label="ไม่กิน">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
-                    <button id="btn-toggle-info" class="control-btn info-btn" title="ดูรายละเอียด">
+                    <button id="btn-toggle-info" class="control-btn info-btn" title="ดูรายละเอียด (ลูกศรขึ้น / Space)" aria-label="ดูรายละเอียด">
                         <i class="fa-solid fa-info"></i>
                     </button>
-                    <button id="btn-swipe-right" class="control-btn like-btn" title="อยากกิน (ปัดขวา)">
+                    <button id="btn-swipe-right" class="control-btn like-btn" title="อยากกิน (ปัดขวา / ลูกศรขวา)" aria-label="อยากกิน">
                         <i class="fa-solid fa-heart"></i>
                     </button>
                 </div>
@@ -805,7 +808,7 @@
                 </div>
 
                 <div class="result-actions">
-                    <a id="btn-open-map" href="#" target="_blank" class="btn btn-primary btn-lg full-width">
+                    <a id="btn-open-map" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg full-width">
                         <i class="fa-solid fa-map-location-dot"></i> นำทางด้วย Google Maps
                     </a>
                     <button id="btn-solo-retry" class="btn btn-secondary btn-lg full-width hidden">
@@ -977,9 +980,12 @@
 
                 <div class="form-group" style="margin-bottom: 0.8rem;">
                     <label for="signup-email" style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">
-                        <i class="fa-solid fa-envelope text-accent"></i> อีเมล (สำหรับกู้คืนรหัสผ่านทาง OTP)
+                        <i class="fa-solid fa-envelope text-accent"></i> อีเมล (1 อีเมลสมัครได้ 1 บัญชีเท่านั้น)
                     </label>
                     <input type="email" id="signup-email" class="form-control" placeholder="เช่น yourname@gmail.com">
+                    <div id="signup-email-feedback" class="hidden" style="font-size: 0.8rem; color: #ef4444; margin-top: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+                        <i class="fa-solid fa-triangle-exclamation"></i> <span id="signup-email-feedback-text">อีเมลนี้ถูกใช้งานในระบบแล้ว</span>
+                    </div>
                 </div>
                 <div class="form-group" style="margin-bottom: 0.8rem;">
                     <label for="signup-question" style="font-size: 0.8rem; margin-bottom: 0.3rem; display: block; color: var(--text-secondary);">
@@ -1139,6 +1145,9 @@
                     <div class="form-group" style="margin-bottom: 0.9rem;">
                         <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">รหัสผ่านใหม่ *</label>
                         <input type="password" id="profile-new-password" class="form-control" placeholder="รหัสผ่านใหม่อย่างน้อย 4 ตัวอักษร" required>
+                        <div id="profile-new-password-feedback" class="hidden" style="font-size: 0.8rem; color: #ef4444; margin-top: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> <span>รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม</span>
+                        </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.2rem;">
                         <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">ยืนยันรหัสผ่านใหม่ *</label>
@@ -1165,6 +1174,9 @@
                             <i class="fa-solid fa-envelope text-accent"></i> อีเมลสำหรับกู้คืนรหัสผ่าน (Email OTP)
                         </label>
                         <input type="email" id="profile-recovery-email" class="form-control" placeholder="เช่น yourname@gmail.com">
+                        <div id="profile-recovery-email-feedback" class="hidden" style="font-size: 0.8rem; color: #ef4444; margin-top: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> <span id="profile-recovery-email-feedback-text">อีเมลนี้ถูกใช้งานโดยบัญชีอื่นแล้ว</span>
+                        </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 0.9rem;">
                         <label style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; display: block;">
@@ -1594,7 +1606,7 @@
     <!-- QRious QR generator -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <!-- App entry logic -->
-    <script src="/static/app.js"></script>
+    <script src="/static/app.js?v=2.0.5"></script>
 </body>
 
 </html>

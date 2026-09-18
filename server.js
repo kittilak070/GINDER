@@ -65,7 +65,8 @@ app.use(session({
 function createRateLimiter({ windowMs = 60 * 1000, max = 20, message = "Too many requests, please try again later." } = {}) {
     const hits = new Map();
     return (req, res, next) => {
-        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+        const rawIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+        const ip = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : 'unknown';
         const now = Date.now();
         const record = hits.get(ip) || { count: 0, resetTime: now + windowMs };
 
@@ -93,6 +94,7 @@ function createRateLimiter({ windowMs = 60 * 1000, max = 20, message = "Too many
 
 const authLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 20, message: "คำขอเข้าสู่ระบบหรือลงทะเบียนถี่เกินไป กรุณารอ 1 นาที" });
 const otpLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 5, message: "ขอรหัส OTP ถี่เกินไป กรุณารอสักครู่" });
+const feedbackLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 10, message: "ส่งข้อเสนอแนะถี่เกินไป กรุณารอสักครู่" });
 
 // Healthcheck & Observability (Skill 05: API Design, Skill 10: DevOps)
 app.get('/api/health', (req, res) => {
@@ -498,10 +500,18 @@ function hashSecurityValue(val, salt) {
     return { hash, salt: s };
 }
 
+function safeCompare(a, b) {
+    if (typeof a !== 'string' || typeof b !== 'string') return false;
+    const bufA = Buffer.from(a);
+    const bufB = Buffer.from(b);
+    if (bufA.length !== bufB.length) return false;
+    return crypto.timingSafeEqual(bufA, bufB);
+}
+
 function verifySecurityValue(val, hash, salt) {
     if (!val || !hash || !salt) return false;
     const computed = crypto.pbkdf2Sync(String(val).trim().toLowerCase(), salt, 100000, 32, 'sha256').toString('hex');
-    return computed === hash;
+    return safeCompare(computed, hash);
 }
 
 function maskEmail(email) {
@@ -760,6 +770,39 @@ async function findUserByUsername(username) {
     }
 }
 
+async function findUserByEmail(email) {
+    if (!email) return null;
+    const lower = String(email).trim().toLowerCase();
+    if (!lower) return null;
+
+    // 1. Check local user recovery records
+    try {
+        const localRecMap = getLocalUserRecoveryMap();
+        for (const [uname, rec] of Object.entries(localRecMap)) {
+            if (rec && rec.email && rec.email.trim().toLowerCase() === lower) {
+                const u = await findUserByUsername(uname);
+                return u || { id: uname, username: uname, email: rec.email };
+            }
+        }
+    } catch (e) {}
+
+    // 2. Check Supabase user_security table
+    try {
+        const { data, error } = await supabase
+            .from('user_security')
+            .select('user_id, username, recovery_email')
+            .ilike('recovery_email', lower)
+            .limit(1);
+        if (!error && data && data.length > 0) {
+            const row = data[0];
+            const u = (await findUserById(row.user_id)) || (await findUserByUsername(row.username));
+            return u || { id: row.user_id, username: row.username, email: row.recovery_email };
+        }
+    } catch (e) {}
+
+    return null;
+}
+
 async function getUserRole(req) {
     if (!req.session.userId) return null;
     const user = await findUserById(req.session.userId);
@@ -836,8 +879,12 @@ app.post('/api/signup', authLimiter, async (req, res) => {
     const password = req.body.password || '';
     let displayName = (req.body.displayName || '').trim() || username;
     const allergies = req.body.allergies || [];
+    const email = (req.body.email || '').trim().toLowerCase();
     
     if (!username || !password) return res.status(400).json({ message: "กรุณากรอกชื่อผู้ใช้และรหัสผ่าน" });
+    if (username.length < 3 || username.length > 50) return res.status(400).json({ message: "ชื่อผู้ใช้ต้องมีความยาวระหว่าง 3 ถึง 50 ตัวอักษร" });
+    if (displayName.length > 50) return res.status(400).json({ message: "ชื่อที่แสดงต้องมีความยาวไม่เกิน 50 ตัวอักษร" });
+    if (password.length < 4 || password.length > 128) return res.status(400).json({ message: "รหัสผ่านต้องมีความยาวระหว่าง 4 ถึง 128 ตัวอักษร" });
     
     if (req.body.pdpaConsent !== true && req.body.pdpaConsent !== 'true') {
         return res.status(400).json({ message: "กรุณายินยอมเงื่อนไขการให้บริการและนโยบายความเป็นส่วนตัว (PDPA) เพื่อลงทะเบียน" });
@@ -845,6 +892,17 @@ app.post('/api/signup', authLimiter, async (req, res) => {
     
     if (await findUserByUsername(username)) {
         return res.status(400).json({ message: "ชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว" });
+    }
+
+    if (email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: "รูปแบบอีเมลไม่ถูกต้อง" });
+        }
+        const existingEmailUser = await findUserByEmail(email);
+        if (existingEmailUser) {
+            return res.status(400).json({ message: "อีเมลนี้ถูกใช้งานในระบบแล้ว กรุณาใช้อีเมลอื่น" });
+        }
     }
     
     const salt = crypto.randomBytes(16).toString('hex');
@@ -942,15 +1000,18 @@ app.post('/api/login', authLimiter, async (req, res) => {
     }
     
     const pwdHash = crypto.pbkdf2Sync(password, user.password_salt, 100000, 32, 'sha256').toString('hex');
-    if (pwdHash !== user.password_hash) {
+    if (!safeCompare(pwdHash, user.password_hash)) {
         return res.status(400).json({ message: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง" });
     }
     
-    req.session.userId = user.id;
-    const algStr = user.allergies || '';
-    const allergies = algStr ? algStr.split(',').map(x => x.trim()).filter(Boolean) : [];
-    
-    res.json({ logged_in: true, username: user.username, displayName: user.display_name, role: user.role, allergies, isGuest: false });
+    req.session.regenerate((err) => {
+        if (err) console.error("Session regeneration failed:", err);
+        req.session.userId = user.id;
+        const algStr = user.allergies || '';
+        const allergies = algStr ? algStr.split(',').map(x => x.trim()).filter(Boolean) : [];
+        
+        res.json({ logged_in: true, username: user.username, displayName: user.display_name, role: user.role, allergies, isGuest: false });
+    });
 });
 
 app.post('/api/logout', (req, res) => {
@@ -1041,6 +1102,7 @@ app.put('/api/user/profile', async (req, res) => {
     if (!req.session.userId) return res.status(401).json({ message: "กรุณาเข้าสู่ระบบก่อนดำเนินการ" });
     const displayName = (req.body.displayName || '').trim();
     if (!displayName) return res.status(400).json({ message: "กรุณาระบุชื่อที่แสดงผล" });
+    if (displayName.length > 50) return res.status(400).json({ message: "ชื่อที่แสดงต้องมีความยาวไม่เกิน 50 ตัวอักษร" });
 
     const allergies = req.body.allergies || [];
     const allergiesStr = Array.isArray(allergies) ? allergies.join(',') : String(allergies);
@@ -1068,14 +1130,17 @@ app.put('/api/user/profile', async (req, res) => {
     res.json({ success: true, displayName: data.display_name, allergies });
 });
 
-app.put('/api/user/password', async (req, res) => {
+app.put('/api/user/password', authLimiter, async (req, res) => {
     if (!req.session.userId) return res.status(401).json({ message: "กรุณาเข้าสู่ระบบก่อนดำเนินการ" });
     const { currentPassword, newPassword } = req.body;
     if (!currentPassword || !newPassword) {
         return res.status(400).json({ message: "กรุณากรอกรหัสผ่านปัจจุบันและรหัสผ่านใหม่" });
     }
-    if (newPassword.length < 4) {
-        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 4 ตัวอักษร" });
+    if (newPassword.length < 4 || newPassword.length > 128) {
+        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องมีความยาวระหว่าง 4 ถึง 128 ตัวอักษร" });
+    }
+    if (currentPassword === newPassword) {
+        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม" });
     }
 
     const user = await findUserById(req.session.userId);
@@ -1084,12 +1149,25 @@ app.put('/api/user/password', async (req, res) => {
     }
 
     const currentHash = crypto.pbkdf2Sync(currentPassword, user.password_salt, 100000, 32, 'sha256').toString('hex');
-    if (currentHash !== user.password_hash) {
+    if (!safeCompare(currentHash, user.password_hash)) {
         return res.status(400).json({ message: "รหัสผ่านปัจจุบันไม่ถูกต้อง" });
+    }
+
+    // Check if new password is identical to the current password hash
+    const checkSameHash = crypto.pbkdf2Sync(newPassword, user.password_salt, 100000, 32, 'sha256').toString('hex');
+    if (safeCompare(checkSameHash, user.password_hash)) {
+        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม" });
     }
 
     const newSalt = crypto.randomBytes(16).toString('hex');
     const newHash = crypto.pbkdf2Sync(newPassword, newSalt, 100000, 32, 'sha256').toString('hex');
+
+    if (localUsers.has(req.session.userId)) {
+        const u = localUsers.get(req.session.userId);
+        u.password_hash = newHash;
+        u.password_salt = newSalt;
+        return res.json({ success: true, message: "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว" });
+    }
 
     const { error } = await supabase
         .from('users')
@@ -1120,15 +1198,26 @@ app.get('/api/user/security', async (req, res) => {
     });
 });
 
-app.put('/api/user/security', async (req, res) => {
+app.put('/api/user/security', authLimiter, async (req, res) => {
     if (!req.session.userId) return res.status(401).json({ message: "กรุณาเข้าสู่ระบบก่อน" });
     const user = await findUserById(req.session.userId);
     if (!user) return res.status(404).json({ message: "ไม่พบผู้ใช้" });
 
     const email = (req.body.email || '').trim().toLowerCase();
-    const securityQuestion = (req.body.securityQuestion || '').trim();
-    const securityAnswer = (req.body.securityAnswer || '').trim();
-    const recoveryPin = (req.body.recoveryPin || '').trim();
+    const securityQuestion = (req.body.securityQuestion || '').trim().slice(0, 200);
+    const securityAnswer = (req.body.securityAnswer || '').trim().slice(0, 200);
+    const recoveryPin = (req.body.recoveryPin || '').trim().slice(0, 10);
+
+    if (email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: "รูปแบบอีเมลไม่ถูกต้อง" });
+        }
+        const existing = await findUserByEmail(email);
+        if (existing && existing.username && existing.username.toLowerCase() !== user.username.toLowerCase()) {
+            return res.status(400).json({ message: "อีเมลนี้ถูกใช้งานโดยบัญชีอื่นแล้ว กรุณาใช้อีเมลอื่น" });
+        }
+    }
 
     const updateData = {};
     if (email !== undefined) updateData.email = email;
@@ -1150,10 +1239,31 @@ app.put('/api/user/security', async (req, res) => {
     res.json({ success: true, message: "บันทึกข้อมูลความปลอดภัยเรียบร้อยแล้ว" });
 });
 
+// Check if email is available for registration/update
+app.get('/api/auth/check-email', authLimiter, async (req, res) => {
+    const email = (req.query.email || '').trim().toLowerCase();
+    if (!email) return res.json({ available: false, message: "กรุณาระบุอีเมล" });
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.json({ available: false, validFormat: false, message: "รูปแบบอีเมลไม่ถูกต้อง" });
+    }
+    const existing = await findUserByEmail(email);
+    if (existing) {
+        if (req.session.userId) {
+            const currentUser = await findUserById(req.session.userId);
+            if (currentUser && existing.username && currentUser.username && existing.username.toLowerCase() === currentUser.username.toLowerCase()) {
+                return res.json({ available: true, validFormat: true });
+            }
+        }
+        return res.json({ available: false, validFormat: true, message: "อีเมลนี้ถูกใช้งานในระบบแล้ว" });
+    }
+    return res.json({ available: true, validFormat: true });
+});
+
 // --- PASSWORD RECOVERY ROUTES (METHODS 2 & 3) ---
 
 // 1. Check user existence and return recovery options
-app.post('/api/auth/forgot/check-user', async (req, res) => {
+app.post('/api/auth/forgot/check-user', authLimiter, async (req, res) => {
     const username = (req.body.username || '').trim().toLowerCase();
     if (!username) return res.status(400).json({ message: "กรุณาระบุชื่อผู้ใช้" });
 
@@ -1177,15 +1287,15 @@ app.post('/api/auth/forgot/check-user', async (req, res) => {
 });
 
 // 2. Method 3: Verify Security Question or Recovery PIN and reset password
-app.post('/api/auth/forgot/verify-question', async (req, res) => {
+app.post('/api/auth/forgot/verify-question', authLimiter, async (req, res) => {
     const username = (req.body.username || '').trim().toLowerCase();
-    const securityAnswer = (req.body.securityAnswer || '').trim();
-    const recoveryPin = (req.body.recoveryPin || '').trim();
+    const securityAnswer = (req.body.securityAnswer || '').trim().slice(0, 200);
+    const recoveryPin = (req.body.recoveryPin || '').trim().slice(0, 10);
     const newPassword = req.body.newPassword || '';
 
     if (!username) return res.status(400).json({ message: "กรุณาระบุชื่อผู้ใช้" });
-    if (!newPassword || newPassword.length < 4) {
-        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 4 ตัวอักษร" });
+    if (!newPassword || newPassword.length < 4 || newPassword.length > 128) {
+        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องมีความยาวระหว่าง 4 ถึง 128 ตัวอักษร" });
     }
 
     const user = await findUserByUsername(username);
@@ -1216,9 +1326,23 @@ app.post('/api/auth/forgot/verify-question', async (req, res) => {
         return res.status(400).json({ message: "คำตอบคำถามความปลอดภัยหรือ PIN ไม่ถูกต้อง" });
     }
 
+    // Check if new password matches existing password
+    if (user.password_salt && user.password_hash) {
+        const checkOld = crypto.pbkdf2Sync(newPassword, user.password_salt, 100000, 32, 'sha256').toString('hex');
+        if (safeCompare(checkOld, user.password_hash)) {
+            return res.status(400).json({ message: "รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม" });
+        }
+    }
+
     // Hash and update new password
     const newSalt = crypto.randomBytes(16).toString('hex');
     const newHash = crypto.pbkdf2Sync(newPassword, newSalt, 100000, 32, 'sha256').toString('hex');
+
+    if (localUsers.has(user.id)) {
+        const u = localUsers.get(user.id);
+        u.password_hash = newHash;
+        u.password_salt = newSalt;
+    }
 
     const { error } = await supabase
         .from('users')
@@ -1292,24 +1416,25 @@ app.post('/api/auth/forgot/send-email-otp', otpLimiter, async (req, res) => {
 
     const sendRes = await sendRecoveryEmail(rec.email, user.display_name || user.username, otp);
 
+    const isDev = process.env.NODE_ENV !== 'production';
     res.json({
         success: true,
         message: `ส่งรหัส OTP 6 หลักไปยัง ${maskEmail(rec.email)} เรียบร้อยแล้ว (รหัสมีอายุ 15 นาที)`,
         maskedEmail: maskEmail(rec.email),
-        devMode: !!sendRes.devMode,
-        devOtp: sendRes.devMode ? otp : undefined
+        devMode: (isDev && !!sendRes.devMode),
+        devOtp: (isDev && sendRes.devMode) ? otp : undefined
     });
 });
 
 // 4. Method 2: Verify OTP and reset password
-app.post('/api/auth/forgot/verify-otp', async (req, res) => {
+app.post('/api/auth/forgot/verify-otp', authLimiter, async (req, res) => {
     const username = (req.body.username || '').trim().toLowerCase();
-    const otp = (req.body.otp || '').trim();
+    const otp = (req.body.otp || '').trim().slice(0, 10);
     const newPassword = req.body.newPassword || '';
 
     if (!username || !otp) return res.status(400).json({ message: "กรุณากรอกชื่อผู้ใช้และรหัส OTP" });
-    if (!newPassword || newPassword.length < 4) {
-        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 4 ตัวอักษร" });
+    if (!newPassword || newPassword.length < 4 || newPassword.length > 128) {
+        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องมีความยาวระหว่าง 4 ถึง 128 ตัวอักษร" });
     }
 
     const user = await findUserByUsername(username);
@@ -1331,13 +1456,27 @@ app.post('/api/auth/forgot/verify-otp', async (req, res) => {
         return res.status(400).json({ message: "ป้อนรหัสผิดเกิน 5 ครั้ง รหัส OTP ถูกยกเลิก กรุณาขอรหัสใหม่" });
     }
 
-    if (record.otp !== otp) {
+    if (!safeCompare(record.otp, otp)) {
         return res.status(400).json({ message: "รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง" });
+    }
+
+    // Check if new password matches existing password
+    if (user.password_salt && user.password_hash) {
+        const checkOld = crypto.pbkdf2Sync(newPassword, user.password_salt, 100000, 32, 'sha256').toString('hex');
+        if (safeCompare(checkOld, user.password_hash)) {
+            return res.status(400).json({ message: "รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม" });
+        }
     }
 
     // OTP is valid! Reset password
     const newSalt = crypto.randomBytes(16).toString('hex');
     const newHash = crypto.pbkdf2Sync(newPassword, newSalt, 100000, 32, 'sha256').toString('hex');
+
+    if (localUsers.has(user.id)) {
+        const u = localUsers.get(user.id);
+        u.password_hash = newHash;
+        u.password_salt = newSalt;
+    }
 
     const { error } = await supabase
         .from('users')
@@ -1460,17 +1599,17 @@ app.get('/api/admin/analytics', async (req, res) => {
 });
 
 // --- FEEDBACK & SUGGESTIONS ROUTES ---
-app.post('/api/feedback', async (req, res) => {
+app.post('/api/feedback', feedbackLimiter, async (req, res) => {
     const { type, title, description, contactInfo } = req.body;
     if (!title || !description) {
         return res.status(400).json({ message: "กรุณากรอกหัวข้อและรายละเอียดข้อความ" });
     }
     const item = {
         id: 'fb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-        type: type || 'general',
-        title: title.trim(),
-        description: description.trim(),
-        contactInfo: (contactInfo || '').trim(),
+        type: (type || 'general').slice(0, 50),
+        title: title.trim().slice(0, 100),
+        description: description.trim().slice(0, 2000),
+        contactInfo: (contactInfo || '').trim().slice(0, 100),
         createdAt: new Date().toISOString()
     };
     await saveFeedback(item);
@@ -1845,7 +1984,7 @@ app.get('/api/pdpa/export-my-data', async (req, res) => {
 });
 
 // 4. DSR: สิทธิในการขอลบหรือทำลายข้อมูลส่วนบุคคล (Right to Erasure / Right to be Forgotten)
-app.post('/api/pdpa/delete-my-account', async (req, res) => {
+app.post('/api/pdpa/delete-my-account', authLimiter, async (req, res) => {
     if (!req.session.userId) return res.status(401).json({ message: "กรุณาเข้าสู่ระบบก่อนดำเนินการ" });
     const user = await findUserById(req.session.userId);
     if (!user) return res.status(404).json({ message: "ไม่พบผู้ใช้ในระบบ" });
@@ -1858,7 +1997,7 @@ app.post('/api/pdpa/delete-my-account', async (req, res) => {
 
     if (user.password_salt && user.password_hash) {
         const computed = crypto.pbkdf2Sync(password, user.password_salt, 100000, 32, 'sha256').toString('hex');
-        if (computed !== user.password_hash) {
+        if (!safeCompare(computed, user.password_hash)) {
             return res.status(400).json({ message: "รหัสผ่านไม่ถูกต้อง ไม่สามารถดำเนินการลบบัญชีได้" });
         }
     }
@@ -2143,7 +2282,7 @@ io.on('connection', (socket) => {
     
     socket.on('join_room', (data) => {
         const roomId = (data.roomId || '').trim().toUpperCase();
-        const name = (data.name || '').trim();
+        const name = (data.name || '').trim().slice(0, 50);
         const allergies = data.allergies || [];
         const preferences = data.preferences || {};
         
@@ -2177,7 +2316,7 @@ io.on('connection', (socket) => {
         const room = rooms[roomId];
         if (room && room.users[socket.id]) {
             if (data.name && data.name.trim()) {
-                room.users[socket.id].name = data.name.trim();
+                room.users[socket.id].name = data.name.trim().slice(0, 50);
             }
             if (Array.isArray(data.allergies)) {
                 room.users[socket.id].allergies = data.allergies;
@@ -2333,7 +2472,7 @@ io.on('connection', (socket) => {
     // Gamification: Real-Time Room Emote Reactions
     socket.on('send_reaction', (data) => {
         const roomId = ((data && data.roomId) || '').trim().toUpperCase();
-        const emoji = data && data.emoji;
+        const emoji = (data && data.emoji && typeof data.emoji === 'string') ? data.emoji.trim().slice(0, 10) : '';
         if (!roomId || !emoji || !rooms[roomId]) return;
         const senderName = rooms[roomId].users[socket.id] ? rooms[roomId].users[socket.id].name : 'เพื่อนในห้อง';
         io.to(roomId).emit('room_reaction', {
@@ -2419,8 +2558,10 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (require.main === module) {
+    server.listen(PORT, '0.0.0.0', () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
 
 module.exports = { app, server };

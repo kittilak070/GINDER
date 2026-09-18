@@ -25,8 +25,20 @@ const state = {
     isSolo: false,
     soloLiked: [],
     comboCount: 0,
-    comboTimer: null
+    comboTimer: null,
+    swipeHistory: []
 };
+
+// --- SECURITY & SANITIZATION HELPERS (OWASP A03 Injection Prevention) ---
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
 
 // --- NON-BLOCKING TOAST NOTIFICATIONS (ERROR PREVENTION & USABILITY) ---
 function showToast(message, type = 'info', duration = 3200) {
@@ -421,8 +433,192 @@ function animateCountUp(element, start, end, duration = 1200) {
     requestAnimationFrame(update);
 }
 
+// ==========================================================================
+// MICRO-INTERACTION HELPERS & HAPTIC SYSTEM
+// ==========================================================================
+
+// Global Tactile Ripple for all buttons, chips, interactive elements
+function setupGlobalRipples() {
+    document.addEventListener('pointerdown', (e) => {
+        const target = e.target.closest('.btn, .control-btn, .btn-icon-glass, .toggle-btn, .solo-chip, .btn-reaction, .solo-dist-pill, .solo-budget-pill, .btn-info-pill, .legal-link, .btn-header-login-highlight');
+        if (!target) return;
+
+        const rect = target.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'glass-ripple';
+
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = `${size}px`;
+
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+
+        target.appendChild(ripple);
+
+        // Tactile micro-spring bounce
+        target.classList.add('btn-spring-bounce');
+        setTimeout(() => target.classList.remove('btn-spring-bounce'), 350);
+
+        setTimeout(() => {
+            if (ripple.parentNode) ripple.parentNode.removeChild(ripple);
+        }, 600);
+    }, { passive: true });
+}
+
+// Swipe Gesture Affordance & Idle Nudge
+let swipeAffordanceTimer = null;
+let swipeAffordanceDismissed = false;
+
+function setupSwipeAffordance() {
+    if (swipeAffordanceDismissed) return;
+    clearSwipeAffordance();
+
+    const deck = document.getElementById('swipe-deck');
+    if (!deck) return;
+
+    swipeAffordanceTimer = setTimeout(() => {
+        const topCard = deck.querySelector('.swipe-card:last-child');
+        if (!topCard || topCard.classList.contains('skeleton-card')) return;
+
+        // Apply gentle idle nudge animation
+        topCard.classList.remove('idle-nudge');
+        void topCard.offsetWidth;
+        topCard.classList.add('idle-nudge');
+
+        // Show floating affordance hint
+        let hint = document.getElementById('swipe-affordance-hint');
+        if (!hint) {
+            hint = document.createElement('div');
+            hint.id = 'swipe-affordance-hint';
+            hint.className = 'swipe-affordance-hint';
+            hint.innerHTML = '<i class="fa-solid fa-hand-pointer text-accent"></i> <span>ลองปัดซ้าย-ขวา หรือกดปุ่มด้านล่าง 👆</span>';
+            const deckContainer = document.querySelector('.deck-container');
+            if (deckContainer) deckContainer.appendChild(hint);
+        }
+        if (hint) hint.classList.add('visible');
+    }, 3500);
+}
+
+function clearSwipeAffordance() {
+    if (swipeAffordanceTimer) {
+        clearTimeout(swipeAffordanceTimer);
+        swipeAffordanceTimer = null;
+    }
+    swipeAffordanceDismissed = true;
+    const hint = document.getElementById('swipe-affordance-hint');
+    if (hint) {
+        hint.classList.remove('visible');
+        setTimeout(() => {
+            if (hint.parentNode) hint.parentNode.removeChild(hint);
+        }, 360);
+    }
+    const deck = document.getElementById('swipe-deck');
+    if (deck) {
+        const topCard = deck.querySelector('.swipe-card:last-child');
+        if (topCard) topCard.classList.remove('idle-nudge');
+    }
+}
+
+// Control Buttons Specific Micro-Reactions
+function triggerControlBtnReaction(type) {
+    clearSwipeAffordance();
+    if (type === 'like') {
+        const btn = document.getElementById('btn-swipe-right');
+        if (btn) {
+            btn.classList.add('ring-glow-green');
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.classList.remove('animate-heart-beat');
+                void icon.offsetWidth;
+                icon.classList.add('animate-heart-beat');
+            }
+            const rect = btn.getBoundingClientRect();
+            spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'heart');
+            setTimeout(() => {
+                btn.classList.remove('ring-glow-green');
+                if (icon) icon.classList.remove('animate-heart-beat');
+            }, 500);
+        }
+    } else if (type === 'dislike') {
+        const btn = document.getElementById('btn-swipe-left');
+        if (btn) {
+            btn.classList.add('ring-glow-pink');
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.classList.remove('animate-tilt-shake');
+                void icon.offsetWidth;
+                icon.classList.add('animate-tilt-shake');
+            }
+            setTimeout(() => {
+                btn.classList.remove('ring-glow-pink');
+                if (icon) icon.classList.remove('animate-tilt-shake');
+            }, 480);
+        }
+    } else if (type === 'info') {
+        const btn = document.getElementById('btn-toggle-info');
+        if (btn) {
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.classList.remove('animate-spin-360');
+                void icon.offsetWidth;
+                icon.classList.add('animate-spin-360');
+                setTimeout(() => icon.classList.remove('animate-spin-360'), 500);
+            }
+        }
+    }
+}
+
+// Emoji Reaction Float with Physics Sway
+function spawnFloatingEmojiPhysics(btn, emoji) {
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    const floating = document.createElement('div');
+    floating.className = 'floating-room-emoji';
+    floating.innerText = emoji;
+    floating.style.fontSize = `${Math.random() * 8 + 26}px`;
+    floating.style.left = `${rect.left + rect.width / 2 - 14}px`;
+    floating.style.top = `${rect.top}px`;
+
+    // Randomize sine-wave sway parameters
+    const swayX1 = (Math.random() * 40 - 20) + 'px';
+    const swayX2 = (Math.random() * 50 - 25) + 'px';
+    const swayX3 = (Math.random() * 60 - 30) + 'px';
+    const rot1 = (Math.random() * 30 - 15) + 'deg';
+    const rot2 = (Math.random() * 30 - 15) + 'deg';
+    const rot3 = (Math.random() * 40 - 20) + 'deg';
+
+    floating.style.setProperty('--sway-x1', swayX1);
+    floating.style.setProperty('--sway-x2', swayX2);
+    floating.style.setProperty('--sway-x3', swayX3);
+    floating.style.setProperty('--sway-rot1', rot1);
+    floating.style.setProperty('--sway-rot2', rot2);
+    floating.style.setProperty('--sway-rot3', rot3);
+
+    document.body.appendChild(floating);
+    setTimeout(() => {
+        if (floating.parentNode) floating.parentNode.removeChild(floating);
+    }, 2100);
+}
+
+// Staggered Rating Stars Pop for Result Screen
+function animateWinnerStars(container) {
+    if (!container) return;
+    const ratingEl = container.querySelector('.card-rating');
+    if (!ratingEl) return;
+    const starIcon = ratingEl.querySelector('i');
+    if (starIcon) {
+        starIcon.classList.remove('winner-star-pop');
+        void starIcon.offsetWidth;
+        starIcon.classList.add('winner-star-pop');
+    }
+}
+
 // --- INITIALIZE & ROUTING ---
 window.addEventListener('DOMContentLoaded', () => {
+    setupGlobalRipples();
     setupEventListeners();
     setupProfileAndFeedback();
     setupForgotPasswordModal();
@@ -553,6 +749,7 @@ function showView(viewName) {
     const btnSoloRetry = document.getElementById('btn-solo-retry');
 
     if (viewName === 'swipe') {
+        setupSwipeAffordance();
         const roomReactionEl = document.getElementById('room-reaction-bar');
 
         if (state.isSolo) {
@@ -620,10 +817,7 @@ function resetApplicationState() {
     state.votes = {};
     state.isSolo = false;
     state.soloLiked = [];
-    state.comboCount = 0;
-    if (state.comboTimer) clearTimeout(state.comboTimer);
-    const comboEl = document.getElementById('combo-streak-container');
-    if (comboEl) comboEl.classList.add('hidden');
+    resetComboStreak();
     const roomReactionEl = document.getElementById('room-reaction-bar');
     if (roomReactionEl) roomReactionEl.classList.add('hidden');
 
@@ -691,6 +885,10 @@ function resetApplicationState() {
 
     // Remove query params from address bar
     window.history.pushState({}, document.title, window.location.pathname);
+
+    if (viewName !== 'swipe') {
+        clearSwipeAffordance();
+    }
 }
 
 // --- EVENT LISTENERS ---
@@ -711,6 +909,17 @@ function setupEventListeners() {
             const muted = soundFx.toggleMute();
             updateSoundBtnUI(muted);
             if (!muted) soundFx.playPop();
+
+            // Sound Toggle Tooltip Badge Micro-interaction
+            let badge = soundToggleBtn.querySelector('.sound-tooltip-badge');
+            if (badge) badge.remove();
+            badge = document.createElement('span');
+            badge.className = 'sound-tooltip-badge';
+            badge.innerText = muted ? 'ปิดเสียงเอฟเฟกต์ 🔇' : 'เปิดเสียงเอฟเฟกต์ 🔊';
+            soundToggleBtn.appendChild(badge);
+            setTimeout(() => {
+                if (badge.parentNode) badge.parentNode.removeChild(badge);
+            }, 1200);
         });
     }
 
@@ -853,6 +1062,13 @@ function setupEventListeners() {
             allChip.addEventListener('click', () => {
                 soundFx.playPop();
                 allChip.classList.add('active');
+                allChip.classList.remove('just-selected');
+                void allChip.offsetWidth;
+                allChip.classList.add('just-selected');
+                setTimeout(() => allChip.classList.remove('just-selected'), 350);
+                const rect = allChip.getBoundingClientRect();
+                spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'sparkle');
+
                 specificChips.forEach(c => c.classList.remove('active'));
                 if (containerId === 'solo-food-chips') updateSoloFilterBadge();
                 if (containerId === 'group-food-chips' && typeof updateGroupFilterBadge === 'function') updateGroupFilterBadge();
@@ -863,6 +1079,15 @@ function setupEventListeners() {
             chip.addEventListener('click', () => {
                 soundFx.playPop();
                 chip.classList.toggle('active');
+                chip.classList.remove('just-selected');
+                void chip.offsetWidth;
+                chip.classList.add('just-selected');
+                setTimeout(() => chip.classList.remove('just-selected'), 350);
+                if (chip.classList.contains('active')) {
+                    const rect = chip.getBoundingClientRect();
+                    spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'sparkle');
+                }
+
                 if (allChip) allChip.classList.remove('active');
 
                 // If none selected, re-activate "All"
@@ -1003,6 +1228,26 @@ function setupEventListeners() {
     if (btnResetSoloChips) {
         btnResetSoloChips.addEventListener('click', () => {
             soundFx.playPop();
+
+            // Micro-interaction: 360 Spin & Feedback Badge
+            const icon = btnResetSoloChips.querySelector('i');
+            if (icon) {
+                icon.classList.remove('animate-spin-reverse');
+                void icon.offsetWidth;
+                icon.classList.add('animate-spin-reverse');
+            }
+            let badge = btnResetSoloChips.querySelector('.reset-feedback-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'reset-feedback-badge';
+                badge.innerText = 'รีเซ็ตแล้ว ✨';
+                btnResetSoloChips.appendChild(badge);
+            }
+            badge.classList.add('visible');
+            setTimeout(() => {
+                if (badge) badge.classList.remove('visible');
+            }, 1400);
+
             // Reset allergy chips
             const soloAllergyChips = document.querySelectorAll('#solo-allergy-chips .solo-allergy-chip');
             soloAllergyChips.forEach(c => {
@@ -1205,6 +1450,26 @@ function setupEventListeners() {
     if (btnResetGroupFilters) {
         btnResetGroupFilters.addEventListener('click', () => {
             soundFx.playPop();
+
+            // Micro-interaction: 360 Spin & Feedback Badge
+            const icon = btnResetGroupFilters.querySelector('i');
+            if (icon) {
+                icon.classList.remove('animate-spin-reverse');
+                void icon.offsetWidth;
+                icon.classList.add('animate-spin-reverse');
+            }
+            let badge = btnResetGroupFilters.querySelector('.reset-feedback-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'reset-feedback-badge';
+                badge.innerText = 'รีเซ็ตแล้ว ✨';
+                btnResetGroupFilters.appendChild(badge);
+            }
+            badge.classList.add('visible');
+            setTimeout(() => {
+                if (badge) badge.classList.remove('visible');
+            }, 1400);
+
             // Reset allergies to "ไม่มีแพ้เลย"
             const allergyChips = document.querySelectorAll('#group-allergy-chips .host-allergy-chip');
             allergyChips.forEach(c => {
@@ -1257,6 +1522,13 @@ function setupEventListeners() {
     if (btnSoloRetry) {
         btnSoloRetry.addEventListener('click', () => {
             soundFx.playPop();
+            const icon = btnSoloRetry.querySelector('i');
+            if (icon) {
+                icon.classList.remove('animate-dice-roll');
+                void icon.offsetWidth;
+                icon.classList.add('animate-dice-roll');
+            }
+            resetComboStreak();
             startSoloSwipe();
         });
     }
@@ -1510,11 +1782,16 @@ function setupEventListeners() {
         const originalHtml = btn.innerHTML;
 
         const setCopiedState = () => {
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> คัดลอกแล้ว!';
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> คัดลอกรหัสแล้ว! ✨';
             btn.classList.add('copied');
+            btn.classList.add('copied-emerald');
+            const rect = btn.getBoundingClientRect();
+            spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'sparkle');
+            if (navigator.vibrate) navigator.vibrate(15);
             setTimeout(() => {
                 btn.innerHTML = originalHtml;
                 btn.classList.remove('copied');
+                btn.classList.remove('copied-emerald');
             }, 2000);
         };
 
@@ -1681,9 +1958,18 @@ function setupEventListeners() {
     if (btnRandomPrefName) {
         btnRandomPrefName.addEventListener('click', () => {
             soundFx.playPop();
+            const icon = btnRandomPrefName.querySelector('i');
+            if (icon) {
+                icon.classList.remove('animate-dice-roll');
+                void icon.offsetWidth;
+                icon.classList.add('animate-dice-roll');
+            }
             const nameInput = document.getElementById('pref-name');
             if (nameInput) {
                 nameInput.value = getRandomFoodNickname();
+                nameInput.classList.remove('input-char-pop');
+                void nameInput.offsetWidth;
+                nameInput.classList.add('input-char-pop');
                 showToast(`สุ่มชื่อ: "${nameInput.value}"`, 'info');
             }
         });
@@ -1693,9 +1979,18 @@ function setupEventListeners() {
     if (btnRandomJoinName) {
         btnRandomJoinName.addEventListener('click', () => {
             soundFx.playPop();
+            const icon = btnRandomJoinName.querySelector('i');
+            if (icon) {
+                icon.classList.remove('animate-dice-roll');
+                void icon.offsetWidth;
+                icon.classList.add('animate-dice-roll');
+            }
             const joinNameInput = document.getElementById('join-name');
             if (joinNameInput) {
                 joinNameInput.value = getRandomFoodNickname();
+                joinNameInput.classList.remove('input-char-pop');
+                void joinNameInput.offsetWidth;
+                joinNameInput.classList.add('input-char-pop');
                 showToast(`สุ่มชื่อ: "${joinNameInput.value}"`, 'info');
             }
         });
@@ -1730,10 +2025,18 @@ function setupEventListeners() {
 
     // Submit Join Request
     document.getElementById('btn-submit-join').addEventListener('click', async () => {
-        const roomId = document.getElementById('join-room-id').value.trim().toUpperCase();
+        const joinInput = document.getElementById('join-room-id');
+        const roomId = joinInput ? joinInput.value.trim().toUpperCase() : '';
         let name = document.getElementById('join-name').value.trim();
 
         if (!roomId || roomId.length !== 4) {
+            if (joinInput) {
+                joinInput.classList.remove('input-shake');
+                void joinInput.offsetWidth;
+                joinInput.classList.add('input-shake');
+                joinInput.focus();
+            }
+            if (navigator.vibrate) navigator.vibrate([40, 40, 40]);
             showToast('กรุณากรอกรหัสห้อง 4 หลักให้ถูกต้อง', 'warning');
             return;
         }
@@ -1753,6 +2056,13 @@ function setupEventListeners() {
         }
 
         if (!check.exists) {
+            if (joinInput) {
+                joinInput.classList.remove('input-shake');
+                void joinInput.offsetWidth;
+                joinInput.classList.add('input-shake');
+                joinInput.focus();
+            }
+            if (navigator.vibrate) navigator.vibrate([40, 40, 40]);
             showToast(check.message || `ไม่พบห้อง "${roomId}" หรือห้องอาจถูกปิดไปแล้ว`, 'error');
             return;
         }
@@ -1797,6 +2107,25 @@ function setupEventListeners() {
         });
     });
 
+    // Room ID Character Pop & Status Glow for Join Screen
+    const joinRoomInput = document.getElementById('join-room-id');
+    if (joinRoomInput) {
+        joinRoomInput.addEventListener('input', () => {
+            const raw = joinRoomInput.value.toUpperCase();
+            joinRoomInput.value = raw;
+            joinRoomInput.classList.remove('input-char-pop');
+            void joinRoomInput.offsetWidth;
+            joinRoomInput.classList.add('input-char-pop');
+
+            if (raw.length === 4) {
+                joinRoomInput.classList.add('input-code-ready');
+                soundFx.playPop();
+            } else {
+                joinRoomInput.classList.remove('input-code-ready');
+            }
+        });
+    }
+
     // Host - Start Game (Enforce > 1 member for group mode)
     document.getElementById('btn-start-game').addEventListener('click', () => {
         if (!state.isCreator) return;
@@ -1818,10 +2147,21 @@ function setupEventListeners() {
     });
 
     // Swipe Control Button Actions
+    const btnSwipeUndo = document.getElementById('btn-swipe-undo');
+    if (btnSwipeUndo) {
+        btnSwipeUndo.addEventListener('click', () => {
+            if (btnSwipeUndo.disabled) return;
+            btnSwipeUndo.classList.add('btn-clicked');
+            setTimeout(() => btnSwipeUndo.classList.remove('btn-clicked'), 320);
+            undoLastSwipe();
+        });
+    }
+
     document.getElementById('btn-swipe-left').addEventListener('click', () => {
         const btn = document.getElementById('btn-swipe-left');
         btn.classList.add('btn-clicked');
         setTimeout(() => btn.classList.remove('btn-clicked'), 320);
+        triggerControlBtnReaction('dislike');
         swipeTopCard('left');
     });
 
@@ -1829,8 +2169,7 @@ function setupEventListeners() {
         const btn = document.getElementById('btn-swipe-right');
         btn.classList.add('btn-clicked');
         setTimeout(() => btn.classList.remove('btn-clicked'), 320);
-        const rect = btn.getBoundingClientRect();
-        spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'heart');
+        triggerControlBtnReaction('like');
         swipeTopCard('right');
     });
 
@@ -1839,6 +2178,10 @@ function setupEventListeners() {
         btn.addEventListener('click', () => {
             const emoji = btn.dataset.emoji;
             if (emoji) {
+                btn.classList.remove('squash-stretch');
+                void btn.offsetWidth;
+                btn.classList.add('squash-stretch');
+                spawnFloatingEmojiPhysics(btn, emoji);
                 sendRoomReaction(emoji);
             }
         });
@@ -1849,7 +2192,55 @@ function setupEventListeners() {
         btn.classList.add('btn-clicked');
         setTimeout(() => btn.classList.remove('btn-clicked'), 320);
         soundFx.playPop();
+        triggerControlBtnReaction('info');
         toggleTopCardDrawer();
+    });
+
+    // Keyboard Shortcuts for Swiping Experience (Ergonomics & Comfort)
+    window.addEventListener('keydown', (e) => {
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') return;
+
+        const swipeView = document.getElementById('view-swipe');
+        if (!swipeView || !swipeView.classList.contains('active')) return;
+
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const btn = document.getElementById('btn-swipe-left');
+            if (btn) {
+                btn.classList.add('btn-clicked');
+                setTimeout(() => btn && btn.classList.remove('btn-clicked'), 320);
+            }
+            triggerControlBtnReaction('dislike');
+            swipeTopCard('left');
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            const btn = document.getElementById('btn-swipe-right');
+            if (btn) {
+                btn.classList.add('btn-clicked');
+                setTimeout(() => btn && btn.classList.remove('btn-clicked'), 320);
+            }
+            triggerControlBtnReaction('like');
+            swipeTopCard('right');
+        } else if (e.key === 'ArrowUp' || e.key === ' ') {
+            e.preventDefault();
+            const btn = document.getElementById('btn-toggle-info');
+            if (btn) {
+                btn.classList.add('btn-clicked');
+                setTimeout(() => btn && btn.classList.remove('btn-clicked'), 320);
+            }
+            soundFx.playPop();
+            triggerControlBtnReaction('info');
+            toggleTopCardDrawer();
+        } else if (e.key === 'z' || e.key === 'Z' || e.key === 'Backspace') {
+            e.preventDefault();
+            const btn = document.getElementById('btn-swipe-undo');
+            if (btn && !btn.disabled) {
+                btn.classList.add('btn-clicked');
+                setTimeout(() => btn && btn.classList.remove('btn-clicked'), 320);
+            }
+            undoLastSwipe();
+        }
     });
 
 
@@ -1887,11 +2278,63 @@ function setupEventListeners() {
         });
     }
 
+    function attachEmailAvailabilityCheck(inputId, feedbackId, feedbackTextId) {
+        const inputEl = document.getElementById(inputId);
+        const feedbackEl = document.getElementById(feedbackId);
+        const feedbackTextEl = document.getElementById(feedbackTextId);
+        if (!inputEl || !feedbackEl) return;
+        let timer = null;
+
+        inputEl.addEventListener('input', () => {
+            if (timer) clearTimeout(timer);
+            const val = (inputEl.value || '').trim();
+            if (!val) {
+                feedbackEl.classList.add('hidden');
+                feedbackEl.style.display = 'none';
+                inputEl.style.borderColor = '';
+                inputEl.setCustomValidity('');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(val)) {
+                feedbackEl.classList.remove('hidden');
+                feedbackEl.style.display = 'flex';
+                if (feedbackTextEl) feedbackTextEl.textContent = 'รูปแบบอีเมลไม่ถูกต้อง';
+                inputEl.style.borderColor = '#ef4444';
+                inputEl.setCustomValidity('รูปแบบอีเมลไม่ถูกต้อง');
+                return;
+            }
+
+            timer = setTimeout(() => {
+                fetch(`/api/auth/check-email?email=${encodeURIComponent(val)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.available) {
+                            feedbackEl.classList.remove('hidden');
+                            feedbackEl.style.display = 'flex';
+                            if (feedbackTextEl) feedbackTextEl.textContent = data.message || 'อีเมลนี้ถูกใช้งานในระบบแล้ว';
+                            inputEl.style.borderColor = '#ef4444';
+                            inputEl.setCustomValidity(data.message || 'อีเมลนี้ถูกใช้งานในระบบแล้ว');
+                        } else {
+                            feedbackEl.classList.add('hidden');
+                            feedbackEl.style.display = 'none';
+                            inputEl.style.borderColor = '';
+                            inputEl.setCustomValidity('');
+                        }
+                    })
+                    .catch(() => {});
+            }, 350);
+        });
+    }
+
     // Auth View Toggles
     const toggleLoginBtn = document.getElementById('auth-toggle-login');
     const toggleSignupBtn = document.getElementById('auth-toggle-signup');
     const viewLoginForm = document.getElementById('view-login-form');
     const viewSignupForm = document.getElementById('view-signup-form');
+
+    attachEmailAvailabilityCheck('view-signup-email', 'view-signup-email-feedback', 'view-signup-email-feedback-text');
 
     toggleLoginBtn.addEventListener('click', () => {
         toggleLoginBtn.classList.add('active');
@@ -1952,6 +2395,15 @@ function setupEventListeners() {
             return;
         }
 
+        if (email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('รูปแบบอีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง');
+                document.getElementById('view-signup-email')?.focus();
+                return;
+            }
+        }
+
         if (!pdpaConsent) {
             alert('กรุณายินยอมรับข้อกำหนดและนโยบายความเป็นส่วนตัว (PDPA) ก่อนสมัครสมาชิก');
             return;
@@ -1993,7 +2445,22 @@ function setupEventListeners() {
                 alert('ลงทะเบียนสำเร็จ! ยินดีต้อนรับ ' + data.displayName);
             })
             .catch(err => {
-                alert(err.message || 'ไม่สามารถสมัครสมาชิกได้');
+                const msg = err.message || 'ไม่สามารถสมัครสมาชิกได้';
+                alert(msg);
+                if (msg.includes('อีเมล')) {
+                    const emailInput = document.getElementById('view-signup-email');
+                    const fb = document.getElementById('view-signup-email-feedback');
+                    const fbTxt = document.getElementById('view-signup-email-feedback-text');
+                    if (emailInput) {
+                        emailInput.style.borderColor = '#ef4444';
+                        emailInput.focus();
+                    }
+                    if (fb) {
+                        fb.classList.remove('hidden');
+                        fb.style.display = 'flex';
+                    }
+                    if (fbTxt) fbTxt.textContent = msg;
+                }
             });
     });
 }
@@ -2159,6 +2626,8 @@ async function startSoloSwipe() {
         }
     }
     state.isSolo = true;
+    showView('swipe');
+    renderSkeletonDeck();
 
     const coords = state.userLocation ? {
         latitude: state.userLocation.lat,
@@ -2179,6 +2648,7 @@ async function startSoloSwipe() {
         const data = await res.json();
         if (!data.success || !data.restaurants || data.restaurants.length === 0) {
             showToast('ไม่พบร้านอาหารที่ตรงเงื่อนไข ระบบจะลองขยายระยะทางให้', 'warning');
+            showView('landing');
             return;
         }
 
@@ -2188,14 +2658,15 @@ async function startSoloSwipe() {
         state.soloLiked = [];
         state.isSolo = true;
         state.roomId = null;
+        resetComboStreak();
 
-        showView('swipe');
         renderDeck();
         updateProgressBar();
         showToast(`พบร้านเด็ด ${data.restaurants.length} ร้าน! ปัดเลือกร้านที่ชอบได้เลย 🍜`, 'success');
     } catch (err) {
         console.error('Failed to start solo swipe:', err);
         showToast('เกิดข้อผิดพลาดในการโหลดรายการร้านอาหาร', 'error');
+        showView('landing');
     } finally {
         if (btn) {
             btn.disabled = false;
@@ -2316,17 +2787,19 @@ socket.on('room_state', (data) => {
             }
         }
 
-        let myNameHtml = user.name;
+        const safeName = escapeHtml(user.name);
+        const safeInitial = escapeHtml(user.name ? user.name.charAt(0) : '?');
+        let myNameHtml = safeName;
         if (isMe) {
-            myNameHtml = `<span>${user.name} (คุณ)</span> <button class="btn-edit-my-name" style="background: none; border: none; color: var(--accent-orange); cursor: pointer; padding: 0.1rem 0.3rem; font-size: 0.85rem;" title="แก้ไขชื่อเล่นของคุณ"><i class="fa-solid fa-pen-to-square"></i></button>`;
+            myNameHtml = `<span>${safeName} (คุณ)</span> <button class="btn-edit-my-name" style="background: none; border: none; color: var(--accent-orange); cursor: pointer; padding: 0.1rem 0.3rem; font-size: 0.85rem;" title="แก้ไขชื่อเล่นของคุณ"><i class="fa-solid fa-pen-to-square"></i></button>`;
         }
 
         row.innerHTML = `
             <div class="member-info">
-                <div class="member-avatar">${user.name.charAt(0)}</div>
+                <div class="member-avatar">${safeInitial}</div>
                 <div>
                     <div class="member-name" style="display: flex; align-items: center; gap: 0.3rem;">${myNameHtml}</div>
-                    ${user.allergies.length ? `<span class="member-status">แพ้: ${user.allergies.join(', ')}</span>` : ''}
+                    ${user.allergies && user.allergies.length ? `<span class="member-status">แพ้: ${user.allergies.map(escapeHtml).join(', ')}</span>` : ''}
                 </div>
             </div>
             ${rightSideHtml}
@@ -2403,6 +2876,7 @@ socket.on('game_started', (data) => {
     state.restaurants = data.restaurants;
     state.currentIndex = 0;
     state.votes = {};
+    resetComboStreak();
 
     // Reset progress for all users locally
     state.users.forEach(user => {
@@ -2441,6 +2915,7 @@ socket.on('room_reaction', (data) => {
 
 
 socket.on('match_found', (data) => {
+    resetComboStreak();
     const r = data.restaurant;
     const isFallback = data.isFallback;
 
@@ -2459,6 +2934,9 @@ socket.on('match_found', (data) => {
 
 // Render Match / Solo Result Screen
 function renderResultScreen(r, options = {}) {
+    // End of round: reset combo counter so next round starts fresh from 1
+    resetComboStreak();
+
     // Play confetti explosion!
     triggerConfettiExplosion();
 
@@ -2540,6 +3018,9 @@ function renderResultScreen(r, options = {}) {
             </div>
         `;
 
+        // Animate winner rating stars pop
+        animateWinnerStars(cardContainer);
+
         // Update Maps URL
         const mapsBtn = document.getElementById('btn-open-map');
         if (r.address && (r.address.startsWith('http://') || r.address.startsWith('https://'))) {
@@ -2560,13 +3041,165 @@ function renderResultScreen(r, options = {}) {
     }
 }
 
+// --- SKELETON SHIMMER & UNDO MANAGEMENT ---
+function renderSkeletonDeck() {
+    const deck = document.getElementById('swipe-deck');
+    if (!deck) return;
+
+    // Empty state must remain strictly hidden while loading / cards active
+    const emptyStateEl = deck.querySelector('.deck-empty-state');
+    if (emptyStateEl) emptyStateEl.classList.add('hidden');
+    const emptyStateHtml = emptyStateEl ? emptyStateEl.outerHTML : `
+        <div class="deck-empty-state hidden">
+            <i class="fa-solid fa-circle-check text-success"
+                style="font-size: 3rem; margin-bottom: 1rem;"></i>
+            <h3 id="deck-empty-title">คุณปัดครบแล้ว!</h3>
+            <p id="deck-empty-desc">กำลังรอเพื่อนๆ ปัดจนครบ...</p>
+        </div>
+    `;
+
+    deck.innerHTML = `
+        ${emptyStateHtml}
+        <div class="swipe-card skeleton-card">
+            <div class="skeleton-image skeleton-shimmer">
+                <i class="fa-solid fa-utensils" style="font-size: 2.8rem; color: rgba(255,255,255,0.18);"></i>
+                <div class="skeleton-badge skeleton-shimmer"></div>
+            </div>
+            <div class="skeleton-details">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div class="skeleton-line title skeleton-shimmer"></div>
+                    <div class="skeleton-line skeleton-shimmer" style="width: 50px; height: 20px; border-radius: 12px;"></div>
+                </div>
+                <div class="skeleton-line meta skeleton-shimmer" style="margin-bottom: 0.7rem;"></div>
+                <div class="skeleton-line desc-1 skeleton-shimmer" style="margin-bottom: 0.35rem;"></div>
+                <div class="skeleton-line desc-2 skeleton-shimmer"></div>
+            </div>
+        </div>
+    `;
+    const counter = document.getElementById('cards-remaining');
+    if (counter) counter.innerText = '...';
+    updateUndoButtonState();
+}
+
+function updateUndoButtonState() {
+    const btn = document.getElementById('btn-swipe-undo');
+    if (!btn) return;
+    const hasHistory = state.swipeHistory && state.swipeHistory.length > 0;
+    btn.disabled = !hasHistory;
+    if (hasHistory) {
+        btn.classList.remove('disabled');
+    } else {
+        btn.classList.add('disabled');
+    }
+}
+
+function undoLastSwipe() {
+    if (!state.swipeHistory || state.swipeHistory.length === 0) return;
+    const last = state.swipeHistory.pop();
+    if (!last || !last.restaurant) return;
+
+    // Decrement currentIndex
+    if (state.currentIndex > 0) state.currentIndex--;
+
+    // Hide empty state because a card is being restored back into play
+    const emptyEl = document.querySelector('.deck-empty-state');
+    if (emptyEl) {
+        emptyEl.classList.add('hidden');
+    }
+
+    // If it was a solo right-swipe, pop from soloLiked
+    if (state.isSolo && last.direction === 'right') {
+        const idx = state.soloLiked ? state.soloLiked.findLastIndex(r => String(r.id) === String(last.restaurant.id)) : -1;
+        if (idx !== -1) {
+            state.soloLiked.splice(idx, 1);
+        }
+    }
+    if (state.votes) {
+        delete state.votes[last.restaurant.id];
+    }
+
+    // Restore card DOM element
+    const deck = document.getElementById('swipe-deck');
+    const card = last.cardElement;
+    if (card && deck) {
+        card.classList.remove('swiped');
+        card.style.transition = 'none';
+        card.style.opacity = '0';
+        const startX = last.direction === 'right' ? 120 : -120;
+        card.style.transform = `translate3d(${startX}px, 0, 0) rotate(${last.direction === 'right' ? 6 : -6}deg)`;
+        card.style.display = 'flex';
+
+        // Hide any active stamps
+        const stamps = card.querySelectorAll('.card-stamp');
+        stamps.forEach(s => s.style.opacity = '0');
+
+        if (!card.parentNode) {
+            deck.appendChild(card);
+        }
+        setupCardGestures(card);
+
+        // Re-conceal card below so it returns to blank silhouette
+        const belowCard = card.previousElementSibling;
+        if (belowCard && belowCard.classList.contains('swipe-card')) {
+            belowCard.classList.remove('card-revealed');
+        }
+
+        requestAnimationFrame(() => {
+            card.style.transition = 'transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.28s ease';
+            card.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
+            card.style.opacity = '1';
+        });
+    }
+
+    // Revert combo
+    state.comboCount = last.comboBefore || 0;
+    if (state.comboCount > 1) {
+        const container = document.getElementById('combo-streak-container');
+        const text = document.getElementById('combo-text');
+        if (container && text) {
+            text.innerText = `COMBO x${state.comboCount}!`;
+            container.classList.remove('hidden');
+        }
+    } else {
+        resetComboStreak();
+    }
+
+    updateProgressBar();
+    updateUndoButtonState();
+
+    if (typeof soundFx !== 'undefined' && soundFx.playPop) soundFx.playPop();
+    if (navigator.vibrate) navigator.vibrate(15);
+    showToast(`ย้อนกลับร้าน "${last.restaurant.name}" เรียบร้อย ↺`, 'info');
+}
+
 // --- RENDER DECK & CARDS ---
 function renderDeck() {
+    // Ensure combo streak & swipe history is reset when a fresh deck is rendered
+    resetComboStreak();
+    state.swipeHistory = [];
+    updateUndoButtonState();
 
     const deck = document.getElementById('swipe-deck');
+    if (!deck) return;
 
-    // Save empty state element
-    const emptyStateHtml = deck.querySelector('.deck-empty-state').outerHTML;
+    // Empty state should only be visible when there are 0 cards
+    const emptyStateEl = deck.querySelector('.deck-empty-state');
+    const hasCards = state.restaurants && state.restaurants.length > 0;
+    if (emptyStateEl) {
+        if (hasCards) {
+            emptyStateEl.classList.add('hidden');
+        } else {
+            emptyStateEl.classList.remove('hidden');
+        }
+    }
+    const emptyStateHtml = emptyStateEl ? emptyStateEl.outerHTML : `
+        <div class="deck-empty-state ${hasCards ? 'hidden' : ''}">
+            <i class="fa-solid fa-circle-check text-success"
+                style="font-size: 3rem; margin-bottom: 1rem;"></i>
+            <h3 id="deck-empty-title">คุณปัดครบแล้ว!</h3>
+            <p id="deck-empty-desc">กำลังรอเพื่อนๆ ปัดจนครบ...</p>
+        </div>
+    `;
     deck.innerHTML = emptyStateHtml;
 
     if (state.restaurants.length === 0) {
@@ -2615,7 +3248,7 @@ function renderDeck() {
                     <p><strong>ราคาเฉลี่ยต่อคน:</strong> ~${r.avgPrice} บาท (${r.priceRange})</p>
                     <p><strong>ระยะทาง:</strong> ห่างออกไป ${r.distance} กิโลเมตร</p>
                     <p><strong>ที่ตั้ง:</strong> ${r.address}</p>
-                    ${r.allergens.length ? `
+                    ${r.allergens && r.allergens.length ? `
                         <div>
                             <strong>สารก่อภูมิแพ้ในร้าน:</strong>
                             <div class="drawer-allergens">
@@ -2644,7 +3277,8 @@ function renderDeck() {
 function updateProgressBar() {
     const total = state.restaurants.length;
     const remaining = total - state.currentIndex;
-    document.getElementById('cards-remaining').innerText = Math.max(remaining, 0);
+    const counter = document.getElementById('cards-remaining');
+    if (counter) counter.innerText = Math.max(remaining, 0);
 }
 
 function updateGroupProgressWidget() {
@@ -2669,7 +3303,7 @@ function updateGroupProgressWidget() {
         card.className = 'progress-user-card';
         card.innerHTML = `
             <div class="progress-dot ${statusClass}"></div>
-            <span class="progress-user-text">${user.name}</span>
+            <span class="progress-user-text">${escapeHtml(user.name)}</span>
             <span class="progress-user-val">${userProgress}/${total}</span>
         `;
         widgetList.appendChild(card);
@@ -2692,7 +3326,12 @@ function setupCardGestures(card) {
         if (e.target.closest('.card-drawer') || e.target.closest('.btn-close-drawer')) {
             return;
         }
+        // Prevent action if another card is currently being swiped away
+        if (document.querySelector('.swipe-card.swiped')) {
+            return;
+        }
 
+        clearSwipeAffordance();
         isDragging = true;
         startX = e.clientX;
         startY = e.clientY;
@@ -2710,13 +3349,12 @@ function setupCardGestures(card) {
         currentY = e.clientY;
 
         const dX = currentX - startX;
-        const dY = currentY - startY;
 
-        // Calculate rotation based on horizontal movement
+        // Calculate rotation based strictly on horizontal movement
         const rotate = dX / 15;
 
-        // Apply transform
-        card.style.transform = `translate3d(${dX}px, ${dY}px, 0) rotate(${rotate}deg)`;
+        // Apply transform strictly along horizontal axis (lock Y to 0)
+        card.style.transform = `translate3d(${dX}px, 0, 0) rotate(${rotate}deg)`;
 
         // Fade in Stamps
         if (dX > 20) { // dragging right -> Like
@@ -2737,19 +3375,18 @@ function setupCardGestures(card) {
         card.classList.remove('dragging');
 
         const dX = currentX - startX;
-        const dY = currentY - startY;
         const threshold = 120; // threshold for a swipe
 
         if (e.type !== 'pointercancel' && dX > threshold) {
             // Swipe right (Like)
-            executeSwipeAction(card, 'right', dX, dY);
+            executeSwipeAction(card, 'right', dX, 0);
         } else if (e.type !== 'pointercancel' && dX < -threshold) {
             // Swipe left (Dislike)
-            executeSwipeAction(card, 'left', dX, dY);
+            executeSwipeAction(card, 'left', dX, 0);
         } else {
             // Snap back
             card.style.transition = 'transform 0.2s ease-out';
-            card.style.transform = '';
+            card.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
             likeStamp.style.opacity = 0;
             dislikeStamp.style.opacity = 0;
         }
@@ -2764,6 +3401,7 @@ function setupCardGestures(card) {
 }
 
 function executeSwipeAction(card, direction, dX = 150, dY = 0) {
+    clearSwipeAffordance();
     // Prevent double swiping
     if (card.classList.contains('swiped')) {
         return;
@@ -2784,26 +3422,32 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
         if (navigator.vibrate) navigator.vibrate(10);
     }
 
-    // Animation out
+    // Animation out strictly horizontal (no Y drift)
     const rotate = dX / 15;
     const flyX = direction === 'right' ? window.innerWidth + 200 : -window.innerWidth - 200;
 
     card.style.transition = 'transform 0.3s ease-in, opacity 0.3s ease-in';
-    card.style.transform = `translate3d(${flyX}px, ${dY * 2}px, 0) rotate(${rotate}deg)`;
+    card.style.transform = `translate3d(${flyX}px, 0, 0) rotate(${rotate}deg)`;
     card.style.opacity = 0;
 
-    // Smoothly scale up the next card in deck
+    // Smoothly reveal details of the waiting card underneath as top card flies away
     const nextCard = card.previousElementSibling;
     if (nextCard && nextCard.classList.contains('swipe-card')) {
-        nextCard.style.transition = 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
-        nextCard.style.transform = 'translate3d(0, 0, 0) scale(1)';
-        nextCard.style.opacity = 1;
+        nextCard.classList.add('card-revealed');
     }
 
     const rId = card.dataset.id;
     const currentR = state.restaurants.find(r => String(r.id) === String(rId));
 
-
+    // Save history for Undo
+    state.swipeHistory = state.swipeHistory || [];
+    state.swipeHistory.push({
+        restaurant: currentR,
+        direction: direction,
+        cardElement: card,
+        comboBefore: state.comboCount || 0
+    });
+    updateUndoButtonState();
 
     // Register vote
     state.votes[rId] = direction;
@@ -2822,9 +3466,15 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
         setTimeout(() => {
             card.remove();
 
-            // Check if deck is finished
+            // Check if deck is finished (last card swiped)
             const remainingCards = document.querySelectorAll('.swipe-card:not(.swiped)');
             if (remainingCards.length === 0) {
+                // Reveal empty state only now that the very last card is swiped
+                const emptyEl = document.querySelector('.deck-empty-state');
+                if (emptyEl) {
+                    emptyEl.classList.remove('hidden');
+                }
+                resetComboStreak();
                 setTimeout(() => {
                     let winner = null;
                     let subtitle = '';
@@ -2871,14 +3521,31 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
 
     setTimeout(() => {
         card.remove();
+
+        // Check if group deck is finished for this player (last card swiped)
+        const remainingCards = document.querySelectorAll('.swipe-card:not(.swiped)');
+        if (remainingCards.length === 0) {
+            const emptyEl = document.querySelector('.deck-empty-state');
+            if (emptyEl) {
+                emptyEl.classList.remove('hidden');
+                const emptyTitle = document.getElementById('deck-empty-title');
+                const emptyDesc = document.getElementById('deck-empty-desc');
+                if (emptyTitle) emptyTitle.innerText = 'คุณปัดครบแล้ว!';
+                if (emptyDesc) emptyDesc.innerText = 'กำลังรอเพื่อนๆ ปัดจนครบ...';
+            }
+        }
     }, 300);
 }
 
 function swipeTopCard(direction) {
+    clearSwipeAffordance();
+    if (document.querySelector('.swipe-card.swiped')) {
+        return;
+    }
     const cards = document.querySelectorAll('.swipe-card:not(.swiped)');
     if (cards.length > 0) {
         const topCard = cards[cards.length - 1];
-        executeSwipeAction(topCard, direction, direction === 'right' ? 200 : -200);
+        executeSwipeAction(topCard, direction, direction === 'right' ? 200 : -200, 0);
     }
 }
 
@@ -2890,6 +3557,18 @@ const COMBO_QUOTES = [
     'สายกินตัวจริง 👑', 'จานนี้ต้องโดน! 🌶️', 'เนื้อย่างเยียวยาทุกสิ่ง 🥩',
     'หิวจนท้องร้อง 🍕', 'กระเพาะเรียกร้อง 💖'
 ];
+
+function resetComboStreak() {
+    state.comboCount = 0;
+    if (state.comboTimer) {
+        clearTimeout(state.comboTimer);
+        state.comboTimer = null;
+    }
+    const container = document.getElementById('combo-streak-container');
+    if (container) {
+        container.classList.add('hidden');
+    }
+}
 
 function handleSwipeStreak(direction) {
     const container = document.getElementById('combo-streak-container');
@@ -2941,8 +3620,8 @@ function spawnFloatingReaction(emoji, senderName) {
     bubble.className = 'floating-reaction-bubble';
     bubble.style.left = `${Math.random() * 70 + 15}%`;
     bubble.innerHTML = `
-        <span class="floating-reaction-emoji">${emoji}</span>
-        <span class="floating-reaction-sender">${senderName}</span>
+        <span class="floating-reaction-emoji">${escapeHtml(emoji)}</span>
+        <span class="floating-reaction-sender">${escapeHtml(senderName)}</span>
     `;
 
     layer.appendChild(bubble);
@@ -3363,6 +4042,9 @@ function setupProfileAndFeedback() {
 
     // Update Security Form Submit
     const formSecurity = document.getElementById('form-update-security');
+    if (typeof attachEmailAvailabilityCheck === 'function') {
+        attachEmailAvailabilityCheck('profile-recovery-email', 'profile-recovery-email-feedback', 'profile-recovery-email-feedback-text');
+    }
     if (formSecurity) {
         formSecurity.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -3370,6 +4052,15 @@ function setupProfileAndFeedback() {
             const securityQuestion = (document.getElementById('profile-recovery-question')?.value || '').trim();
             const securityAnswer = (document.getElementById('profile-recovery-answer')?.value || '').trim();
             const recoveryPin = (document.getElementById('profile-recovery-pin')?.value || '').trim();
+
+            if (email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('รูปแบบอีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง');
+                    document.getElementById('profile-recovery-email')?.focus();
+                    return;
+                }
+            }
 
             fetch('/api/user/security', {
                 method: 'PUT',
@@ -3383,6 +4074,20 @@ function setupProfileAndFeedback() {
                         loadUserSecuritySettings();
                     } else {
                         alert(data.message || 'บันทึกข้อมูลไม่สำเร็จ');
+                        if (data.message && data.message.includes('อีเมล')) {
+                            const emailInput = document.getElementById('profile-recovery-email');
+                            const fb = document.getElementById('profile-recovery-email-feedback');
+                            const fbTxt = document.getElementById('profile-recovery-email-feedback-text');
+                            if (emailInput) {
+                                emailInput.style.borderColor = '#ef4444';
+                                emailInput.focus();
+                            }
+                            if (fb) {
+                                fb.classList.remove('hidden');
+                                fb.style.display = 'flex';
+                            }
+                            if (fbTxt) fbTxt.textContent = data.message;
+                        }
                     }
                 })
                 .catch(err => alert('เกิดข้อผิดพลาด: ' + err.message));
@@ -3424,14 +4129,45 @@ function setupProfileAndFeedback() {
         });
     }
 
-    // Update Password Form Submit
+    // Update Password Form Submit & Real-time Validation
     const formPassword = document.getElementById('form-update-password');
+    const inputCurrentPwd = document.getElementById('profile-current-password');
+    const inputNewPwd = document.getElementById('profile-new-password');
+    const inputConfirmPwd = document.getElementById('profile-confirm-password');
+    const feedbackPwd = document.getElementById('profile-new-password-feedback');
+
+    function checkPasswordMatch() {
+        if (!feedbackPwd || !inputCurrentPwd || !inputNewPwd) return;
+        const cur = inputCurrentPwd.value;
+        const nxt = inputNewPwd.value;
+        if (cur && nxt && cur === nxt) {
+            feedbackPwd.classList.remove('hidden');
+            feedbackPwd.style.display = 'flex';
+            inputNewPwd.style.borderColor = '#ef4444';
+        } else {
+            feedbackPwd.classList.add('hidden');
+            feedbackPwd.style.display = 'none';
+            inputNewPwd.style.borderColor = '';
+        }
+    }
+
+    if (inputCurrentPwd && inputNewPwd) {
+        inputCurrentPwd.addEventListener('input', checkPasswordMatch);
+        inputNewPwd.addEventListener('input', checkPasswordMatch);
+    }
+
     if (formPassword) {
         formPassword.addEventListener('submit', (e) => {
             e.preventDefault();
-            const currentPassword = document.getElementById('profile-current-password').value;
-            const newPassword = document.getElementById('profile-new-password').value;
-            const confirmPassword = document.getElementById('profile-confirm-password').value;
+            const currentPassword = inputCurrentPwd ? inputCurrentPwd.value : '';
+            const newPassword = inputNewPwd ? inputNewPwd.value : '';
+            const confirmPassword = inputConfirmPwd ? inputConfirmPwd.value : '';
+
+            if (currentPassword === newPassword) {
+                alert('รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม');
+                if (inputNewPwd) inputNewPwd.focus();
+                return;
+            }
 
             if (newPassword !== confirmPassword) {
                 alert('รหัสผ่านใหม่และการยืนยันรหัสผ่านไม่ตรงกัน');
@@ -3448,6 +4184,7 @@ function setupProfileAndFeedback() {
                     if (data.success) {
                         alert('เปลี่ยนรหัสผ่านสำเร็จเรียบร้อย');
                         formPassword.reset();
+                        checkPasswordMatch();
                         if (profileModal) profileModal.classList.remove('active');
                     } else {
                         alert(data.message || 'เปลี่ยนรหัสผ่านไม่สำเร็จ');
@@ -3606,6 +4343,16 @@ function openProfileModal() {
 
     const pdpaDeletePassword = document.getElementById('pdpa-delete-confirm-password');
     if (pdpaDeletePassword) pdpaDeletePassword.value = '';
+
+    const formPassword = document.getElementById('form-update-password');
+    if (formPassword) formPassword.reset();
+    const feedbackPwd = document.getElementById('profile-new-password-feedback');
+    if (feedbackPwd) {
+        feedbackPwd.classList.add('hidden');
+        feedbackPwd.style.display = 'none';
+    }
+    const inputNewPwd = document.getElementById('profile-new-password');
+    if (inputNewPwd) inputNewPwd.style.borderColor = '';
 
     // Prefill profile allergies
     const userProfileAllergies = (state.currentUser && Array.isArray(state.currentUser.allergies)) ? state.currentUser.allergies : [];
@@ -3853,6 +4600,9 @@ if (loginForm) {
 
 // Signup Form Submit
 if (signupForm) {
+    if (typeof attachEmailAvailabilityCheck === 'function') {
+        attachEmailAvailabilityCheck('signup-email', 'signup-email-feedback', 'signup-email-feedback-text');
+    }
     signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const username = document.getElementById('signup-username').value.trim();
@@ -3864,6 +4614,15 @@ if (signupForm) {
         const recoveryPin = (document.getElementById('signup-pin')?.value || '').trim();
         const pdpaConsent = document.getElementById('signup-pdpa-consent')?.checked;
         const marketingConsent = document.getElementById('signup-marketing-consent')?.checked || false;
+
+        if (email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('รูปแบบอีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง');
+                document.getElementById('signup-email')?.focus();
+                return;
+            }
+        }
 
         if (!pdpaConsent) {
             alert('กรุณายินยอมรับข้อกำหนดและนโยบายความเป็นส่วนตัว (PDPA) ก่อนสมัครสมาชิก');
@@ -3906,7 +4665,22 @@ if (signupForm) {
                 alert('ลงทะเบียนสำเร็จ! ยินดีต้อนรับ ' + data.displayName);
             })
             .catch(err => {
-                alert(err.message || 'ไม่สามารถสมัครสมาชิกได้');
+                const msg = err.message || 'ไม่สามารถสมัครสมาชิกได้';
+                alert(msg);
+                if (msg.includes('อีเมล')) {
+                    const emailInput = document.getElementById('signup-email');
+                    const fb = document.getElementById('signup-email-feedback');
+                    const fbTxt = document.getElementById('signup-email-feedback-text');
+                    if (emailInput) {
+                        emailInput.style.borderColor = '#ef4444';
+                        emailInput.focus();
+                    }
+                    if (fb) {
+                        fb.classList.remove('hidden');
+                        fb.style.display = 'flex';
+                    }
+                    if (fbTxt) fbTxt.textContent = msg;
+                }
             });
     });
 };

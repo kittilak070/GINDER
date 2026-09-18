@@ -554,6 +554,8 @@ body {
     text-decoration: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary {
@@ -719,9 +721,11 @@ body {
     background: rgba(0, 255, 38, 0.05) !important;
 }
 
-#landing-room-id.input-shake {
+#landing-room-id.input-shake,
+.input-shake {
     animation: input-shake-anim 0.35s ease;
     border-color: var(--accent-danger) !important;
+    box-shadow: 0 0 16px rgba(255, 50, 50, 0.4) !important;
 }
 
 @keyframes input-shake-anim {
@@ -1472,43 +1476,83 @@ body {
     user-select: none;
     will-change: transform, opacity;
     cursor: grab;
-    z-index: 2;
+    transition: opacity 0.15s ease;
 }
 
 .swipe-card.dragging {
     cursor: grabbing;
 }
 
-/* Card Visual Order - Front card is 100% solid & primary focus; cards behind are dimmed and neatly aligned */
-.swipe-card:nth-last-child(1) {
+/* Card Visual Order - Only the active front card is fully interactive and visible */
+.swipe-card:last-child {
     z-index: 5;
     transform: translate3d(0, 0, 0);
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
     filter: none;
 }
 
-.swipe-card:nth-last-child(2) {
-    z-index: 4;
-    transform: translate3d(0, 5px, -8px) scale(0.985);
-    opacity: 0.7;
-    filter: brightness(0.5);
-    pointer-events: none;
-}
-
-.swipe-card:nth-last-child(3) {
-    z-index: 3;
-    transform: translate3d(0, 10px, -16px) scale(0.97);
-    opacity: 0.4;
-    filter: brightness(0.3);
-    pointer-events: none;
-}
-
-.swipe-card:nth-last-child(n+4) {
-    z-index: 2;
-    transform: translate3d(0, 14px, -24px) scale(0.95);
+/* Base hidden state for deeper cards in the deck */
+.swipe-card:not(:last-child) {
+    z-index: 1;
+    transform: translate3d(0, 0, 0);
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    display: none;
+}
+
+/* Card immediately behind active card:
+   Show as a clean, blank card silhouette so the user knows another card is waiting,
+   without revealing image, text, or restaurant details. */
+.swipe-card:nth-last-child(2) {
+    z-index: 2;
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: none;
+    background: #190e36;
+    background: linear-gradient(180deg, #1d1140 0%, #130a28 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Hide image, text, and drawer content on non-active cards so nothing is spoiled */
+.swipe-card:not(:last-child):not(.card-revealed) .card-image-wrapper,
+.swipe-card:not(:last-child):not(.card-revealed) .card-details,
+.swipe-card:not(:last-child):not(.card-revealed) .card-drawer {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Smooth fade-in of details when next card is revealed during flyout */
+.swipe-card.card-revealed .card-image-wrapper,
+.swipe-card.card-revealed .card-details {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: opacity 0.22s ease-in;
+}
+
+/* Subtle card silhouette watermark on the waiting card */
+.swipe-card:nth-last-child(2):not(.card-revealed)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--border-radius-lg);
+    background: radial-gradient(circle at 50% 40%, rgba(238, 120, 22, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.swipe-card:nth-last-child(2):not(.card-revealed)::after {
+    content: '🍽️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.14;
+    filter: grayscale(1);
+    pointer-events: none;
 }
 
 .card-image-wrapper {
@@ -1737,6 +1781,13 @@ body {
     margin-top: 0.4rem;
 }
 
+.deck-empty-state.hidden {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
 /* Swipe controls */
 .swipe-controls {
     display: flex;
@@ -1836,6 +1887,124 @@ body {
 .info-btn.btn-clicked {
     background: rgba(50, 132, 255, 0.22);
     box-shadow: 0 0 20px rgba(50, 132, 255, 0.5);
+}
+
+.undo-btn {
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.3);
+    width: clamp(48px, 12.5vw, 54px);
+    height: clamp(48px, 12.5vw, 54px);
+    font-size: clamp(1.1rem, 3.2vw, 1.3rem);
+}
+
+.undo-btn:hover:not(:disabled) {
+    background: rgba(245, 158, 11, 0.14);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
+    border-color: rgba(245, 158, 11, 0.6);
+}
+
+.undo-btn:active:not(:disabled),
+.undo-btn.btn-clicked:not(:disabled) {
+    background: rgba(245, 158, 11, 0.25);
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+}
+
+.undo-btn:disabled,
+.undo-btn.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(0.8);
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Skeleton Card & Shimmer Effects (UX Enhancement) */
+.swipe-card.skeleton-card {
+    background: #190e36 !important;
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--glass-shadow);
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    cursor: default;
+    z-index: 5;
+    transform: translate3d(0, 0, 0) scale(1) !important;
+}
+
+.skeleton-shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.04) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer-wave 1.5s infinite linear;
+}
+
+@keyframes skeleton-shimmer-wave {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.04);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skeleton-badge {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    width: 85px;
+    height: 24px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.skeleton-details {
+    padding: clamp(0.85rem, 2.5vh, 1.15rem);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.65rem;
+    background: linear-gradient(180deg, #1e1140 0%, #130a2a 100%);
+}
+
+.skeleton-line {
+    height: 16px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.skeleton-line.title {
+    height: 22px;
+    width: 65%;
+}
+
+.skeleton-line.meta {
+    height: 14px;
+    width: 85%;
+}
+
+.skeleton-line.desc-1 {
+    height: 12px;
+    width: 95%;
+}
+
+.skeleton-line.desc-2 {
+    height: 12px;
+    width: 70%;
 }
 
 /* Group Progress Widget */
@@ -4212,3 +4381,393 @@ body:has(#view-swipe.active) .app-footer,
 .animate-scale-up {
     animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
+
+/* ==========================================================================
+   MICRO-INTERACTIONS SYSTEM (GINDER HAPTIC & TACTILE ENHANCEMENTS)
+   ========================================================================== */
+
+/* 1. Glassmorphic Radial Ripple */
+.glass-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(238, 120, 22, 0.3) 55%, transparent 80%);
+    pointer-events: none;
+    transform: scale(0);
+    animation: ripple-glow-anim 0.58s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    z-index: 5;
+}
+
+@keyframes ripple-glow-anim {
+    0% {
+        transform: scale(0);
+        opacity: 0.85;
+    }
+    55% {
+        opacity: 0.45;
+    }
+    100% {
+        transform: scale(3.2);
+        opacity: 0;
+    }
+}
+
+/* 2. Spring Tactile Feedback for Buttons & Interactive Elements */
+.btn:active,
+.btn-icon-glass:active,
+.btn-reaction:active {
+    transform: scale(0.95);
+    transition: transform 0.08s ease-out;
+}
+
+.btn-spring-bounce {
+    animation: btn-micro-spring 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes btn-micro-spring {
+    0% { transform: scale(0.95); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* 3. Swipe Controls Micro-Reactions (Heart Beat, Tilt Shake, 360 Spin) */
+@keyframes heart-beat-spring {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.4) rotate(-8deg); color: #00FF26; }
+    50% { transform: scale(0.92) rotate(5deg); }
+    75% { transform: scale(1.15) rotate(-2deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.animate-heart-beat {
+    animation: heart-beat-spring 0.48s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+@keyframes tilt-shake {
+    0% { transform: scale(1) rotate(0deg); }
+    20% { transform: scale(1.25) rotate(-16deg); color: #FF3232; }
+    40% { transform: scale(1.15) rotate(16deg); }
+    60% { transform: scale(1.05) rotate(-8deg); }
+    80% { transform: scale(1.02) rotate(4deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.animate-tilt-shake {
+    animation: tilt-shake 0.45s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+@keyframes spin-360 {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.22); color: #3284FF; }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.animate-spin-360 {
+    animation: spin-360 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+@keyframes spin-reverse-360 {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(-180deg) scale(1.25); color: var(--accent-orange); }
+    100% { transform: rotate(-360deg) scale(1); }
+}
+
+.animate-spin-reverse {
+    animation: spin-reverse-360 0.55s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* Ring Expand Glow on Controls */
+.ring-glow-green::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-green);
+    opacity: 0;
+    animation: ring-expand-kf 0.55s ease-out forwards;
+    pointer-events: none;
+}
+
+.ring-glow-pink::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-pink);
+    opacity: 0;
+    animation: ring-expand-kf 0.55s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes ring-expand-kf {
+    0% { transform: scale(0.8); opacity: 0.9; }
+    100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* 4. First-time Swipe Affordance Nudge & Hint */
+@keyframes card-idle-nudge {
+    0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    20% { transform: translate3d(12px, 0, 0) rotate(1.2deg); }
+    40% { transform: translate3d(-12px, 0, 0) rotate(-1.2deg); }
+    60% { transform: translate3d(6px, 0, 0) rotate(0.6deg); }
+    80% { transform: translate3d(-3px, 0, 0) rotate(-0.3deg); }
+    100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+
+.swipe-card.idle-nudge {
+    animation: card-idle-nudge 1.6s ease-in-out;
+}
+
+.swipe-affordance-hint {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(16, 9, 35, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #FFFFFF;
+    border: 1px solid rgba(238, 120, 22, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(238, 120, 22, 0.25);
+    padding: 0.45rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 100;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.swipe-affordance-hint.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-6px);
+    animation: hint-float 2.2s infinite ease-in-out alternate;
+}
+
+@keyframes hint-float {
+    0% { transform: translateX(-50%) translateY(-6px); }
+    100% { transform: translateX(-50%) translateY(0px); }
+}
+
+/* 5. Filter Chips & Pill Pop Effects */
+.solo-chip {
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.solo-chip:active {
+    transform: scale(0.92);
+}
+
+.solo-chip.just-selected {
+    animation: pill-elastic-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.solo-chip.just-selected i {
+    animation: chip-icon-spin 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes pill-elastic-pop {
+    0% { transform: scale(0.92); }
+    55% { transform: scale(1.09); }
+    100% { transform: scale(1); }
+}
+
+@keyframes chip-icon-spin {
+    0% { transform: rotate(-60deg) scale(0.7); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+
+.reset-feedback-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    color: var(--accent-green);
+    background: rgba(0, 255, 38, 0.12);
+    border: 1px solid rgba(0, 255, 38, 0.3);
+    padding: 0.18rem 0.55rem;
+    border-radius: 20px;
+    margin-left: 0.45rem;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.reset-feedback-badge.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 6. Room Code Interactive Pop & Feedback */
+.input-char-pop {
+    animation: char-pop-kf 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes char-pop-kf {
+    0% { transform: scale(0.97); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+.input-code-ready {
+    border-color: var(--accent-green) !important;
+    box-shadow: 0 0 22px rgba(0, 255, 38, 0.38) !important;
+}
+
+/* 7. Copy Button Emerald Glow & Checkmark Morph */
+.btn.copied-emerald {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: #FFFFFF !important;
+    border-color: #34d399 !important;
+    box-shadow: 0 4px 22px rgba(16, 185, 129, 0.45) !important;
+    transform: scale(1.02);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn.copied-emerald i {
+    animation: checkmark-morph 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes checkmark-morph {
+    0% { transform: scale(0.3) rotate(-45deg); opacity: 0; }
+    60% { transform: scale(1.25) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* 8. Emoji Reaction Squash & Stretch and Floating Motion */
+.btn-reaction {
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-reaction:active {
+    transform: scale(0.78);
+}
+
+.btn-reaction.squash-stretch {
+    animation: squash-stretch-anim 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes squash-stretch-anim {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.38, 0.72); }
+    55% { transform: scale(0.82, 1.28); }
+    80% { transform: scale(1.1, 0.94); }
+    100% { transform: scale(1); }
+}
+
+.floating-room-emoji {
+    position: fixed;
+    pointer-events: none;
+    user-select: none;
+    z-index: 9999;
+    will-change: transform, opacity;
+    animation: float-rise-sway 2.1s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes float-rise-sway {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.4) rotate(0deg);
+        opacity: 0.95;
+    }
+    25% {
+        transform: translate3d(var(--sway-x1, 15px), -60px, 0) scale(1.35) rotate(var(--sway-rot1, 10deg));
+        opacity: 1;
+    }
+    60% {
+        transform: translate3d(var(--sway-x2, -15px), -150px, 0) scale(1.15) rotate(var(--sway-rot2, -8deg));
+        opacity: 0.85;
+    }
+    100% {
+        transform: translate3d(var(--sway-x3, 10px), -270px, 0) scale(0.85) rotate(var(--sway-rot3, 15deg));
+        opacity: 0;
+    }
+}
+
+/* 9. Async Button Loading State with Dual-Ring Glow */
+.btn.btn-loading {
+    pointer-events: none !important;
+    cursor: wait !important;
+    position: relative !important;
+    color: transparent !important;
+}
+
+.btn.btn-loading * {
+    visibility: hidden !important;
+}
+
+.btn.btn-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 22px;
+    height: 22px;
+    margin-top: -11px;
+    margin-left: -11px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #FFFFFF;
+    border-right-color: var(--accent-orange);
+    animation: btn-spin-kf 0.65s linear infinite;
+    visibility: visible !important;
+}
+
+@keyframes btn-spin-kf {
+    to { transform: rotate(360deg); }
+}
+
+/* 10. Result Screen Winner Rating Stars Staggered Light-up & Dice Spin */
+@keyframes star-pop-kf {
+    0% { transform: scale(0.3) rotate(-35deg); opacity: 0; }
+    60% { transform: scale(1.4) rotate(14deg); opacity: 1; color: #fde047; text-shadow: 0 0 16px rgba(253, 224, 71, 0.85); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.winner-star-pop {
+    display: inline-block;
+    animation: star-pop-kf 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes dice-roll-spin {
+    0% { transform: rotate(0deg) scale(1); }
+    40% { transform: rotate(360deg) scale(1.35); color: #fde047; }
+    100% { transform: rotate(720deg) scale(1); }
+}
+
+.animate-dice-roll {
+    animation: dice-roll-spin 0.75s cubic-bezier(0.2, 0.8, 0.25, 1) !important;
+}
+
+/* 11. Tooltip Feedback Badge for Sound Toggle */
+.sound-tooltip-badge {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 6px;
+    background: rgba(16, 9, 35, 0.92);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    color: #FFFFFF;
+    font-size: 0.74rem;
+    font-weight: 500;
+    padding: 0.25rem 0.6rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    animation: tooltip-fade-float 1.2s ease-out forwards;
+}
+
+@keyframes tooltip-fade-float {
+    0% { opacity: 0; transform: translateY(-4px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-6px); }
+}
+
