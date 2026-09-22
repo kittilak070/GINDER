@@ -1255,6 +1255,58 @@
     </div>
 
     <script>
+        function showToast(message, type = 'info', duration = 3000) {
+            let container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.style.cssText = 'position: fixed; top: 24px; right: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;';
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement('div');
+            toast.style.cssText = 'pointer-events: auto; padding: 12px 20px; border-radius: 12px; font-size: 0.92rem; font-weight: 500; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.4); backdrop-filter: blur(16px); color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(-10px); opacity: 0;';
+            if (type === 'error') {
+                toast.style.background = 'rgba(239, 68, 68, 0.92)';
+                toast.style.border = '1px solid rgba(239, 68, 68, 0.5)';
+                toast.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> <span>${message}</span>`;
+            } else if (type === 'success') {
+                toast.style.background = 'rgba(34, 197, 94, 0.92)';
+                toast.style.border = '1px solid rgba(34, 197, 94, 0.5)';
+                toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${message}</span>`;
+            } else if (type === 'warning') {
+                toast.style.background = 'rgba(245, 158, 11, 0.92)';
+                toast.style.border = '1px solid rgba(245, 158, 11, 0.5)';
+                toast.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>${message}</span>`;
+            } else {
+                toast.style.background = 'rgba(59, 130, 246, 0.92)';
+                toast.style.border = '1px solid rgba(59, 130, 246, 0.5)';
+                toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> <span>${message}</span>`;
+            }
+            container.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.style.transform = 'translateY(0)';
+                toast.style.opacity = '1';
+            });
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(20px)';
+                setTimeout(() => toast.remove(), 320);
+            }, duration);
+        }
+
+        window.alert = function(msg) {
+            let type = 'info';
+            if (/ผิดพลาด|ไม่สำเร็จ|ไม่ถูกต้อง|ล้มเหลว|error|fail/i.test(msg)) type = 'error';
+            else if (/สำเร็จ|เรียบร้อย|success/i.test(msg)) type = 'success';
+            else if (/ระวัง|เตือน|กรุณา|โปรด/i.test(msg)) type = 'warning';
+            showToast(msg, type);
+        };
+
+        window.confirm = function(msg) {
+            showToast(msg, 'info');
+            return true;
+        };
+
         let allRestaurants = [];
         let allUsers = [];
 

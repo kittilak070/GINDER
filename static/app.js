@@ -80,6 +80,12 @@ window.alert = function(message) {
     showToast(message, type);
 };
 
+// Upgrade browser confirm() to non-blocking toast
+window.confirm = function(message) {
+    showToast(message, 'info');
+    return true;
+};
+
 // --- AUTO NICKNAME GENERATOR (ZERO-FRICTION ONBOARDING) ---
 const FOOD_NICKNAMES = [
     'นักชิมสายกิน 🍜', 'กูรูหมูกระทะ 🥩', 'สายหวานตาลเรียกพี่ 🍰',
@@ -2075,25 +2081,12 @@ function setupEventListeners() {
 
     // Leave Room Handler
     const handleLeaveRoom = () => {
-        let msg = 'คุณต้องการออกจากกลุ่มใช่หรือไม่?';
-
-        if (views.lobby.classList.contains('active')) {
-            if (state.isCreator) {
-                msg = 'คุณเป็นหัวหน้าห้อง หากคุณออกจากห้อง ห้องนี้จะถูกปิดและสมาชิกทุกคนจะหลุดออก ยืนยันที่จะออกใช่หรือไม่?';
-            } else {
-                msg = 'คุณต้องการออกจากห้องกลุ่มใช่หรือไม่?';
-            }
-        } else if (views.swipe.classList.contains('active')) {
-            msg = 'การโหวตกำลังดำเนินอยู่ คุณแน่ใจหรือไม่ว่าจะออกจากห้องโหวต?';
-        }
-
-        if (confirm(msg)) {
-            socket.disconnect();
-            if (state.timerInterval) clearInterval(state.timerInterval);
-            resetApplicationState();
-            showView('landing');
-            socket.connect();
-        }
+        socket.disconnect();
+        if (state.timerInterval) clearInterval(state.timerInterval);
+        resetApplicationState();
+        showView('landing');
+        socket.connect();
+        showToast('ออกจากห้องโหวตเรียบร้อยแล้ว 🍜', 'info');
     };
 
     document.getElementById('btn-leave-lobby').addEventListener('click', handleLeaveRoom);
@@ -2163,12 +2156,10 @@ function setupEventListeners() {
                            (distSliderEl && parseFloat(distSliderEl.value) < 20.0) ||
                            (activeBudget && !(activeBudget.dataset.min === '0' && activeBudget.dataset.max === '9999'));
 
-        if (hasChanged) {
-            if (!confirm('คุณต้องการยกเลิกการตั้งค่าและย้อนกลับใช่หรือไม่?')) {
-                return;
-            }
-        }
         showView('landing');
+        if (hasChanged) {
+            showToast('ยกเลิกการตั้งค่าและย้อนกลับแล้ว', 'info');
+        }
     });
 
     // Food Type Selectors (with "Select All" support for Join view)
@@ -2332,12 +2323,10 @@ function setupEventListeners() {
 
         const hasInput = name.length > 0 || activeAllergies > 0;
 
-        if (hasInput) {
-            if (!confirm('ข้อมูลที่กรอกจะสูญหาย คุณต้องการย้อนกลับใช่หรือไม่?')) {
-                return;
-            }
-        }
         showView('landing');
+        if (hasInput) {
+            showToast('ย้อนกลับหน้าหลักแล้ว', 'info');
+        }
     });
 
     // Multi-select for Allergies (Join and Host)
@@ -3129,9 +3118,8 @@ socket.on('room_state', (data) => {
             btn.addEventListener('click', () => {
                 const userId = btn.dataset.id;
                 const userName = btn.dataset.name;
-                if (confirm(`คุณต้องการเตะคุณ ${userName} ออกจากห้องใช่หรือไม่?`)) {
-                    socket.emit('kick_user', { roomId: state.roomId, userId: userId });
-                }
+                socket.emit('kick_user', { roomId: state.roomId, userId: userId });
+                showToast(`นำคุณ ${userName} ออกจากห้องแล้ว`, 'warning');
             });
         });
     }
@@ -4209,23 +4197,23 @@ function updateHeaderUI() {
         const logoutBtn = document.getElementById('btn-logout');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
-                if (confirm('คุณต้องการออกจากระบบใช่หรือไม่?')) {
-                    fetch('/api/logout', { method: 'POST' })
-                        .then(res => res.json())
-                        .then(data => {
-                            state.currentUser = (data && data.isGuest) ? data : null;
+                fetch('/api/logout', { method: 'POST' })
+                    .then(res => res.json())
+                    .then(data => {
+                        state.currentUser = (data && data.isGuest) ? data : null;
+                        updateHeaderUI();
+                        prefillUserPreferences();
+                        closeProfileModal();
+                        showToast('ออกจากระบบแล้ว คุณยังคงใช้งานระบบแบบทั่วไป (Guest) ได้ตามปกติ 🍜', 'info');
+                        showView('landing');
+                    })
+                    .catch(err => {
+                        triggerQuickGuestLogin(() => {
                             updateHeaderUI();
-                            prefillUserPreferences();
-                            showToast('ออกจากระบบแล้ว คุณยังคงใช้งานระบบแบบทั่วไป (Guest) ได้ตามปกติ 🍜', 'info');
+                            closeProfileModal();
                             showView('landing');
-                        })
-                        .catch(err => {
-                            triggerQuickGuestLogin(() => {
-                                updateHeaderUI();
-                                showView('landing');
-                            });
                         });
-                }
+                    });
             });
         }
     } else {
@@ -4576,12 +4564,10 @@ function setupProfileAndFeedback() {
             const confirmInput = document.getElementById('pdpa-delete-confirm-text') || document.getElementById('pdpa-delete-confirm-password');
             const confirmVal = confirmInput ? confirmInput.value.trim() : '';
             if (confirmVal !== 'DELETE') {
-                alert('กรุณาพิมพ์คำว่า DELETE (ตัวพิมพ์ใหญ่) เพื่อยืนยันการลบบัญชีและทำลายข้อมูล');
+                showToast('กรุณาพิมพ์คำว่า DELETE (ตัวพิมพ์ใหญ่) เพื่อยืนยันการลบบัญชี', 'warning');
                 if (confirmInput) confirmInput.focus();
                 return;
             }
-            const confirmed = confirm('⚠️ คำเตือนสำคัญตาม PDPA:\n\nการดำเนินการนี้จะลบข้อมูลส่วนตัว การตั้งค่า และประวัติทั้งหมดของคุณอย่างถาวร (Right to Erasure)\n\nคุณแน่ใจหรือไม่ที่จะลบบัญชีนี้?');
-            if (!confirmed) return;
 
             btnPdpaDelete.disabled = true;
             btnPdpaDelete.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังลบข้อมูล...';
