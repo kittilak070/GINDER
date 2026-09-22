@@ -86,6 +86,70 @@ window.confirm = function(message) {
     return true;
 };
 
+// Upgrade browser prompt() to non-blocking toast
+window.prompt = function(message, defaultVal) {
+    showToast(message, 'info');
+    return defaultVal || null;
+};
+
+// Custom non-blocking prompt modal
+function showCustomPrompt(title, defaultValue = '', onConfirm) {
+    let overlay = document.getElementById('custom-prompt-modal');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'custom-prompt-modal';
+        overlay.className = 'modal-backdrop';
+        overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100000; opacity: 0; transition: opacity 0.25s ease;';
+        overlay.innerHTML = `
+            <div style="background: var(--bg-card, #1e2029); border: 1px solid var(--border-glass, rgba(255,255,255,0.12)); border-radius: 20px; padding: 1.8rem; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transform: scale(0.92); transition: transform 0.25s ease; color: #fff;">
+                <h4 id="custom-prompt-title" style="margin: 0 0 1rem 0; font-size: 1.1rem; font-weight: 600; color: #fff;"></h4>
+                <input type="text" id="custom-prompt-input" style="width: 100%; padding: 0.8rem 1rem; border-radius: 12px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-size: 1rem; outline: none; margin-bottom: 1.2rem; box-sizing: border-box;" />
+                <div style="display: flex; gap: 0.8rem; justify-content: flex-end;">
+                    <button id="custom-prompt-cancel" class="btn btn-secondary" style="padding: 0.6rem 1.2rem; border-radius: 10px; cursor: pointer;">ยกเลิก</button>
+                    <button id="custom-prompt-ok" class="btn btn-primary" style="padding: 0.6rem 1.4rem; border-radius: 10px; cursor: pointer;">ตกลง</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+    }
+    const titleEl = overlay.querySelector('#custom-prompt-title');
+    const inputEl = overlay.querySelector('#custom-prompt-input');
+    const btnCancel = overlay.querySelector('#custom-prompt-cancel');
+    const btnOk = overlay.querySelector('#custom-prompt-ok');
+
+    titleEl.textContent = title;
+    inputEl.value = defaultValue || '';
+
+    const close = () => {
+        overlay.style.opacity = '0';
+        overlay.firstElementChild.style.transform = 'scale(0.92)';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 250);
+    };
+
+    const submit = () => {
+        const val = inputEl.value;
+        close();
+        if (typeof onConfirm === 'function') onConfirm(val);
+    };
+
+    btnCancel.onclick = close;
+    btnOk.onclick = submit;
+    inputEl.onkeydown = (e) => {
+        if (e.key === 'Enter') submit();
+        if (e.key === 'Escape') close();
+    };
+
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => {
+        overlay.style.opacity = '1';
+        overlay.firstElementChild.style.transform = 'scale(1)';
+        inputEl.focus();
+        inputEl.select();
+    });
+}
+
 // --- AUTO NICKNAME GENERATOR (ZERO-FRICTION ONBOARDING) ---
 const FOOD_NICKNAMES = [
     'นักชิมสายกิน 🍜', 'กูรูหมูกระทะ 🥩', 'สายหวานตาลเรียกพี่ 🍰',
@@ -930,7 +994,7 @@ function handleSocialLogin(provider, email, name) {
             routeAfterAuth();
         })
         .catch(err => {
-            alert(err.message || 'ไม่สามารถเข้าสู่ระบบได้ กรุณาลองใหม่อีกครั้ง');
+            showToast(err.message || 'ไม่สามารถเข้าสู่ระบบได้ กรุณาลองใหม่อีกครั้ง', 'error');
         });
 }
 
@@ -2720,7 +2784,7 @@ function setupEventListeners() {
             const email = (document.getElementById('social-custom-email')?.value || '').trim();
             const name = (document.getElementById('social-custom-name')?.value || '').trim();
             if (!email) {
-                alert('กรุณากรอกอีเมลหรือชื่อผู้ใช้');
+                showToast('กรุณากรอกอีเมลหรือชื่อผู้ใช้', 'warning');
                 return;
             }
             handleSocialLogin(activeSocialProvider, email, name || email);
@@ -3023,12 +3087,12 @@ socket.on('join_error', (data) => {
         });
         return;
     }
-    alert(data.message);
+    showToast(data.message, 'warning');
     showView('landing');
 });
 
 socket.on('kicked', (data) => {
-    alert('คุณถูกเตะออกจากห้องกลุ่ม');
+    showToast('คุณถูกเตะออกจากห้องกลุ่ม', 'error');
     socket.disconnect();
     if (state.timerInterval) clearInterval(state.timerInterval);
     resetApplicationState();
@@ -3099,14 +3163,16 @@ socket.on('room_state', (data) => {
             const editBtn = row.querySelector('.btn-edit-my-name');
             if (editBtn) {
                 editBtn.addEventListener('click', () => {
-                    const newName = prompt('แก้ไขชื่อเล่นที่คุณต้องการให้เพื่อนเห็นในห้อง:', user.name);
-                    if (newName && newName.trim() && newName.trim() !== user.name) {
-                        state.name = newName.trim();
-                        socket.emit('update_member', {
-                            roomId: state.roomId,
-                            name: state.name
-                        });
-                    }
+                    showCustomPrompt('แก้ไขชื่อเล่นที่คุณต้องการให้เพื่อนเห็นในห้อง:', user.name, (newName) => {
+                        if (newName && newName.trim() && newName.trim() !== user.name) {
+                            state.name = newName.trim();
+                            socket.emit('update_member', {
+                                roomId: state.roomId,
+                                name: state.name
+                            });
+                            showToast(`เปลี่ยนชื่อเล่นเป็น "${state.name}" แล้ว`, 'success');
+                        }
+                    });
                 });
             }
         }
@@ -4032,7 +4098,7 @@ function startQRScanner() {
             // Fallback to front camera or default camera
             html5QrCode.start({ facingMode: "user" }, config, qrCodeSuccessCallback)
                 .catch(err2 => {
-                    alert("ไม่สามารถเข้าถึงกล้องถ่ายภาพได้: " + err2);
+                    showToast("ไม่สามารถเข้าถึงกล้องถ่ายภาพได้: " + err2, 'error');
                     stopQRScanner();
                 });
         });
@@ -4339,7 +4405,7 @@ function setupProfileAndFeedback() {
             if (email) {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
-                    alert('รูปแบบอีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง');
+                    showToast('รูปแบบอีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง', 'warning');
                     document.getElementById('profile-recovery-email')?.focus();
                     return;
                 }
@@ -4353,10 +4419,10 @@ function setupProfileAndFeedback() {
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        alert(data.message || 'บันทึกข้อมูลความปลอดภัยเรียบร้อยแล้ว');
+                        showToast(data.message || 'บันทึกข้อมูลความปลอดภัยเรียบร้อยแล้ว', 'success');
                         loadUserSecuritySettings();
                     } else {
-                        alert(data.message || 'บันทึกข้อมูลไม่สำเร็จ');
+                        showToast(data.message || 'บันทึกข้อมูลไม่สำเร็จ', 'error');
                         if (data.message && data.message.includes('อีเมล')) {
                             const emailInput = document.getElementById('profile-recovery-email');
                             const fb = document.getElementById('profile-recovery-email-feedback');
@@ -4373,7 +4439,7 @@ function setupProfileAndFeedback() {
                         }
                     }
                 })
-                .catch(err => alert('เกิดข้อผิดพลาด: ' + err.message));
+                .catch(err => showToast('เกิดข้อผิดพลาด: ' + err.message, 'error'));
         });
     }
 
@@ -4402,13 +4468,13 @@ function setupProfileAndFeedback() {
                         state.currentUser.allergies = data.allergies || selectedAllergies;
                         updateHeaderUI();
                         prefillUserPreferences();
-                        alert('บันทึกข้อมูลส่วนตัวเรียบร้อยแล้ว');
+                        showToast('บันทึกข้อมูลส่วนตัวเรียบร้อยแล้ว', 'success');
                         if (profileModal) profileModal.classList.remove('active');
                     } else {
-                        alert(data.message || 'บันทึกข้อมูลไม่สำเร็จ');
+                        showToast(data.message || 'บันทึกข้อมูลไม่สำเร็จ', 'error');
                     }
                 })
-                .catch(err => alert('เกิดข้อผิดพลาด: ' + err.message));
+                .catch(err => showToast('เกิดข้อผิดพลาด: ' + err.message, 'error'));
         });
     }
 
@@ -4447,13 +4513,13 @@ function setupProfileAndFeedback() {
             const confirmPassword = inputConfirmPwd ? inputConfirmPwd.value : '';
 
             if (currentPassword === newPassword) {
-                alert('รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม');
+                showToast('รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม', 'warning');
                 if (inputNewPwd) inputNewPwd.focus();
                 return;
             }
 
             if (newPassword !== confirmPassword) {
-                alert('รหัสผ่านใหม่และการยืนยันรหัสผ่านไม่ตรงกัน');
+                showToast('รหัสผ่านใหม่และการยืนยันรหัสผ่านไม่ตรงกัน', 'warning');
                 return;
             }
 
@@ -4465,15 +4531,15 @@ function setupProfileAndFeedback() {
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        alert('เปลี่ยนรหัสผ่านสำเร็จเรียบร้อย');
+                        showToast('เปลี่ยนรหัสผ่านสำเร็จเรียบร้อย', 'success');
                         formPassword.reset();
                         checkPasswordMatch();
                         if (profileModal) profileModal.classList.remove('active');
                     } else {
-                        alert(data.message || 'เปลี่ยนรหัสผ่านไม่สำเร็จ');
+                        showToast(data.message || 'เปลี่ยนรหัสผ่านไม่สำเร็จ', 'error');
                     }
                 })
-                .catch(err => alert('เกิดข้อผิดพลาด: ' + err.message));
+                .catch(err => showToast('เกิดข้อผิดพลาด: ' + err.message, 'error'));
         });
     }
 
@@ -4514,14 +4580,14 @@ function setupProfileAndFeedback() {
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        alert(data.message);
+                        showToast(data.message, 'success');
                         formFeedback.reset();
                         if (feedbackModal) feedbackModal.classList.remove('active');
                     } else {
-                        alert(data.message || 'ส่งข้อความไม่สำเร็จ');
+                        showToast(data.message || 'ส่งข้อความไม่สำเร็จ', 'error');
                     }
                 })
-                .catch(err => alert('เกิดข้อผิดพลาด: ' + err.message));
+                .catch(err => showToast('เกิดข้อผิดพลาด: ' + err.message, 'error'));
         });
     }
 
@@ -4548,12 +4614,12 @@ function setupProfileAndFeedback() {
                     a.click();
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-                    alert('ดาวน์โหลดสำเนาข้อมูลส่วนบุคคลตามสิทธิ PDPA (Right of Access) สำเร็จเรียบร้อย');
+                    showToast('ดาวน์โหลดสำเนาข้อมูลส่วนบุคคลตามสิทธิ PDPA (Right of Access) สำเร็จเรียบร้อย', 'success');
                 })
                 .catch(err => {
                     btnPdpaExport.disabled = false;
                     btnPdpaExport.innerHTML = '<i class="fa-solid fa-download"></i> ดาวน์โหลดสำเนาข้อมูลส่วนบุคคลของฉัน (JSON)';
-                    alert('เกิดข้อผิดพลาด: ' + err.message);
+                    showToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
                 });
         });
     }
@@ -4582,17 +4648,17 @@ function setupProfileAndFeedback() {
                     btnPdpaDelete.disabled = false;
                     btnPdpaDelete.innerHTML = '<i class="fa-solid fa-trash"></i> ขอลบข้อมูลและปิดบัญชีถาวร';
                     if (!ok || !data.success) {
-                        alert(data.message || 'ไม่สามารถลบบัญชีได้');
+                        showToast(data.message || 'ไม่สามารถลบบัญชีได้', 'error');
                         return;
                     }
-                    alert(data.message || 'ลบบัญชีและข้อมูลส่วนบุคคลตามสิทธิ PDPA สำเร็จแล้ว');
+                    showToast(data.message || 'ลบบัญชีและข้อมูลส่วนบุคคลตามสิทธิ PDPA สำเร็จแล้ว', 'success');
                     localStorage.removeItem('ginder_pdpa_consent');
                     window.location.reload();
                 })
                 .catch(err => {
                     btnPdpaDelete.disabled = false;
                     btnPdpaDelete.innerHTML = '<i class="fa-solid fa-trash"></i> ขอลบข้อมูลและปิดบัญชีถาวร';
-                    alert('เกิดข้อผิดพลาด: ' + err.message);
+                    showToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
                 });
         });
     }
@@ -4973,7 +5039,7 @@ function setupForgotPasswordModal() {
         btnQCheck.addEventListener('click', () => {
             const username = (document.getElementById('forgot-q-username')?.value || '').trim();
             if (!username) {
-                alert('กรุณากรอกชื่อผู้ใช้');
+                showToast('กรุณากรอกชื่อผู้ใช้', 'warning');
                 return;
             }
 
@@ -4991,12 +5057,12 @@ function setupForgotPasswordModal() {
                     btnQCheck.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> ค้นหาบัญชี';
 
                     if (!data.success) {
-                        alert(data.message || 'ไม่พบบัญชีผู้ใช้นี้');
+                        showToast(data.message || 'ไม่พบบัญชีผู้ใช้นี้', 'error');
                         return;
                     }
 
                     if (!data.hasSecurityQuestion && !data.hasPin) {
-                        alert('บัญชีนี้ยังไม่ได้ตั้งคำถามลับหรือ PIN กู้คืนไว้\nระบบแนะนำให้ใช้แท็บ "รหัส OTP อีเมล" ในการกู้คืนแทน');
+                        showToast('บัญชีนี้ยังไม่ได้ตั้งคำถามลับหรือ PIN กู้คืนไว้ ระบบแนะนำให้ใช้แท็บ "รหัส OTP อีเมล" ในการกู้คืนแทน', 'warning');
                         switchForgotTab('email');
                         const eInput = document.getElementById('forgot-e-input');
                         if (eInput) eInput.value = username;
@@ -5032,7 +5098,7 @@ function setupForgotPasswordModal() {
                 .catch(err => {
                     btnQCheck.disabled = false;
                     btnQCheck.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> ค้นหาบัญชี';
-                    alert('เกิดข้อผิดพลาด: ' + err.message);
+                    showToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
                 });
         });
     }
@@ -5056,17 +5122,17 @@ function setupForgotPasswordModal() {
             const confirmPassword = document.getElementById('forgot-q-confirm-password')?.value || '';
 
             if (!securityAnswer && !recoveryPin) {
-                alert('กรุณาตอบคำถามความปลอดภัย หรือกรอก Recovery PIN อย่างใดอย่างหนึ่ง');
+                showToast('กรุณาตอบคำถามความปลอดภัย หรือกรอก Recovery PIN อย่างใดอย่างหนึ่ง', 'warning');
                 return;
             }
 
             if (!newPassword || newPassword.length < 4) {
-                alert('รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 4 ตัวอักษร');
+                showToast('รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 4 ตัวอักษร', 'warning');
                 return;
             }
 
             if (newPassword !== confirmPassword) {
-                alert('รหัสผ่านใหม่และการยืนยันรหัสผ่านไม่ตรงกัน');
+                showToast('รหัสผ่านใหม่และการยืนยันรหัสผ่านไม่ตรงกัน', 'warning');
                 return;
             }
 
@@ -5089,7 +5155,7 @@ function setupForgotPasswordModal() {
                     btnQSubmit.innerHTML = '<i class="fa-solid fa-check"></i> บันทึกรหัสผ่านใหม่';
 
                     if (data.success) {
-                        alert(data.message || 'ตั้งรหัสผ่านใหม่สำเร็จแล้ว สามารถเข้าสู่ระบบได้ทันที');
+                        showToast(data.message || 'ตั้งรหัสผ่านใหม่สำเร็จแล้ว สามารถเข้าสู่ระบบได้ทันที', 'success');
                         closeForgotModal();
 
                         // Prefill login input
@@ -5098,13 +5164,13 @@ function setupForgotPasswordModal() {
                         if (viewLogin) viewLogin.value = currentForgotUsername;
                         if (modalLogin) modalLogin.value = currentForgotUsername;
                     } else {
-                        alert(data.message || 'การยืนยันไม่ถูกต้อง');
+                        showToast(data.message || 'การยืนยันไม่ถูกต้อง', 'error');
                     }
                 })
                 .catch(err => {
                     btnQSubmit.disabled = false;
                     btnQSubmit.innerHTML = '<i class="fa-solid fa-check"></i> บันทึกรหัสผ่านใหม่';
-                    alert('เกิดข้อผิดพลาด: ' + err.message);
+                    showToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
                 });
         });
     }
@@ -5115,7 +5181,7 @@ function setupForgotPasswordModal() {
         btnESendOtp.addEventListener('click', () => {
             const inputVal = (document.getElementById('forgot-e-input')?.value || '').trim();
             if (!inputVal) {
-                alert('กรุณากรอกชื่อผู้ใช้ หรืออีเมล');
+                showToast('กรุณากรอกชื่อผู้ใช้ หรืออีเมล', 'warning');
                 return;
             }
 
@@ -5140,20 +5206,20 @@ function setupForgotPasswordModal() {
                         if (eStep2) eStep2.classList.remove('hidden');
 
                         if (data.devMode && data.devOtp) {
-                            alert(`${data.message}\n\n[Dev Mode] รหัส OTP สำหรับทดสอบคือ: ${data.devOtp}`);
+                            showToast(`${data.message} [Dev Mode OTP: ${data.devOtp}]`, 'info', 6000);
                             const otpInput = document.getElementById('forgot-e-otp');
                             if (otpInput) otpInput.value = data.devOtp;
                         } else {
-                            alert(data.message);
+                            showToast(data.message, 'success');
                         }
                     } else {
-                        alert(data.message || 'ส่งรหัส OTP ไม่สำเร็จ');
+                        showToast(data.message || 'ส่งรหัส OTP ไม่สำเร็จ', 'error');
                     }
                 })
                 .catch(err => {
                     btnESendOtp.disabled = false;
                     btnESendOtp.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ส่งรหัส OTP ไปที่อีเมล';
-                    alert('เกิดข้อผิดพลาด: ' + err.message);
+                    showToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
                 });
         });
     }
@@ -5176,17 +5242,17 @@ function setupForgotPasswordModal() {
             const confirmPassword = document.getElementById('forgot-e-confirm-password')?.value || '';
 
             if (!otp || otp.length !== 6) {
-                alert('กรุณากรอกรหัส OTP 6 หลัก');
+                showToast('กรุณากรอกรหัส OTP 6 หลัก', 'warning');
                 return;
             }
 
             if (!newPassword || newPassword.length < 4) {
-                alert('รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 4 ตัวอักษร');
+                showToast('รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 4 ตัวอักษร', 'warning');
                 return;
             }
 
             if (newPassword !== confirmPassword) {
-                alert('รหัสผ่านใหม่และการยืนยันรหัสผ่านไม่ตรงกัน');
+                showToast('รหัสผ่านใหม่และการยืนยันรหัสผ่านไม่ตรงกัน', 'warning');
                 return;
             }
 
@@ -5208,7 +5274,7 @@ function setupForgotPasswordModal() {
                     btnESubmit.innerHTML = '<i class="fa-solid fa-check"></i> ยืนยันรหัสผ่านใหม่';
 
                     if (data.success) {
-                        alert(data.message || 'ตั้งรหัสผ่านใหม่สำเร็จแล้ว สามารถเข้าสู่ระบบได้ทันที');
+                        showToast(data.message || 'ตั้งรหัสผ่านใหม่สำเร็จแล้ว สามารถเข้าสู่ระบบได้ทันที', 'success');
                         closeForgotModal();
 
                         const viewLogin = document.getElementById('view-login-username');
@@ -5216,13 +5282,13 @@ function setupForgotPasswordModal() {
                         if (viewLogin) viewLogin.value = currentForgotUsername;
                         if (modalLogin) modalLogin.value = currentForgotUsername;
                     } else {
-                        alert(data.message || 'รหัส OTP ไม่ถูกต้อง');
+                        showToast(data.message || 'รหัส OTP ไม่ถูกต้อง', 'error');
                     }
                 })
                 .catch(err => {
                     btnESubmit.disabled = false;
                     btnESubmit.innerHTML = '<i class="fa-solid fa-check"></i> ยืนยันรหัสผ่านใหม่';
-                    alert('เกิดข้อผิดพลาด: ' + err.message);
+                    showToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
                 });
         });
     }

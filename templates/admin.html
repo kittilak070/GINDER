@@ -1254,6 +1254,21 @@
         </div>
     </div>
 
+    <!-- Admin Confirmation Modal -->
+    <div id="admin-confirm-modal" class="modal-backdrop" style="position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100000; opacity: 0; transition: opacity 0.25s ease;">
+        <div style="background: var(--bg-card, #1e2029); border: 1px solid var(--border-glass, rgba(255,255,255,0.12)); border-radius: 20px; padding: 2rem; width: 90%; max-width: 420px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; color: #fff;">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); color: #ef4444; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1.2rem auto;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 style="margin: 0 0 0.8rem 0; font-size: 1.2rem; font-weight: 600;">ยืนยันการทำรายการ</h3>
+            <p id="admin-confirm-message" style="color: var(--text-secondary, #94a3b8); font-size: 0.95rem; line-height: 1.5; margin: 0 0 1.5rem 0;"></p>
+            <div style="display: flex; gap: 0.8rem; justify-content: center;">
+                <button id="admin-confirm-cancel" class="btn btn-secondary" style="padding: 0.65rem 1.4rem; border-radius: 12px; cursor: pointer;">ยกเลิก</button>
+                <button id="admin-confirm-ok" class="btn btn-delete" style="padding: 0.65rem 1.5rem; border-radius: 12px; cursor: pointer; background: #ef4444; color: #fff;">ยืนยัน</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function showToast(message, type = 'info', duration = 3000) {
             let container = document.getElementById('toast-container');
@@ -1294,6 +1309,33 @@
             }, duration);
         }
 
+        function showAdminConfirm(message, onConfirm) {
+            const modal = document.getElementById('admin-confirm-modal');
+            const msgEl = document.getElementById('admin-confirm-message');
+            const btnCancel = document.getElementById('admin-confirm-cancel');
+            const btnOk = document.getElementById('admin-confirm-ok');
+            if (!modal) {
+                if (onConfirm) onConfirm();
+                return;
+            }
+            msgEl.textContent = message;
+            modal.style.display = 'flex';
+            requestAnimationFrame(() => {
+                modal.style.opacity = '1';
+            });
+
+            const close = () => {
+                modal.style.opacity = '0';
+                setTimeout(() => { modal.style.display = 'none'; }, 250);
+            };
+
+            btnCancel.onclick = close;
+            btnOk.onclick = () => {
+                close();
+                if (typeof onConfirm === 'function') onConfirm();
+            };
+        }
+
         window.alert = function(msg) {
             let type = 'info';
             if (/ผิดพลาด|ไม่สำเร็จ|ไม่ถูกต้อง|ล้มเหลว|error|fail/i.test(msg)) type = 'error';
@@ -1305,6 +1347,11 @@
         window.confirm = function(msg) {
             showToast(msg, 'info');
             return true;
+        };
+
+        window.prompt = function(msg, def) {
+            showToast(msg, 'info');
+            return def || null;
         };
 
         let allRestaurants = [];
@@ -1371,7 +1418,7 @@
                 })
                 .catch(err => {
                     console.error('Error loading restaurants:', err);
-                    alert('เกิดข้อผิดพลาดในการดึงข้อมูลร้านอาหาร');
+                    showToast('เกิดข้อผิดพลาดในการดึงข้อมูลร้านอาหาร', 'error');
                 });
         }
 
@@ -1515,15 +1562,16 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
+                            showToast('บันทึกข้อมูลร้านอาหารเรียบร้อยแล้ว', 'success');
                             closeModal();
                             loadRestaurants();
                         } else {
-                            alert(data.message || 'บันทึกไม่สำเร็จ');
+                            showToast(data.message || 'บันทึกไม่สำเร็จ', 'error');
                         }
                     })
                     .catch(err => {
                         console.error('Error saving restaurant:', err);
-                        alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+                        showToast('เกิดข้อผิดพลาดในการบันทึกข้อมูล', 'error');
                     });
             });
 
@@ -1584,23 +1632,24 @@
             const r = allRestaurants.find(item => String(item.id) === String(id));
             if (!r) return;
 
-            if (confirm(`คุณแน่ใจหรือไม่ที่จะลบอาหาร/ร้าน "${r.name}"?`)) {
+            showAdminConfirm(`คุณแน่ใจหรือไม่ที่จะลบอาหาร/ร้าน "${r.name}"?`, () => {
                 fetch(`/api/admin/restaurants/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
+                            showToast('ลบข้อมูลอาหาร/ร้านอาหารเรียบร้อยแล้ว', 'success');
                             loadRestaurants();
                         } else {
-                            alert(data.message || 'ลบไม่สำเร็จ');
+                            showToast(data.message || 'ลบไม่สำเร็จ', 'error');
                         }
                     })
                     .catch(err => {
                         console.error('Error deleting restaurant:', err);
-                        alert('เกิดข้อผิดพลาดในการลบข้อมูล');
+                        showToast('เกิดข้อผิดพลาดในการลบข้อมูล', 'error');
                     });
-            }
+            });
         };
 
         // ---------------- USER MANAGEMENT ----------------
@@ -1680,45 +1729,47 @@
         window.toggleUserRole = function (id, currentRole, username) {
             const newRole = currentRole === 'admin' ? 'user' : 'admin';
             const actionText = newRole === 'admin' ? 'ตั้งเป็นแอดมิน' : 'เปลี่ยนเป็นผู้ใช้ทั่วไป';
-            if (!confirm(`คุณต้องการ ${actionText} สำหรับผู้ใช้ "${username}" ใช่หรือไม่?`)) return;
-
-            fetch(`/api/admin/users/${id}/role`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ role: newRole })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        loadUsers();
-                    } else {
-                        alert(data.message || 'เปลี่ยนบทบาทไม่สำเร็จ');
-                    }
+            showAdminConfirm(`คุณต้องการ ${actionText} สำหรับผู้ใช้ "${username}" ใช่หรือไม่?`, () => {
+                fetch(`/api/admin/users/${id}/role`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role: newRole })
                 })
-                .catch(err => {
-                    console.error('Error updating user role:', err);
-                    alert('เกิดข้อผิดพลาดในการเปลี่ยนสิทธิ์ผู้ใช้');
-                });
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast(`เปลี่ยนบทบาทผู้ใช้เป็น ${newRole === 'admin' ? 'Admin' : 'User'} สำเร็จ`, 'success');
+                            loadUsers();
+                        } else {
+                            showToast(data.message || 'เปลี่ยนบทบาทไม่สำเร็จ', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error updating user role:', err);
+                        showToast('เกิดข้อผิดพลาดในการเปลี่ยนสิทธิ์ผู้ใช้', 'error');
+                    });
+            });
         };
 
         window.deleteUser = function (id, username) {
-            if (!confirm(`คุณแน่ใจหรือไม่ที่จะลบบัญชีผู้ใช้ "${username}" อย่างถาวร?`)) return;
-
-            fetch(`/api/admin/users/${id}`, {
-                method: 'DELETE'
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        loadUsers();
-                    } else {
-                        alert(data.message || 'ลบผู้ใช้ไม่สำเร็จ');
-                    }
+            showAdminConfirm(`คุณแน่ใจหรือไม่ที่จะลบบัญชีผู้ใช้ "${username}" อย่างถาวร?`, () => {
+                fetch(`/api/admin/users/${id}`, {
+                    method: 'DELETE'
                 })
-                .catch(err => {
-                    console.error('Error deleting user:', err);
-                    alert('เกิดข้อผิดพลาดในการลบผู้ใช้');
-                });
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast('ลบบัญชีผู้ใช้เรียบร้อยแล้ว', 'success');
+                            loadUsers();
+                        } else {
+                            showToast(data.message || 'ลบผู้ใช้ไม่สำเร็จ', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error deleting user:', err);
+                        showToast('เกิดข้อผิดพลาดในการลบผู้ใช้', 'error');
+                    });
+            });
         };
 
         // ---------------- DASHBOARD ANALYTICS ----------------
@@ -1917,22 +1968,24 @@
         }
 
         window.deleteFeedback = function (id) {
-            if (!confirm('คุณต้องการลบข้อความนี้ใช่หรือไม่?')) return;
-            fetch(`/api/admin/feedback/${id}`, {
-                method: 'DELETE'
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        loadFeedback();
-                    } else {
-                        alert(data.message || 'ลบไม่สำเร็จ');
-                    }
+            showAdminConfirm('คุณต้องการลบข้อความนี้ใช่หรือไม่?', () => {
+                fetch(`/api/admin/feedback/${id}`, {
+                    method: 'DELETE'
                 })
-                .catch(err => {
-                    console.error('Error deleting feedback:', err);
-                    alert('เกิดข้อผิดพลาดในการลบ');
-                });
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast('ลบข้อความเรียบร้อยแล้ว', 'success');
+                            loadFeedback();
+                        } else {
+                            showToast(data.message || 'ลบไม่สำเร็จ', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error deleting feedback:', err);
+                        showToast('เกิดข้อผิดพลาดในการลบ', 'error');
+                    });
+            });
         };
 
         // ---------------- REPORTS & DATA EXPORT ----------------
