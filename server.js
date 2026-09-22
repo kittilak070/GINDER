@@ -117,9 +117,8 @@ function calculateHaversine(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-// History & Feedback Storage Helpers (Dual-storage: Supabase with Local JSON fallback)
+// History Storage Helpers (Dual-storage: Supabase with Local JSON fallback)
 const HISTORY_FILE = path.join(__dirname, 'data', 'history.json');
-const FEEDBACK_FILE = path.join(__dirname, 'data', 'feedback.json');
 const USER_RECOVERY_FILE = path.join(__dirname, 'data', 'user_recovery.json');
 const PDPA_CONSENT_FILE = path.join(__dirname, 'data', 'pdpa_consent_logs.json');
 const PDPA_DSR_FILE = path.join(__dirname, 'data', 'pdpa_dsr_requests.json');
@@ -183,13 +182,67 @@ async function saveHistoryItem(item) {
     } catch (e) {}
 }
 
-function getLocalFeedback() {
-    try {
-        if (!fs.existsSync(FEEDBACK_FILE)) return [];
-        return JSON.parse(fs.readFileSync(FEEDBACK_FILE, 'utf8'));
-    } catch (e) {
-        return [];
+function encodeFeedbackDescription(description, rating, tags, device, role, ageRange, frequency, modeTested) {
+    const metaParts = [];
+    if (rating) metaParts.push(`⭐ ${rating}/5 ดาว`);
+    if (role) metaParts.push(`🎓 ${role}`);
+    if (ageRange) metaParts.push(`🎂 ${ageRange}`);
+    if (frequency) metaParts.push(`🤔 ปัญหา: ${frequency}`);
+    if (modeTested) metaParts.push(`🎮 โหมด: ${modeTested}`);
+    if (tags && tags.length > 0) metaParts.push(`🏷️ แท็ก: ${Array.isArray(tags) ? tags.join(', ') : tags}`);
+    if (device) metaParts.push(`📱 อุปกรณ์: ${device}`);
+    
+    if (metaParts.length > 0) {
+        const metaPrefix = `[ ${metaParts.join(' | ')} ]\n\n`;
+        return metaPrefix + (description || '');
     }
+    return description || '';
+}
+
+function parseFeedbackDescription(rawDescription) {
+    if (!rawDescription) return { description: '', rating: null, tags: [], device: '', role: '', ageRange: '', frequency: '', modeTested: '' };
+    
+    let description = rawDescription;
+    let rating = null;
+    let tags = [];
+    let device = '';
+    let role = '';
+    let ageRange = '';
+    let frequency = '';
+    let modeTested = '';
+    
+    const metaMatch = rawDescription.match(/^\[\s*(.*?)\s*\]\n\n([\s\S]*)$/);
+    if (metaMatch) {
+        const metaStr = metaMatch[1];
+        description = metaMatch[2].trim();
+        
+        const ratingMatch = metaStr.match(/⭐\s*(\d+)\/5/);
+        if (ratingMatch) rating = parseInt(ratingMatch[1]);
+
+        const roleMatch = metaStr.match(/🎓\s*([^|]+)/);
+        if (roleMatch) role = roleMatch[1].trim();
+
+        const ageMatch = metaStr.match(/🎂\s*([^|]+)/);
+        if (ageMatch) ageRange = ageMatch[1].trim();
+
+        const freqMatch = metaStr.match(/🤔\s*(?:ปัญหา:\s*)?([^|]+)/);
+        if (freqMatch) frequency = freqMatch[1].trim();
+
+        const modeMatch = metaStr.match(/🎮\s*(?:โหมด:\s*)?([^|]+)/);
+        if (modeMatch) modeTested = modeMatch[1].trim();
+        
+        const tagsMatch = metaStr.match(/🏷️\s*(?:แท็ก:\s*)?([^|]+)/);
+        if (tagsMatch) {
+            tags = tagsMatch[1].split(',').map(t => t.trim()).filter(Boolean);
+        }
+        
+        const deviceMatch = metaStr.match(/📱\s*(?:อุปกรณ์:\s*)?([^|]+)/);
+        if (deviceMatch) {
+            device = deviceMatch[1].trim();
+        }
+    }
+    
+    return { description, rating, tags, device, role, ageRange, frequency, modeTested };
 }
 
 async function getFeedback() {
@@ -198,59 +251,85 @@ async function getFeedback() {
             .from('feedbacks')
             .select('*')
             .order('created_at', { ascending: false });
-        if (!error && data && data.length > 0) {
-            return data.map(item => ({
+        if (error) {
+            console.error("[Supabase Error] getFeedback:", error);
+            return [];
+        }
+        return (data || []).map(item => {
+            const parsed = parseFeedbackDescription(item.description);
+            return {
                 id: item.id,
                 type: item.type,
                 title: item.title,
-                description: item.description,
+                description: parsed.description || item.description || '',
                 contact: item.contact_info,
                 contactInfo: item.contact_info,
+                rating: item.rating !== undefined && item.rating !== null ? item.rating : parsed.rating,
+                tags: (item.tags && item.tags.length > 0) ? item.tags : parsed.tags,
+                device: item.device || parsed.device || '',
+                role: parsed.role || '',
+                ageRange: parsed.ageRange || '',
+                frequency: parsed.frequency || '',
+                modeTested: parsed.modeTested || '',
                 createdAt: item.created_at
-            }));
-        }
-    } catch (e) {}
-    return getLocalFeedback();
+            };
+        });
+    } catch (e) {
+        console.error("[Supabase Exception] getFeedback:", e);
+        return [];
+    }
 }
 
 async function saveFeedback(item) {
-    // 1. Local backup
     try {
-        const list = getLocalFeedback();
-        list.unshift(item);
-        const dir = path.dirname(FEEDBACK_FILE);
-        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-        fs.writeFileSync(FEEDBACK_FILE, JSON.stringify(list, null, 2), 'utf8');
-    } catch (e) {
-        console.error("Error saving local feedback:", e);
-    }
+        const encodedDescription = encodeFeedbackDescription(
+            item.description,
+            item.rating,
+            item.tags,
+            item.device,
+            item.role,
+            item.ageRange,
+            item.frequency,
+            item.modeTested
+        );
 
-    // 2. Supabase storage
-    try {
-        await supabase.from('feedbacks').upsert({
+        const isValidUuid = typeof item.userId === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(item.userId);
+        const payload = {
             id: item.id || ('fb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4)),
             type: item.type || 'general',
             title: item.title || 'ข้อเสนอแนะทั่วไป',
-            description: item.description || '',
+            description: encodedDescription,
             contact_info: item.contactInfo || item.contact || '',
+            rating: item.rating !== undefined && item.rating !== null ? item.rating : null,
+            tags: Array.isArray(item.tags) ? item.tags : (item.tags ? [item.tags] : []),
+            device: item.device || null,
+            user_id: isValidUuid ? item.userId : null,
             created_at: item.createdAt || new Date().toISOString()
-        });
-    } catch (e) {}
+        };
+
+        const { error } = await supabase.from('feedbacks').upsert(payload);
+        if (error) {
+            console.error("[Supabase Error] saveFeedback:", error);
+            throw error;
+        }
+    } catch (e) {
+        console.error("[Supabase Exception] saveFeedback:", e);
+        throw e;
+    }
 }
 
 async function deleteFeedback(id) {
-    // 1. Local deletion
     try {
-        let list = getLocalFeedback();
-        list = list.filter(x => String(x.id) !== String(id));
-        fs.writeFileSync(FEEDBACK_FILE, JSON.stringify(list, null, 2), 'utf8');
-    } catch (e) {}
-
-    // 2. Supabase deletion
-    try {
-        await supabase.from('feedbacks').delete().eq('id', id);
-    } catch (e) {}
-    return true;
+        const { error } = await supabase.from('feedbacks').delete().eq('id', id);
+        if (error) {
+            console.error("[Supabase Error] deleteFeedback:", error);
+            return false;
+        }
+        return true;
+    } catch (e) {
+        console.error("[Supabase Exception] deleteFeedback:", e);
+        return false;
+    }
 }
 
 // User Security & Recovery Storage Helpers (Supabase + Local Fallback)
@@ -803,6 +882,21 @@ async function findUserByEmail(email) {
     return null;
 }
 
+function getAdminEmails() {
+    const raw = process.env.ADMIN_EMAILS || '';
+    return new Set(
+        raw.split(',')
+            .map(e => e.trim().toLowerCase())
+            .filter(Boolean)
+    );
+}
+
+function isExactAdminEmail(email) {
+    if (!email || typeof email !== 'string') return false;
+    const adminSet = getAdminEmails();
+    return adminSet.has(email.trim().toLowerCase());
+}
+
 async function getUserRole(req) {
     if (!req.session.userId) return null;
     const user = await findUserById(req.session.userId);
@@ -873,6 +967,165 @@ app.post('/api/solo/record-match', async (req, res) => {
     }
 });
 
+// --- GOOGLE & FACEBOOK SOCIAL OAUTH URL GENERATOR & STATUS CHECK ---
+app.get('/api/auth/oauth-url', async (req, res) => {
+    const provider = String(req.query.provider || '').toLowerCase().trim();
+    if (provider !== 'google' && provider !== 'facebook') {
+        return res.status(400).json({ success: false, message: "รองรับเฉพาะ Google และ Facebook เท่านั้น" });
+    }
+
+    const host = req.get('host');
+    const protocol = req.protocol;
+    const redirectTo = `${protocol}://${host}/`;
+
+    try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider,
+            options: {
+                redirectTo: redirectTo
+            }
+        });
+
+        if (error) {
+            return res.status(400).json({ success: false, message: error.message });
+        }
+
+        // Check if provider is enabled in Supabase
+        let isEnabled = true;
+        try {
+            const checkRes = await fetch(data.url, { method: 'GET', redirect: 'manual' });
+            if (checkRes.status === 400) {
+                const bodyText = await checkRes.text();
+                if (bodyText.includes('provider is not enabled')) {
+                    isEnabled = false;
+                }
+            }
+        } catch (e) {}
+
+        res.json({
+            success: true,
+            enabled: isEnabled,
+            url: data.url,
+            provider,
+            callbackUrl: `${process.env.SUPABASE_URL}/auth/v1/callback`,
+            dashboardUrl: `https://supabase.com/dashboard/project/icksdmnzcdswiscusrep/auth/providers`
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// --- GOOGLE & FACEBOOK SOCIAL OAUTH LOGIN & AUTO-SIGNUP ---
+app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
+    delete req.session.manualLogout;
+    const provider = String(req.body.provider || '').toLowerCase().trim();
+    if (provider !== 'google' && provider !== 'facebook') {
+        return res.status(400).json({ message: "ผู้ให้บริการไม่ถูกต้อง รองรับเฉพาะ Google และ Facebook เท่านั้น" });
+    }
+
+    const rawEmail = String(req.body.email || '').trim().toLowerCase();
+    let displayName = String(req.body.name || req.body.displayName || '').trim().slice(0, 50);
+
+    if (!rawEmail && !displayName) {
+        return res.status(400).json({ message: "กรุณาระบุข้อมูลบัญชีสำหรับเข้าสู่ระบบ" });
+    }
+
+    // Standardize email & username
+    let email = rawEmail;
+    let username = '';
+    if (rawEmail.includes('@')) {
+        const emailPrefix = rawEmail.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '').slice(0, 30);
+        username = `${provider}_${emailPrefix}`;
+    } else {
+        const cleanName = (rawEmail || displayName).replace(/[^a-zA-Z0-9_]/g, '').slice(0, 30);
+        username = `${provider}_${cleanName || Date.now().toString(36)}`;
+        email = `${username}@${provider}.auth`;
+    }
+
+    if (!displayName) {
+        displayName = provider === 'google' ? 'Google User' : 'Facebook User';
+    }
+
+    // Secure Admin Determination: Strict exact whitelist match from server .env (OWASP A01 Access Control)
+    const isEmailAdmin = isExactAdminEmail(rawEmail) || isExactAdminEmail(email);
+
+    // 1. Check if user already exists in Supabase users table
+    let user = await findUserByUsername(username);
+    if (!user) {
+        user = await findUserByEmail(email);
+    }
+
+    if (user) {
+        // Elevate to admin if authorized in ADMIN_EMAILS whitelist
+        if (isEmailAdmin && user.role !== 'admin') {
+            await supabase.from('users').update({ role: 'admin' }).eq('id', user.id);
+            user.role = 'admin';
+            console.log(`[Admin Security] Elevated role to admin for authorized whitelist email: ${email}`);
+        }
+    } else {
+        // 2. Auto-provision new user in Supabase with Principle of Least Privilege (Default: 'user')
+        const role = isEmailAdmin ? 'admin' : 'user';
+
+        const { data: newUser, error: insertErr } = await supabase.from('users').insert({
+            username,
+            password_hash: `oauth_${provider}`,
+            password_salt: `oauth_${provider}`,
+            display_name: displayName,
+            allergies: '',
+            role
+        }).select().single();
+
+        if (insertErr || !newUser) {
+            console.error("[OAuth Login Error] Failed to create user in Supabase:", insertErr);
+            return res.status(500).json({ message: "เกิดข้อผิดพลาดในการสร้างบัญชี OAuth ใน Supabase" });
+        }
+
+        user = newUser;
+        if (role === 'admin') {
+            console.log(`[Admin Security] New Admin account provisioned from whitelist: ${email}`);
+        }
+    }
+
+    // Record PDPA Consent Audit Log
+    try {
+            await savePdpaConsentLog({
+                userId: user.id,
+                identifier: user.username,
+                consentType: `oauth_${provider}`,
+                policyVersion: '1.0',
+                necessary: true,
+                functional: true,
+                analytics: true,
+                marketing: false,
+                ipAddress: req.headers['x-forwarded-for'] || req.socket.remoteAddress || '',
+                userAgent: req.headers['user-agent'] || ''
+            });
+        } catch (e) {}
+
+        // Save recovery email
+        try {
+            await saveUserRecoveryRecord(user.username, { email });
+        } catch (e) {}
+
+    // 3. Authenticate Session
+    req.session.regenerate((err) => {
+        if (err) console.error("Session regeneration failed:", err);
+        req.session.userId = user.id;
+        req.session.oauthProvider = provider;
+        const algStr = user.allergies || '';
+        const allergies = algStr ? algStr.split(',').map(x => x.trim()).filter(Boolean) : [];
+
+        res.json({
+            logged_in: true,
+            username: user.username,
+            displayName: user.display_name,
+            role: user.role,
+            allergies,
+            provider,
+            isGuest: false
+        });
+    });
+});
 
 app.post('/api/signup', authLimiter, async (req, res) => {
     const username = (req.body.username || '').trim().toLowerCase();
@@ -1039,12 +1292,14 @@ app.get('/api/me', async (req, res) => {
     const algStr = user.allergies || '';
     const allergies = algStr ? algStr.split(',').map(x => x.trim()).filter(Boolean) : [];
     const isGuest = !user.password_hash || String(user.id).startsWith('guest_');
+    const provider = req.session.oauthProvider || (user.password_hash?.startsWith('oauth_') ? user.password_hash.replace('oauth_', '') : (isGuest ? 'guest' : 'standard'));
     res.json({
         logged_in: true,
         username: user.username,
         displayName: user.display_name,
         role: user.role,
         allergies,
+        provider,
         isGuest: isGuest,
         networkBaseUrl: `http://${getLocalNetworkIp()}:${PORT}`
     });
@@ -1600,20 +1855,34 @@ app.get('/api/admin/analytics', async (req, res) => {
 
 // --- FEEDBACK & SUGGESTIONS ROUTES ---
 app.post('/api/feedback', feedbackLimiter, async (req, res) => {
-    const { type, title, description, contactInfo } = req.body;
-    if (!title || !description) {
-        return res.status(400).json({ message: "กรุณากรอกหัวข้อและรายละเอียดข้อความ" });
+    const { type, title, description, contactInfo, rating, tags, device, role, ageRange, frequency, modeTested } = req.body;
+    if (!title && !description && !rating) {
+        return res.status(400).json({ message: "กรุณาระบุคะแนนความพึงพอใจหรือรายละเอียดข้อความ" });
     }
+    const numRating = rating ? Math.max(1, Math.min(5, parseInt(rating) || 5)) : null;
     const item = {
         id: 'fb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-        type: (type || 'general').slice(0, 50),
-        title: title.trim().slice(0, 100),
-        description: description.trim().slice(0, 2000),
+        type: (type || (numRating ? 'usability_research' : 'general')).slice(0, 50),
+        title: (title ? title.trim().slice(0, 100) : (numRating ? `ประเมินความพึงพอใจ ${numRating} ดาว` : 'ข้อเสนอแนะทั่วไป')),
+        description: (description ? description.trim().slice(0, 2000) : ''),
         contactInfo: (contactInfo || '').trim().slice(0, 100),
+        rating: numRating,
+        role: (role || '').trim().slice(0, 50),
+        ageRange: (ageRange || '').trim().slice(0, 30),
+        frequency: (frequency || '').trim().slice(0, 50),
+        modeTested: (modeTested || '').trim().slice(0, 50),
+        tags: Array.isArray(tags) ? tags.map(t => String(t).trim().slice(0, 50)).filter(Boolean) : (tags ? [String(tags).trim().slice(0, 50)] : []),
+        device: (device || 'unknown').slice(0, 50),
+        userId: req.session.userId || null,
         createdAt: new Date().toISOString()
     };
-    await saveFeedback(item);
-    res.json({ success: true, message: "ขอบคุณสำหรับข้อเสนอแนะของคุณ ข้อมูลถูกส่งถึงผู้ดูแลเรียบร้อยแล้ว!" });
+    try {
+        await saveFeedback(item);
+        res.json({ success: true, message: "ขอบคุณสำหรับข้อเสนอแนะของคุณ ข้อมูลถูกส่งถึงผู้ดูแลเรียบร้อยแล้ว!" });
+    } catch (err) {
+        console.error("Error in POST /api/feedback:", err);
+        res.status(500).json({ success: false, message: "ไม่สามารถบันทึกข้อเสนอแนะได้ในขณะนี้" });
+    }
 });
 
 app.get('/api/admin/feedback', async (req, res) => {
@@ -1749,13 +2018,21 @@ app.get('/api/admin/reports/export/:type', async (req, res) => {
         } else if (exportType === 'feedbacks') {
             filename = `GINDER_Feedbacks_${nowStr}.csv`;
             const feedbacks = await getFeedback();
-            rows.push(['รหัสฟีดแบ็ก', 'ประเภท', 'หัวข้อ', 'รายละเอียด', 'ข้อมูลติดต่อ', 'วันที่ส่ง']);
+            rows.push(['รหัสฟีดแบ็ก', 'ประเภท', 'หัวข้อ', 'คะแนน (Rating)', 'กลุ่มผู้ใช้ (Role)', 'ช่วงอายุ (Age)', 'ความถี่ปัญหา (Frequency)', 'โหมดที่ทดสอบ (Mode)', 'แท็กประเด็น/ปัญหา (Tags)', 'รายละเอียด', 'อุปกรณ์', 'ข้อมูลติดต่อ', 'วันที่ส่ง']);
             feedbacks.forEach(f => {
+                const tagStr = Array.isArray(f.tags) ? f.tags.join(', ') : (f.tags || '-');
                 rows.push([
                     f.id || '',
                     f.type || '',
                     f.title || '',
+                    f.rating ? `${f.rating} ดาว` : '-',
+                    f.role || '-',
+                    f.ageRange || '-',
+                    f.frequency || '-',
+                    f.modeTested || '-',
+                    tagStr,
                     f.description || '',
+                    f.device || '-',
                     f.contact || f.contactInfo || '',
                     f.createdAt || ''
                 ]);
@@ -1989,14 +2266,19 @@ app.post('/api/pdpa/delete-my-account', authLimiter, async (req, res) => {
     const user = await findUserById(req.session.userId);
     if (!user) return res.status(404).json({ message: "ไม่พบผู้ใช้ในระบบ" });
 
-    // ตรวจสอบรหัสผ่านเพื่อความปลอดภัยขั้นสูงสุด
-    const password = req.body.password || '';
-    if (!password) {
-        return res.status(400).json({ message: "กรุณากรอกรหัสผ่านปัจจุบันเพื่อยืนยันการลบบัญชีถาวร" });
+    // ตรวจสอบการยืนยันเพื่อความปลอดภัย (รองรับทั้งคำยืนยัน DELETE สำหรับ OAuth และรหัสผ่าน)
+    const confirmation = (req.body.confirmation || req.body.password || '').trim();
+    if (!confirmation) {
+        return res.status(400).json({ message: "กรุณากรอกคำว่า DELETE หรือรหัสผ่านเพื่อยืนยันการลบบัญชีถาวร" });
     }
 
-    if (user.password_salt && user.password_hash) {
-        const computed = crypto.pbkdf2Sync(password, user.password_salt, 100000, 32, 'sha256').toString('hex');
+    const isOauthUser = user.password_hash && user.password_hash.startsWith('oauth_');
+    if (isOauthUser || confirmation.toUpperCase() === 'DELETE') {
+        if (confirmation.toUpperCase() !== 'DELETE' && !isOauthUser) {
+            return res.status(400).json({ message: "คำยืนยันไม่ถูกต้อง กรุณาพิมพ์คำว่า DELETE" });
+        }
+    } else if (user.password_salt && user.password_hash) {
+        const computed = crypto.pbkdf2Sync(confirmation, user.password_salt, 100000, 32, 'sha256').toString('hex');
         if (!safeCompare(computed, user.password_hash)) {
             return res.status(400).json({ message: "รหัสผ่านไม่ถูกต้อง ไม่สามารถดำเนินการลบบัญชีได้" });
         }

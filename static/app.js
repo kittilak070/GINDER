@@ -1,6 +1,11 @@
 // Establish socket.io connection
 const socket = io();
 
+// Supabase Client for Real Google & Facebook OAuth
+const supabaseClient = (typeof window.supabase !== 'undefined' && window.SUPABASE_URL && window.SUPABASE_ANON_KEY)
+    ? window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY)
+    : null;
+
 // Application State
 const state = {
     userId: null,
@@ -616,15 +621,332 @@ function animateWinnerStars(container) {
     }
 }
 
+// --- SUPABASE OAUTH CALLBACK HANDLER ---
+async function handleOAuthCallback() {
+    const hash = window.location.hash ? window.location.hash.substring(1) : '';
+    const searchParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(hash);
+
+    const errorDesc = hashParams.get('error_description') || searchParams.get('error_description');
+    if (errorDesc) {
+        showToast(`เข้าสู่ระบบไม่สำเร็จ: ${decodeURIComponent(errorDesc)}`, 'error', 5000);
+        window.history.replaceState(null, '', window.location.pathname);
+        return false;
+    }
+
+    const accessToken = hashParams.get('access_token');
+    const providerFromHash = hashParams.get('provider') || 'google';
+    const code = searchParams.get('code');
+
+    // 1. Handle PKCE Code exchange if code is in URL query parameters
+    if (code && supabaseClient) {
+        try {
+            showToast('กำลังยืนยันตัวตนกับ Google/Supabase...', 'info', 2000);
+            const { data, error } = await supabaseClient.auth.exchangeCodeForSession(code);
+            if (data && data.user && !error) {
+                const user = data.user;
+                const email = user.email || '';
+                const name = user.user_metadata?.full_name || user.user_metadata?.name || email.split('@')[0];
+                const provider = user.app_metadata?.provider || 'google';
+
+                const res = await fetch('/api/auth/oauth-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ provider, email, name })
+                });
+
+                if (res.ok) {
+                    const authData = await res.json();
+                    state.currentUser = authData;
+                    updateHeaderUI();
+                    prefillUserPreferences();
+                    window.history.replaceState(null, '', window.location.pathname);
+                    showToast(`ยินดีต้อนรับ ${authData.displayName} เข้าสู่ระบบด้วย ${provider === 'google' ? 'Google' : 'Facebook'} สำเร็จ 🎉`, 'success', 3500);
+                    routeAfterAuth();
+                    return true;
+                }
+            }
+        } catch (e) {
+            console.warn("PKCE code exchange error:", e);
+        }
+    }
+
+    // 2. Handle Implicit token in URL hash
+    if (accessToken && supabaseClient) {
+        try {
+            showToast('กำลังยืนยันตัวตนกับ Supabase...', 'info', 2000);
+            const { data: { user }, error } = await supabaseClient.auth.getUser(accessToken);
+            if (user && !error) {
+                const email = user.email || '';
+                const name = user.user_metadata?.full_name || user.user_metadata?.name || email.split('@')[0];
+                const provider = user.app_metadata?.provider || providerFromHash;
+
+                const res = await fetch('/api/auth/oauth-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ provider, email, name })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    state.currentUser = data;
+                    updateHeaderUI();
+                    prefillUserPreferences();
+                    window.history.replaceState(null, '', window.location.pathname);
+                    showToast(`ยินดีต้อนรับ ${data.displayName} เข้าสู่ระบบด้วย ${provider === 'google' ? 'Google' : 'Facebook'} สำเร็จ 🎉`, 'success', 3500);
+                    routeAfterAuth();
+                    return true;
+                }
+            }
+        } catch (e) {
+            console.warn("OAuth hash token verification failed:", e);
+        }
+    }
+
+    if (supabaseClient) {
+        try {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session && session.user) {
+                const user = session.user;
+                const email = user.email || '';
+                const name = user.user_metadata?.full_name || user.user_metadata?.name || email.split('@')[0];
+                const provider = user.app_metadata?.provider || 'google';
+
+                const res = await fetch('/api/auth/oauth-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ provider, email, name })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    state.currentUser = data;
+                    updateHeaderUI();
+                    prefillUserPreferences();
+                    window.history.replaceState(null, '', window.location.pathname);
+                    showToast(`ยินดีต้อนรับ ${data.displayName} เข้าสู่ระบบด้วย ${provider === 'google' ? 'Google' : 'Facebook'} สำเร็จ 🎉`, 'success', 3500);
+                    routeAfterAuth();
+                    return true;
+                }
+            }
+        } catch (e) {
+            console.warn("Supabase session check error:", e);
+        }
+    }
+
+    return false;
+}
+
+// --- GOOGLE & FACEBOOK SOCIAL LOGIN SYSTEM (GLOBAL SCOPE) ---
+let activeSocialProvider = 'google';
+let currentOAuthData = null;
+
+const SOCIAL_ACCOUNTS = {
+    google: [
+        {
+            name: 'Kittilak Somboon (Admin)',
+            email: 'kittilak.dev@gmail.com',
+            isAdmin: true,
+            avatar: 'K'
+        },
+        {
+            name: 'Somchai Jaidee (Google)',
+            email: 'somchai.jaidee@gmail.com',
+            isAdmin: false,
+            avatar: 'S'
+        },
+        {
+            name: 'Chula Student (CU Foodie)',
+            email: 'student.chula@gmail.com',
+            isAdmin: false,
+            avatar: 'C'
+        }
+    ],
+    facebook: [
+        {
+            name: 'Kittilak Somboon (Admin FB)',
+            email: 'kittilak.fb@facebook.com',
+            isAdmin: true,
+            avatar: 'K'
+        },
+        {
+            name: 'Nong Aom Chanon (Foodie FB)',
+            email: 'aom.chanon@facebook.com',
+            isAdmin: false,
+            avatar: 'A'
+        },
+        {
+            name: 'Bangkok Food Lover',
+            email: 'bkk.foodie@facebook.com',
+            isAdmin: false,
+            avatar: 'B'
+        }
+    ]
+};
+
+let isOAuthInitiating = false;
+
+async function initiateOAuthLogin(provider) {
+    if (isOAuthInitiating) return;
+    isOAuthInitiating = true;
+    setTimeout(() => { isOAuthInitiating = false; }, 3000);
+
+    if (typeof showToast === 'function') {
+        showToast(`กำลังเชื่อมต่อ ${provider === 'google' ? 'Google' : 'Facebook'} OAuth...`, 'info', 2500);
+    }
+
+    try {
+        const res = await fetch(`/api/auth/oauth-url?provider=${encodeURIComponent(provider)}`);
+        const data = await res.json();
+
+        if (!data.success) {
+            throw new Error(data.message || 'ไม่สามารถสร้างลิงก์เข้าสู่ระบบได้');
+        }
+
+        currentOAuthData = data;
+
+        if (data.enabled) {
+            // Real OAuth is active in Supabase! Navigate directly to Google / Facebook!
+            window.location.href = data.url;
+        } else {
+            // Provider is not yet enabled in Supabase Dashboard
+            openOAuthSetupModal(provider, data);
+        }
+    } catch (err) {
+        console.warn("OAuth initiate error:", err);
+        openSocialAuthModal(provider);
+    }
+}
+
+function openOAuthSetupModal(provider, data) {
+    openSocialAuthModal(provider);
+
+    const setupNotice = document.getElementById('social-oauth-setup-notice');
+    const setupDesc = document.getElementById('social-oauth-setup-desc');
+    const linkDash = document.getElementById('link-supabase-dashboard');
+
+    if (setupNotice) setupNotice.classList.remove('hidden');
+    if (setupDesc) {
+        setupDesc.innerHTML = `ผู้ดูแลระบบยังไม่ได้เปิดใช้งาน (Enable) <strong>${provider === 'google' ? 'Google' : 'Facebook'}</strong> ใน Supabase Dashboard<br><span style="font-size: 0.78rem; opacity: 0.9;">สามารถเปิดใช้งานในแดชบอร์ด แล้วกดเชื่อมต่อจริง หรือเลือกบัญชีทดสอบ/โหมด Guest ด้านล่างนี้ได้ทันที</span>`;
+    }
+    if (linkDash && data && data.dashboardUrl) {
+        linkDash.href = data.dashboardUrl;
+    }
+}
+
+function openSocialAuthModal(provider) {
+    activeSocialProvider = provider;
+    const modalSocialAuth = document.getElementById('modal-social-auth');
+    if (!modalSocialAuth) return;
+
+    const setupNotice = document.getElementById('social-oauth-setup-notice');
+    if (setupNotice) setupNotice.classList.add('hidden');
+
+    const headerText = document.getElementById('social-auth-header-text');
+    const headerIcon = document.getElementById('social-auth-icon');
+    const descText = document.getElementById('social-auth-desc');
+    const accountList = document.getElementById('social-account-list');
+    const lblEmail = document.getElementById('lbl-social-email');
+    const customEmailInput = document.getElementById('social-custom-email');
+    const customNameInput = document.getElementById('social-custom-name');
+
+    if (provider === 'google') {
+        if (headerText) headerText.innerText = 'ลงชื่อเข้าใช้ด้วย Google';
+        if (headerIcon) headerIcon.innerHTML = `<svg class="oauth-svg-icon" viewBox="0 0 24 24" width="22" height="22"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>`;
+        if (descText) descText.innerText = 'เลือกบัญชี Google ที่ต้องการเข้าสู่ระบบ หรือพิมพ์อีเมลของคุณเพื่อเชื่อมต่อกับ GINDER';
+        if (lblEmail) lblEmail.innerText = 'อีเมล Google (Gmail)';
+        if (customEmailInput) customEmailInput.placeholder = 'เช่น yourname@gmail.com';
+    } else {
+        if (headerText) headerText.innerText = 'เข้าสู่ระบบด้วย Facebook';
+        if (headerIcon) headerIcon.innerHTML = `<i class="fa-brands fa-facebook-f" style="color: #1877F2; font-size: 1.3rem;"></i>`;
+        if (descText) descText.innerText = 'เลือกบัญชี Facebook ที่ต้องการเข้าสู่ระบบ หรือพิมพ์ข้อมูลของคุณเพื่อเชื่อมต่อกับ GINDER';
+        if (lblEmail) lblEmail.innerText = 'อีเมล หรือชื่อผู้ใช้ Facebook';
+        if (customEmailInput) customEmailInput.placeholder = 'เช่น yourname@facebook.com หรือ ชื่อผู้ใช้';
+    }
+
+    if (customEmailInput) customEmailInput.value = '';
+    if (customNameInput) customNameInput.value = '';
+
+    if (accountList) {
+        accountList.innerHTML = '';
+        const accounts = SOCIAL_ACCOUNTS[provider] || [];
+        accounts.forEach(acc => {
+            const item = document.createElement('div');
+            item.className = 'social-account-item';
+            item.innerHTML = `
+                <div class="social-avatar">${acc.avatar}</div>
+                <div class="social-account-info">
+                    <div class="social-account-name">
+                        <span>${escapeHtml(acc.name)}</span>
+                        ${acc.isAdmin ? '<span class="social-admin-tag"><i class="fa-solid fa-crown"></i> Admin</span>' : ''}
+                    </div>
+                    <div class="social-account-email">${escapeHtml(acc.email)}</div>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 0.8rem;"></i>
+            `;
+            item.addEventListener('click', () => {
+                handleSocialLogin(provider, acc.email, acc.name);
+            });
+            accountList.appendChild(item);
+        });
+    }
+
+    modalSocialAuth.classList.add('active');
+}
+
+function closeSocialAuthModal() {
+    const modalSocialAuth = document.getElementById('modal-social-auth');
+    if (modalSocialAuth) modalSocialAuth.classList.remove('active');
+}
+
+function handleSocialLogin(provider, email, name) {
+    if (typeof showToast === 'function') {
+        showToast(`กำลังเข้าสู่ระบบผ่าน ${provider === 'google' ? 'Google' : 'Facebook'}...`, 'info', 2000);
+    }
+
+    fetch('/api/auth/oauth-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ provider, email, name })
+    })
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(data => { throw new Error(data.message || 'เข้าสู่ระบบไม่สำเร็จ'); });
+            }
+            return res.json();
+        })
+        .then(data => {
+            state.currentUser = data;
+            updateHeaderUI();
+            prefillUserPreferences();
+            closeSocialAuthModal();
+            showToast(`ยินดีต้อนรับ ${data.displayName} เข้าสู่ระบบด้วย ${provider === 'google' ? 'Google' : 'Facebook'} สำเร็จ 🎉`, 'success', 3500);
+            routeAfterAuth();
+        })
+        .catch(err => {
+            alert(err.message || 'ไม่สามารถเข้าสู่ระบบได้ กรุณาลองใหม่อีกครั้ง');
+        });
+}
+
+// Expose globally
+window.initiateOAuthLogin = initiateOAuthLogin;
+window.openSocialAuthModal = openSocialAuthModal;
+window.openOAuthSetupModal = openOAuthSetupModal;
+window.closeSocialAuthModal = closeSocialAuthModal;
+window.handleSocialLogin = handleSocialLogin;
+
 // --- INITIALIZE & ROUTING ---
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
     setupGlobalRipples();
     setupEventListeners();
     setupProfileAndFeedback();
     setupForgotPasswordModal();
     setupPdpaSystem();
     setupWelcomeModal();
-    checkCurrentUser();
+    const handled = await handleOAuthCallback();
+    if (!handled) {
+        checkCurrentUser();
+    }
     requestUserLocation();
 
     // Check if Room ID is in the query params (scanned QR code or direct link)
@@ -2355,141 +2677,92 @@ function setupEventListeners() {
         });
     }
 
-    // Auth View Toggles
-    const toggleLoginBtn = document.getElementById('auth-toggle-login');
-    const toggleSignupBtn = document.getElementById('auth-toggle-signup');
-    const viewLoginForm = document.getElementById('view-login-form');
-    const viewSignupForm = document.getElementById('view-signup-form');
+    // --- GOOGLE & FACEBOOK SOCIAL LOGIN SYSTEM EVENT LISTENERS ---
+    const btnGoogleLogin = document.getElementById('btn-google-login');
+    const btnFacebookLogin = document.getElementById('btn-facebook-login');
+    const modalSocialAuth = document.getElementById('modal-social-auth');
+    const btnCloseSocialAuth = document.getElementById('btn-close-social-auth');
+    const formCustomSocial = document.getElementById('form-custom-social-auth');
+    const btnTriggerSupabaseOAuth = document.getElementById('btn-trigger-supabase-oauth');
+    const btnForceRealOAuth = document.getElementById('btn-force-real-oauth');
+    const btnModalSocialGuest = document.getElementById('btn-modal-social-guest');
 
-    attachEmailAvailabilityCheck('view-signup-email', 'view-signup-email-feedback', 'view-signup-email-feedback-text');
+    if (btnGoogleLogin) {
+        btnGoogleLogin.addEventListener('click', () => initiateOAuthLogin('google'));
+    }
 
-    toggleLoginBtn.addEventListener('click', () => {
-        toggleLoginBtn.classList.add('active');
-        toggleSignupBtn.classList.remove('active');
-        viewLoginForm.classList.remove('hidden');
-        viewSignupForm.classList.add('hidden');
-    });
+    if (btnFacebookLogin) {
+        btnFacebookLogin.addEventListener('click', () => initiateOAuthLogin('facebook'));
+    }
 
-    toggleSignupBtn.addEventListener('click', () => {
-        toggleSignupBtn.classList.add('active');
-        toggleLoginBtn.classList.remove('active');
-        viewSignupForm.classList.remove('hidden');
-        viewLoginForm.classList.add('hidden');
-    });
+    if (btnCloseSocialAuth) {
+        btnCloseSocialAuth.addEventListener('click', closeSocialAuthModal);
+    }
 
-    // View Login Submit
-    viewLoginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const username = document.getElementById('view-login-username').value.trim();
-        const password = document.getElementById('view-login-password').value;
+    if (modalSocialAuth) {
+        modalSocialAuth.addEventListener('click', (e) => {
+            if (e.target === modalSocialAuth) closeSocialAuthModal();
+        });
+    }
 
-        fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        })
-            .then(res => {
-                if (!res.ok) {
-                    return res.json().then(data => { throw new Error(data.message || 'รหัสผ่านไม่ถูกต้อง'); });
-                }
-                return res.json();
-            })
-            .then(data => {
-                state.currentUser = data;
-                routeAfterAuth();
-                alert('เข้าสู่ระบบสำเร็จ ยินดีต้อนรับ ' + data.displayName);
-            })
-            .catch(err => {
-                alert(err.message || 'ไม่สามารถเข้าสู่ระบบได้');
+    if (btnForceRealOAuth) {
+        btnForceRealOAuth.addEventListener('click', () => {
+            if (currentOAuthData && currentOAuthData.url) {
+                window.location.href = currentOAuthData.url;
+            } else {
+                window.location.href = `https://icksdmnzcdswiscusrep.supabase.co/auth/v1/authorize?provider=${activeSocialProvider}&redirect_to=${encodeURIComponent(window.location.origin)}`;
+            }
+        });
+    }
+
+    if (btnModalSocialGuest) {
+        btnModalSocialGuest.addEventListener('click', () => {
+            closeSocialAuthModal();
+            triggerQuickGuestLogin(() => {
+                showView('landing');
+                showToast('เข้าใช้งานในโหมดผู้เยี่ยมชม (Guest Mode) 🍜', 'info');
             });
-    });
+        });
+    }
 
-    // View Signup Submit
-    viewSignupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const username = document.getElementById('view-signup-username').value.trim();
-        const password = document.getElementById('view-signup-password').value;
-        const confirmPassword = document.getElementById('view-signup-confirm-password').value;
-        const email = (document.getElementById('view-signup-email')?.value || '').trim();
-        const securityQuestion = (document.getElementById('view-signup-question')?.value || '').trim();
-        const securityAnswer = (document.getElementById('view-signup-answer')?.value || '').trim();
-        const recoveryPin = (document.getElementById('view-signup-pin')?.value || '').trim();
-        const pdpaConsent = document.getElementById('view-signup-pdpa-consent')?.checked;
-        const marketingConsent = document.getElementById('view-signup-marketing-consent')?.checked || false;
-
-        if (password !== confirmPassword) {
-            alert('รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกัน');
-            return;
-        }
-
-        if (email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('รูปแบบอีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง');
-                document.getElementById('view-signup-email')?.focus();
+    if (formCustomSocial) {
+        formCustomSocial.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = (document.getElementById('social-custom-email')?.value || '').trim();
+            const name = (document.getElementById('social-custom-name')?.value || '').trim();
+            if (!email) {
+                alert('กรุณากรอกอีเมลหรือชื่อผู้ใช้');
                 return;
             }
-        }
-
-        if (!pdpaConsent) {
-            alert('กรุณายินยอมรับข้อกำหนดและนโยบายความเป็นส่วนตัว (PDPA) ก่อนสมัครสมาชิก');
-            return;
-        }
-
-        // Get allergy tags selected in signup form
-        const checkedAllergens = [];
-        document.querySelectorAll('#view-signup-form .signup-allergy-selector .allergy-pill.active').forEach(pill => {
-            if (pill.dataset.allergen) checkedAllergens.push(pill.dataset.allergen);
+            handleSocialLogin(activeSocialProvider, email, name || email);
         });
+    }
 
-        fetch('/api/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                username,
-                password,
-                displayName: username,
-                allergies: checkedAllergens,
-                email,
-                securityQuestion,
-                securityAnswer,
-                recoveryPin,
-                pdpaConsent,
-                marketingConsent
-            })
-        })
-            .then(res => {
-                if (!res.ok) {
-                    return res.json().then(data => { throw new Error(data.message || 'สมัครสมาชิกไม่สำเร็จ'); });
+    if (btnTriggerSupabaseOAuth) {
+        btnTriggerSupabaseOAuth.addEventListener('click', async () => {
+            try {
+                btnTriggerSupabaseOAuth.disabled = true;
+                btnTriggerSupabaseOAuth.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเชื่อมต่อ Supabase...';
+                if (supabaseClient && supabaseClient.auth && typeof supabaseClient.auth.signInWithOAuth === 'function') {
+                    const { error } = await supabaseClient.auth.signInWithOAuth({
+                        provider: activeSocialProvider === 'google' ? 'google' : 'facebook',
+                        options: {
+                            redirectTo: window.location.origin
+                        }
+                    });
+                    if (error) throw error;
+                } else {
+                    window.location.href = `https://icksdmnzcdswiscusrep.supabase.co/auth/v1/authorize?provider=${activeSocialProvider}&redirect_to=${encodeURIComponent(window.location.origin)}`;
                 }
-                return res.json();
-            })
-            .then(data => {
-                state.currentUser = data;
-                updateHeaderUI();
-                prefillUserPreferences();
-                routeAfterAuth();
-                alert('ลงทะเบียนสำเร็จ! ยินดีต้อนรับ ' + data.displayName);
-            })
-            .catch(err => {
-                const msg = err.message || 'ไม่สามารถสมัครสมาชิกได้';
-                alert(msg);
-                if (msg.includes('อีเมล')) {
-                    const emailInput = document.getElementById('view-signup-email');
-                    const fb = document.getElementById('view-signup-email-feedback');
-                    const fbTxt = document.getElementById('view-signup-email-feedback-text');
-                    if (emailInput) {
-                        emailInput.style.borderColor = '#ef4444';
-                        emailInput.focus();
-                    }
-                    if (fb) {
-                        fb.classList.remove('hidden');
-                        fb.style.display = 'flex';
-                    }
-                    if (fbTxt) fbTxt.textContent = msg;
-                }
-            });
-    });
+            } catch (err) {
+                console.warn("Supabase OAuth redirect error:", err);
+                window.location.href = `https://icksdmnzcdswiscusrep.supabase.co/auth/v1/authorize?provider=${activeSocialProvider}&redirect_to=${encodeURIComponent(window.location.origin)}`;
+            } finally {
+                btnTriggerSupabaseOAuth.disabled = false;
+                btnTriggerSupabaseOAuth.innerHTML = '<i class="fa-solid fa-cloud"></i> เชื่อมต่อผ่าน Supabase OAuth Redirect';
+            }
+        });
+    }
 }
 
 function updatePrefAccordionBadges() {
@@ -4016,13 +4289,13 @@ function setupProfileAndFeedback() {
     }
 
     function activateProfileTab(activeBtn, activePane) {
-        [tabInfoBtn, tabPasswordBtn, tabHistoryBtn, tabSecurityBtn, tabPdpaBtn].forEach(b => {
+        [tabInfoBtn, tabHistoryBtn, tabPdpaBtn].forEach(b => {
             if (b) {
                 b.classList.remove('btn-primary', 'active');
                 b.classList.add('btn-secondary');
             }
         });
-        [paneInfo, panePassword, paneHistory, paneSecurity, panePdpa].forEach(p => {
+        [paneInfo, paneHistory, panePdpa].forEach(p => {
             if (p) p.classList.add('hidden');
         });
 
@@ -4034,14 +4307,9 @@ function setupProfileAndFeedback() {
     }
 
     if (tabInfoBtn) tabInfoBtn.addEventListener('click', () => activateProfileTab(tabInfoBtn, paneInfo));
-    if (tabPasswordBtn) tabPasswordBtn.addEventListener('click', () => activateProfileTab(tabPasswordBtn, panePassword));
     if (tabHistoryBtn) tabHistoryBtn.addEventListener('click', () => {
         activateProfileTab(tabHistoryBtn, paneHistory);
         loadMatchHistory();
-    });
-    if (tabSecurityBtn) tabSecurityBtn.addEventListener('click', () => {
-        activateProfileTab(tabSecurityBtn, paneSecurity);
-        loadUserSecuritySettings();
     });
     if (tabPdpaBtn) tabPdpaBtn.addEventListener('click', () => activateProfileTab(tabPdpaBtn, panePdpa));
 
@@ -4305,14 +4573,14 @@ function setupProfileAndFeedback() {
     const btnPdpaDelete = document.getElementById('btn-pdpa-delete-account');
     if (btnPdpaDelete) {
         btnPdpaDelete.addEventListener('click', () => {
-            const passwordInput = document.getElementById('pdpa-delete-confirm-password');
-            const password = passwordInput ? passwordInput.value : '';
-            if (!password) {
-                alert('กรุณาป้อนรหัสผ่านปัจจุบันเพื่อยืนยันการลบบัญชีและทำลายข้อมูล');
-                if (passwordInput) passwordInput.focus();
+            const confirmInput = document.getElementById('pdpa-delete-confirm-text') || document.getElementById('pdpa-delete-confirm-password');
+            const confirmVal = confirmInput ? confirmInput.value.trim() : '';
+            if (confirmVal !== 'DELETE') {
+                alert('กรุณาพิมพ์คำว่า DELETE (ตัวพิมพ์ใหญ่) เพื่อยืนยันการลบบัญชีและทำลายข้อมูล');
+                if (confirmInput) confirmInput.focus();
                 return;
             }
-            const confirmed = confirm('⚠️ คำเตือนสำคัญตาม PDPA:\n\nการดำเนินการนี้จะลบข้อมูลส่วนตัว การตั้งค่าความปลอดภัย และประวัติทั้งหมดของคุณอย่างถาวร (Right to Erasure)\n\nคุณแน่ใจหรือไม่ที่จะลบบัญชีนี้?');
+            const confirmed = confirm('⚠️ คำเตือนสำคัญตาม PDPA:\n\nการดำเนินการนี้จะลบข้อมูลส่วนตัว การตั้งค่า และประวัติทั้งหมดของคุณอย่างถาวร (Right to Erasure)\n\nคุณแน่ใจหรือไม่ที่จะลบบัญชีนี้?');
             if (!confirmed) return;
 
             btnPdpaDelete.disabled = true;
@@ -4321,7 +4589,7 @@ function setupProfileAndFeedback() {
             fetch('/api/pdpa/delete-my-account', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ password })
+                body: JSON.stringify({ password: 'DELETE' })
             })
                 .then(res => res.json().then(data => ({ ok: res.ok, data })))
                 .then(({ ok, data }) => {
@@ -4351,6 +4619,30 @@ function openProfileModal() {
     document.getElementById('profile-username').value = state.currentUser.username || '';
     document.getElementById('profile-display-name').value = state.currentUser.displayName || '';
 
+    // Update Connected Provider Badge
+    const providerBadge = document.getElementById('profile-provider-badge');
+    const providerText = document.getElementById('profile-provider-text');
+    if (providerBadge && providerText) {
+        const provider = state.currentUser.provider || (state.currentUser.isGuest ? 'guest' : 'standard');
+        if (provider === 'google') {
+            providerBadge.style.borderColor = 'rgba(66, 133, 244, 0.4)';
+            providerBadge.style.background = 'rgba(66, 133, 244, 0.1)';
+            providerText.innerHTML = `<svg class="oauth-svg-icon" viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle; margin-right: 4px;"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg> บัญชี Google`;
+        } else if (provider === 'facebook') {
+            providerBadge.style.borderColor = 'rgba(24, 119, 242, 0.4)';
+            providerBadge.style.background = 'rgba(24, 119, 242, 0.1)';
+            providerText.innerHTML = `<i class="fa-brands fa-facebook-f" style="color: #1877F2; margin-right: 4px;"></i> บัญชี Facebook`;
+        } else if (state.currentUser.isGuest) {
+            providerBadge.style.borderColor = 'rgba(255, 140, 0, 0.4)';
+            providerBadge.style.background = 'rgba(255, 140, 0, 0.1)';
+            providerText.innerHTML = `<i class="fa-solid fa-user-ninja text-accent" style="margin-right: 4px;"></i> โหมดผู้เยี่ยมชม (Guest)`;
+        } else {
+            providerBadge.style.borderColor = 'var(--glass-border)';
+            providerBadge.style.background = 'rgba(255, 255, 255, 0.06)';
+            providerText.innerHTML = `<i class="fa-solid fa-user text-accent" style="margin-right: 4px;"></i> บัญชีบุคคล`;
+        }
+    }
+
     const guestNotice = document.getElementById('profile-guest-notice');
     const btnProfileToLogin = document.getElementById('btn-profile-to-login');
     if (guestNotice) {
@@ -4368,18 +4660,10 @@ function openProfileModal() {
         }
     }
 
+    const pdpaDeleteText = document.getElementById('pdpa-delete-confirm-text');
+    if (pdpaDeleteText) pdpaDeleteText.value = '';
     const pdpaDeletePassword = document.getElementById('pdpa-delete-confirm-password');
     if (pdpaDeletePassword) pdpaDeletePassword.value = '';
-
-    const formPassword = document.getElementById('form-update-password');
-    if (formPassword) formPassword.reset();
-    const feedbackPwd = document.getElementById('profile-new-password-feedback');
-    if (feedbackPwd) {
-        feedbackPwd.classList.add('hidden');
-        feedbackPwd.style.display = 'none';
-    }
-    const inputNewPwd = document.getElementById('profile-new-password');
-    if (inputNewPwd) inputNewPwd.style.borderColor = '';
 
     // Prefill profile allergies
     const userProfileAllergies = (state.currentUser && Array.isArray(state.currentUser.allergies)) ? state.currentUser.allergies : [];
@@ -4526,54 +4810,40 @@ function prefillUserPreferences() {
 // Modal actions
 const authModal = document.getElementById('auth-modal');
 const btnCloseAuth = document.getElementById('btn-close-auth');
-const tabLogin = document.getElementById('tab-login');
-const tabSignup = document.getElementById('tab-signup');
-const loginForm = document.getElementById('auth-login-form');
-const signupForm = document.getElementById('auth-signup-form');
-const modalTitleText = document.querySelector('#auth-modal-title span');
+const btnModalGoogleLogin = document.getElementById('btn-modal-google-login');
+const btnModalFacebookLogin = document.getElementById('btn-modal-facebook-login');
 
 function openAuthModal() {
-    authModal.classList.remove('hidden');
-    switchAuthTab('login');
+    if (authModal) authModal.classList.remove('hidden');
 }
 
 function closeAuthModal() {
-    authModal.classList.add('hidden');
-    loginForm.reset();
-    signupForm.reset();
-    document.querySelectorAll('.signup-allergy-selector .allergy-pill').forEach(p => p.classList.remove('active'));
+    if (authModal) authModal.classList.add('hidden');
 }
 
-function switchAuthTab(tab) {
-    if (tab === 'login') {
-        tabLogin.classList.add('active');
-        tabLogin.style.color = 'var(--text-primary)';
-        tabSignup.classList.remove('active');
-        tabSignup.style.color = 'var(--text-muted)';
-        loginForm.classList.remove('hidden');
-        signupForm.classList.add('hidden');
-        modalTitleText.innerText = 'เข้าสู่ระบบ';
-    } else {
-        tabSignup.classList.add('active');
-        tabSignup.style.color = 'var(--text-primary)';
-        tabLogin.classList.remove('active');
-        tabLogin.style.color = 'var(--text-muted)';
-        signupForm.classList.remove('hidden');
-        loginForm.classList.add('hidden');
-        modalTitleText.innerText = 'สมัครสมาชิกใหม่';
-    }
-}
-
-// Bind auth modal triggers
 if (btnCloseAuth) btnCloseAuth.addEventListener('click', closeAuthModal);
-if (tabLogin) tabLogin.addEventListener('click', () => switchAuthTab('login'));
-if (tabSignup) tabSignup.addEventListener('click', () => switchAuthTab('signup'));
+
+if (btnModalGoogleLogin) {
+    btnModalGoogleLogin.addEventListener('click', () => {
+        closeAuthModal();
+        initiateOAuthLogin('google');
+    });
+}
+
+if (btnModalFacebookLogin) {
+    btnModalFacebookLogin.addEventListener('click', () => {
+        closeAuthModal();
+        initiateOAuthLogin('facebook');
+    });
+}
 
 const btnModalQuickGuest = document.getElementById('btn-modal-quick-guest');
 if (btnModalQuickGuest) {
     btnModalQuickGuest.addEventListener('click', () => {
         closeAuthModal();
-        showToast('ใช้งานต่อในโหมดทั่วไป สามารถปัดอาหารต่อได้ทันที 🍜', 'info');
+        triggerQuickGuestLogin(() => {
+            showToast('ใช้งานต่อในโหมดทั่วไป สามารถปัดอาหารต่อได้ทันที 🍜', 'info');
+        });
     });
 }
 
@@ -4585,133 +4855,14 @@ if (authModal) {
     });
 }
 
-// Handle allergy selector inside signup forms & profile modal
-document.querySelectorAll('.signup-allergy-selector .allergy-pill, #profile-allergy-selector .allergy-pill').forEach(pill => {
+// Handle allergy selector inside profile modal
+document.querySelectorAll('#profile-allergy-selector .allergy-pill').forEach(pill => {
     pill.addEventListener('click', () => {
         soundFx.playPop();
         if (navigator.vibrate) navigator.vibrate(8);
         pill.classList.toggle('active');
     });
 });
-
-// Login Form Submit
-if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const username = document.getElementById('login-username').value.trim();
-        const password = document.getElementById('login-password').value;
-
-        fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        })
-            .then(res => {
-                if (!res.ok) {
-                    return res.json().then(data => { throw new Error(data.message || 'รหัสผ่านไม่ถูกต้อง'); });
-                }
-                return res.json();
-            })
-            .then(data => {
-                state.currentUser = data;
-                updateHeaderUI();
-                prefillUserPreferences();
-                closeAuthModal();
-                alert('เข้าสู่ระบบสำเร็จ ยินดีต้อนรับ ' + data.displayName);
-            })
-            .catch(err => {
-                alert(err.message || 'ไม่สามารถเข้าสู่ระบบได้');
-            });
-    });
-}
-
-// Signup Form Submit
-if (signupForm) {
-    if (typeof attachEmailAvailabilityCheck === 'function') {
-        attachEmailAvailabilityCheck('signup-email', 'signup-email-feedback', 'signup-email-feedback-text');
-    }
-    signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const username = document.getElementById('signup-username').value.trim();
-        const password = document.getElementById('signup-password').value;
-        const displayName = username;
-        const email = (document.getElementById('signup-email')?.value || '').trim();
-        const securityQuestion = (document.getElementById('signup-question')?.value || '').trim();
-        const securityAnswer = (document.getElementById('signup-answer')?.value || '').trim();
-        const recoveryPin = (document.getElementById('signup-pin')?.value || '').trim();
-        const pdpaConsent = document.getElementById('signup-pdpa-consent')?.checked;
-        const marketingConsent = document.getElementById('signup-marketing-consent')?.checked || false;
-
-        if (email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('รูปแบบอีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง');
-                document.getElementById('signup-email')?.focus();
-                return;
-            }
-        }
-
-        if (!pdpaConsent) {
-            alert('กรุณายินยอมรับข้อกำหนดและนโยบายความเป็นส่วนตัว (PDPA) ก่อนสมัครสมาชิก');
-            return;
-        }
-
-        // Get allergy tags selected in signup form
-        const checkedAllergens = [];
-        document.querySelectorAll('.signup-allergy-selector .allergy-pill.active').forEach(pill => {
-            checkedAllergens.push(pill.dataset.allergen);
-        });
-
-        fetch('/api/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                username,
-                password,
-                displayName,
-                allergies: checkedAllergens,
-                email,
-                securityQuestion,
-                securityAnswer,
-                recoveryPin,
-                pdpaConsent,
-                marketingConsent
-            })
-        })
-            .then(res => {
-                if (!res.ok) {
-                    return res.json().then(data => { throw new Error(data.message || 'สมัครสมาชิกไม่สำเร็จ'); });
-                }
-                return res.json();
-            })
-            .then(data => {
-                state.currentUser = data;
-                updateHeaderUI();
-                prefillUserPreferences();
-                closeAuthModal();
-                alert('ลงทะเบียนสำเร็จ! ยินดีต้อนรับ ' + data.displayName);
-            })
-            .catch(err => {
-                const msg = err.message || 'ไม่สามารถสมัครสมาชิกได้';
-                alert(msg);
-                if (msg.includes('อีเมล')) {
-                    const emailInput = document.getElementById('signup-email');
-                    const fb = document.getElementById('signup-email-feedback');
-                    const fbTxt = document.getElementById('signup-email-feedback-text');
-                    if (emailInput) {
-                        emailInput.style.borderColor = '#ef4444';
-                        emailInput.focus();
-                    }
-                    if (fb) {
-                        fb.classList.remove('hidden');
-                        fb.style.display = 'flex';
-                    }
-                    if (fbTxt) fbTxt.textContent = msg;
-                }
-            });
-    });
-};
-
 
 function requestUserLocation() {
     if (navigator.geolocation) {
@@ -4731,11 +4882,10 @@ function requestUserLocation() {
     }
 }
 
-
-
 // --- FORGOT PASSWORD MODAL CONTROLS (METHODS 2 & 3) ---
 function setupForgotPasswordModal() {
     const forgotModal = document.getElementById('modal-forgot-password');
+    if (!forgotModal) return;
     const closeForgotBtn = document.getElementById('btn-close-forgot-modal');
     const tabQuestionBtn = document.getElementById('tab-forgot-question');
     const tabEmailBtn = document.getElementById('tab-forgot-email');

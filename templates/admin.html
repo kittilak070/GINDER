@@ -774,12 +774,65 @@
             </div>
         </div>
 
-        <!-- SECTION 4: FEEDBACK -->
+        <!-- SECTION 4: FEEDBACK & RESEARCH -->
         <div id="section-feedback" class="admin-section hidden">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.1rem;"><i class="fa-solid fa-inbox text-accent"></i> กล่องข้อความเสนอแนะ & แจ้งปัญหา</h3>
-                <span id="feedback-count-badge" class="badge-type" style="background: var(--accent-gradient); color: white;">0 ข้อความ</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+                <div>
+                    <h3 style="font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-comments text-accent"></i> ผลวิจัยและการประเมินจากผู้ใช้งาน (User Research & Feedback)
+                    </h3>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">
+                        สถิติความพึงพอใจจริง (Rating), ประเด็นปัญหาที่พบ (Pain Points) และข้อเสนอแนะจาก In-App Widget
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.6rem; align-items: center;">
+                    <a href="/api/admin/reports/export/feedbacks" class="btn btn-secondary btn-sm" style="padding: 0.45rem 0.9rem; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;" title="ดาวน์โหลดผลวิจัยเป็นไฟล์ CSV">
+                        <i class="fa-solid fa-file-csv" style="color: var(--accent-green);"></i> ส่งออก CSV
+                    </a>
+                    <span id="feedback-count-badge" class="badge-type" style="background: var(--accent-gradient); color: white; padding: 0.45rem 0.9rem; font-size: 0.85rem;">0 ข้อความ</span>
+                </div>
             </div>
+
+            <!-- Research KPI Cards -->
+            <div class="analytics-grid" style="margin-bottom: 1.5rem;">
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(254, 224, 71, 0.15); color: #fde047;">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="feedback-kpi-avg-rating">0.0 / 5</div>
+                        <div class="analytics-label">คะแนนความพึงพอใจเฉลี่ย</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(50, 132, 255, 0.15); color: var(--accent-purple);">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="feedback-kpi-research-count">0</div>
+                        <div class="analytics-label">ผลการประเมิน Usability</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(0, 255, 38, 0.15); color: var(--accent-green);">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="feedback-kpi-positive-rate">0%</div>
+                        <div class="analytics-label">อัตราความพึงพอใจสูง (4-5 ดาว)</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon" style="background: rgba(255, 51, 119, 0.15); color: var(--accent-pink);">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div>
+                        <div class="analytics-num" id="feedback-kpi-painpoints-count">0</div>
+                        <div class="analytics-label">ประเด็นปัญหา/ข้อเสนอแนะ</div>
+                    </div>
+                </div>
+            </div>
+
             <div id="feedback-list-container">
                 <!-- Feedback loaded dynamically -->
             </div>
@@ -1692,10 +1745,27 @@
 
                     badge.innerText = `${data.length} ข้อความ`;
 
+                    // Calculate KPI metrics
+                    const ratedItems = data.filter(d => d.rating && d.rating > 0);
+                    const avgRating = ratedItems.length ? (ratedItems.reduce((sum, item) => sum + item.rating, 0) / ratedItems.length).toFixed(1) : '0.0';
+                    const positiveCount = ratedItems.filter(item => item.rating >= 4).length;
+                    const positiveRate = ratedItems.length ? Math.round((positiveCount / ratedItems.length) * 100) : 0;
+                    const totalPainpoints = data.reduce((acc, curr) => acc + (Array.isArray(curr.tags) ? curr.tags.length : (curr.tags ? 1 : 0)), 0);
+
+                    const elAvg = document.getElementById('feedback-kpi-avg-rating');
+                    const elCount = document.getElementById('feedback-kpi-research-count');
+                    const elPos = document.getElementById('feedback-kpi-positive-rate');
+                    const elPain = document.getElementById('feedback-kpi-painpoints-count');
+
+                    if (elAvg) elAvg.innerText = `${avgRating} / 5`;
+                    if (elCount) elCount.innerText = `${ratedItems.length} คน`;
+                    if (elPos) elPos.innerText = `${positiveRate}%`;
+                    if (elPain) elPain.innerText = `${totalPainpoints} จุด`;
+
                     if (data.length === 0) {
                         container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 3rem 1rem; background: var(--bg-card); border-radius: var(--border-radius-md); border: 1px solid var(--glass-border);">
                             <i class="fa-regular fa-envelope-open" style="font-size: 2.5rem; margin-bottom: 0.8rem; opacity: 0.5;"></i>
-                            <p>ยังไม่มีข้อความเสนอแนะหรือแจ้งปัญหาเข้ามา</p>
+                            <p>ยังไม่มีข้อความเสนอแนะหรือผลการประเมินเข้ามา</p>
                         </div>`;
                         return;
                     }
@@ -1704,11 +1774,16 @@
                     data.forEach(item => {
                         const card = document.createElement('div');
                         card.className = 'feedback-item';
+                        card.style.cssText = 'background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); padding: 1.2rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.7rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);';
 
                         let typeLabel = 'ข้อเสนอแนะ';
                         let typeColor = 'rgba(50, 132, 255, 0.2)';
                         let typeTextColor = 'var(--accent-purple)';
-                        if (item.type === 'suggest_restaurant') {
+                        if (item.type === 'usability_research') {
+                            typeLabel = '📊 User Research';
+                            typeColor = 'rgba(0, 255, 38, 0.2)';
+                            typeTextColor = 'var(--accent-green)';
+                        } else if (item.type === 'suggest_restaurant') {
                             typeLabel = '🍲 แนะนำร้านอาหาร';
                             typeColor = 'rgba(255, 119, 51, 0.2)';
                             typeTextColor = 'var(--accent-orange)';
@@ -1718,23 +1793,65 @@
                             typeTextColor = 'var(--accent-pink)';
                         }
 
+                        // Rating stars rendering
+                        let starsHtml = '';
+                        if (item.rating) {
+                            const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+                            starsHtml = `<span style="color: #fde047; font-weight: 700; font-size: 1rem; letter-spacing: 2px;" title="${item.rating} เต็ม 5 ดาว">${stars} <span style="font-size: 0.85rem; color: #fff;">(${item.rating}/5)</span></span>`;
+                        }
+
+                        // Demographic badges
+                        let demoHtml = '';
+                        const demoBadges = [];
+                        if (item.role) demoBadges.push(`<span class="allergen-tag" style="background: rgba(138, 43, 226, 0.18); color: #d8b4fe; border-color: rgba(168, 85, 247, 0.3); font-size: 0.75rem; padding: 0.15rem 0.5rem;"><i class="fa-solid fa-graduation-cap"></i> ${escapeHtml(item.role)}</span>`);
+                        if (item.ageRange) demoBadges.push(`<span class="allergen-tag" style="background: rgba(59, 130, 246, 0.18); color: #93c5fd; border-color: rgba(59, 130, 246, 0.3); font-size: 0.75rem; padding: 0.15rem 0.5rem;"><i class="fa-solid fa-cake-candles"></i> ${escapeHtml(item.ageRange)} ปี</span>`);
+                        if (item.frequency) demoBadges.push(`<span class="allergen-tag" style="background: rgba(239, 68, 68, 0.18); color: #fca5a5; border-color: rgba(239, 68, 68, 0.3); font-size: 0.75rem; padding: 0.15rem 0.5rem;"><i class="fa-solid fa-fire"></i> ปัญหา: ${escapeHtml(item.frequency)}</span>`);
+                        if (item.modeTested) demoBadges.push(`<span class="allergen-tag" style="background: rgba(16, 185, 129, 0.18); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.3); font-size: 0.75rem; padding: 0.15rem 0.5rem;"><i class="fa-solid fa-gamepad"></i> โหมด: ${escapeHtml(item.modeTested)}</span>`);
+                        if (demoBadges.length > 0) {
+                            demoHtml = `<div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem;">` + demoBadges.join('') + `</div>`;
+                        }
+
+                        // Tags rendering
+                        let tagsHtml = '';
+                        const itemTags = Array.isArray(item.tags) ? item.tags : (item.tags ? [item.tags] : []);
+                        if (itemTags.length > 0) {
+                            tagsHtml = `<div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem;">` +
+                                itemTags.map(tag => `<span class="allergen-tag" style="background: rgba(238, 120, 22, 0.15); color: #ffca99; border-color: rgba(238, 120, 22, 0.3); font-size: 0.75rem; padding: 0.2rem 0.5rem;"><i class="fa-solid fa-tag"></i> ${escapeHtml(tag)}</span>`).join('') +
+                                `</div>`;
+                        }
+
+                        // Device badge
+                        let deviceHtml = '';
+                        if (item.device) {
+                            const isMobile = item.device.toLowerCase().includes('mobile');
+                            deviceHtml = `<span style="color: var(--text-muted); font-size: 0.75rem;"><i class="fa-solid ${isMobile ? 'fa-mobile-screen' : 'fa-desktop'}"></i> ${escapeHtml(item.device)}</span>`;
+                        }
+
                         const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
 
                         card.innerHTML = `
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; flex-wrap: wrap;">
                                 <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                                     <span class="badge-type" style="background: ${typeColor}; color: ${typeTextColor}; margin: 0;">${typeLabel}</span>
+                                    ${starsHtml}
                                     <span style="font-weight: 700; font-size: 1.05rem;">${escapeHtml(item.title)}</span>
                                 </div>
                                 <button class="btn btn-delete" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="deleteFeedback('${item.id}')">
                                     <i class="fa-solid fa-trash"></i> ลบ
                                 </button>
                             </div>
-                            <div style="color: var(--text-primary); font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap; background: rgba(0,0,0,0.15); padding: 0.8rem; border-radius: var(--border-radius-sm);">
+                            ${demoHtml}
+                            ${tagsHtml}
+                            ${item.description ? `
+                            <div style="color: var(--text-primary); font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap; background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: var(--border-radius-sm); border: 1px solid rgba(255,255,255,0.05);">
                                 ${escapeHtml(item.description)}
                             </div>
+                            ` : ''}
                             <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; flex-wrap: wrap; gap: 0.5rem;">
-                                <span><i class="fa-regular fa-user"></i> ผู้ส่ง: <strong>${escapeHtml(item.contact || 'ไม่ระบุตัวตน')}</strong></span>
+                                <div style="display: flex; gap: 0.8rem; align-items: center;">
+                                    <span><i class="fa-regular fa-user"></i> ผู้ส่ง: <strong>${escapeHtml(item.contact || item.contactInfo || 'ไม่ระบุตัวตน')}</strong></span>
+                                    ${deviceHtml}
+                                </div>
                                 <span><i class="fa-regular fa-clock"></i> ${dateStr}</span>
                             </div>
                         `;

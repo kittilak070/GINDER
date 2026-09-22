@@ -4771,3 +4771,260 @@ body:has(#view-swipe.active) .app-footer,
     100% { opacity: 0; transform: translateY(-6px); }
 }
 
+/* ============================================================================== */
+/* 12. IN-APP FEEDBACK WIDGET & USER RESEARCH MODAL STYLES                       */
+/* ============================================================================== */
+
+.btn-floating-feedback {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 995;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 30px;
+    padding: 0.65rem 1.15rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 6px 25px rgba(255, 51, 119, 0.45);
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-floating-feedback:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 30px rgba(255, 51, 119, 0.6);
+}
+
+.btn-floating-feedback:active {
+    transform: translateY(0) scale(0.97);
+}
+
+.btn-floating-feedback .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #00FF26;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px #00FF26;
+    animation: feedback-pulse 1.8s infinite;
+}
+
+@keyframes feedback-pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 38, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(0, 255, 38, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 38, 0); }
+}
+
+/* Star Rating Widget */
+.feedback-stars-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.8rem 0 0.4rem;
+}
+
+.feedback-star-btn {
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 0 0.15rem;
+}
+
+.feedback-star-btn:hover,
+.feedback-star-btn.hover-active {
+    color: #fde047;
+    transform: scale(1.25) rotate(5deg);
+    text-shadow: 0 0 20px rgba(253, 224, 71, 0.75);
+}
+
+.feedback-star-btn.active {
+    color: #fde047;
+    transform: scale(1.1);
+    text-shadow: 0 0 15px rgba(253, 224, 71, 0.6);
+}
+
+.feedback-emotion-text {
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffca99;
+    min-height: 1.4rem;
+    transition: all 0.2s ease;
+}
+
+/* Feedback Chips / Pain Points Selector */
+.feedback-chips-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.4rem;
+}
+
+.feedback-chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.feedback-chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.feedback-chip.active {
+    background: rgba(255, 51, 119, 0.25);
+    border-color: var(--accent-pink);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 0 12px rgba(255, 51, 119, 0.35);
+}
+
+/* Prompt Banner after Match */
+.match-feedback-prompt {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 51, 119, 0.15);
+    border: 1px solid rgba(255, 51, 119, 0.3);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    animation: fadeIn 0.4s ease;
+}
+
+@media (max-width: 600px) {
+    .btn-floating-feedback {
+        bottom: 18px;
+        right: 18px;
+        padding: 0.55rem 0.95rem;
+        font-size: 0.8rem;
+    }
+    .feedback-star-btn {
+        font-size: 1.8rem;
+    }
+}
+
+/* ==========================================================================
+   GOOGLE & FACEBOOK SOCIAL AUTH & ACCOUNT CHOOSER STYLES
+   ========================================================================== */
+.btn-oauth {
+    user-select: none;
+    cursor: pointer;
+    font-family: 'Mitr', sans-serif;
+    outline: none;
+}
+
+.btn-google:hover {
+    background: #f8fafc !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+.btn-google:active {
+    transform: translateY(0);
+}
+
+.btn-facebook:hover {
+    background: #1464c8 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(24, 119, 242, 0.5) !important;
+}
+
+.btn-facebook:active {
+    transform: translateY(0);
+}
+
+.social-account-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-account-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.social-account-item:active {
+    transform: translateY(0);
+}
+
+.social-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: 700;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.social-account-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.social-account-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.social-account-email {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.social-admin-tag {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 10px;
+    background: rgba(244, 63, 94, 0.2);
+    color: var(--accent-pink);
+    border: 1px solid rgba(244, 63, 94, 0.4);
+}
+
+
+
