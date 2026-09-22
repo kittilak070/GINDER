@@ -929,7 +929,7 @@ let currentOAuthData = null;
 const SOCIAL_ACCOUNTS = {
     google: [
         {
-            name: 'Kittilak Somboon (Admin)',
+            name: 'kittilak',
             email: 'kittilak.dev@gmail.com',
             isAdmin: true,
             avatar: 'K'
@@ -1142,6 +1142,18 @@ window.addEventListener('DOMContentLoaded', async () => {
         state.autoJoin = true;
         const joinInput = document.getElementById('join-room-id');
         if (joinInput) joinInput.value = state.targetRoomId;
+    }
+
+    // Check if redirected from /admin for admin authentication
+    if (urlParams.get('login') === 'admin') {
+        setTimeout(() => {
+            if (typeof showToast === 'function') {
+                showToast('กรุณาเข้าสู่ระบบด้วยบัญชีผู้ดูแลระบบ (Admin) เพื่อเข้าถึงแดชบอร์ด', 'warning', 4500);
+            }
+            if (typeof openSocialAuthModal === 'function') {
+                openSocialAuthModal('google');
+            }
+        }, 400);
     }
 });
 

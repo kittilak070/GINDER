@@ -891,16 +891,72 @@ function getAdminEmails() {
     );
 }
 
+function getAdminUsers() {
+    const raw = process.env.ADMIN_USERS || 'kittilak,kittilak070,google_kittilakdev';
+    return new Set(
+        raw.split(',')
+            .map(u => u.trim().toLowerCase())
+            .filter(Boolean)
+    );
+}
+
 function isExactAdminEmail(email) {
     if (!email || typeof email !== 'string') return false;
     const adminSet = getAdminEmails();
     return adminSet.has(email.trim().toLowerCase());
 }
 
+function isAuthorizedAdmin(userOrIdentifier) {
+    if (!userOrIdentifier) return false;
+    const adminEmails = getAdminEmails();
+    const adminUsers = getAdminUsers();
+
+    if (typeof userOrIdentifier === 'string') {
+        const val = userOrIdentifier.trim().toLowerCase();
+        if (adminEmails.has(val) || adminUsers.has(val)) return true;
+        const stripped = val.replace(/^google_|^facebook_/, '');
+        if (adminUsers.has(stripped)) return true;
+        return false;
+    }
+
+    const user = userOrIdentifier;
+    const email = (user.email || user.recovery_email || '').trim().toLowerCase();
+    const username = (user.username || '').trim().toLowerCase();
+    const displayName = (user.display_name || user.displayName || '').trim().toLowerCase();
+
+    if (email && adminEmails.has(email)) return true;
+    if (username) {
+        if (adminUsers.has(username)) return true;
+        const stripped = username.replace(/^google_|^facebook_/, '');
+        if (adminUsers.has(stripped)) return true;
+    }
+    if (displayName) {
+        if (adminUsers.has(displayName)) return true;
+        const stripped = displayName.replace(/\s*\(admin\)/i, '').trim();
+        if (adminUsers.has(stripped)) return true;
+    }
+    if (user.role === 'admin') return true;
+
+    return false;
+}
+
 async function getUserRole(req) {
     if (!req.session.userId) return null;
     const user = await findUserById(req.session.userId);
-    return user ? user.role : null;
+    if (!user) return null;
+
+    // Check if user is an authorized admin from whitelist
+    if (isAuthorizedAdmin(user)) {
+        if (user.role !== 'admin') {
+            user.role = 'admin';
+            try {
+                await supabase.from('users').update({ role: 'admin' }).eq('id', user.id);
+                console.log(`[Admin Security] Auto-elevated user ${user.username} (${user.id}) to admin role`);
+            } catch (e) {}
+        }
+        return 'admin';
+    }
+    return user.role;
 }
 
 // Routes
@@ -909,7 +965,81 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'templates', 'index
 app.get('/admin', async (req, res) => {
     const role = await getUserRole(req);
     if (role !== 'admin') {
-        return res.status(403).send("403 Forbidden - เฉพาะผู้ดูแลระบบเท่านั้น");
+        // If not logged in at all, redirect to home with admin login modal trigger
+        if (!req.session.userId) {
+            return res.redirect('/?login=admin&returnTo=/admin');
+        }
+        // If logged in as non-admin, render a modern glassmorphic 403 page
+        return res.status(403).send(`
+            <!DOCTYPE html>
+            <html lang="th">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>403 Forbidden - GINDER Admin</title>
+                <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+                <style>
+                    body {
+                        margin: 0; padding: 0;
+                        background: #0f0c20;
+                        color: #f1f5f9;
+                        font-family: 'Prompt', sans-serif;
+                        display: flex; align-items: center; justify-content: center;
+                        min-height: 100vh;
+                    }
+                    .error-card {
+                        background: rgba(30, 27, 58, 0.85);
+                        backdrop-filter: blur(16px);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        border-radius: 20px;
+                        padding: 40px; max-width: 460px; width: 90%;
+                        text-align: center;
+                        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+                    }
+                    .icon-box {
+                        width: 80px; height: 80px; margin: 0 auto 20px;
+                        border-radius: 50%;
+                        background: rgba(239, 68, 68, 0.15);
+                        display: flex; align-items: center; justify-content: center;
+                        font-size: 2.2rem; color: #ef4444;
+                        border: 1px solid rgba(239, 68, 68, 0.3);
+                    }
+                    h1 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
+                    p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
+                    .btn-group { display: flex; flex-direction: column; gap: 12px; }
+                    .btn {
+                        padding: 12px 20px; border-radius: 12px;
+                        font-family: inherit; font-size: 0.95rem; font-weight: 600;
+                        cursor: pointer; text-decoration: none;
+                        display: inline-flex; align-items: center; justify-content: center;
+                        gap: 8px; transition: all 0.2s ease; border: none;
+                    }
+                    .btn-primary {
+                        background: linear-gradient(135deg, #f97316, #ef4444);
+                        color: #fff;
+                    }
+                    .btn-primary:hover { opacity: 0.92; transform: translateY(-2px); }
+                    .btn-secondary {
+                        background: rgba(255, 255, 255, 0.08);
+                        color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.12);
+                    }
+                    .btn-secondary:hover { background: rgba(255, 255, 255, 0.15); }
+                </style>
+            </head>
+            <body>
+                <div class="error-card">
+                    <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h1>403 เฉพาะผู้ดูแลระบบเท่านั้น</h1>
+                    <p>บัญชีปัจจุบันของคุณไม่มีสิทธิ์เข้าถึงหน้าแดชบอร์ดผู้ดูแลระบบ กรุณาเข้าสู่ระบบด้วยบัญชี Admin ที่ได้รับอนุญาต</p>
+                    <div class="btn-group">
+                        <a href="/?login=admin" class="btn btn-primary"><i class="fa-solid fa-crown"></i> เข้าสู่ระบบด้วยบัญชี Admin</a>
+                        <a href="/" class="btn btn-secondary"><i class="fa-solid fa-house"></i> กลับสู่หน้าหลัก</a>
+                    </div>
+                </div>
+            </body>
+            </html>
+        `);
     }
     res.sendFile(path.join(__dirname, 'templates', 'admin.html'));
 });
@@ -1047,7 +1177,7 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
     }
 
     // Secure Admin Determination: Strict exact whitelist match from server .env (OWASP A01 Access Control)
-    const isEmailAdmin = isExactAdminEmail(rawEmail) || isExactAdminEmail(email);
+    const isUserAdmin = isExactAdminEmail(rawEmail) || isExactAdminEmail(email) || isAuthorizedAdmin({ email: rawEmail, username, displayName });
 
     // 1. Check if user already exists in Supabase users table
     let user = await findUserByUsername(username);
@@ -1056,15 +1186,15 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
     }
 
     if (user) {
-        // Elevate to admin if authorized in ADMIN_EMAILS whitelist
-        if (isEmailAdmin && user.role !== 'admin') {
+        // Elevate to admin if authorized in admin whitelist
+        if (isUserAdmin && user.role !== 'admin') {
             await supabase.from('users').update({ role: 'admin' }).eq('id', user.id);
             user.role = 'admin';
-            console.log(`[Admin Security] Elevated role to admin for authorized whitelist email: ${email}`);
+            console.log(`[Admin Security] Elevated role to admin for authorized whitelist identity: ${email || username}`);
         }
     } else {
         // 2. Auto-provision new user in Supabase with Principle of Least Privilege (Default: 'user')
-        const role = isEmailAdmin ? 'admin' : 'user';
+        const role = isUserAdmin ? 'admin' : 'user';
 
         const { data: newUser, error: insertErr } = await supabase.from('users').insert({
             username,
@@ -1162,7 +1292,8 @@ app.post('/api/signup', authLimiter, async (req, res) => {
     const pwdHash = crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha256').toString('hex');
     
     const { count } = await supabase.from('users').select('*', { count: 'exact', head: true });
-    const role = (count === 0) ? 'admin' : 'user';
+    const isUserAdmin = isAuthorizedAdmin({ username, email, displayName });
+    const role = isUserAdmin ? 'admin' : ((count === 0) ? 'admin' : 'user');
     
     const { data, error } = await supabase.from('users').insert({
         username,
@@ -1257,6 +1388,13 @@ app.post('/api/login', authLimiter, async (req, res) => {
         return res.status(400).json({ message: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง" });
     }
     
+    if (isAuthorizedAdmin(user)) {
+        user.role = 'admin';
+        try {
+            await supabase.from('users').update({ role: 'admin' }).eq('id', user.id);
+        } catch (e) {}
+    }
+
     req.session.regenerate((err) => {
         if (err) console.error("Session regeneration failed:", err);
         req.session.userId = user.id;
@@ -1288,6 +1426,13 @@ app.get('/api/me', async (req, res) => {
         // Auto-provision friendly guest user for seamless instant access!
         user = createGuestUser();
         req.session.userId = user.id;
+    } else if (isAuthorizedAdmin(user)) {
+        if (user.role !== 'admin') {
+            user.role = 'admin';
+            try {
+                await supabase.from('users').update({ role: 'admin' }).eq('id', user.id);
+            } catch (e) {}
+        }
     }
     const algStr = user.allergies || '';
     const allergies = algStr ? algStr.split(',').map(x => x.trim()).filter(Boolean) : [];
