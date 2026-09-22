@@ -92,6 +92,121 @@ window.prompt = function(message, defaultVal) {
     return defaultVal || null;
 };
 
+// Custom non-blocking confirmation modal
+function showCustomConfirm({
+    title = 'ยืนยันการทำรายการ',
+    message = 'คุณแน่ใจหรือไม่ที่จะดำเนินการต่อ?',
+    confirmText = 'ยืนยัน',
+    cancelText = 'ยกเลิก',
+    type = 'danger', // 'danger' | 'warning' | 'info'
+    icon = 'fa-triangle-exclamation',
+    onConfirm,
+    onCancel
+} = {}) {
+    return new Promise((resolve) => {
+        let overlay = document.getElementById('custom-confirm-modal');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'custom-confirm-modal';
+            overlay.className = 'modal-backdrop';
+            overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.68); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100000; opacity: 0; transition: opacity 0.25s ease;';
+            overlay.innerHTML = `
+                <div class="custom-confirm-card" style="background: var(--bg-card, #1e2029); border: 1px solid var(--border-glass, rgba(255,255,255,0.12)); border-radius: 22px; padding: 2rem; width: 90%; max-width: 420px; box-shadow: 0 25px 60px rgba(0,0,0,0.6); transform: scale(0.92); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); text-align: center; color: #fff;">
+                    <div id="custom-confirm-icon-box" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1.2rem auto;">
+                        <i id="custom-confirm-icon" class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h3 id="custom-confirm-title" style="margin: 0 0 0.6rem 0; font-size: 1.25rem; font-weight: 700; color: #fff;"></h3>
+                    <p id="custom-confirm-message" style="color: var(--text-secondary, #94a3b8); font-size: 0.95rem; line-height: 1.55; margin: 0 0 1.6rem 0;"></p>
+                    <div style="display: flex; gap: 0.8rem; justify-content: center;">
+                        <button id="custom-confirm-cancel" class="btn btn-secondary" style="padding: 0.7rem 1.4rem; border-radius: 12px; cursor: pointer; flex: 1; font-weight: 600;">ยกเลิก</button>
+                        <button id="custom-confirm-ok" class="btn" style="padding: 0.7rem 1.5rem; border-radius: 12px; cursor: pointer; flex: 1; font-weight: 600;">ยืนยัน</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        const iconBox = overlay.querySelector('#custom-confirm-icon-box');
+        const iconEl = overlay.querySelector('#custom-confirm-icon');
+        const titleEl = overlay.querySelector('#custom-confirm-title');
+        const msgEl = overlay.querySelector('#custom-confirm-message');
+        const btnCancel = overlay.querySelector('#custom-confirm-cancel');
+        const btnOk = overlay.querySelector('#custom-confirm-ok');
+
+        titleEl.textContent = title;
+        msgEl.textContent = message;
+        btnCancel.textContent = cancelText;
+        btnOk.textContent = confirmText;
+
+        // Theme icon and confirm button based on type
+        iconEl.className = `fa-solid ${icon}`;
+        if (type === 'danger') {
+            iconBox.style.background = 'rgba(239, 68, 68, 0.16)';
+            iconBox.style.color = '#ef4444';
+            btnOk.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+            btnOk.style.color = '#fff';
+            btnOk.style.border = 'none';
+            btnOk.style.boxShadow = '0 4px 15px rgba(239, 68, 68, 0.35)';
+        } else if (type === 'warning') {
+            iconBox.style.background = 'rgba(245, 158, 11, 0.16)';
+            iconBox.style.color = '#f59e0b';
+            btnOk.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+            btnOk.style.color = '#fff';
+            btnOk.style.border = 'none';
+            btnOk.style.boxShadow = '0 4px 15px rgba(245, 158, 11, 0.35)';
+        } else {
+            iconBox.style.background = 'rgba(59, 130, 246, 0.16)';
+            iconBox.style.color = '#3b82f6';
+            btnOk.style.background = 'linear-gradient(135deg, #3b82f6, #2563eb)';
+            btnOk.style.color = '#fff';
+            btnOk.style.border = 'none';
+            btnOk.style.boxShadow = '0 4px 15px rgba(59, 130, 246, 0.35)';
+        }
+
+        let isClosed = false;
+        const cleanupAndClose = (result) => {
+            if (isClosed) return;
+            isClosed = true;
+            document.removeEventListener('keydown', keyHandler);
+            overlay.style.opacity = '0';
+            overlay.firstElementChild.style.transform = 'scale(0.92)';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 250);
+            if (result) {
+                if (typeof onConfirm === 'function') onConfirm();
+                resolve(true);
+            } else {
+                if (typeof onCancel === 'function') onCancel();
+                resolve(false);
+            }
+        };
+
+        const keyHandler = (e) => {
+            if (e.key === 'Escape') {
+                cleanupAndClose(false);
+            } else if (e.key === 'Enter') {
+                cleanupAndClose(true);
+            }
+        };
+        document.addEventListener('keydown', keyHandler);
+
+        btnCancel.onclick = () => cleanupAndClose(false);
+        btnOk.onclick = () => cleanupAndClose(true);
+        overlay.onclick = (e) => {
+            if (e.target === overlay) cleanupAndClose(false);
+        };
+
+        overlay.style.display = 'flex';
+        requestAnimationFrame(() => {
+            overlay.style.opacity = '1';
+            overlay.firstElementChild.style.transform = 'scale(1)';
+            btnCancel.focus();
+        });
+    });
+}
+window.showCustomConfirm = showCustomConfirm;
+
 // Custom non-blocking prompt modal
 function showCustomPrompt(title, defaultValue = '', onConfirm) {
     let overlay = document.getElementById('custom-prompt-modal');
@@ -2153,8 +2268,25 @@ function setupEventListeners() {
         showToast('ออกจากห้องโหวตเรียบร้อยแล้ว 🍜', 'info');
     };
 
-    document.getElementById('btn-leave-lobby').addEventListener('click', handleLeaveRoom);
-    document.getElementById('btn-leave-swipe').addEventListener('click', handleLeaveRoom);
+    const confirmLeaveRoom = (isSwipe = false) => {
+        showCustomConfirm({
+            title: isSwipe ? 'ออกจากห้องโหวต?' : 'ออกจากห้อง?',
+            message: isSwipe
+                ? 'การโหวตกำลังดำเนินอยู่ คุณแน่ใจหรือไม่ว่าจะออกจากห้องโหวต?'
+                : 'คุณแน่ใจหรือไม่ว่าจะออกจากห้องนี้?',
+            confirmText: 'ออกจากห้อง',
+            cancelText: 'อยู่ต่อ',
+            type: 'danger',
+            icon: 'fa-right-from-bracket',
+            onConfirm: handleLeaveRoom
+        });
+    };
+
+    const btnLeaveLobby = document.getElementById('btn-leave-lobby');
+    if (btnLeaveLobby) btnLeaveLobby.addEventListener('click', () => confirmLeaveRoom(false));
+
+    const btnLeaveSwipe = document.getElementById('btn-leave-swipe');
+    if (btnLeaveSwipe) btnLeaveSwipe.addEventListener('click', () => confirmLeaveRoom(true));
 
     // Copy Room ID to Clipboard with feedback
     document.getElementById('btn-copy-room-id').addEventListener('click', () => {
@@ -3184,8 +3316,18 @@ socket.on('room_state', (data) => {
             btn.addEventListener('click', () => {
                 const userId = btn.dataset.id;
                 const userName = btn.dataset.name;
-                socket.emit('kick_user', { roomId: state.roomId, userId: userId });
-                showToast(`นำคุณ ${userName} ออกจากห้องแล้ว`, 'warning');
+                showCustomConfirm({
+                    title: 'เตะสมาชิกออกจากห้อง?',
+                    message: `คุณต้องการนำคุณ "${userName}" ออกจากห้องใช่หรือไม่?`,
+                    confirmText: 'เตะออก',
+                    cancelText: 'ยกเลิก',
+                    type: 'danger',
+                    icon: 'fa-user-xmark',
+                    onConfirm: () => {
+                        socket.emit('kick_user', { roomId: state.roomId, userId: userId });
+                        showToast(`นำคุณ ${userName} ออกจากห้องแล้ว`, 'warning');
+                    }
+                });
             });
         });
     }
@@ -4263,23 +4405,33 @@ function updateHeaderUI() {
         const logoutBtn = document.getElementById('btn-logout');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
-                fetch('/api/logout', { method: 'POST' })
-                    .then(res => res.json())
-                    .then(data => {
-                        state.currentUser = (data && data.isGuest) ? data : null;
-                        updateHeaderUI();
-                        prefillUserPreferences();
-                        closeProfileModal();
-                        showToast('ออกจากระบบแล้ว คุณยังคงใช้งานระบบแบบทั่วไป (Guest) ได้ตามปกติ 🍜', 'info');
-                        showView('landing');
-                    })
-                    .catch(err => {
-                        triggerQuickGuestLogin(() => {
-                            updateHeaderUI();
-                            closeProfileModal();
-                            showView('landing');
-                        });
-                    });
+                showCustomConfirm({
+                    title: 'ออกจากระบบ?',
+                    message: 'คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบบัญชีของคุณ?',
+                    confirmText: 'ออกจากระบบ',
+                    cancelText: 'ยกเลิก',
+                    type: 'danger',
+                    icon: 'fa-arrow-right-from-bracket',
+                    onConfirm: () => {
+                        fetch('/api/logout', { method: 'POST' })
+                            .then(res => res.json())
+                            .then(data => {
+                                state.currentUser = (data && data.isGuest) ? data : null;
+                                updateHeaderUI();
+                                prefillUserPreferences();
+                                closeProfileModal();
+                                showToast('ออกจากระบบแล้ว คุณยังคงใช้งานระบบแบบทั่วไป (Guest) ได้ตามปกติ 🍜', 'info');
+                                showView('landing');
+                            })
+                            .catch(err => {
+                                triggerQuickGuestLogin(() => {
+                                    updateHeaderUI();
+                                    closeProfileModal();
+                                    showView('landing');
+                                });
+                            });
+                    }
+                });
             });
         }
     } else {
@@ -4635,31 +4787,41 @@ function setupProfileAndFeedback() {
                 return;
             }
 
-            btnPdpaDelete.disabled = true;
-            btnPdpaDelete.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังลบข้อมูล...';
+            showCustomConfirm({
+                title: 'ยืนยันการลบบัญชีถาวร?',
+                message: 'ข้อมูลและประวัติทั้งหมดของคุณจะถูกลบอย่างถาวรและไม่สามารถกู้คืนได้อีก คุณแน่ใจหรือไม่?',
+                confirmText: 'ลบบัญชีถาวร',
+                cancelText: 'ยกเลิก',
+                type: 'danger',
+                icon: 'fa-trash',
+                onConfirm: () => {
+                    btnPdpaDelete.disabled = true;
+                    btnPdpaDelete.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังลบข้อมูล...';
 
-            fetch('/api/pdpa/delete-my-account', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ password: 'DELETE' })
-            })
-                .then(res => res.json().then(data => ({ ok: res.ok, data })))
-                .then(({ ok, data }) => {
-                    btnPdpaDelete.disabled = false;
-                    btnPdpaDelete.innerHTML = '<i class="fa-solid fa-trash"></i> ขอลบข้อมูลและปิดบัญชีถาวร';
-                    if (!ok || !data.success) {
-                        showToast(data.message || 'ไม่สามารถลบบัญชีได้', 'error');
-                        return;
-                    }
-                    showToast(data.message || 'ลบบัญชีและข้อมูลส่วนบุคคลตามสิทธิ PDPA สำเร็จแล้ว', 'success');
-                    localStorage.removeItem('ginder_pdpa_consent');
-                    window.location.reload();
-                })
-                .catch(err => {
-                    btnPdpaDelete.disabled = false;
-                    btnPdpaDelete.innerHTML = '<i class="fa-solid fa-trash"></i> ขอลบข้อมูลและปิดบัญชีถาวร';
-                    showToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
-                });
+                    fetch('/api/pdpa/delete-my-account', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ password: 'DELETE' })
+                    })
+                        .then(res => res.json().then(data => ({ ok: res.ok, data })))
+                        .then(({ ok, data }) => {
+                            btnPdpaDelete.disabled = false;
+                            btnPdpaDelete.innerHTML = '<i class="fa-solid fa-trash"></i> ขอลบข้อมูลและปิดบัญชีถาวร';
+                            if (!ok || !data.success) {
+                                showToast(data.message || 'ไม่สามารถลบบัญชีได้', 'error');
+                                return;
+                            }
+                            showToast(data.message || 'ลบบัญชีและข้อมูลส่วนบุคคลตามสิทธิ PDPA สำเร็จแล้ว', 'success');
+                            localStorage.removeItem('ginder_pdpa_consent');
+                            window.location.reload();
+                        })
+                        .catch(err => {
+                            btnPdpaDelete.disabled = false;
+                            btnPdpaDelete.innerHTML = '<i class="fa-solid fa-trash"></i> ขอลบข้อมูลและปิดบัญชีถาวร';
+                            showToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
+                        });
+                }
+            });
         });
     }
 }
