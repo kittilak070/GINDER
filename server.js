@@ -754,6 +754,25 @@ async function getAllRestaurants() {
     }
 }
 
+function matchFoodTypes(restaurantTypes, selectedFoodTypes) {
+    if (!selectedFoodTypes || selectedFoodTypes.length === 0) return true;
+    if (!restaurantTypes || !Array.isArray(restaurantTypes)) return false;
+    return restaurantTypes.some(t => {
+        return selectedFoodTypes.some(ft => {
+            if (!t || !ft) return false;
+            const tClean = String(t).trim();
+            const ftClean = String(ft).trim();
+            if (tClean === ftClean) return true;
+            if ((tClean.includes('ซีฟู้ด') || tClean.includes('อาหารทะเล')) && (ftClean.includes('ซีฟู้ด') || ftClean.includes('อาหารทะเล'))) return true;
+            if ((tClean.includes('ก๋วยเตี๋ยว') || tClean.includes('จานด่วน') || tClean.includes('อาหารจานเดียว')) && (ftClean.includes('ก๋วยเตี๋ยว') || ftClean.includes('จานด่วน') || ftClean.includes('อาหารจานเดียว'))) return true;
+            if ((tClean.includes('ปิ้งย่าง') || tClean.includes('ชาบู') || tClean.includes('หมูกระทะ')) && (ftClean.includes('ปิ้งย่าง') || ftClean.includes('ชาบู') || ftClean.includes('หมูกระทะ'))) return true;
+            if ((tClean.includes('คาเฟ่') || tClean.includes('ของหวาน') || tClean.includes('ไอศกรีม') || tClean.includes('ชาชัก')) && (ftClean.includes('คาเฟ่') || ftClean.includes('ของหวาน') || ftClean.includes('ไอศกรีม') || ftClean.includes('ชาชัก'))) return true;
+            if ((tClean.includes('ฮาลาล') || tClean.includes('มุสลิม')) && (ftClean.includes('ฮาลาล') || ftClean.includes('มุสลิม'))) return true;
+            return false;
+        });
+    });
+}
+
 function filterRestaurantsByCriteria(allR, pref = {}, allergiesList = [], coords = null) {
     const allAllergies = new Set(allergiesList || []);
     const minPrice = pref.minPrice !== undefined ? pref.minPrice : 0;
@@ -795,9 +814,7 @@ function filterRestaurantsByCriteria(allR, pref = {}, allergiesList = [], coords
 
     // 1. First pass: Apply user's selected filters
     let filtered = list.filter(r => {
-        if (foodTypes.length > 0) {
-            if (!r.type.some(t => foodTypes.includes(t))) return false;
-        }
+        if (foodTypes.length > 0 && !matchFoodTypes(r.type, foodTypes)) return false;
         if (r.avgPrice < minPrice || r.avgPrice > maxPrice) return false;
         if (maxDistance && r.distance > maxDistance) return false;
         if (r.allergens && r.allergens.some(a => allAllergies.has(a))) return false;
@@ -808,7 +825,7 @@ function filterRestaurantsByCriteria(allR, pref = {}, allergiesList = [], coords
     if (filtered.length < 6) {
         console.log(`[Smart Filter] Only ${filtered.length} matches found. Relaxing distance filter...`);
         const relaxedDistance = list.filter(r => {
-            if (foodTypes.length > 0 && !r.type.some(t => foodTypes.includes(t))) return false;
+            if (foodTypes.length > 0 && !matchFoodTypes(r.type, foodTypes)) return false;
             if (r.avgPrice < minPrice || r.avgPrice > maxPrice) return false;
             if (r.allergens && r.allergens.some(a => allAllergies.has(a))) return false;
             return true;
@@ -822,7 +839,7 @@ function filterRestaurantsByCriteria(allR, pref = {}, allergiesList = [], coords
     if (filtered.length < 6) {
         console.log(`[Smart Filter] Still ${filtered.length} matches found. Relaxing price filter...`);
         const relaxedPrice = list.filter(r => {
-            if (foodTypes.length > 0 && !r.type.some(t => foodTypes.includes(t))) return false;
+            if (foodTypes.length > 0 && !matchFoodTypes(r.type, foodTypes)) return false;
             if (r.allergens && r.allergens.some(a => allAllergies.has(a))) return false;
             return true;
         });

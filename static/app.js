@@ -3589,6 +3589,11 @@ function renderDeck() {
                </div>`
             : '';
 
+        const isHalal = Array.isArray(r.type) && r.type.some(t => String(t).includes('ฮาลาล') || String(t).includes('มุสลิม'));
+        const halalBadgeHtml = isHalal
+            ? `<div class="card-halal-badge" title="อาหารฮาลาล"><i class="fa-solid fa-star-and-crescent"></i> ฮาลาล</div>`
+            : '';
+
         card.innerHTML = `
             <div class="card-image-wrapper">
                 ${storyBarsHtml}
@@ -3596,6 +3601,7 @@ function renderDeck() {
                 <div class="card-stamp card-stamp-like">อยากกิน</div>
                 <div class="card-stamp card-stamp-dislike">ไม่กิน</div>
                 <div class="card-info-badge"><i class="fa-solid fa-location-arrow"></i> ${distDisplay}</div>
+                ${halalBadgeHtml}
             </div>
             <div class="card-details">
                 <div class="card-title-row">
@@ -3603,7 +3609,7 @@ function renderDeck() {
                     <span class="card-rating"><i class="fa-solid fa-star"></i> ${r.rating}</span>
                 </div>
                 <div class="card-meta-row">
-                    <span><i class="fa-solid fa-bowl-food"></i> ${Array.isArray(r.type) ? r.type.join(', ') : r.type}</span>
+                    <span><i class="fa-solid fa-bowl-food"></i> ${Array.isArray(r.type) ? r.type.map(t => t === 'อาหารฮาลาล' ? '<span class="halal-text-badge"><i class="fa-solid fa-star-and-crescent"></i> ฮาลาล</span>' : t).join(', ') : r.type}</span>
                     <span><i class="fa-solid fa-money-bill-wave"></i> ${r.priceRange} (~${r.avgPrice}฿)</span>
                 </div>
                 <p class="card-description">${r.description}</p>
@@ -3617,7 +3623,7 @@ function renderDeck() {
                 </div>
                 <div class="drawer-content">
                     <p><strong>ชื่อร้าน:</strong> ${r.name}</p>
-                    <p><strong>ประเภท:</strong> ${Array.isArray(r.type) ? r.type.join(', ') : r.type}</p>
+                    <p><strong>ประเภท:</strong> ${Array.isArray(r.type) ? r.type.map(t => t === 'อาหารฮาลาล' ? '<span class="halal-pill"><i class="fa-solid fa-star-and-crescent"></i> อาหารฮาลาล</span>' : t).join(', ') : r.type}</p>
                     <p><strong>ราคาเฉลี่ยต่อคน:</strong> ~${r.avgPrice} บาท (${r.priceRange})</p>
                     <p><strong>ระยะทาง:</strong> ห่างออกไป ${r.distance} กิโลเมตร</p>
                     <p><strong>ที่ตั้ง:</strong> ${r.address}</p>
