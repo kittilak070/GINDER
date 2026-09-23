@@ -503,5 +503,507 @@
     "address": "ถนนชลาทัศน์ ใกล้สระบัว อำเภอเมืองสงขลา",
     "latitude": 7.198,
     "longitude": 100.605
+  },
+  {
+    "id": "r_songkhla_21",
+    "name": "คุณจิตซีวิว เกาะยอ (Khun Jitt Sea View)",
+    "rating": 4.7,
+    "priceRange": "$$$",
+    "avgPrice": 250,
+    "distance": 8.2,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "จุดชมวิวสะพานติณสูลานนท์ที่สวยที่สุด กุ้งแม่น้ำเผาเตาถ่านมันเยิ้ม ปูม้านึ่งแกะพร้อมทาน กุ้งแชบ๊วยอบเกลือทะเล แกงส้มไข่ปลาริวกิว",
+    "address": "เชิงสะพานติณสูลานนท์ ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.171,
+    "longitude": 100.551
+  },
+  {
+    "id": "r_songkhla_22",
+    "name": "ร้านระเบียงทราย (หาดชลาทัศน์)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 2.1,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลบรรยากาศเปิดโล่งรับลมทะเลหาดชลาทัศน์ หมึกไข่นึ่งมะนาวรสแซ่บ กุ้งอบวุ้นเส้น หอยนางรมสดสุราษฎร์ทรงเครื่อง",
+    "address": "ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.181,
+    "longitude": 100.613
+  },
+  {
+    "id": "r_songkhla_23",
+    "name": "สมิหลาซีฟู้ด",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 1.8,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลติดแหลมสมิหลา ปูม้านึ่งสดหวาน ยำไข่แมงดาทะเลสูตรเข้มข้น ปลาสำลีแดดเดียวยำมะม่วงรสเด็ด",
+    "address": "แหลมสมิหลา ถนนราชดำเนิน ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.213,
+    "longitude": 100.592
+  },
+  {
+    "id": "r_songkhla_24",
+    "name": "ทิวทัศน์ เกาะยอ",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 9,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "นั่งทานอาหารบนแพยื่นลงไปในทะเลสาบสงขลา ปลากะพงนึ่งมะนาว แกงส้มปูดำหน่อไม้ดอง ทอดมันกุ้งสดเนื้อแน่น",
+    "address": "หมู่ 1 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.155,
+    "longitude": 100.532
+  },
+  {
+    "id": "r_songkhla_25",
+    "name": "ชมจันทร์ เกาะยอ",
+    "rating": 4.6,
+    "priceRange": "$$$",
+    "avgPrice": 250,
+    "distance": 8.4,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารริมน้ำบรรยากาศโมเดิร์นโรแมนติก กุ้งราดซอสมะขามรสเปรี้ยวหวาน หอยนางรมสดทรงเครื่อง ปลากะพงทอดขมิ้นกรอบหอม",
+    "address": "ถนนรอบเกาะยอ ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.167,
+    "longitude": 100.545
+  },
+  {
+    "id": "r_songkhla_26",
+    "name": "เรอดัง เกาะยอ",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 8.6,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "ซีฟู้ดรสชาติพื้นบ้านเกาะยอดั้งเดิม ยำเคยสด (กุ้งเคยทะเลสาบ) ต้มส้มปลากระบอกไข่ ปลากะพงเผาเกลือเสิร์ฟคู่น้ำจิ้มซีฟู้ดมะนาวสด",
+    "address": "หมู่ 7 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.169,
+    "longitude": 100.548
+  },
+  {
+    "id": "r_songkhla_27",
+    "name": "สุจินดาซีฟู้ด (หาดสมิหลา)",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 1.9,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านซีฟู้ดเก่าแก่ใกล้รูปปั้นนางเงือกทอง หอยชักตีนลวกจิ้ม กุ้งแชบ๊วยทอดกระเทียม ปลากะพง 3 รส ต้มยำกุ้งน้ำข้นสูตรดั้งเดิม",
+    "address": "แหลมสมิหลา ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.214,
+    "longitude": 100.591
+  },
+  {
+    "id": "r_songkhla_28",
+    "name": "ภูผาเพชร เกาะยอ",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 8.7,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านตั้งอยู่บนเนินเขาวิวทะเลสาบมุมสูง ปลากะพงลุยสวนเครื่องสมุนไพรแน่นๆ หมึกผัดไข่เค็มมันหอม กุ้งอบวุ้นเส้นหม้อดิน",
+    "address": "หมู่ 4 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.16,
+    "longitude": 100.538
+  },
+  {
+    "id": "r_songkhla_29",
+    "name": "น้าชม ทะเลสาบสงขลา",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 150,
+    "distance": 8.5,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านซีฟู้ดชาวบ้านแท้ๆ ราคาเป็นมิตร กุ้งกุลาดำอบเกลือ ปลากระบอกต้มส้มยอดจาก กั้งทอดกระเทียมพริกไทยสด",
+    "address": "ริมทะเลสาบ ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.159,
+    "longitude": 100.542
+  },
+  {
+    "id": "r_songkhla_30",
+    "name": "เกาะน้ำซีฟู้ด เกาะยอ",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 8.9,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารบนเกาะกลางทะเลสาบ ปูม้าไข่นึ่งหวานสด แกงส้มชะอมกุ้งสด ยำปลาหมึกไข่รสจี๊ดจ๊าดสูตรเกาะยอ",
+    "address": "หมู่ 1 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.163,
+    "longitude": 100.534
+  },
+  {
+    "id": "r_songkhla_31",
+    "name": "ครัวสวนสองทะเล",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 2.7,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
+    ],
+    "description": "ตั้งอยู่จุดบรรจบระหว่างทะเลสาบสงขลากับอ่าวไทย ยำไข่แมงดาทะเล ปูม้าถอดเสื้อแกะเนื้อพร้อมทาน หอยแครงลวกตัวใหญ่",
+    "address": "แหลมสนอ่อน สวนสองทะเล ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.22,
+    "longitude": 100.575
+  },
+  {
+    "id": "r_songkhla_32",
+    "name": "ครัวปลาเล (หาดชลาทัศน์)",
+    "rating": 4.3,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 2.3,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลบรรยากาศเป็นกันเอง ปลาสำลียำมะม่วง กุ้งทอดราดซอสมะขาม หมึกย่างเตาถ่านหอมกรุ่นรับลมทะเล",
+    "address": "ถนนเลียบหาดชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.178,
+    "longitude": 100.614
+  },
+  {
+    "id": "r_songkhla_33",
+    "name": "แม่เบญซีฟู้ด เกาะยอ",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 220,
+    "distance": 8.3,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลสูตรครอบครัว กุ้งลายเสือเผาตัวโต หอยแมลงภู่อบสมุนไพร ปลากะพงนึ่งซีอิ๊วสูตรเด็ดรสกลมกล่อม",
+    "address": "หมู่ 3 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.165,
+    "longitude": 100.54
+  },
+  {
+    "id": "r_songkhla_34",
+    "name": "ครัวริมหาดชลาทัศน์ (ป้าพร)",
+    "rating": 4.3,
+    "priceRange": "$",
+    "avgPrice": 100,
+    "distance": 2,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "ส้มตำปูม้าสดรสแซ่บ หอยนางรมทรงเครื่อง ยำวุ้นเส้นทะเลรวมมิตร นั่งทานรับลมริมชายหาดชลาทัศน์",
+    "address": "ชายหาดชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.185,
+    "longitude": 100.611
+  },
+  {
+    "id": "r_songkhla_35",
+    "name": "โพธิ์ทะเล เกาะยอ",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 8.5,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านใต้ต้นโพธิ์ทะเลริมน้ำ แกงส้มยอดมะพร้าวปลากะพงสองเล ยำสาหร่ายผมนาง กุ้งผัดกะปิสะตอสด",
+    "address": "หมู่ 6 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.168,
+    "longitude": 100.546
+  },
+  {
+    "id": "r_songkhla_36",
+    "name": "แหลมทรายซีฟู้ด (สิงหนคร)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 3.5,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ข้ามแพขนานยนต์มาฝั่งสิงหนคร ปูม้าเป็นๆ ต้มสดใหม่ ปลากะพงทอดน้ำปลา หมึกไข่ย่างน้ำจิ้มถั่วบดแซ่บๆ",
+    "address": "แหลมสน ตำบลหัวเขา อำเภอสิงหนคร สงขลา",
+    "latitude": 7.208,
+    "longitude": 100.576
+  },
+  {
+    "id": "r_songkhla_37",
+    "name": "น้องณี เกาะยอ",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 8.8,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ซีฟู้ดสดจากกระชังเลี้ยง ปลากะพงผัดฉ่าร้อนแรง ต้มยำกุ้งแชบ๊วยน้ำใส ยำหอยแครงสดตัวโต",
+    "address": "หมู่ 2 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.161,
+    "longitude": 100.535
+  },
+  {
+    "id": "r_songkhla_38",
+    "name": "ดาริส ซีฟู้ด (ฮาลาลริมเล)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 220,
+    "distance": 3.2,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลสดปรุงตามหลักฮาลาล 100% ริมทะเลสาบสงขลา กุ้งเผาตัวโต ปูม้านึ่งสดหวาน ปลากะพงทอด 3 รส",
+    "address": "ถนนเลียบทะเลสาบ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.172,
+    "longitude": 100.56
+  },
+  {
+    "id": "r_songkhla_39",
+    "name": "ครัววันดี เกาะยอ",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 8.6,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารซีฟู้ดอบอุ่นสไตล์ครอบครัว ปลากะพงต้มเต้าเจี้ยว ทอดมันกุ้งสดกรอบนอกนุ่มใน แกงคั่วหอยขม",
+    "address": "หมู่ 3 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.164,
+    "longitude": 100.539
+  },
+  {
+    "id": "r_songkhla_40",
+    "name": "หาดแก้วซีฟู้ด (สิงหนคร)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 190,
+    "distance": 4.8,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลริมหาดแก้ว บรรยากาศทิวสนชายทะเลสงบ ปลากะพงนึ่งซีอิ๊ว กุ้งแชบ๊วยคั่วพริกเกลือ ยำไข่แมงดา",
+    "address": "หาดแก้ว ตำบลชิงโค อำเภอสิงหนคร สงขลา",
+    "latitude": 7.228,
+    "longitude": 100.564
   }
 ]
