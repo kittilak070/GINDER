@@ -256,6 +256,257 @@
     "longitude": 100.6125
   },
   {
+    "id": "r_songkhla_100",
+    "name": "หมูกระทะ 99 สงขลา (สี่แยกวชิรา)",
+    "rating": 4.4,
+    "priceRange": "$",
+    "avgPrice": 149,
+    "distance": 2.7,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "หมูกระทะราคาสบายกระเป๋า หมูหมักซอสเกาหลี เบคอนกรอบ กุ้งสด และน้ำจิ้มสุกี้โบราณรสเด็ด",
+    "address": "สี่แยกวชิรา ถนนทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.177,
+    "longitude": 100.607
+  },
+  {
+    "id": "r_songkhla_101",
+    "name": "Songkhla Station (สถานีสงขลา คาเฟ่)",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 90,
+    "distance": 0.9,
+    "type": [
+      "คาเฟ่ / ของหวาน",
+      "อาหารเช้า"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
+    ],
+    "description": "คาเฟ่บ้านไม้โบราณย้อนยุคริมทางรถไฟเก่า กาแฟดริปเมล็ดคั่วพิเศษ ขนมปังปิ้งเนยสังขยาใบเตยโบราณ ชาไทยเย็นเข้มข้น",
+    "address": "ถนนพัทลุง ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1925,
+    "longitude": 100.592
+  },
+  {
+    "id": "r_songkhla_102",
+    "name": "Heart Made Roastery (ถนนนครนอก)",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 110,
+    "distance": 0.6,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
+    ],
+    "description": "Specialty Coffee โรงคั่วกาแฟชื่อดังเมืองเก่าสงขลา Dirty Coffee นมเย็นจัดราดเอสเปรสโซ่เข้มข้น เมล็ดกาแฟ Single Origin คั่วเอง",
+    "address": "ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1965,
+    "longitude": 100.588
+  },
+  {
+    "id": "r_songkhla_103",
+    "name": "โรตี ชาชัก ฟารีดา ฮาลาล (ถนนรามวิถี)",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 50,
+    "distance": 1.4,
+    "type": [
+      "คาเฟ่ / ของหวาน",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "โรตีตบแป้งนุ่มหอมเนย ชาชักฟองหนานุ่มละมุน โรตีมะตะบะไก่รสเข้มข้น โรตีกรอบราดนมข้นหวาน ฮาลาล 100%",
+    "address": "ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1908,
+    "longitude": 100.595
+  },
+  {
+    "id": "r_songkhla_104",
+    "name": "Cafe Der See Nakornnok (คาเฟ่ เดอ ซี)",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 0.7,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop"
+    ],
+    "description": "คาเฟ่ริมทะเลสาบสงขลา ชมวิวพระอาทิตย์ตกดินสุดโรแมนติก เค้กมะพร้าวอ่อนน้ำหอม กาแฟส้มยูซุสดชื่น วาฟเฟิลอบร้อน",
+    "address": "ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1955,
+    "longitude": 100.5875
+  },
+  {
+    "id": "r_songkhla_105",
+    "name": "Lyn's The Shanghai Cafe (ลินส์ คาเฟ่ ถนนนครใน)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 110,
+    "distance": 0.8,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
+    ],
+    "description": "คาเฟ่สไตล์ชิโนโปรตุกีสผสมเซี่ยงไฮ้วินเทจ ครัวซองต์เนยสดฝรั่งเศส เค้กช็อกโกแลตฟัดจ์เข้มข้น ชาเก๊กฮวยหิมะ",
+    "address": "ถนนนครใน ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.194,
+    "longitude": 100.5895
+  },
+  {
+    "id": "r_songkhla_106",
+    "name": "น้ำชา-โรตี บังหนูด ฮาลาล (หาดสมิหลา)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 45,
+    "distance": 1.9,
+    "type": [
+      "คาเฟ่ / ของหวาน",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านน้ำชายอดนิยมริมหาดสมิหลา โรตีกรอบบาง ชาชักเมืองใต้แท้ๆ กือโป๊ะทอดกรอบจิ้มน้ำจิ้มหวาน นั่งรับลมทะเลชิลล์ยามค่ำคืน",
+    "address": "ริมหาดสมิหลา ถนนราชดำเนิน ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.212,
+    "longitude": 100.593
+  },
+  {
+    "id": "r_songkhla_107",
+    "name": "Ep's Cafe & Bakery สงขลา (ถนนปละท่า)",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 130,
+    "distance": 1.2,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
+    ],
+    "description": "เบเกอรี่และกาแฟระดับพรีเมียม ชีสเค้กหน้าไหม้ ช็อกโกแลตลาวาเยิ้มๆ ครัวซองต์อัลมอนด์ กาแฟคาราเมลมัคคิอาโต้",
+    "address": "ถนนปละท่า ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.198,
+    "longitude": 100.593
+  },
+  {
+    "id": "r_songkhla_108",
+    "name": "Studio 55 Songkhla (ถนนนครนอก)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 110,
+    "distance": 0.6,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
+    ],
+    "description": "คาเฟ่ศิลปะริมทะเลสาบสงขลา ชาเขียวมัทฉะอุจิแท้ กาแฟ Cold Brew สกัดเย็น บราวนี่ดาร์กช็อกโกแลตเข้มข้น",
+    "address": "55 ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.197,
+    "longitude": 100.5878
+  },
+  {
+    "id": "r_songkhla_109",
+    "name": "ไอศกรีมยิว (ไอติมถั่วเขียวสูตรโบราณถนนนางงาม)",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 40,
+    "distance": 0.7,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "ไข่",
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ไอศกรีมโบราณสูตรกว่า 80 ปี ไอติมกะทิสดไข่แข็งใส่ถั่วเขียวต้มน้ำตาลทรายแดง หวานมันเค็มกลมกล่อมชื่นใจ",
+    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1946,
+    "longitude": 100.5905
+  },
+  {
     "id": "r_songkhla_11",
     "name": "ร้านพะโล้สะเดา (เจ๊หยู)",
     "rating": 4.5,
@@ -280,6 +531,262 @@
     "longitude": 100.593
   },
   {
+    "id": "r_songkhla_110",
+    "name": "The Secret Garden Songkhla (คาเฟ่ในสวน)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 3.5,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
+    ],
+    "description": "คาเฟ่ในสวนทรอปิคอลเขียวขจี มัทฉะลาเต้ เค้กแครอทครีมชีส วาฟเฟิลผลไม้รวมสดใหม่ บรรยากาศร่มรื่นเงียบสงบ",
+    "address": "ถนนสงขลา-นาทวี ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.163,
+    "longitude": 100.61
+  },
+  {
+    "id": "r_songkhla_111",
+    "name": "โรตี ชาชัก อาบู ฮาลาล (หน้า มรภ.สงขลา)",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 50,
+    "distance": 3.2,
+    "type": [
+      "คาเฟ่ / ของหวาน",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "โรตีชีสยืด โรตีภูเขาไฟราดผงโอวัลติน ชาเขียวชักเข้มข้นฟองนุ่ม นมสดร้อน ฮาลาล 100% ขวัญใจวัยรุ่นสงขลา",
+    "address": "ถนนกาญจนวนิช หน้า มรภ.สงขลา ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.1675,
+    "longitude": 100.605
+  },
+  {
+    "id": "r_songkhla_112",
+    "name": "Nakorn Cafe (นคร คาเฟ่ ถนนนครนอก)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 100,
+    "distance": 0.7,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
+    ],
+    "description": "คาเฟ่วินเทจริมน้ำทะเลสาบ กาแฟ Cold Drip เค้กเลมอนเมอแรงก์เปรี้ยวหวานสดชื่น ชาผลไม้สกัดเย็น",
+    "address": "ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.195,
+    "longitude": 100.588
+  },
+  {
+    "id": "r_songkhla_113",
+    "name": "บ้านชา ชาชัก สงขลา (ย่านวชิรา)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 45,
+    "distance": 2.6,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
+    ],
+    "description": "ชาชักเมืองใต้แท้ๆ กลิ่นหอมชาเข้มข้น โรตีกรอบราดคาราเมล ขนมปังปิ้งไส้ทะลักชาไทย กะหรี่ปั๊บไส้ไก่แป้งกรอบ",
+    "address": "ถนนทะเลหลวง ย่านวชิรา ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1785,
+    "longitude": 100.607
+  },
+  {
+    "id": "r_songkhla_114",
+    "name": "Coffee Beach หาดชลาทัศน์",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 110,
+    "distance": 2.1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "แป้งสาลี/กลูเตน",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop"
+    ],
+    "description": "คาเฟ่สไตล์บาหลีริมหาดชลาทัศน์ กาแฟมะพร้าวน้ำหอมสด ครัวซองต์อัลมอนด์อบใหม่ สมูทตี้โบวล์ผลไม้สดรับลมทะเล",
+    "address": "ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.183,
+    "longitude": 100.612
+  },
+  {
+    "id": "r_songkhla_115",
+    "name": "โกปี๊ฮับ สงขลา (Kope Hub)",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1.8,
+    "type": [
+      "คาเฟ่ / ของหวาน",
+      "อาหารเช้า",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "ไข่",
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "ติ่มซำนึ่งสดและคาเฟ่ชาโบราณ ชาเย็นโกปี๊ฮับสูตรพรีเมียม ซาลาเปาลาวาไข่เค็ม ปาท่องโก๋ยักษ์ดิปสังขยาใบเตย",
+    "address": "ถนนกาญจนวนิช ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.185,
+    "longitude": 100.603
+  },
+  {
+    "id": "r_songkhla_116",
+    "name": "โรตีป้าหนู ฮาลาล (หน้าโรงเรียนสงขลาพัฒนาปัญญา)",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 45,
+    "distance": 3.6,
+    "type": [
+      "คาเฟ่ / ของหวาน",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "โรตีใส่ไข่กล้วยหอม ชาชักสูตรสตูลหอมเข้มข้น โรตีทิชชู่วิปครีมฝอยทอง ฮาลาล 100% เปิดขายมายาวนาน",
+    "address": "ถนนสงขลา-นาทวี ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.162,
+    "longitude": 100.611
+  },
+  {
+    "id": "r_songkhla_117",
+    "name": "Pot & Pastry Bakery Cafe สงขลา",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 130,
+    "distance": 1.5,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
+    ],
+    "description": "เบเกอรี่สไตล์ฝรั่งเศสอบสดใหม่ทุกวัน ทาร์ตผลไม้สด เค้กเรดเวลเวต ครัวซองต์ชาเขียวมัทฉะลาวา และเอสเปรสโซ่โทนิก",
+    "address": "ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.19,
+    "longitude": 100.596
+  },
+  {
+    "id": "r_songkhla_118",
+    "name": "Chao Cafe (ชาว คาเฟ่ เกาะยอ)",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 8.5,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
+    ],
+    "description": "คาเฟ่ชมวิวทะเลสาบเกาะยอจากมุมสูง กาแฟซิกเนเจอร์เกาะยอ ครัวซองต์ไข่เค็มลาวา ชาพีชโซดาคลายร้อน",
+    "address": "หมู่ 4 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.165,
+    "longitude": 100.537
+  },
+  {
+    "id": "r_songkhla_119",
+    "name": "Sweet Time บิงซู & ของหวาน สงขลา",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 99,
+    "distance": 2.5,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
+    ],
+    "description": "บิงซูเกล็ดหิมะเนียนนุ่ม บิงซูมะม่วงน้ำดอกไม้ บิงซูบัวลอยชาไทย โทสต์เนยสดไอศกรีมวานิลลาฉ่ำๆ",
+    "address": "ถนนทะเลหลวง ย่านวชิรา ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.178,
+    "longitude": 100.608
+  },
+  {
     "id": "r_songkhla_12",
     "name": "ครัวเจ๊ม่วย ข้าวแกงเมืองสงขลา",
     "rating": 4.6,
@@ -301,6 +808,31 @@
     "address": "ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
     "latitude": 7.189,
     "longitude": 100.598
+  },
+  {
+    "id": "r_songkhla_120",
+    "name": "ชาชัก เจ๊แอ๋ว สงขลา (ถนนทะเลหลวง)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 45,
+    "distance": 2.7,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop"
+    ],
+    "description": "ชาชักเข้มข้นฟองหนา โรตีมะตะบะเนื้อ ขนมปังชุบไข่ทอดหอมเนย นมสดคาราเมล บรรยากาศสตรีทฟู้ดกลางคืน",
+    "address": "ถนนทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1765,
+    "longitude": 100.6095
   },
   {
     "id": "r_songkhla_13",
@@ -1523,5 +2055,1001 @@
     "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
     "latitude": 7.1942,
     "longitude": 100.5908
+  },
+  {
+    "id": "r_songkhla_61",
+    "name": "เสวนาซีฟู้ด เกาะยอ (Sewana Koh Yor)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 220,
+    "distance": 8.4,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารริมทะเลสาบสงขลาบรรยากาศสุดชิลล์ กุ้งกุลาดำเผาเตาถ่าน ปลากะพงทอดราดน้ำปลา ยำไข่แมงดาทะเลสูตรเข้มข้น",
+    "address": "หมู่ 2 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.1625,
+    "longitude": 100.5365
+  },
+  {
+    "id": "r_songkhla_62",
+    "name": "ครัวมัชฌิมา เกาะยอ",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 8.7,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "ซีฟู้ดสดใหม่จากกระชังเลี้ยงเกาะยอ แกงส้มไข่ปลาริวกิวหน่อไม้ดอง ปูม้านึ่งเนื้อแน่นหวาน และกุ้งอบเกลือสมุนไพร",
+    "address": "หมู่ 4 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.1645,
+    "longitude": 100.5385
+  },
+  {
+    "id": "r_songkhla_63",
+    "name": "ร้านหาดสมิหลา ชายเล (ซีฟู้ดฮาลาล)",
+    "rating": 4.6,
+    "priceRange": "$$$",
+    "avgPrice": 260,
+    "distance": 1.8,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลฮาลาล 100% ริมหาดสมิหลา กุ้งมังกร 7 สีซาชิมิ ปูม้าถอดเสื้อนึ่งสด ทะเลรวมมิตรเผาเสิร์ฟคู่น้ำจิ้มซีฟู้ดมะนาวสด",
+    "address": "แหลมสมิหลา ถนนราชดำเนิน ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.2135,
+    "longitude": 100.5915
+  },
+  {
+    "id": "r_songkhla_64",
+    "name": "ครัวเสาวรส เกาะยอ",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 190,
+    "distance": 8.5,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "ซีฟู้ดสไตล์ชาวเกาะ ต้มยำกุ้งแชบ๊วยน้ำใสรสแซ่บ ปลากระบอกทอดขมิ้นกรอบ ยำสาหร่ายผมนาง และหอยชักตีนลวกจิ้ม",
+    "address": "ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.166,
+    "longitude": 100.542
+  },
+  {
+    "id": "r_songkhla_65",
+    "name": "ร้านอาหารทะเล ครัวลุงเจิม (หาดชลาทัศน์)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 210,
+    "distance": 2.2,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลติดหาดชลาทัศน์ ปูม้าถอดเสื้อแกะพร้อมทาน แกงส้มปูดำหน่อไม้ดอง ปลากะพง 3 รส และหอยแครงลวกตัวใหญ่",
+    "address": "ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1825,
+    "longitude": 100.612
+  },
+  {
+    "id": "r_songkhla_66",
+    "name": "เกาะยอซีวิว (ร้านป้าเอียด)",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 8.8,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "ซีฟู้ดสดๆ ราคาย่อมเยา ปลากะพงนึ่งซีอิ๊ว กุ้งทอดราดซอสมะขาม ยำสาหร่ายข้อสด และปูม้านึ่งหวานเจี๊ยบ",
+    "address": "หมู่ 1 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.158,
+    "longitude": 100.533
+  },
+  {
+    "id": "r_songkhla_67",
+    "name": "ซีฟู้ดฮาลาล ริมหาดชลาทัศน์ (บังดล)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 220,
+    "distance": 2.4,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลปรุงตามหลักฮาลาลริมหาดชลาทัศน์ ข้าวผัดปูก้อน ทะเลเผารวมมิตร ปลากะพงทอดน้ำปลา กุ้งอบวุ้นเส้น",
+    "address": "ถนนเลียบหาดชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.18,
+    "longitude": 100.6135
+  },
+  {
+    "id": "r_songkhla_68",
+    "name": "ร้านปลาเผาชายเล เก้าเส้ง",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 3.4,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปลากะพงเผาเกลือเตาถ่านตัวใหญ่เนื้อชุ่มฉ่ำ เสิร์ฟพร้อมผักเคียงและหมี่ขาว หอยหวานเผา ยำไข่ปลาหมึกสด",
+    "address": "หาดเก้าเส้ง ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.171,
+    "longitude": 100.6175
+  },
+  {
+    "id": "r_songkhla_69",
+    "name": "ร้านอาหารชายน้ำ เกาะยอ",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 8.6,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารติดชายน้ำทะเลสาบ ปลากะพงสองเล แกงคั่วปูม้าใบชะพลู ทอดมันกุ้งสด และหมึกไข่นึ่งมะนาว",
+    "address": "หมู่ 5 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.1675,
+    "longitude": 100.547
+  },
+  {
+    "id": "r_songkhla_70",
+    "name": "ครัวป้าทิพย์ ทะเลสาบสงขลา (ปากรอ)",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 12,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านซีฟู้ดวิถีประมงพื้นบ้าน ปลากระบอกรวนเค็ม กุ้งก้ามกรามเผามันเยิ้ม แกงส้มออดิบปลากะพงสองเล",
+    "address": "ตำบลปากรอ อำเภอสิงหนคร สงขลา",
+    "latitude": 7.24,
+    "longitude": 100.485
+  },
+  {
+    "id": "r_songkhla_71",
+    "name": "ร้านอาหารทะเล ยายขำ (สิงหนคร)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 190,
+    "distance": 4.1,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปูม้าเป็นต้มน้ำตาลสด ปลากระเบนแดดเดียวทอด กุ้งอบวุ้นเส้นหม้อดิน และแกงส้มยอดมะพร้าวปลากะพง",
+    "address": "ตำบลหัวเขา อำเภอสิงหนคร สงขลา",
+    "latitude": 7.215,
+    "longitude": 100.573
+  },
+  {
+    "id": "r_songkhla_72",
+    "name": "หาดจันทร์ซีฟู้ด (ชลาทัศน์)",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 2.1,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "นม/ชีส",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "กุ้งลายเสือเผาตัวโต หอยตลับผัดพริกเผา ต้มยำทะเลรวมน้ำข้น ปลากะพงผัดฉ่าสมุนไพรสด",
+    "address": "ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.184,
+    "longitude": 100.6115
+  },
+  {
+    "id": "r_songkhla_73",
+    "name": "แพโฟลทติ้ง ซีฟู้ด เกาะยอ",
+    "rating": 4.6,
+    "priceRange": "$$$",
+    "avgPrice": 250,
+    "distance": 8.9,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ทานอาหารบนแพลอยน้ำกลางทะเลสาบสงขลา กุ้งแม่น้ำซอสมะขาม หมึกแดดเดียวทอด ปลากะพงนึ่งมะนาว",
+    "address": "ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.1615,
+    "longitude": 100.5345
+  },
+  {
+    "id": "r_songkhla_74",
+    "name": "ครัวคุณป้า ซีฟู้ดฮาลาล (แหลมสนอ่อน)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 2.6,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารฮาลาล",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ไข่",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "อาหารทะเลฮาลาล 100% บรรยากาศร่มรื่นใต้ทิวสน ปลากะพง 3 รส ต้มยำโป๊ะแตกทะเล กุ้งผัดผงกะหรี่เข้มข้น",
+    "address": "แหลมสนอ่อน ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.218,
+    "longitude": 100.578
+  },
+  {
+    "id": "r_songkhla_75",
+    "name": "ครัวริมเขื่อน สวนเฉลิมพระเกียรติ สงขลา",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 190,
+    "distance": 3,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ยำสามกรอบทะเล ปลาจาระเม็ดนึ่งบ๊วย ปูม้าผัดต้นหอม และหอยนางรมสดทรงเครื่องรับลมเขื่อน",
+    "address": "สวนเฉลิมพระเกียรติฯ 72 พรรษา ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.202,
+    "longitude": 100.582
+  },
+  {
+    "id": "r_songkhla_76",
+    "name": "ครัวระเบียงน้ำ เกาะยอ (ป้าแตน)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 210,
+    "distance": 8.5,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปลากะพงนึ่งมะนาว แกงส้มชะอมกุ้งสด หอยนางรมสุราษฎร์ทรงเครื่อง กุ้งแชบ๊วยอบวุ้นเส้น",
+    "address": "หมู่ 3 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.1635,
+    "longitude": 100.541
+  },
+  {
+    "id": "r_songkhla_77",
+    "name": "ร้านอาหารทะเล ท้ายเล สิงหนคร",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 190,
+    "distance": 4.5,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปูม้านึ่งหวานเจี๊ยบจากแพปลา แกงส้มปลาอินทรียอดมะพร้าว หมึกกล้วยไข่ย่างเตาถ่าน",
+    "address": "ตำบลชิงโค อำเภอสิงหนคร สงขลา",
+    "latitude": 7.225,
+    "longitude": 100.567
+  },
+  {
+    "id": "r_songkhla_78",
+    "name": "ซีฟู้ดฮาลาล หาดทรายแก้ว สงขลา",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 210,
+    "distance": 5.2,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านอาหารทะเลสดฮาลาล 100% ริมหาดทรายแก้ว ข้าวผัดต้มยำกุ้ง ปลากะพงนึ่งซีอิ๊ว ทะเลลวกจิ้มน้ำจิ้มถั่วบดแซ่บๆ",
+    "address": "หาดทรายแก้ว ตำบลชิงโค อำเภอสิงหนคร สงขลา",
+    "latitude": 7.231,
+    "longitude": 100.562
+  },
+  {
+    "id": "r_songkhla_79",
+    "name": "ครัวลานไทร เกาะยอ",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 200,
+    "distance": 8.6,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ไข่",
+      "นม/ชีส"
+    ],
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "นั่งใต้ต้นไทรใหญ่ริมทะเลสาบ ปลากะพงทอดกระเทียมพริกไทย หอยแมลงภู่อบหม้อดิน ปูม้าผัดผงกะหรี่รสเด็ด",
+    "address": "หมู่ 6 ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.1685,
+    "longitude": 100.544
+  },
+  {
+    "id": "r_songkhla_80",
+    "name": "ร้านอาหารทะเล แหลมขวัญ เกาะยอ",
+    "rating": 4.6,
+    "priceRange": "$$$",
+    "avgPrice": 240,
+    "distance": 8.3,
+    "type": [
+      "ซีฟู้ด",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "จุดชมวิวสะพานติณสูลานนท์แบบพาโนรามา กุ้งแม่น้ำตัวใหญ่เผาเตาถ่าน แกงส้มไข่ปลาริวกิว ปูดำผัดพริกไทยดำรสเข้มข้น",
+    "address": "เชิงสะพานติณสูลานนท์ ตำบลเกาะยอ อำเภอเมืองสงขลา",
+    "latitude": 7.17,
+    "longitude": 100.55
+  },
+  {
+    "id": "r_songkhla_81",
+    "name": "โรงช้างหมูกระทะ สงขลา (วชิรา)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 199,
+    "distance": 2.6,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
+    ],
+    "description": "บุฟเฟต์หมูกระทะเตาถ่านยอดฮิต หมูหมักงา สามชั้นสไลด์บางกรอบ น้ำซุปกระดูกหมูหวานกลมกล่อม น้ำจิ้มสุกี้และซีฟู้ดมะนาวสด",
+    "address": "ถนนทะเลหลวง ย่านวชิรา ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1775,
+    "longitude": 100.608
+  },
+  {
+    "id": "r_songkhla_82",
+    "name": "ฮาลาล ชาบู & กริลล์ สงขลา (Halal Shabu & Grill)",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 259,
+    "distance": 3.2,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "อาหารทะเล",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "บุฟเฟต์ชาบูปิ้งย่างฮาลาลแท้ 100% เนื้อออสเตรเลียสไลด์ กุ้งแม่น้ำ หมึกสด ชีสยืด น้ำซุปต้มยำและน้ำซุปดำฮาลาล",
+    "address": "ถนนกาญจนวนิช ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.1665,
+    "longitude": 100.606
+  },
+  {
+    "id": "r_songkhla_83",
+    "name": "นินจา ชาบู บุฟเฟต์ สงขลา (Ninja Shabu)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 289,
+    "distance": 2.4,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารญี่ปุ่น"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ชาบูหม้อไฟสไตล์ญี่ปุ่น ซุปน้ำดำสุกี้ยากี้เข้มข้น ซุปทงคัตสึ เนื้อริบอายสไลด์ หมูคุโรบูตะ ซูชิและไอศกรีมไม่อั้น",
+    "address": "ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.181,
+    "longitude": 100.6025
+  },
+  {
+    "id": "r_songkhla_84",
+    "name": "สิมิลัน ปิ้งย่าง ซีฟู้ด & หมูกระทะ สงขลา",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 239,
+    "distance": 2.7,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "บุฟเฟต์ปิ้งย่างซีฟู้ดบวกหมูกระทะ กุ้งก้ามกรามเผา ปูม้า หอยหวาน หอยเชลล์ย่างเนย และหมูสามชั้นหมักเกาหลี",
+    "address": "ถนนทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1765,
+    "longitude": 100.609
+  },
+  {
+    "id": "r_songkhla_85",
+    "name": "ยากินิคุ เฮาส์ สงขลา (Yakiniku House)",
+    "rating": 4.7,
+    "priceRange": "$$$",
+    "avgPrice": 350,
+    "distance": 1.5,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารญี่ปุ่น"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปิ้งย่างเนื้อพรีเมียมสไตล์ญี่ปุ่นเตาถ่าน เนื้อวากิวย่างเนยหอมกรุ่น ลิ้นวัวหั่นหนาย่างเกลือ หมูหมักซอสมิโซะ กิมจิโฮมเมด",
+    "address": "ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1895,
+    "longitude": 100.5955
+  },
+  {
+    "id": "r_songkhla_86",
+    "name": "ชาบู ชาบู นางงาม (Shabu Nang Ngam)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 219,
+    "distance": 0.8,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านชาบูหม้อไฟบรรยากาศตึกแถวโบราณถนนนางงาม น้ำซุปกระดูกหมูสูตรเฉพาะ ชุดหมูสไลด์ ผักสดคัดเกรดสะอาด",
+    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1948,
+    "longitude": 100.5904
+  },
+  {
+    "id": "r_songkhla_87",
+    "name": "หมูกระทะริมเล หาดชลาทัศน์ (ป้านวล)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 150,
+    "distance": 2.3,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
+    ],
+    "description": "กินหมูกระทะเตาถ่านรับลมทะเลหาดชลาทัศน์ หมูหมักพริกไทยดำ สามชั้นหมักน้ำมันหอย ตับหวานสด น้ำจิ้มซีฟู้ดมะนาวแท้",
+    "address": "ถนนเลียบหาดชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1815,
+    "longitude": 100.6125
+  },
+  {
+    "id": "r_songkhla_88",
+    "name": "เดอะ กริลล์ ฮาลาล บาร์บีคิว (The Grill Halal BBQ)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 249,
+    "distance": 3.5,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปิ้งย่างกระทะร้อนฮาลาล 100% เนื้อโคขุนหมักงา ไก่สไปซี่ กุ้งสดตัวโต เนยแท้หอมกรุ่น น้ำจิ้มแจ่วรสจัดจ้าน",
+    "address": "ถนนสงขลา-นาทวี ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.164,
+    "longitude": 100.609
+  },
+  {
+    "id": "r_songkhla_89",
+    "name": "อันดามัน ชาบู & สุกี้โบราณ (ถนนรามวิถี)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1.3,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "อาหารทะเล",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "สุกี้โบราณหมักเต้าหู้ยี้สูตรกวางตุ้ง ชาบูหม้อรวมมิตรเนื้อหมูนุ่ม ไก่หมัก และซีฟู้ด น้ำจิ้มเต้าหู้ยี้โรยงาขาวคั่วหอมฟุ้ง",
+    "address": "ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1912,
+    "longitude": 100.5945
+  },
+  {
+    "id": "r_songkhla_90",
+    "name": "โกดังหมูกระทะ สงขลา (ย่าน มรภ.สงขลา)",
+    "rating": 4.4,
+    "priceRange": "$",
+    "avgPrice": 169,
+    "distance": 3.3,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง",
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
+    ],
+    "description": "บุฟเฟต์หมูกระทะขวัญใจนักศึกษา อาหารสดเติมตลอด หมูนุ่ม สามชั้น เบคอน กุ้งสด ไอศกรีมและของทานเล่นไม่อั้น",
+    "address": "ถนนกาญจนวนิช หน้า มรภ.สงขลา ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.167,
+    "longitude": 100.6055
+  },
+  {
+    "id": "r_songkhla_91",
+    "name": "ซูโม่ ปิ้งย่างเกาหลี สงขลา (Sumo Korean BBQ)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 279,
+    "distance": 2.5,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารเกาหลี"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปิ้งย่างเกาหลีแท้ หมูสามชั้นย่างห่อผักกาดหอม สันคอหมักซอสโคชูจัง ซุปกิมจิต้มร้อนๆ เครื่องเคียงเกาหลีเติมไม่อั้น",
+    "address": "ถนนทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.178,
+    "longitude": 100.6075
+  },
+  {
+    "id": "r_songkhla_92",
+    "name": "โอชา ชาบูหม้อไฟฮาลาล (Ocha Shabu Halal)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 239,
+    "distance": 2.8,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "อาหารทะเล",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "หม้อชาบู 2 ซุปแยกช่อง ซุปต้มยำกุ้งน้ำข้น และซุปใสปลาแห้ง เนื้อใบพายสไลด์ ลูกชิ้นปลา กุ้งแม่น้ำ สดสะอาดฮาลาล 100%",
+    "address": "ถนนไทรบุรี ซอย 32 ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.183,
+    "longitude": 100.6
+  },
+  {
+    "id": "r_songkhla_93",
+    "name": "บาร์บีคิว เทอเรซ ชลาทัศน์ (BBQ Terrace)",
+    "rating": 4.5,
+    "priceRange": "$$$",
+    "avgPrice": 320,
+    "distance": 2,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารตะวันตก"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปิ้งย่างสเต็กบาร์บีคิวริมหาดชลาทัศน์ ซี่โครงหมูย่างบาร์บีคิวซอสรมควัน กุ้งแม่น้ำย่างเนยกระเทียม ไส้กรอกรวมย่างเกรียม",
+    "address": "ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.186,
+    "longitude": 100.6105
+  },
+  {
+    "id": "r_songkhla_94",
+    "name": "หมูกระทะคุณหมอ สงขลา",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 3.1,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "หมูกระทะเน้นความสะอาดระดับพรีเมียม หมูหมักสูตรนุ่มไร้สาร เบคอนรมควัน น้ำจิ้มสุกี้มะนาวสดใส่พริกกระเทียมไม่อั้น",
+    "address": "ถนนกาญจนวนิช ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.169,
+    "longitude": 100.6045
+  },
+  {
+    "id": "r_songkhla_95",
+    "name": "ปักกิ่ง ชาบูหม่าล่าหม้อไฟ สงขลา",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 250,
+    "distance": 2.3,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่ว",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ชาบูหม่าล่าหม้อไฟสูตรเสฉวนแท้ น้ำซุปหม่าล่าเผ็ดลิ้นชา ซุปกระดูกหมูคอลลาเจนขาวข้น ไส้เป็ด เนื้อแกะสไลด์ ฟองเต้าหู้ทอด",
+    "address": "ถนนทะเลหลวง ย่านวชิรา ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.179,
+    "longitude": 100.6065
+  },
+  {
+    "id": "r_songkhla_96",
+    "name": "มีตแอนด์มอร์ ปิ้งย่างพรีเมียม (Meat & More Grill)",
+    "rating": 4.7,
+    "priceRange": "$$$",
+    "avgPrice": 390,
+    "distance": 1.6,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารตะวันตก"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านปิ้งย่างเนื้อวากิวและไทย-วากิวคัดเกรด ลิ้นวัวย่างเกลือมะนาว เนื้อสตริปลอยน์ลายหินอ่อน ย่างบนกระทะทองเหลือง",
+    "address": "ถนนเพชรคีรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.192,
+    "longitude": 100.592
+  },
+  {
+    "id": "r_songkhla_97",
+    "name": "นาจา หมูกระทะเตาถ่าน (ถนนไทรบุรี)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 150,
+    "distance": 1.7,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "หมูกระทะชุดแบบดั้งเดิม น้ำซุปหัวไชเท้ากระดูกหมูหวานธรรมชาติ น้ำจิ้มพริกคั่วเข้มข้น สามชั้นย่างกรอบๆ",
+    "address": "ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.187,
+    "longitude": 100.598
+  },
+  {
+    "id": "r_songkhla_98",
+    "name": "ซันนี่ ฮาลาล ปิ้งย่าง & ชาบู (Sunny Halal Grill)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 249,
+    "distance": 3.4,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารฮาลาล"
+    ],
+    "allergens": [
+      "นม/ชีส",
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปิ้งย่างเนยและชาบูฮาลาล 100% เนื้อริบอายหมักกระเทียมพริกไทย กุ้งขาวสด กะทะชีสยืดจิ้มฟินๆ",
+    "address": "ถนนกาญจนวนิช ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.1655,
+    "longitude": 100.607
+  },
+  {
+    "id": "r_songkhla_99",
+    "name": "สเต็ก & กริลล์ ชายเล เก้าเส้ง",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 190,
+    "distance": 3.6,
+    "type": [
+      "ปิ้งย่าง / ชาบู",
+      "อาหารตะวันตก"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ชีส",
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปิ้งย่างกระทะร้อน สเต็กเนื้อโคขุนพริกไทยดำ สเต็กปลาแซลมอนย่างเนย สลัดผักสดริมทะเลเก้าเส้ง",
+    "address": "ชุมชนเก้าเส้ง ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1695,
+    "longitude": 100.619
   }
 ]
