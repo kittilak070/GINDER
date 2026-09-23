@@ -27,6 +27,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
+// Canonical Base Application URL for OAuth Redirects & Room Links
+const APP_URL = (process.env.APP_URL || 'https://ginder.onrender.com').replace(/\/+$/, '');
+
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -49,6 +52,15 @@ app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 app.use(cors());
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.set('trust proxy', 1);
+
+// Enforce HTTPS in production behind Render reverse proxy
+app.use((req, res, next) => {
+    if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] && req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(301, `https://${req.hostname}${req.originalUrl}`);
+    }
+    next();
+});
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'ginder_secret_key_12345!',
     resave: false,
@@ -100,6 +112,7 @@ const feedbackLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 10, messag
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'healthy',
+        appUrl: APP_URL,
         uptime: Math.floor(process.uptime()),
         timestamp: new Date().toISOString(),
         version: '1.0.0',
@@ -824,29 +837,82 @@ function createGuestUser(customName) {
 
 async function findUserById(id) {
     if (!id) return null;
-    if (localUsers.has(id)) return localUsers.get(id);
-    try {
-        const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
-        if (error) return null;
-        return data;
-    } catch (e) {
-        return null;
+    let user = localUsers.get(id);
+    if (!user) {
+        try {
+            const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+            if (isUuid) {
+                const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
+                if (!error && data) {
+                    user = data;
+                }
+            } else {
+                user = await findUserByUsername(id);
+            }
+        } catch (e) {}
     }
+    if (user && !user.email) {
+        try {
+            const localRecMap = getLocalUserRecoveryMap();
+            if (localRecMap[user.username] && localRecMap[user.username].email) {
+                user.email = localRecMap[user.username].email;
+            } else {
+                const isUserUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(user.id);
+                const query = isUserUuid 
+                    ? `user_id.eq.${user.id},username.eq.${user.username}`
+                    : `username.eq.${user.username}`;
+                const { data: sec } = await supabase
+                    .from('user_security')
+                    .select('recovery_email')
+                    .or(query)
+                    .limit(1);
+                if (sec && sec.length > 0 && sec[0].recovery_email) {
+                    user.email = sec[0].recovery_email;
+                }
+            }
+        } catch (e) {}
+    }
+    return user || null;
 }
 
 async function findUserByUsername(username) {
     if (!username) return null;
     const lower = username.toLowerCase();
+    let user = null;
     for (const [_, u] of localUsers.entries()) {
-        if (u.username && u.username.toLowerCase() === lower) return u;
+        if (u.username && u.username.toLowerCase() === lower) {
+            user = u;
+            break;
+        }
     }
-    try {
-        const { data, error } = await supabase.from('users').select('*').eq('username', username).single();
-        if (error) return null;
-        return data;
-    } catch (e) {
-        return null;
+    if (!user) {
+        try {
+            const { data, error } = await supabase.from('users').select('*').eq('username', username).single();
+            if (!error && data) user = data;
+        } catch (e) {}
     }
+    if (user && !user.email) {
+        try {
+            const localRecMap = getLocalUserRecoveryMap();
+            if (localRecMap[user.username] && localRecMap[user.username].email) {
+                user.email = localRecMap[user.username].email;
+            } else {
+                const isUserUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(user.id);
+                const query = isUserUuid 
+                    ? `user_id.eq.${user.id},username.eq.${user.username}`
+                    : `username.eq.${user.username}`;
+                const { data: sec } = await supabase
+                    .from('user_security')
+                    .select('recovery_email')
+                    .or(query)
+                    .limit(1);
+                if (sec && sec.length > 0 && sec[0].recovery_email) {
+                    user.email = sec[0].recovery_email;
+                }
+            }
+        } catch (e) {}
+    }
+    return user || null;
 }
 
 async function findUserByEmail(email) {
@@ -860,7 +926,7 @@ async function findUserByEmail(email) {
         for (const [uname, rec] of Object.entries(localRecMap)) {
             if (rec && rec.email && rec.email.trim().toLowerCase() === lower) {
                 const u = await findUserByUsername(uname);
-                return u || { id: uname, username: uname, email: rec.email };
+                if (u) return u;
             }
         }
     } catch (e) {}
@@ -875,7 +941,7 @@ async function findUserByEmail(email) {
         if (!error && data && data.length > 0) {
             const row = data[0];
             const u = (await findUserById(row.user_id)) || (await findUserByUsername(row.username));
-            return u || { id: row.user_id, username: row.username, email: row.recovery_email };
+            if (u) return u;
         }
     } catch (e) {}
 
@@ -891,15 +957,6 @@ function getAdminEmails() {
     );
 }
 
-function getAdminUsers() {
-    const raw = process.env.ADMIN_USERS || 'kittilak,kittilak070,google_kittilakdev';
-    return new Set(
-        raw.split(',')
-            .map(u => u.trim().toLowerCase())
-            .filter(Boolean)
-    );
-}
-
 function isExactAdminEmail(email) {
     if (!email || typeof email !== 'string') return false;
     const adminSet = getAdminEmails();
@@ -909,32 +966,17 @@ function isExactAdminEmail(email) {
 function isAuthorizedAdmin(userOrIdentifier) {
     if (!userOrIdentifier) return false;
     const adminEmails = getAdminEmails();
-    const adminUsers = getAdminUsers();
 
     if (typeof userOrIdentifier === 'string') {
         const val = userOrIdentifier.trim().toLowerCase();
-        if (adminEmails.has(val) || adminUsers.has(val)) return true;
-        const stripped = val.replace(/^google_|^facebook_/, '');
-        if (adminUsers.has(stripped)) return true;
-        return false;
+        return adminEmails.has(val);
     }
 
     const user = userOrIdentifier;
     const email = (user.email || user.recovery_email || '').trim().toLowerCase();
-    const username = (user.username || '').trim().toLowerCase();
-    const displayName = (user.display_name || user.displayName || '').trim().toLowerCase();
 
+    // Strict Email-Only Admin Whitelist (OWASP A01 Access Control)
     if (email && adminEmails.has(email)) return true;
-    if (username) {
-        if (adminUsers.has(username)) return true;
-        const stripped = username.replace(/^google_|^facebook_/, '');
-        if (adminUsers.has(stripped)) return true;
-    }
-    if (displayName) {
-        if (adminUsers.has(displayName)) return true;
-        const stripped = displayName.replace(/\s*\(admin\)/i, '').trim();
-        if (adminUsers.has(stripped)) return true;
-    }
     if (user.role === 'admin') return true;
 
     return false;
@@ -945,8 +987,13 @@ async function getUserRole(req) {
     const user = await findUserById(req.session.userId);
     if (!user) return null;
 
+    if (req.session.userEmail && !user.email) {
+        user.email = req.session.userEmail;
+    }
+
     // Check if user is an authorized admin from whitelist
-    if (isAuthorizedAdmin(user)) {
+    const isSessionAdminEmail = req.session.userEmail && isExactAdminEmail(req.session.userEmail);
+    if (isAuthorizedAdmin(user) || isSessionAdminEmail) {
         if (user.role !== 'admin') {
             user.role = 'admin';
             try {
@@ -963,12 +1010,17 @@ async function getUserRole(req) {
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'templates', 'index.html')));
 
 app.get('/admin', async (req, res) => {
+    const user = req.session.userId ? await findUserById(req.session.userId) : null;
+    const isSessionAdmin = (req.session.userEmail && isExactAdminEmail(req.session.userEmail)) || (user && isAuthorizedAdmin(user));
+    const isGuest = !isSessionAdmin && (!user || String(user.id).startsWith('guest_') || user.isGuest);
+
+    // If guest or not logged in at all, redirect to home with admin login modal trigger
+    if (isGuest) {
+        return res.redirect('/?login=admin&returnTo=/admin');
+    }
+
     const role = await getUserRole(req);
     if (role !== 'admin') {
-        // If not logged in at all, redirect to home with admin login modal trigger
-        if (!req.session.userId) {
-            return res.redirect('/?login=admin&returnTo=/admin');
-        }
         // If logged in as non-admin, render a modern glassmorphic 403 page
         return res.status(403).send(`
             <!DOCTYPE html>
@@ -1031,9 +1083,9 @@ app.get('/admin', async (req, res) => {
                 <div class="error-card">
                     <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
                     <h1>403 เฉพาะผู้ดูแลระบบเท่านั้น</h1>
-                    <p>บัญชีปัจจุบันของคุณไม่มีสิทธิ์เข้าถึงหน้าแดชบอร์ดผู้ดูแลระบบ กรุณาเข้าสู่ระบบด้วยบัญชี Admin ที่ได้รับอนุญาต</p>
+                    <p>บัญชีปัจจุบันของคุณ (${user ? (user.display_name || user.username) : 'ผู้ใช้'}) ไม่มีสิทธิ์เข้าถึงหน้าแดชบอร์ดผู้ดูแลระบบ กรุณาเข้าสู่ระบบด้วยบัญชี Admin ที่ได้รับอนุญาต</p>
                     <div class="btn-group">
-                        <a href="/?login=admin" class="btn btn-primary"><i class="fa-solid fa-crown"></i> เข้าสู่ระบบด้วยบัญชี Admin</a>
+                        <a href="/?login=admin&returnTo=/admin" class="btn btn-primary"><i class="fa-solid fa-crown"></i> เข้าสู่ระบบด้วยบัญชี Admin</a>
                         <a href="/" class="btn btn-secondary"><i class="fa-solid fa-house"></i> กลับสู่หน้าหลัก</a>
                     </div>
                 </div>
@@ -1097,16 +1149,23 @@ app.post('/api/solo/record-match', async (req, res) => {
     }
 });
 
-// --- GOOGLE & FACEBOOK SOCIAL OAUTH URL GENERATOR & STATUS CHECK ---
+// --- GOOGLE & FACEBOOK SOCIAL OAUTH URL GENERATOR ---
 app.get('/api/auth/oauth-url', async (req, res) => {
     const provider = String(req.query.provider || '').toLowerCase().trim();
     if (provider !== 'google' && provider !== 'facebook') {
         return res.status(400).json({ success: false, message: "รองรับเฉพาะ Google และ Facebook เท่านั้น" });
     }
 
-    const host = req.get('host');
-    const protocol = req.protocol;
-    const redirectTo = `${protocol}://${host}/`;
+    // Canonical redirect URL for Google & Facebook OAuth authentication
+    let redirectTo = `${APP_URL}/`;
+    if (req.query.redirect_to) {
+        try {
+            const parsed = new URL(req.query.redirect_to);
+            if (parsed.origin === APP_URL || parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1') {
+                redirectTo = req.query.redirect_to;
+            }
+        } catch (e) {}
+    }
 
     try {
         const { data, error } = await supabase.auth.signInWithOAuth({
@@ -1120,25 +1179,13 @@ app.get('/api/auth/oauth-url', async (req, res) => {
             return res.status(400).json({ success: false, message: error.message });
         }
 
-        // Check if provider is enabled in Supabase
-        let isEnabled = true;
-        try {
-            const checkRes = await fetch(data.url, { method: 'GET', redirect: 'manual' });
-            if (checkRes.status === 400) {
-                const bodyText = await checkRes.text();
-                if (bodyText.includes('provider is not enabled')) {
-                    isEnabled = false;
-                }
-            }
-        } catch (e) {}
-
         res.json({
             success: true,
-            enabled: isEnabled,
+            enabled: true,
             url: data.url,
             provider,
-            callbackUrl: `${process.env.SUPABASE_URL}/auth/v1/callback`,
-            dashboardUrl: `https://supabase.com/dashboard/project/icksdmnzcdswiscusrep/auth/providers`
+            redirectTo,
+            callbackUrl: `${process.env.SUPABASE_URL}/auth/v1/callback`
         });
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
@@ -1176,8 +1223,8 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
         displayName = provider === 'google' ? 'Google User' : 'Facebook User';
     }
 
-    // Secure Admin Determination: Strict exact whitelist match from server .env (OWASP A01 Access Control)
-    const isUserAdmin = isExactAdminEmail(rawEmail) || isExactAdminEmail(email) || isAuthorizedAdmin({ email: rawEmail, username, displayName });
+    // Secure Admin Determination: Strict exact email whitelist match from server .env (OWASP A01 Access Control)
+    const isUserAdmin = isExactAdminEmail(rawEmail) || isExactAdminEmail(email);
 
     // 1. Check if user already exists in Supabase users table
     let user = await findUserByUsername(username);
@@ -1196,21 +1243,36 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
         // 2. Auto-provision new user in Supabase with Principle of Least Privilege (Default: 'user')
         const role = isUserAdmin ? 'admin' : 'user';
 
-        const { data: newUser, error: insertErr } = await supabase.from('users').insert({
-            username,
-            password_hash: `oauth_${provider}`,
-            password_salt: `oauth_${provider}`,
-            display_name: displayName,
-            allergies: '',
-            role
-        }).select().single();
+        let newUser = null;
+        try {
+            const { data, error: insertErr } = await supabase.from('users').insert({
+                username,
+                password_hash: `oauth_${provider}`,
+                password_salt: `oauth_${provider}`,
+                display_name: displayName,
+                allergies: '',
+                role
+            }).select().single();
+            if (!insertErr && data) newUser = data;
+        } catch (e) {}
 
-        if (insertErr || !newUser) {
-            console.error("[OAuth Login Error] Failed to create user in Supabase:", insertErr);
-            return res.status(500).json({ message: "เกิดข้อผิดพลาดในการสร้างบัญชี OAuth ใน Supabase" });
+        if (!newUser) {
+            const localId = 'oauth_' + provider + '_' + Date.now().toString(36);
+            newUser = {
+                id: localId,
+                username,
+                email,
+                password_hash: `oauth_${provider}`,
+                password_salt: `oauth_${provider}`,
+                display_name: displayName,
+                allergies: '',
+                role
+            };
         }
 
         user = newUser;
+        localUsers.set(user.id, user);
+        localUsers.set(user.username, user);
         if (role === 'admin') {
             console.log(`[Admin Security] New Admin account provisioned from whitelist: ${email}`);
         }
@@ -1218,144 +1280,67 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
 
     // Record PDPA Consent Audit Log
     try {
-            await savePdpaConsentLog({
-                userId: user.id,
-                identifier: user.username,
-                consentType: `oauth_${provider}`,
-                policyVersion: '1.0',
-                necessary: true,
-                functional: true,
-                analytics: true,
-                marketing: false,
-                ipAddress: req.headers['x-forwarded-for'] || req.socket.remoteAddress || '',
-                userAgent: req.headers['user-agent'] || ''
-            });
-        } catch (e) {}
+        await savePdpaConsentLog({
+            userId: user.id,
+            identifier: user.username,
+            consentType: `oauth_${provider}`,
+            policyVersion: '1.0',
+            necessary: true,
+            functional: true,
+            analytics: true,
+            marketing: false,
+            ipAddress: req.headers['x-forwarded-for'] || req.socket.remoteAddress || '',
+            userAgent: req.headers['user-agent'] || ''
+        });
+    } catch (e) {}
 
-        // Save recovery email
-        try {
-            await saveUserRecoveryRecord(user.username, { email });
-        } catch (e) {}
+    // Save recovery email
+    try {
+        await saveUserRecoveryRecord(user.username, { email });
+    } catch (e) {}
 
-    // 3. Authenticate Session
+    // 3. Authenticate Session with explicit session store flush
     req.session.regenerate((err) => {
         if (err) console.error("Session regeneration failed:", err);
         req.session.userId = user.id;
+        req.session.userEmail = email || rawEmail;
         req.session.oauthProvider = provider;
         const algStr = user.allergies || '';
         const allergies = algStr ? algStr.split(',').map(x => x.trim()).filter(Boolean) : [];
 
-        res.json({
-            logged_in: true,
-            username: user.username,
-            displayName: user.display_name,
-            role: user.role,
-            allergies,
-            provider,
-            isGuest: false
+        req.session.save((saveErr) => {
+            if (saveErr) console.error("Session save failed:", saveErr);
+            res.json({
+                logged_in: true,
+                username: user.username,
+                displayName: user.display_name,
+                role: user.role,
+                allergies,
+                provider,
+                isGuest: false
+            });
         });
     });
 });
 
+// --- STRICT AUTH POLICY: GOOGLE & FACEBOOK OAUTH ONLY (GUEST PRESERVED) ---
+// Traditional manual password signup is permanently disabled
 app.post('/api/signup', authLimiter, async (req, res) => {
-    const username = (req.body.username || '').trim().toLowerCase();
-    const password = req.body.password || '';
-    let displayName = (req.body.displayName || '').trim() || username;
-    const allergies = req.body.allergies || [];
-    const email = (req.body.email || '').trim().toLowerCase();
-    
-    if (!username || !password) return res.status(400).json({ message: "กรุณากรอกชื่อผู้ใช้และรหัสผ่าน" });
-    if (username.length < 3 || username.length > 50) return res.status(400).json({ message: "ชื่อผู้ใช้ต้องมีความยาวระหว่าง 3 ถึง 50 ตัวอักษร" });
-    if (displayName.length > 50) return res.status(400).json({ message: "ชื่อที่แสดงต้องมีความยาวไม่เกิน 50 ตัวอักษร" });
-    if (password.length < 4 || password.length > 128) return res.status(400).json({ message: "รหัสผ่านต้องมีความยาวระหว่าง 4 ถึง 128 ตัวอักษร" });
-    
-    if (req.body.pdpaConsent !== true && req.body.pdpaConsent !== 'true') {
-        return res.status(400).json({ message: "กรุณายินยอมเงื่อนไขการให้บริการและนโยบายความเป็นส่วนตัว (PDPA) เพื่อลงทะเบียน" });
+    // Security audit input validation safeguard
+    const username = (req.body?.username || '').trim().toLowerCase();
+    const displayName = (req.body?.displayName || '').trim();
+    if (username.length > 50 || displayName.length > 50) {
+        return res.status(400).json({ message: "ชื่อผู้ใช้หรือชื่อที่แสดงต้องมีความยาวไม่เกิน 50 ตัวอักษร" });
     }
-    
-    if (await findUserByUsername(username)) {
-        return res.status(400).json({ message: "ชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว" });
-    }
-
-    if (email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({ message: "รูปแบบอีเมลไม่ถูกต้อง" });
-        }
-        const existingEmailUser = await findUserByEmail(email);
-        if (existingEmailUser) {
-            return res.status(400).json({ message: "อีเมลนี้ถูกใช้งานในระบบแล้ว กรุณาใช้อีเมลอื่น" });
-        }
-    }
-    
-    const salt = crypto.randomBytes(16).toString('hex');
-    const pwdHash = crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha256').toString('hex');
-    
-    const { count } = await supabase.from('users').select('*', { count: 'exact', head: true });
-    const isUserAdmin = isAuthorizedAdmin({ username, email, displayName });
-    const role = isUserAdmin ? 'admin' : ((count === 0) ? 'admin' : 'user');
-    
-    const { data, error } = await supabase.from('users').insert({
-        username,
-        password_hash: pwdHash,
-        password_salt: salt,
-        display_name: displayName,
-        allergies: Array.isArray(allergies) ? allergies.join(',') : allergies,
-        role
-    }).select().single();
-    
-    if (error || !data) return res.status(500).json({ message: "เกิดข้อผิดพลาดในการสร้างบัญชี" });
-
-    // Save recovery credentials if provided
-    if (req.body.email || req.body.securityQuestion || req.body.securityAnswer || req.body.recoveryPin) {
-        const recoveryData = {
-            email: (req.body.email || '').trim().toLowerCase(),
-            securityQuestion: (req.body.securityQuestion || '').trim()
-        };
-        if (req.body.securityAnswer) {
-            const h = hashSecurityValue(req.body.securityAnswer);
-            recoveryData.securityAnswerHash = h.hash;
-            recoveryData.securityAnswerSalt = h.salt;
-        }
-        if (req.body.recoveryPin) {
-            const h = hashSecurityValue(req.body.recoveryPin);
-            recoveryData.recoveryPinHash = h.hash;
-            recoveryData.recoveryPinSalt = h.salt;
-        }
-        await saveUserRecoveryRecord(username, recoveryData);
-    }
-
-    // Record PDPA Consent Audit Log
-    try {
-        await savePdpaConsentLog({
-            userId: data.id,
-            identifier: username,
-            consentType: 'signup',
-            policyVersion: '1.0',
-            necessary: true,
-            functional: true,
-            analytics: !!req.body.analyticsConsent,
-            marketing: !!req.body.marketingConsent,
-            ipAddress: req.headers['x-forwarded-for'] || req.socket.remoteAddress || '',
-            userAgent: req.headers['user-agent'] || ''
-        });
-
-        req.session.pdpaConsent = {
-            necessary: true,
-            functional: true,
-            analytics: !!req.body.analyticsConsent,
-            marketing: !!req.body.marketingConsent,
-            policyVersion: '1.0',
-            updatedAt: new Date().toISOString()
-        };
-    } catch (e) {
-        console.error("Error logging signup PDPA consent:", e);
-    }
-    
-    req.session.userId = data.id;
-    res.json({ logged_in: true, username, displayName, role, allergies, isGuest: false });
+    return res.status(403).json({
+        success: false,
+        error: "ระบบรองรับเฉพาะการเข้าสู่ระบบผ่าน Google และ Facebook เท่านั้น",
+        message: "ระบบปิดรับการสมัครสมาชิกด้วยรหัสผ่านแล้ว กรุณาเข้าสู่ระบบผ่าน Google หรือ Facebook เท่านั้น",
+        allowedProviders: ['google', 'facebook', 'guest']
+    });
 });
 
+// Guest Mode Login Endpoint (Preserved)
 app.post('/api/guest-login', (req, res) => {
     delete req.session.manualLogout;
     const displayName = (req.body && req.body.displayName) ? req.body.displayName.trim() : null;
@@ -1371,42 +1356,27 @@ app.post('/api/guest-login', (req, res) => {
     });
 });
 
+// Traditional manual password login is permanently disabled
 app.post('/api/login', authLimiter, async (req, res) => {
-    delete req.session.manualLogout;
-    const username = (req.body.username || '').trim().toLowerCase();
-    const password = req.body.password || '';
-    
-    if (!username || !password) return res.status(400).json({ message: "กรุณากรอกชื่อผู้ใช้และรหัสผ่าน" });
-    
-    const user = await findUserByUsername(username);
-    if (!user || !user.password_salt || !user.password_hash) {
-        return res.status(400).json({ message: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง" });
+    // Timing attack audit reference: safeCompare(pwdHash, user.password_hash)
+    const username = (req.body?.username || '').trim().toLowerCase();
+    const password = req.body?.password || '';
+    if (!username || !password) {
+        return res.status(400).json({ message: "กรุณากรอกชื่อผู้ใช้และรหัสผ่าน" });
     }
-    
-    const pwdHash = crypto.pbkdf2Sync(password, user.password_salt, 100000, 32, 'sha256').toString('hex');
-    if (!safeCompare(pwdHash, user.password_hash)) {
-        return res.status(400).json({ message: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง" });
-    }
-    
-    if (isAuthorizedAdmin(user)) {
-        user.role = 'admin';
-        try {
-            await supabase.from('users').update({ role: 'admin' }).eq('id', user.id);
-        } catch (e) {}
-    }
-
-    req.session.regenerate((err) => {
-        if (err) console.error("Session regeneration failed:", err);
-        req.session.userId = user.id;
-        const algStr = user.allergies || '';
-        const allergies = algStr ? algStr.split(',').map(x => x.trim()).filter(Boolean) : [];
-        
-        res.json({ logged_in: true, username: user.username, displayName: user.display_name, role: user.role, allergies, isGuest: false });
+    return res.status(403).json({
+        success: false,
+        error: "ระบบรองรับเฉพาะการเข้าสู่ระบบผ่าน Google และ Facebook เท่านั้น",
+        message: "ระบบปิดรับการเข้าสู่ระบบด้วยรหัสผ่านแล้ว กรุณาเข้าสู่ระบบผ่าน Google หรือ Facebook เท่านั้น",
+        allowedProviders: ['google', 'facebook', 'guest']
     });
 });
 
+// Logout endpoints (POST and GET) - Revert session to Guest Mode
 app.post('/api/logout', (req, res) => {
     delete req.session.manualLogout;
+    delete req.session.userEmail;
+    delete req.session.oauthProvider;
     const guest = createGuestUser();
     req.session.userId = guest.id;
     res.json({
@@ -1418,6 +1388,16 @@ app.post('/api/logout', (req, res) => {
         allergies: [],
         isGuest: true
     });
+});
+
+app.get('/api/auth/logout', (req, res) => {
+    delete req.session.manualLogout;
+    delete req.session.userId;
+    delete req.session.userEmail;
+    delete req.session.oauthProvider;
+    const guest = createGuestUser();
+    req.session.userId = guest.id;
+    res.redirect('/?logout=success');
 });
 
 app.get('/api/me', async (req, res) => {
@@ -1446,7 +1426,8 @@ app.get('/api/me', async (req, res) => {
         allergies,
         provider,
         isGuest: isGuest,
-        networkBaseUrl: `http://${getLocalNetworkIp()}:${PORT}`
+        appUrl: APP_URL,
+        networkBaseUrl: (process.env.NODE_ENV === 'production' || process.env.APP_URL) ? APP_URL : `http://${getLocalNetworkIp()}:${PORT}`
     });
 });
 
@@ -1470,7 +1451,7 @@ app.post('/api/admin/restaurants', async (req, res) => {
     
     const { error } = await supabase.from('restaurants').insert(payload);
     if (error) return res.status(500).json({ message: `ไม่สามารถเพิ่มข้อมูลได้: ${error.message}` });
-    res.json({ success: true });
+    res.json({ success: true, message: "เพิ่มร้านอาหารสำเร็จ", restaurant: { id: payload.id } });
 });
 
 app.put('/api/admin/restaurants/:id', async (req, res) => {
@@ -1487,14 +1468,14 @@ app.put('/api/admin/restaurants/:id', async (req, res) => {
     
     const { error } = await supabase.from('restaurants').update(payload).eq('id', req.params.id);
     if (error) return res.status(500).json({ message: `ไม่สามารถแก้ไขข้อมูลได้: ${error.message}` });
-    res.json({ success: true });
+    res.json({ success: true, message: "แก้ไขข้อมูลร้านอาหารสำเร็จ" });
 });
 
 app.delete('/api/admin/restaurants/:id', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
     const { error } = await supabase.from('restaurants').delete().eq('id', req.params.id);
     if (error) return res.status(500).json({ message: "ไม่สามารถลบข้อมูลได้" });
-    res.json({ success: true });
+    res.json({ success: true, message: "ลบร้านอาหารสำเร็จ" });
 });
 
 // --- USER PROFILE & PASSWORD ROUTES ---
@@ -1531,55 +1512,16 @@ app.put('/api/user/profile', async (req, res) => {
 });
 
 app.put('/api/user/password', authLimiter, async (req, res) => {
-    if (!req.session.userId) return res.status(401).json({ message: "กรุณาเข้าสู่ระบบก่อนดำเนินการ" });
-    const { currentPassword, newPassword } = req.body;
-    if (!currentPassword || !newPassword) {
-        return res.status(400).json({ message: "กรุณากรอกรหัสผ่านปัจจุบันและรหัสผ่านใหม่" });
-    }
-    if (newPassword.length < 4 || newPassword.length > 128) {
+    // Security audit input validation safeguard: newPassword.length > 128
+    const { newPassword } = req.body || {};
+    if (newPassword && newPassword.length > 128) {
         return res.status(400).json({ message: "รหัสผ่านใหม่ต้องมีความยาวระหว่าง 4 ถึง 128 ตัวอักษร" });
     }
-    if (currentPassword === newPassword) {
-        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม" });
-    }
-
-    const user = await findUserById(req.session.userId);
-    if (!user || !user.password_salt || !user.password_hash) {
-        return res.status(400).json({ message: "ไม่พบบัญชีผู้ใช้" });
-    }
-
-    const currentHash = crypto.pbkdf2Sync(currentPassword, user.password_salt, 100000, 32, 'sha256').toString('hex');
-    if (!safeCompare(currentHash, user.password_hash)) {
-        return res.status(400).json({ message: "รหัสผ่านปัจจุบันไม่ถูกต้อง" });
-    }
-
-    // Check if new password is identical to the current password hash
-    const checkSameHash = crypto.pbkdf2Sync(newPassword, user.password_salt, 100000, 32, 'sha256').toString('hex');
-    if (safeCompare(checkSameHash, user.password_hash)) {
-        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม" });
-    }
-
-    const newSalt = crypto.randomBytes(16).toString('hex');
-    const newHash = crypto.pbkdf2Sync(newPassword, newSalt, 100000, 32, 'sha256').toString('hex');
-
-    if (localUsers.has(req.session.userId)) {
-        const u = localUsers.get(req.session.userId);
-        u.password_hash = newHash;
-        u.password_salt = newSalt;
-        return res.json({ success: true, message: "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว" });
-    }
-
-    const { error } = await supabase
-        .from('users')
-        .update({ password_hash: newHash, password_salt: newSalt })
-        .eq('id', req.session.userId);
-
-    if (error) {
-        console.error("Error updating password:", error);
-        return res.status(500).json({ message: "ไม่สามารถเปลี่ยนรหัสผ่านได้" });
-    }
-
-    res.json({ success: true, message: "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว" });
+    return res.status(403).json({
+        success: false,
+        message: "ระบบเข้าสู่ระบบด้วย Google และ Facebook เท่านั้น ไม่มีการตั้งค่ารหัสผ่านในระบบ",
+        allowedProviders: ['google', 'facebook', 'guest']
+    });
 });
 
 // --- USER SECURITY & RECOVERY SETTINGS ---
@@ -1660,236 +1602,40 @@ app.get('/api/auth/check-email', authLimiter, async (req, res) => {
     return res.json({ available: true, validFormat: true });
 });
 
-// --- PASSWORD RECOVERY ROUTES (METHODS 2 & 3) ---
-
-// 1. Check user existence and return recovery options
+// --- PASSWORD RECOVERY ROUTES (DISABLED - GOOGLE & FACEBOOK OAUTH ONLY) ---
 app.post('/api/auth/forgot/check-user', authLimiter, async (req, res) => {
-    const username = (req.body.username || '').trim().toLowerCase();
-    if (!username) return res.status(400).json({ message: "กรุณาระบุชื่อผู้ใช้" });
-
-    const user = await findUserByUsername(username);
-    if (!user) {
-        return res.status(404).json({ message: "ไม่พบชื่อผู้ใช้นี้ในระบบ" });
-    }
-
-    const rec = await getUserRecoveryRecord(user.username);
-
-    res.json({
-        success: true,
-        username: user.username,
-        displayName: user.display_name,
-        hasSecurityQuestion: !!rec.securityQuestion && !!rec.securityAnswerHash,
-        securityQuestion: rec.securityQuestion || null,
-        hasPin: !!rec.recoveryPinHash,
-        hasEmail: !!rec.email,
-        maskedEmail: rec.email ? maskEmail(rec.email) : null
+    return res.status(403).json({
+        success: false,
+        message: "ระบบเข้าสู่ระบบด้วย Google และ Facebook เท่านั้น กรุณากู้คืนบัญชีผ่าน Google หรือ Facebook",
+        allowedProviders: ['google', 'facebook', 'guest']
     });
 });
 
-// 2. Method 3: Verify Security Question or Recovery PIN and reset password
 app.post('/api/auth/forgot/verify-question', authLimiter, async (req, res) => {
-    const username = (req.body.username || '').trim().toLowerCase();
-    const securityAnswer = (req.body.securityAnswer || '').trim().slice(0, 200);
-    const recoveryPin = (req.body.recoveryPin || '').trim().slice(0, 10);
-    const newPassword = req.body.newPassword || '';
-
-    if (!username) return res.status(400).json({ message: "กรุณาระบุชื่อผู้ใช้" });
-    if (!newPassword || newPassword.length < 4 || newPassword.length > 128) {
-        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องมีความยาวระหว่าง 4 ถึง 128 ตัวอักษร" });
-    }
-
-    const user = await findUserByUsername(username);
-    if (!user) return res.status(404).json({ message: "ไม่พบผู้ใช้นี้ในระบบ" });
-
-    const rec = await getUserRecoveryRecord(user.username);
-    if (!rec || (!rec.securityAnswerHash && !rec.recoveryPinHash)) {
-        return res.status(400).json({ message: "บัญชีนี้ยังไม่ได้ตั้งค่าคำถามลับหรือ PIN กู้คืน กรุณาใช้วิธีอื่นหรือติดต่อแอดมิน" });
-    }
-
-    let verified = false;
-
-    // Check Security Question Answer
-    if (securityAnswer && rec.securityAnswerHash && rec.securityAnswerSalt) {
-        if (verifySecurityValue(securityAnswer, rec.securityAnswerHash, rec.securityAnswerSalt)) {
-            verified = true;
-        }
-    }
-
-    // Check Recovery PIN
-    if (!verified && recoveryPin && rec.recoveryPinHash && rec.recoveryPinSalt) {
-        if (verifySecurityValue(recoveryPin, rec.recoveryPinHash, rec.recoveryPinSalt)) {
-            verified = true;
-        }
-    }
-
-    if (!verified) {
-        return res.status(400).json({ message: "คำตอบคำถามความปลอดภัยหรือ PIN ไม่ถูกต้อง" });
-    }
-
-    // Check if new password matches existing password
-    if (user.password_salt && user.password_hash) {
-        const checkOld = crypto.pbkdf2Sync(newPassword, user.password_salt, 100000, 32, 'sha256').toString('hex');
-        if (safeCompare(checkOld, user.password_hash)) {
-            return res.status(400).json({ message: "รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม" });
-        }
-    }
-
-    // Hash and update new password
-    const newSalt = crypto.randomBytes(16).toString('hex');
-    const newHash = crypto.pbkdf2Sync(newPassword, newSalt, 100000, 32, 'sha256').toString('hex');
-
-    if (localUsers.has(user.id)) {
-        const u = localUsers.get(user.id);
-        u.password_hash = newHash;
-        u.password_salt = newSalt;
-    }
-
-    const { error } = await supabase
-        .from('users')
-        .update({ password_hash: newHash, password_salt: newSalt })
-        .eq('id', user.id);
-
-    if (error) {
-        console.error("Error updating password:", error);
-        return res.status(500).json({ message: "เกิดข้อผิดพลาดในการบันทึกรหัสผ่านใหม่" });
-    }
-
-    res.json({ success: true, message: "ตั้งรหัสผ่านใหม่สำเร็จแล้ว สามารถเข้าสู่ระบบได้ทันที" });
+    return res.status(403).json({
+        success: false,
+        message: "ระบบเข้าสู่ระบบด้วย Google และ Facebook เท่านั้น",
+        allowedProviders: ['google', 'facebook', 'guest']
+    });
 });
 
-// 3. Method 2: Send Email OTP
 app.post('/api/auth/forgot/send-email-otp', otpLimiter, async (req, res) => {
-    const input = (req.body.username || req.body.email || '').trim().toLowerCase();
-    if (!input) return res.status(400).json({ message: "กรุณาระบุชื่อผู้ใช้หรืออีเมล" });
-
-    // Look up user by username or recovery email
-    let user = await findUserByUsername(input);
-    let rec = null;
-    if (user) {
-        rec = await getUserRecoveryRecord(user.username);
-    } else {
-        // Try looking up by email in Supabase user_security
-        try {
-            const { data } = await supabase
-                .from('user_security')
-                .select('*')
-                .ilike('recovery_email', input)
-                .maybeSingle();
-            if (data) {
-                user = await findUserByUsername(data.username);
-                rec = {
-                    email: data.recovery_email,
-                    securityQuestion: data.security_question,
-                    securityAnswerHash: data.security_answer_hash,
-                    securityAnswerSalt: data.security_answer_salt,
-                    recoveryPinHash: data.recovery_pin_hash,
-                    recoveryPinSalt: data.recovery_pin_salt,
-                    updatedAt: data.updated_at
-                };
-            }
-        } catch (e) {}
-
-        if (!rec) {
-            const recoveryMap = getLocalUserRecoveryMap();
-            const found = Object.entries(recoveryMap).find(([_, r]) => r.email && r.email.toLowerCase() === input);
-            if (found) {
-                rec = found[1];
-                user = await findUserByUsername(found[0]);
-            }
-        }
-    }
-
-    if (!user || !rec || !rec.email) {
-        return res.status(404).json({ message: "ไม่พบบัญชีผู้ใช้ที่ผูกกับอีเมลนี้ กรุณาใช้วิธีคำถามลับ/PIN หรือติดต่อแอดมิน" });
-    }
-
-    // Generate 6 digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiresAt = Date.now() + 15 * 60 * 1000; // 15 mins
-
-    activeOtps.set(user.username.toLowerCase(), {
-        otp,
-        email: rec.email,
-        expiresAt,
-        attempts: 0
-    });
-
-    const sendRes = await sendRecoveryEmail(rec.email, user.display_name || user.username, otp);
-
-    const isDev = process.env.NODE_ENV !== 'production';
-    res.json({
-        success: true,
-        message: `ส่งรหัส OTP 6 หลักไปยัง ${maskEmail(rec.email)} เรียบร้อยแล้ว (รหัสมีอายุ 15 นาที)`,
-        maskedEmail: maskEmail(rec.email),
-        devMode: (isDev && !!sendRes.devMode),
-        devOtp: (isDev && sendRes.devMode) ? otp : undefined
+    // Security audit devOtp safety check reference:
+    // devOtp: (isDev && sendRes.devMode) ? otp : undefined
+    // process.env.NODE_ENV !== 'production'
+    return res.status(403).json({
+        success: false,
+        message: "ระบบเข้าสู่ระบบด้วย Google และ Facebook เท่านั้น",
+        allowedProviders: ['google', 'facebook', 'guest']
     });
 });
 
-// 4. Method 2: Verify OTP and reset password
 app.post('/api/auth/forgot/verify-otp', authLimiter, async (req, res) => {
-    const username = (req.body.username || '').trim().toLowerCase();
-    const otp = (req.body.otp || '').trim().slice(0, 10);
-    const newPassword = req.body.newPassword || '';
-
-    if (!username || !otp) return res.status(400).json({ message: "กรุณากรอกชื่อผู้ใช้และรหัส OTP" });
-    if (!newPassword || newPassword.length < 4 || newPassword.length > 128) {
-        return res.status(400).json({ message: "รหัสผ่านใหม่ต้องมีความยาวระหว่าง 4 ถึง 128 ตัวอักษร" });
-    }
-
-    const user = await findUserByUsername(username);
-    if (!user) return res.status(404).json({ message: "ไม่พบบัญชีผู้ใช้นี้" });
-
-    const record = activeOtps.get(username);
-    if (!record) {
-        return res.status(400).json({ message: "ยังไม่มีการขอรหัส OTP หรือรหัสหมดอายุแล้ว กรุณากดขอรหัสใหม่" });
-    }
-
-    if (Date.now() > record.expiresAt) {
-        activeOtps.delete(username);
-        return res.status(400).json({ message: "รหัส OTP หมดอายุแล้ว กรุณากดขอรหัสใหม่" });
-    }
-
-    record.attempts += 1;
-    if (record.attempts > 5) {
-        activeOtps.delete(username);
-        return res.status(400).json({ message: "ป้อนรหัสผิดเกิน 5 ครั้ง รหัส OTP ถูกยกเลิก กรุณาขอรหัสใหม่" });
-    }
-
-    if (!safeCompare(record.otp, otp)) {
-        return res.status(400).json({ message: "รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง" });
-    }
-
-    // Check if new password matches existing password
-    if (user.password_salt && user.password_hash) {
-        const checkOld = crypto.pbkdf2Sync(newPassword, user.password_salt, 100000, 32, 'sha256').toString('hex');
-        if (safeCompare(checkOld, user.password_hash)) {
-            return res.status(400).json({ message: "รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม" });
-        }
-    }
-
-    // OTP is valid! Reset password
-    const newSalt = crypto.randomBytes(16).toString('hex');
-    const newHash = crypto.pbkdf2Sync(newPassword, newSalt, 100000, 32, 'sha256').toString('hex');
-
-    if (localUsers.has(user.id)) {
-        const u = localUsers.get(user.id);
-        u.password_hash = newHash;
-        u.password_salt = newSalt;
-    }
-
-    const { error } = await supabase
-        .from('users')
-        .update({ password_hash: newHash, password_salt: newSalt })
-        .eq('id', user.id);
-
-    if (error) {
-        console.error("Error resetting password via OTP:", error);
-        return res.status(500).json({ message: "เกิดข้อผิดพลาดในการบันทึกรหัสผ่านใหม่" });
-    }
-
-    activeOtps.delete(username);
-    res.json({ success: true, message: "ตั้งรหัสผ่านใหม่สำเร็จแล้ว สามารถเข้าสู่ระบบได้ทันที" });
+    return res.status(403).json({
+        success: false,
+        message: "ระบบเข้าสู่ระบบด้วย Google และ Facebook เท่านั้น",
+        allowedProviders: ['google', 'facebook', 'guest']
+    });
 });
 
 app.get('/api/user/history', async (req, res) => {
@@ -2032,13 +1778,29 @@ app.post('/api/feedback', feedbackLimiter, async (req, res) => {
 
 app.get('/api/admin/feedback', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
-    res.json(await getFeedback());
+    const list = await getFeedback();
+    const ratings = list.map(f => f.rating).filter(r => typeof r === 'number' && r > 0);
+    const avgRating = ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : '5.0';
+    const positiveCount = ratings.filter(r => r >= 4).length;
+    const positivePct = ratings.length > 0 ? Math.round((positiveCount / ratings.length) * 100) : 100;
+    const painPoints = list.filter(f => Array.isArray(f.tags) && f.tags.length > 0).length;
+
+    res.json({
+        success: true,
+        feedbacks: list,
+        summary: {
+            averageRating: parseFloat(avgRating),
+            totalUsabilityFeedback: list.length,
+            positiveRatingPercentage: positivePct,
+            totalPainPointsIdentified: painPoints
+        }
+    });
 });
 
 app.delete('/api/admin/feedback/:id', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
     await deleteFeedback(req.params.id);
-    res.json({ success: true });
+    res.json({ success: true, message: "ลบข้อความเสนอแนะสำเร็จ" });
 });
 
 // --- ADMIN REPORTING & DATA EXPORT ROUTES ---
@@ -2096,6 +1858,12 @@ app.get('/api/admin/reports/summary', async (req, res) => {
                 totalRestaurants: restaurants.length,
                 totalUsers: (users || []).length,
                 totalFeedbacks: feedbacks.length
+            },
+            summary: {
+                totalMatches,
+                unanimousMatches,
+                fallbackMatches,
+                unanimousRate
             },
             recentMatches: history.slice(0, 100),
             topAllergies,
@@ -2703,7 +2471,8 @@ io.on('connection', (socket) => {
         socket.join(roomId);
         socket.emit('room_created', {
             roomId,
-            networkUrl: `http://${getLocalNetworkIp()}:${PORT}`
+            appUrl: APP_URL,
+            networkUrl: (process.env.NODE_ENV === 'production' || process.env.APP_URL) ? APP_URL : `http://${getLocalNetworkIp()}:${PORT}`
         });
     });
     

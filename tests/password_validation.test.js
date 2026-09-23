@@ -84,68 +84,63 @@ async function runSuite() {
     const testUser = `pwd_test_${Date.now()}`;
     const initialPassword = 'OriginalPassword123';
 
-    // 1. Create a user
-    let userCookie = null;
-    await runTest('Signup new user for password test', async () => {
+    // 1. Password Signup Rejection
+    await runTest('POST /api/signup rejects manual password signup with HTTP 403', async () => {
         const res = await makeRequest('/api/signup', { method: 'POST' }, {
             username: testUser,
             password: initialPassword,
             displayName: 'PwdTester',
-            pdpaConsent: true,
-            securityQuestion: 'Pet name?',
-            securityAnswer: 'fluffy'
+            pdpaConsent: true
         });
 
-        assert.strictEqual(res.statusCode, 200, `Signup failed: ${JSON.stringify(res.data)}`);
-        assert.ok(res.headers['set-cookie'], 'Signup should return session cookie');
-        userCookie = res.headers['set-cookie'][0];
+        assert.strictEqual(res.statusCode, 403, `Expected 403, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, false);
+        assert.ok(res.data.allowedProviders && res.data.allowedProviders.includes('google'));
     });
 
-    // 2. Try changing password to the EXACT SAME password
-    await runTest('PUT /api/user/password rejects identical current and new password', async () => {
+    // 2. Password Login Rejection
+    await runTest('POST /api/login rejects manual password login with HTTP 403', async () => {
+        const res = await makeRequest('/api/login', { method: 'POST' }, {
+            username: testUser,
+            password: initialPassword
+        });
+
+        assert.strictEqual(res.statusCode, 403, `Expected 403, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, false);
+        assert.ok(res.data.allowedProviders && res.data.allowedProviders.includes('facebook'));
+    });
+
+    // 3. Password Modification Rejection
+    await runTest('PUT /api/user/password rejects password change requests with HTTP 403', async () => {
         const res = await makeRequest('/api/user/password', { method: 'PUT' }, {
             currentPassword: initialPassword,
-            newPassword: initialPassword
-        }, userCookie);
+            newPassword: 'BrandNewPassword456'
+        });
 
-        assert.strictEqual(res.statusCode, 400, `Expected 400, got ${res.statusCode}`);
-        assert.strictEqual(res.data.message, 'รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม');
+        assert.strictEqual(res.statusCode, 403, `Expected 403, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, false);
     });
 
-    // 3. Try changing password to a valid DIFFERENT password
-    const newPassword = 'BrandNewPassword456';
-    await runTest('PUT /api/user/password accepts different new password', async () => {
-        const res = await makeRequest('/api/user/password', { method: 'PUT' }, {
-            currentPassword: initialPassword,
-            newPassword: newPassword
-        }, userCookie);
-
-        assert.strictEqual(res.statusCode, 200, `Expected 200, got ${res.statusCode}`);
-        assert.strictEqual(res.data.success, true);
-        assert.strictEqual(res.data.message, 'เปลี่ยนรหัสผ่านเรียบร้อยแล้ว');
-    });
-
-    // 4. Try changing again with the new password as current and new
-    await runTest('PUT /api/user/password rejects new password matching the updated password', async () => {
-        const res = await makeRequest('/api/user/password', { method: 'PUT' }, {
-            currentPassword: newPassword,
-            newPassword: newPassword
-        }, userCookie);
-
-        assert.strictEqual(res.statusCode, 400, `Expected 400, got ${res.statusCode}`);
-        assert.strictEqual(res.data.message, 'รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม');
-    });
-
-    // 5. Test forgot-password question reset rejecting current password
-    await runTest('POST /api/auth/forgot/verify-question rejects existing password', async () => {
+    // 4. Forgot Password Verify Question Rejection
+    await runTest('POST /api/auth/forgot/verify-question is disabled and returns HTTP 403', async () => {
         const res = await makeRequest('/api/auth/forgot/verify-question', { method: 'POST' }, {
             username: testUser,
             securityAnswer: 'fluffy',
-            newPassword: newPassword // Same as current password now
+            newPassword: 'BrandNewPassword456'
         });
 
-        assert.strictEqual(res.statusCode, 400, `Expected 400, got ${res.statusCode}`);
-        assert.strictEqual(res.data.message, 'รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม');
+        assert.strictEqual(res.statusCode, 403, `Expected 403, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, false);
+    });
+
+    // 5. Forgot Password Send Email OTP Rejection
+    await runTest('POST /api/auth/forgot/send-email-otp is disabled and returns HTTP 403', async () => {
+        const res = await makeRequest('/api/auth/forgot/send-email-otp', { method: 'POST' }, {
+            email: 'test@example.com'
+        });
+
+        assert.strictEqual(res.statusCode, 403, `Expected 403, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, false);
     });
 
     console.log(`\n========================================`);

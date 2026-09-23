@@ -177,90 +177,88 @@ async function runSuite() {
         assert.strictEqual(res.data.exists, false, 'Non-existent room should return false without crashing');
     });
 
-    // 9. Password Duplicate Prevention on Change (Skill 09: Credential Management)
-    await runTest('PUT /api/user/password rejects identical current and new password', async () => {
-        const pwdUser = `pwd_user_${Date.now()}`;
-        const pwd = 'TestSecretPassword123';
-        const signupRes = await makeRequest('/api/signup', { method: 'POST' }, {
-            username: pwdUser,
-            password: pwd,
-            displayName: 'PwdUser',
-            pdpaConsent: true,
-            securityQuestion: 'Pet?',
-            securityAnswer: 'cat'
+    // 9. Legacy Password Login Rejection (Skill 09: OWASP Authentication Restriction)
+    await runTest('POST /api/login rejects manual password login with HTTP 403 Forbidden', async () => {
+        const res = await makeRequest('/api/login', { method: 'POST' }, {
+            username: 'test_user',
+            password: 'SomePassword123'
         });
-        assert.strictEqual(signupRes.statusCode, 200);
-        const cookie = signupRes.headers['set-cookie'] ? signupRes.headers['set-cookie'][0] : null;
+        assert.strictEqual(res.statusCode, 403, `Expected 403, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, false);
+        assert.ok(res.data.allowedProviders && res.data.allowedProviders.includes('google'));
+        assert.ok(res.data.allowedProviders && res.data.allowedProviders.includes('facebook'));
+    });
 
-        const res = await makeRequest('/api/user/password', {
-            method: 'PUT',
-            headers: { 'Cookie': cookie }
-        }, {
-            currentPassword: pwd,
-            newPassword: pwd
+    // 10. Legacy Password Signup Rejection (Skill 09: OWASP Authentication Restriction)
+    await runTest('POST /api/signup rejects manual account signup with HTTP 403 Forbidden', async () => {
+        const res = await makeRequest('/api/signup', { method: 'POST' }, {
+            username: 'new_manual_user',
+            password: 'SomePassword123',
+            displayName: 'NewUser'
         });
+        assert.strictEqual(res.statusCode, 403, `Expected 403, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, false);
+        assert.ok(res.data.allowedProviders && res.data.allowedProviders.includes('google'));
+        assert.ok(res.data.allowedProviders && res.data.allowedProviders.includes('facebook'));
+    });
 
+    // 11. OAuth Provider Validation (Strict Google & Facebook Only)
+    await runTest('POST /api/auth/oauth-login rejects invalid provider with HTTP 400', async () => {
+        const res = await makeRequest('/api/auth/oauth-login', { method: 'POST' }, {
+            provider: 'github',
+            email: 'unsupported@github.com',
+            name: 'Unsupported GitHub User'
+        });
         assert.strictEqual(res.statusCode, 400, `Expected 400, got ${res.statusCode}`);
-        assert.strictEqual(res.data.message, 'รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม');
     });
 
-    // 10. Password Duplicate Prevention on Recovery (Skill 09: Credential Management)
-    await runTest('POST /api/auth/forgot/verify-question rejects new password matching old password', async () => {
-        const pwdUser = `pwd_rec_${Date.now()}`;
-        const pwd = 'TestSecretPassword456';
-        await makeRequest('/api/signup', { method: 'POST' }, {
-            username: pwdUser,
-            password: pwd,
-            displayName: 'PwdRec',
-            pdpaConsent: true,
-            securityQuestion: 'Favorite color?',
-            securityAnswer: 'blue'
+    // 12. OAuth Login Successful Provisioning for Google & Facebook
+    await runTest('POST /api/auth/oauth-login provisions valid session for Google account', async () => {
+        const testEmail = `oauth_test_${Date.now()}@google.auth`;
+        const res = await makeRequest('/api/auth/oauth-login', { method: 'POST' }, {
+            provider: 'google',
+            email: testEmail,
+            name: 'Somchai GoogleUser'
         });
-
-        const res = await makeRequest('/api/auth/forgot/verify-question', { method: 'POST' }, {
-            username: pwdUser,
-            securityAnswer: 'blue',
-            newPassword: pwd
-        });
-
-        assert.strictEqual(res.statusCode, 400, `Expected 400, got ${res.statusCode}`);
-        assert.strictEqual(res.data.message, 'รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเดิม');
+        assert.strictEqual(res.statusCode, 200, `Expected 200, got ${res.statusCode}`);
+        assert.strictEqual(res.data.logged_in, true);
+        assert.strictEqual(res.data.provider, 'google');
+        assert.strictEqual(res.data.isGuest, false);
+        assert.ok(res.data.displayName && res.data.displayName.includes('Somchai'));
     });
 
-    // 11. Unique Email Constraint on Signup (1 Account per Email)
-    await runTest('POST /api/signup rejects duplicate email across accounts', async () => {
-        const uniqueEmail = `unique_${Date.now()}@ginder.test`;
-        const user1 = `email_u1_${Date.now()}`;
-        const user2 = `email_u2_${Date.now()}`;
-
-        // Signup first user with email
-        const res1 = await makeRequest('/api/signup', { method: 'POST' }, {
-            username: user1,
-            password: 'Password123',
-            email: uniqueEmail,
-            displayName: 'User1',
-            pdpaConsent: true
+    // 13. Guest Login Endpoint (Preserved Guest Mode)
+    await runTest('POST /api/guest-login creates valid guest user session', async () => {
+        const res = await makeRequest('/api/guest-login', { method: 'POST' }, {
+            displayName: 'Guest Tester'
         });
-        assert.strictEqual(res1.statusCode, 200, `First user signup failed: ${JSON.stringify(res1.data)}`);
-
-        // Attempt signup with same email for second user
-        const res2 = await makeRequest('/api/signup', { method: 'POST' }, {
-            username: user2,
-            password: 'Password123',
-            email: uniqueEmail,
-            displayName: 'User2',
-            pdpaConsent: true
-        });
-        assert.strictEqual(res2.statusCode, 400, `Expected 400, got ${res2.statusCode}`);
-        assert.strictEqual(res2.data.message, 'อีเมลนี้ถูกใช้งานในระบบแล้ว กรุณาใช้อีเมลอื่น');
+        assert.strictEqual(res.statusCode, 200, `Expected 200, got ${res.statusCode}`);
+        assert.strictEqual(res.data.logged_in, true);
+        assert.strictEqual(res.data.isGuest, true);
+        assert.strictEqual(res.data.role, 'user');
+        assert.strictEqual(res.data.displayName, 'Guest Tester');
     });
 
-    // 12. Email Availability Endpoint Check
-    await runTest('GET /api/auth/check-email correctly indicates availability', async () => {
-        const takenEmail = `unique_${Date.now()}@ginder.test`; // Not taken yet
-        const resAvailable = await makeRequest(`/api/auth/check-email?email=${encodeURIComponent(takenEmail)}`);
-        assert.strictEqual(resAvailable.statusCode, 200);
-        assert.strictEqual(resAvailable.data.available, true);
+    // 14. Canonical Endpoint Verification (https://ginder.onrender.com)
+    await runTest('GET /api/health & GET /api/me expose canonical appUrl https://ginder.onrender.com', async () => {
+        const healthRes = await makeRequest('/api/health');
+        assert.strictEqual(healthRes.statusCode, 200);
+        assert.strictEqual(healthRes.data.appUrl, 'https://ginder.onrender.com');
+
+        const meRes = await makeRequest('/api/me');
+        assert.strictEqual(meRes.statusCode, 200);
+        assert.strictEqual(meRes.data.appUrl, 'https://ginder.onrender.com');
+    });
+
+    // 15. OAuth Redirect Configuration (Google & Facebook redirect to https://ginder.onrender.com/)
+    await runTest('GET /api/auth/oauth-url uses https://ginder.onrender.com/ as default redirectTo', async () => {
+        const res = await makeRequest('/api/auth/oauth-url?provider=google');
+        assert.strictEqual(res.statusCode, 200, `Expected 200, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, true);
+        assert.strictEqual(res.data.provider, 'google');
+        assert.strictEqual(res.data.redirectTo, 'https://ginder.onrender.com/');
+        assert.ok(res.data.url, 'Should return OAuth redirect authorization URL');
+        assert.ok(res.data.callbackUrl.includes('supabase.co/auth/v1/callback'), 'Callback URL should point to Supabase');
     });
 
     console.log(`\n========================================`);

@@ -923,52 +923,6 @@ async function handleOAuthCallback() {
 }
 
 // --- GOOGLE & FACEBOOK SOCIAL LOGIN SYSTEM (GLOBAL SCOPE) ---
-let activeSocialProvider = 'google';
-let currentOAuthData = null;
-
-const SOCIAL_ACCOUNTS = {
-    google: [
-        {
-            name: 'kittilak',
-            email: 'kittilak.dev@gmail.com',
-            isAdmin: true,
-            avatar: 'K'
-        },
-        {
-            name: 'Somchai Jaidee (Google)',
-            email: 'somchai.jaidee@gmail.com',
-            isAdmin: false,
-            avatar: 'S'
-        },
-        {
-            name: 'Chula Student (CU Foodie)',
-            email: 'student.chula@gmail.com',
-            isAdmin: false,
-            avatar: 'C'
-        }
-    ],
-    facebook: [
-        {
-            name: 'Kittilak Somboon (Admin FB)',
-            email: 'kittilak.fb@facebook.com',
-            isAdmin: true,
-            avatar: 'K'
-        },
-        {
-            name: 'Nong Aom Chanon (Foodie FB)',
-            email: 'aom.chanon@facebook.com',
-            isAdmin: false,
-            avatar: 'A'
-        },
-        {
-            name: 'Bangkok Food Lover',
-            email: 'bkk.foodie@facebook.com',
-            isAdmin: false,
-            avatar: 'B'
-        }
-    ]
-};
-
 let isOAuthInitiating = false;
 
 async function initiateOAuthLogin(provider) {
@@ -976,141 +930,59 @@ async function initiateOAuthLogin(provider) {
     isOAuthInitiating = true;
     setTimeout(() => { isOAuthInitiating = false; }, 3000);
 
+    const providerName = provider === 'google' ? 'Google' : 'Facebook';
     if (typeof showToast === 'function') {
-        showToast(`กำลังเชื่อมต่อ ${provider === 'google' ? 'Google' : 'Facebook'} OAuth...`, 'info', 2500);
+        showToast(`กำลังเชื่อมต่อไปยัง ${providerName} เพื่อเข้าสู่ระบบ...`, 'info', 3000);
     }
 
     try {
-        const res = await fetch(`/api/auth/oauth-url?provider=${encodeURIComponent(provider)}`);
+        // Determine canonical redirect target pointing to https://ginder.onrender.com
+        const canonicalBase = (window.APP_URL || (window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1') ? window.location.origin : 'https://ginder.onrender.com')).replace(/\/+$/, '');
+        const targetRedirectUrl = `${canonicalBase}/`;
+
+        // 1. Preferred: Use frontend Supabase Client directly if available
+        if (supabaseClient && supabaseClient.auth && typeof supabaseClient.auth.signInWithOAuth === 'function') {
+            const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                provider: provider,
+                options: {
+                    redirectTo: targetRedirectUrl
+                }
+            });
+            if (error) throw error;
+            if (data && data.url) {
+                window.location.href = data.url;
+                return;
+            }
+        }
+
+        // 2. Fallback: Fetch OAuth URL from server endpoint
+        const res = await fetch(`/api/auth/oauth-url?provider=${encodeURIComponent(provider)}&redirect_to=${encodeURIComponent(targetRedirectUrl)}`);
         const data = await res.json();
 
-        if (!data.success) {
+        if (!data.success || !data.url) {
             throw new Error(data.message || 'ไม่สามารถสร้างลิงก์เข้าสู่ระบบได้');
         }
 
-        currentOAuthData = data;
-
-        if (data.enabled) {
-            // Real OAuth is active in Supabase! Navigate directly to Google / Facebook!
-            window.location.href = data.url;
-        } else {
-            // Provider is not yet enabled in Supabase Dashboard
-            openOAuthSetupModal(provider, data);
-        }
+        window.location.href = data.url;
     } catch (err) {
-        console.warn("OAuth initiate error:", err);
-        openSocialAuthModal(provider);
+        console.error("OAuth initiate error:", err);
+        isOAuthInitiating = false;
+        if (typeof showToast === 'function') {
+            showToast(`เกิดข้อผิดพลาดในการเชื่อมต่อ ${providerName}: ${err.message}`, 'error', 4500);
+        }
     }
 }
 
-function openOAuthSetupModal(provider, data) {
-    openSocialAuthModal(provider);
-
-    const setupNotice = document.getElementById('social-oauth-setup-notice');
-    const setupDesc = document.getElementById('social-oauth-setup-desc');
-    const linkDash = document.getElementById('link-supabase-dashboard');
-
-    if (setupNotice) setupNotice.classList.remove('hidden');
-    if (setupDesc) {
-        setupDesc.innerHTML = `ผู้ดูแลระบบยังไม่ได้เปิดใช้งาน (Enable) <strong>${provider === 'google' ? 'Google' : 'Facebook'}</strong> ใน Supabase Dashboard<br><span style="font-size: 0.78rem; opacity: 0.9;">สามารถเปิดใช้งานในแดชบอร์ด แล้วกดเชื่อมต่อจริง หรือเลือกบัญชีทดสอบ/โหมด Guest ด้านล่างนี้ได้ทันที</span>`;
-    }
-    if (linkDash && data && data.dashboardUrl) {
-        linkDash.href = data.dashboardUrl;
-    }
-}
-
+// Deprecated stubs to prevent any reference errors
 function openSocialAuthModal(provider) {
-    activeSocialProvider = provider;
-    const modalSocialAuth = document.getElementById('modal-social-auth');
-    if (!modalSocialAuth) return;
-
-    const setupNotice = document.getElementById('social-oauth-setup-notice');
-    if (setupNotice) setupNotice.classList.add('hidden');
-
-    const headerText = document.getElementById('social-auth-header-text');
-    const headerIcon = document.getElementById('social-auth-icon');
-    const descText = document.getElementById('social-auth-desc');
-    const accountList = document.getElementById('social-account-list');
-    const lblEmail = document.getElementById('lbl-social-email');
-    const customEmailInput = document.getElementById('social-custom-email');
-    const customNameInput = document.getElementById('social-custom-name');
-
-    if (provider === 'google') {
-        if (headerText) headerText.innerText = 'ลงชื่อเข้าใช้ด้วย Google';
-        if (headerIcon) headerIcon.innerHTML = `<svg class="oauth-svg-icon" viewBox="0 0 24 24" width="22" height="22"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>`;
-        if (descText) descText.innerText = 'เลือกบัญชี Google ที่ต้องการเข้าสู่ระบบ หรือพิมพ์อีเมลของคุณเพื่อเชื่อมต่อกับ GINDER';
-        if (lblEmail) lblEmail.innerText = 'อีเมล Google (Gmail)';
-        if (customEmailInput) customEmailInput.placeholder = 'เช่น yourname@gmail.com';
-    } else {
-        if (headerText) headerText.innerText = 'เข้าสู่ระบบด้วย Facebook';
-        if (headerIcon) headerIcon.innerHTML = `<i class="fa-brands fa-facebook-f" style="color: #1877F2; font-size: 1.3rem;"></i>`;
-        if (descText) descText.innerText = 'เลือกบัญชี Facebook ที่ต้องการเข้าสู่ระบบ หรือพิมพ์ข้อมูลของคุณเพื่อเชื่อมต่อกับ GINDER';
-        if (lblEmail) lblEmail.innerText = 'อีเมล หรือชื่อผู้ใช้ Facebook';
-        if (customEmailInput) customEmailInput.placeholder = 'เช่น yourname@facebook.com หรือ ชื่อผู้ใช้';
-    }
-
-    if (customEmailInput) customEmailInput.value = '';
-    if (customNameInput) customNameInput.value = '';
-
-    if (accountList) {
-        accountList.innerHTML = '';
-        const accounts = SOCIAL_ACCOUNTS[provider] || [];
-        accounts.forEach(acc => {
-            const item = document.createElement('div');
-            item.className = 'social-account-item';
-            item.innerHTML = `
-                <div class="social-avatar">${acc.avatar}</div>
-                <div class="social-account-info">
-                    <div class="social-account-name">
-                        <span>${escapeHtml(acc.name)}</span>
-                        ${acc.isAdmin ? '<span class="social-admin-tag"><i class="fa-solid fa-crown"></i> Admin</span>' : ''}
-                    </div>
-                    <div class="social-account-email">${escapeHtml(acc.email)}</div>
-                </div>
-                <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 0.8rem;"></i>
-            `;
-            item.addEventListener('click', () => {
-                handleSocialLogin(provider, acc.email, acc.name);
-            });
-            accountList.appendChild(item);
-        });
-    }
-
-    modalSocialAuth.classList.add('active');
+    initiateOAuthLogin(provider || 'google');
 }
-
-function closeSocialAuthModal() {
-    const modalSocialAuth = document.getElementById('modal-social-auth');
-    if (modalSocialAuth) modalSocialAuth.classList.remove('active');
+function closeSocialAuthModal() {}
+function openOAuthSetupModal(provider) {
+    initiateOAuthLogin(provider || 'google');
 }
-
 function handleSocialLogin(provider, email, name) {
-    if (typeof showToast === 'function') {
-        showToast(`กำลังเข้าสู่ระบบผ่าน ${provider === 'google' ? 'Google' : 'Facebook'}...`, 'info', 2000);
-    }
-
-    fetch('/api/auth/oauth-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ provider, email, name })
-    })
-        .then(res => {
-            if (!res.ok) {
-                return res.json().then(data => { throw new Error(data.message || 'เข้าสู่ระบบไม่สำเร็จ'); });
-            }
-            return res.json();
-        })
-        .then(data => {
-            state.currentUser = data;
-            updateHeaderUI();
-            prefillUserPreferences();
-            closeSocialAuthModal();
-            showToast(`ยินดีต้อนรับ ${data.displayName} เข้าสู่ระบบด้วย ${provider === 'google' ? 'Google' : 'Facebook'} สำเร็จ 🎉`, 'success', 3500);
-            routeAfterAuth();
-        })
-        .catch(err => {
-            showToast(err.message || 'ไม่สามารถเข้าสู่ระบบได้ กรุณาลองใหม่อีกครั้ง', 'error');
-        });
+    initiateOAuthLogin(provider || 'google');
 }
 
 // Expose globally
@@ -1146,13 +1018,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // Check if redirected from /admin for admin authentication
     if (urlParams.get('login') === 'admin') {
+        sessionStorage.setItem('returnTo', '/admin');
         setTimeout(() => {
             if (typeof showToast === 'function') {
-                showToast('กรุณาเข้าสู่ระบบด้วยบัญชีผู้ดูแลระบบ (Admin) เพื่อเข้าถึงแดชบอร์ด', 'warning', 4500);
+                showToast('กรุณาเข้าสู่ระบบด้วย Google เพื่อเข้าถึงแดชบอร์ดผู้ดูแลระบบ (Admin)', 'info', 4500);
             }
-            if (typeof openSocialAuthModal === 'function') {
-                openSocialAuthModal('google');
-            }
+            openAuthModal();
         }, 400);
     }
 });
@@ -2351,6 +2222,46 @@ function setupEventListeners() {
         }
     });
 
+    // Share Room Join Link (using https://ginder.onrender.com)
+    const btnShareLink = document.getElementById('btn-share-room-link');
+    if (btnShareLink) {
+        btnShareLink.addEventListener('click', () => {
+            if (!state.roomId) return;
+            soundFx.playCopy();
+            if (navigator.vibrate) navigator.vibrate(12);
+
+            let baseUrl = (window.APP_URL || 'https://ginder.onrender.com').replace(/\/+$/, '');
+            if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && window.location.origin) {
+                baseUrl = window.location.origin.replace(/\/+$/, '');
+            } else if (state.networkBaseUrl) {
+                baseUrl = state.networkBaseUrl.replace(/\/+$/, '');
+            }
+            const joinUrl = `${baseUrl}/?roomId=${state.roomId}&autoJoin=1`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'GINDER - เข้าร่วมห้องเลือกกินอะไรดี',
+                    text: `เข้ามาร่วมปัดเลือกเมนูอาหารด้วยกันในห้อง ${state.roomId}!`,
+                    url: joinUrl
+                }).catch(() => {});
+            } else if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(joinUrl).then(() => {
+                    const originalHtml = btnShareLink.innerHTML;
+                    btnShareLink.innerHTML = '<i class="fa-solid fa-check"></i> คัดลอกลิงก์แล้ว! ✨';
+                    btnShareLink.classList.add('copied-emerald');
+                    setTimeout(() => {
+                        btnShareLink.innerHTML = originalHtml;
+                        btnShareLink.classList.remove('copied-emerald');
+                    }, 2000);
+                });
+            } else {
+                if (typeof showToast === 'function') {
+                    showToast(`คัดลอกลิงก์: ${joinUrl}`, 'info', 4000);
+                }
+            }
+        });
+    }
+
 
     // Preferences View Actions
     document.getElementById('btn-back-to-landing').addEventListener('click', () => {
@@ -2877,12 +2788,6 @@ function setupEventListeners() {
     // --- GOOGLE & FACEBOOK SOCIAL LOGIN SYSTEM EVENT LISTENERS ---
     const btnGoogleLogin = document.getElementById('btn-google-login');
     const btnFacebookLogin = document.getElementById('btn-facebook-login');
-    const modalSocialAuth = document.getElementById('modal-social-auth');
-    const btnCloseSocialAuth = document.getElementById('btn-close-social-auth');
-    const formCustomSocial = document.getElementById('form-custom-social-auth');
-    const btnTriggerSupabaseOAuth = document.getElementById('btn-trigger-supabase-oauth');
-    const btnForceRealOAuth = document.getElementById('btn-force-real-oauth');
-    const btnModalSocialGuest = document.getElementById('btn-modal-social-guest');
 
     if (btnGoogleLogin) {
         btnGoogleLogin.addEventListener('click', () => initiateOAuthLogin('google'));
@@ -2890,75 +2795,6 @@ function setupEventListeners() {
 
     if (btnFacebookLogin) {
         btnFacebookLogin.addEventListener('click', () => initiateOAuthLogin('facebook'));
-    }
-
-    if (btnCloseSocialAuth) {
-        btnCloseSocialAuth.addEventListener('click', closeSocialAuthModal);
-    }
-
-    if (modalSocialAuth) {
-        modalSocialAuth.addEventListener('click', (e) => {
-            if (e.target === modalSocialAuth) closeSocialAuthModal();
-        });
-    }
-
-    if (btnForceRealOAuth) {
-        btnForceRealOAuth.addEventListener('click', () => {
-            if (currentOAuthData && currentOAuthData.url) {
-                window.location.href = currentOAuthData.url;
-            } else {
-                window.location.href = `https://icksdmnzcdswiscusrep.supabase.co/auth/v1/authorize?provider=${activeSocialProvider}&redirect_to=${encodeURIComponent(window.location.origin)}`;
-            }
-        });
-    }
-
-    if (btnModalSocialGuest) {
-        btnModalSocialGuest.addEventListener('click', () => {
-            closeSocialAuthModal();
-            triggerQuickGuestLogin(() => {
-                showView('landing');
-                showToast('เข้าใช้งานในโหมดผู้เยี่ยมชม (Guest Mode) 🍜', 'info');
-            });
-        });
-    }
-
-    if (formCustomSocial) {
-        formCustomSocial.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = (document.getElementById('social-custom-email')?.value || '').trim();
-            const name = (document.getElementById('social-custom-name')?.value || '').trim();
-            if (!email) {
-                showToast('กรุณากรอกอีเมลหรือชื่อผู้ใช้', 'warning');
-                return;
-            }
-            handleSocialLogin(activeSocialProvider, email, name || email);
-        });
-    }
-
-    if (btnTriggerSupabaseOAuth) {
-        btnTriggerSupabaseOAuth.addEventListener('click', async () => {
-            try {
-                btnTriggerSupabaseOAuth.disabled = true;
-                btnTriggerSupabaseOAuth.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเชื่อมต่อ Supabase...';
-                if (supabaseClient && supabaseClient.auth && typeof supabaseClient.auth.signInWithOAuth === 'function') {
-                    const { error } = await supabaseClient.auth.signInWithOAuth({
-                        provider: activeSocialProvider === 'google' ? 'google' : 'facebook',
-                        options: {
-                            redirectTo: window.location.origin
-                        }
-                    });
-                    if (error) throw error;
-                } else {
-                    window.location.href = `https://icksdmnzcdswiscusrep.supabase.co/auth/v1/authorize?provider=${activeSocialProvider}&redirect_to=${encodeURIComponent(window.location.origin)}`;
-                }
-            } catch (err) {
-                console.warn("Supabase OAuth redirect error:", err);
-                window.location.href = `https://icksdmnzcdswiscusrep.supabase.co/auth/v1/authorize?provider=${activeSocialProvider}&redirect_to=${encodeURIComponent(window.location.origin)}`;
-            } finally {
-                btnTriggerSupabaseOAuth.disabled = false;
-                btnTriggerSupabaseOAuth.innerHTML = '<i class="fa-solid fa-cloud"></i> เชื่อมต่อผ่าน Supabase OAuth Redirect';
-            }
-        });
     }
 }
 
@@ -3200,10 +3036,12 @@ socket.on('join_success', (data) => {
     showView('lobby');
     document.getElementById('lobby-room-id').innerText = data.roomId;
 
-    // Draw QR Code using LAN IP so mobile cameras connect directly
-    let baseUrl = window.location.origin;
-    if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && state.networkBaseUrl) {
-        baseUrl = state.networkBaseUrl;
+    // Draw QR Code using canonical production URL or network Base URL
+    let baseUrl = (window.APP_URL || 'https://ginder.onrender.com').replace(/\/+$/, '');
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && window.location.origin) {
+        baseUrl = window.location.origin.replace(/\/+$/, '');
+    } else if (state.networkBaseUrl) {
+        baseUrl = state.networkBaseUrl.replace(/\/+$/, '');
     }
     const joinUrl = `${baseUrl}/?roomId=${data.roomId}&autoJoin=1`;
     new QRious({
@@ -4282,6 +4120,14 @@ state.currentUser = null;
 function routeAfterAuth() {
     updateHeaderUI();
     prefillUserPreferences();
+
+    const returnTo = sessionStorage.getItem('returnTo');
+    if (returnTo) {
+        sessionStorage.removeItem('returnTo');
+        window.location.href = returnTo;
+        return;
+    }
+
     if (state.targetRoomId) {
         // Scanned QR code with native phone camera -> Verify room first before attempting join!
         verifyRoomExists(state.targetRoomId).then(check => {
@@ -4293,7 +4139,7 @@ function routeAfterAuth() {
                 showView('landing');
             }
         });
-    } else if (views.auth.classList.contains('active')) {
+    } else if (views.auth && views.auth.classList.contains('active')) {
         showView('landing');
     }
 }

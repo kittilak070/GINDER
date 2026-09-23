@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>GINDER - ปัดหาคู่กินมติเอกฉันท์</title>
+    <link rel="canonical" href="https://ginder.onrender.com">
+    <meta property="og:url" content="https://ginder.onrender.com">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -571,9 +573,14 @@
                     <div class="room-code-container">
                         <p class="lobby-label">รหัสห้องเข้าร่วม</p>
                         <h1 id="lobby-room-id" class="lobby-room-id">----</h1>
-                        <button id="btn-copy-room-id" class="btn-copy-code" title="คัดลอกรหัสห้อง" style="min-height: 40px; padding: 0.5rem 1.2rem; font-size: 0.9rem;">
-                            <i class="fa-regular fa-copy"></i> คัดลอกรหัสห้อง
-                        </button>
+                        <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0.8rem;">
+                            <button id="btn-copy-room-id" class="btn-copy-code" title="คัดลอกรหัสห้อง" style="min-height: 40px; padding: 0.5rem 1.1rem; font-size: 0.9rem;">
+                                <i class="fa-regular fa-copy"></i> คัดลอกรหัสห้อง
+                            </button>
+                            <button id="btn-share-room-link" class="btn-copy-code" title="แชร์ลิงก์เข้าห้อง" style="min-height: 40px; padding: 0.5rem 1.1rem; font-size: 0.9rem; background: rgba(50, 132, 255, 0.15); border-color: rgba(50, 132, 255, 0.35); color: #8bbaff;">
+                                <i class="fa-solid fa-share-nodes"></i> คัดลอกลิงก์
+                            </button>
+                        </div>
                         <div class="qr-container">
                             <canvas id="lobby-qr"></canvas>
                         </div>
@@ -1005,89 +1012,7 @@
         </div>
     </div>
 
-    <!-- SOCIAL LOGIN & ACCOUNT CHOOSER MODAL -->
-    <div id="modal-social-auth" class="modal">
-        <div class="modal-content glass" style="max-width: 480px; width: 92%;">
-            <div class="modal-header">
-                <h3 id="social-auth-title" style="display: flex; align-items: center; gap: 0.6rem;">
-                    <span id="social-auth-icon"><i class="fa-brands fa-google" style="color: #4285F4;"></i></span>
-                    <span id="social-auth-header-text">เข้าสู่ระบบด้วย Google</span>
-                </h3>
-                <button id="btn-close-social-auth" class="btn-close-modal" type="button"><i class="fa-solid fa-xmark"></i></button>
-            </div>
 
-            <div style="padding: 0.5rem 0;">
-                <!-- Real OAuth Provider Notice (Shown if provider is not yet enabled in Supabase Dashboard) -->
-                <div id="social-oauth-setup-notice" class="hidden" style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.35); border-radius: var(--border-radius-sm); padding: 0.85rem; margin-bottom: 1.1rem; font-size: 0.82rem; color: #fef08a; line-height: 1.5;">
-                    <div style="font-weight: 700; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem; color: #fde047;">
-                        <i class="fa-solid fa-circle-info"></i> เชื่อมต่อจริง (Real OAuth via Supabase)
-                    </div>
-                    <div id="social-oauth-setup-desc" style="color: rgba(255,255,255,0.85); margin-bottom: 0.55rem;">
-                        สำหรับเชื่อมต่อจริง ต้องเปิดใช้งาน Provider นี้ใน Supabase Dashboard ก่อน
-                    </div>
-                    <div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 0.45rem 0.6rem; font-family: monospace; font-size: 0.75rem; word-break: break-all; margin-bottom: 0.65rem; color: #38bdf8;">
-                        Callback URL: https://icksdmnzcdswiscusrep.supabase.co/auth/v1/callback
-                    </div>
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button type="button" id="btn-force-real-oauth" class="btn btn-primary btn-sm" style="font-size: 0.78rem; padding: 0.4rem 0.75rem;">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดหน้า OAuth Supabase ทันที
-                        </button>
-                        <a id="link-supabase-dashboard" href="https://supabase.com/dashboard/project/icksdmnzcdswiscusrep/auth/providers" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 0.4rem 0.75rem; text-decoration: none;">
-                            <i class="fa-solid fa-gear"></i> ไปหน้าตั้งค่า Supabase
-                        </a>
-                    </div>
-                </div>
-
-                <p id="social-auth-desc" style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.1rem; line-height: 1.5;">
-                    เลือกบัญชีที่ต้องการเข้าสู่ระบบ หรือพิมพ์ข้อมูลของคุณเพื่อเชื่อมต่อกับ GINDER
-                </p>
-
-                <!-- Fast Account Selection List -->
-                <div id="social-account-list" style="display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.2rem;">
-                    <!-- Injected dynamically by app.js depending on provider -->
-                </div>
-
-                <div style="display: flex; align-items: center; margin: 1.2rem 0; color: var(--text-muted); font-size: 0.8rem;">
-                    <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
-                    <span style="padding: 0 0.8rem;">หรือระบุบัญชีด้วยตนเอง</span>
-                    <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
-                </div>
-
-                <!-- Custom Account Input Form -->
-                <form id="form-custom-social-auth" style="display: flex; flex-direction: column; gap: 0.85rem;">
-                    <div class="form-group">
-                        <label id="lbl-social-email" style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.35rem; display: block;">
-                            อีเมล หรือชื่อผู้ใช้
-                        </label>
-                        <input type="text" id="social-custom-email" class="form-control" placeholder="เช่น yourname@gmail.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.35rem; display: block;">
-                            ชื่อที่แสดง (Display Name)
-                        </label>
-                        <input type="text" id="social-custom-name" class="form-control" placeholder="เช่น กิตติลักษณ์, นัท, ส้ม">
-                    </div>
-                    <button type="submit" id="btn-submit-custom-social" class="btn btn-primary full-width" style="padding: 0.8rem; font-size: 0.95rem; margin-top: 0.4rem;">
-                        <i class="fa-solid fa-right-to-bracket"></i> ดำเนินการเข้าสู่ระบบ
-                    </button>
-                </form>
-
-                <!-- Direct Supabase OAuth Trigger Button -->
-                <div style="margin-top: 0.9rem; text-align: center;">
-                    <button type="button" id="btn-trigger-supabase-oauth" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 0.4rem 0.8rem; border-radius: 20px; color: var(--text-muted);">
-                        <i class="fa-solid fa-cloud"></i> เชื่อมต่อผ่าน Supabase OAuth Redirect
-                    </button>
-                </div>
-
-                <!-- Guest Mode Option inside Modal -->
-                <div style="margin-top: 1rem; border-top: 1px solid var(--glass-border); padding-top: 0.8rem; text-align: center;">
-                    <button type="button" id="btn-modal-social-guest" class="btn btn-secondary full-width" style="padding: 0.65rem; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                        <i class="fa-solid fa-user-ninja text-accent"></i> ใช้งานต่อในโหมดผู้เยี่ยมชม (Guest Mode)
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- FEEDBACK & SUGGESTION MODAL -->
     <div id="modal-feedback" class="modal">
@@ -1250,12 +1175,12 @@
                     </div>
 
                     <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-circle-info text-accent"></i> 1. วัตถุประสงค์ของการประมวลผลข้อมูล (Purposes)</h4>
-                    <p>เราเก็บรวบรวมและใช้ข้อมูลส่วนบุคคลเพื่อการให้บริการจับคู่ร้านอาหาร การยืนยันตัวตนและการเข้าสู่ระบบ การกู้คืนบัญชีผู้ใช้ และการติดต่อช่วยเหลือเมื่อเกิดปัญหาทางเทคนิค</p>
+                    <p>เราเก็บรวบรวมและใช้ข้อมูลส่วนบุคคลเพื่อการให้บริการจับคู่ร้านอาหาร การยืนยันตัวตนและการเข้าสู่ระบบผ่าน Google และ Facebook ตลอดจนการติดต่อช่วยเหลือเมื่อเกิดปัญหาทางเทคนิค</p>
 
                     <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-database text-accent"></i> 2. ข้อมูลส่วนบุคคลที่เราจัดเก็บ (Data Collected)</h4>
                     <ul style="padding-left: 1.2rem; margin-bottom: 0.6rem;">
                         <li><strong>ข้อมูลทั่วไป:</strong> ชื่อผู้ใช้ (Username), ชื่อที่แสดง (Display Name)</li>
-                        <li><strong>ข้อมูลสำหรับกู้คืนบัญชี:</strong> อีเมล (Email), คำถามและคำตอบความปลอดภัย (เข้ารหัส Salted Hash ไม่สามารถถอดรหัสได้), Recovery PIN</li>
+                        <li><strong>ข้อมูลยืนยันตัวตนจากผู้ให้บริการ:</strong> อีเมล (Email), ชื่อและบัญชีที่ได้รับอนุญาตจาก Google หรือ Facebook (ไม่มีการจัดเก็บรหัสผ่านในระบบ)</li>
                         <li><strong>ข้อมูลความอ่อนไหว (Sensitive Data):</strong> ข้อมูลการแพ้อาหาร (Allergies) ซึ่งถือเป็นข้อมูลสุขภาพตามมาตรา 26 โดยเราจะประมวลผลเฉพาะเมื่อได้รับความยินยอมชัดแจ้งเพื่อกรองร้านอาหารที่ปลอดภัยต่อคุณ</li>
                         <li><strong>ข้อมูลทางเทคนิคและพิกัด:</strong> พิกัด GPS (เพื่อค้นหาร้านอาหารใกล้คุณ จัดเก็บเฉพาะชั่วคราว), ข้อมูลการเข้าสู่ระบบ IP Address และ User Agent</li>
                     </ul>
@@ -1267,13 +1192,13 @@
                     <p>ภายใต้กฎหมาย PDPA คุณมีสิทธิดังต่อไปนี้:</p>
                     <ul style="padding-left: 1.2rem; margin-bottom: 0.6rem;">
                         <li><strong>สิทธิขอเข้าถึงและขอรับสำเนาข้อมูล (Right of Access & Portability):</strong> คุณสามารถกดดาวน์โหลดไฟล์สำเนาข้อมูลส่วนบุคคลของคุณทั้งหมดได้ทันทีในหน้าโปรไฟล์</li>
-                        <li><strong>สิทธิขอแก้ไขข้อมูล (Right to Rectification):</strong> แก้ไขชื่อแสดงผล ข้อมูลภูมิแพ้ และรหัสผ่านได้ตลอดเวลา</li>
+                        <li><strong>สิทธิขอแก้ไขข้อมูล (Right to Rectification):</strong> แก้ไขชื่อแสดงผล และข้อมูลภูมิแพ้ได้ตลอดเวลา</li>
                         <li><strong>สิทธิขอลบข้อมูลหรือทำลาย (Right to Erasure / Right to be Forgotten):</strong> คุณสามารถใช้สิทธิขอลบข้อมูลและปิดบัญชีถาวรได้ในแท็บ PDPA ของหน้าโปรไฟล์</li>
                         <li><strong>สิทธิในการถอนความยินยอม (Right to Withdraw Consent):</strong> สามารถปรับเปลี่ยนการยินยอมคุกกี้และการรับข้อเสนอได้ทุกเมื่อ</li>
                     </ul>
 
                     <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-lock text-accent"></i> 5. มาตรการรักษาความมั่นคงปลอดภัย (Security Measures)</h4>
-                    <p>ระบบใช้การเข้ารหัสผ่านแบบ Salted PBKDF2 (100,000 รอบ) และ SHA-256 ป้องกันการเข้าถึงข้อมูลโดยมิชอบ พร้อมสิทธิ์การควบคุมระดับฐานข้อมูล (Row Level Security - RLS)</p>
+                    <p>ระบบเชื่อมต่อการยืนยันตัวตนผ่านโปรโตคอลมาตรฐาน OAuth 2.0 (Google & Facebook) ไม่มีการจัดเก็บรหัสผ่านในระบบ พร้อมสิทธิ์การควบคุมระดับฐานข้อมูล (Row Level Security - RLS)</p>
 
                     <h4 style="color: var(--text-primary); margin: 0.9rem 0 0.3rem;"><i class="fa-solid fa-address-book text-accent"></i> 6. ช่องทางการติดต่อเจ้าหน้าที่คุ้มครองข้อมูล (DPO Contact)</h4>
                     <p>หากมีข้อสงสัยเกี่ยวกับนโยบายหรือประสงค์จะใช้สิทธิของเจ้าของข้อมูล สามารถติดต่อเจ้าหน้าที่คุ้มครองข้อมูลได้ที่: <strong>support@ginder.app</strong> หรือผ่านแบบฟอร์ม "ติดต่อเรา" บนหน้าเว็บ</p>
@@ -1283,7 +1208,7 @@
                 <div id="pane-policy-terms" class="hidden">
                     <h4 style="color: var(--text-primary); margin: 0.6rem 0 0.3rem;">ข้อกำหนดและเงื่อนไขการใช้งานแพลตฟอร์ม GINDER</h4>
                     <p>1. <strong>การยอมรับข้อกำหนด:</strong> การเข้าใช้งานหรือสมัครสมาชิกถือว่าคุณยอมรับข้อกำหนดเหล่านี้อย่างสมบูรณ์</p>
-                    <p>2. <strong>บัญชีผู้ใช้และความปลอดภัย:</strong> คุณมีหน้าที่รักษาความลับของรหัสผ่านและข้อมูลความปลอดภัยของบัญชีตนเอง</p>
+                    <p>2. <strong>บัญชีผู้ใช้และความปลอดภัย:</strong> การยืนยันตัวตนดำเนินการผ่าน Google และ Facebook เท่านั้น คุณมีหน้าที่รักษาความปลอดภัยของบัญชีของตนเอง</p>
                     <p>3. <strong>การใช้งานที่เหมาะสม:</strong> ห้ามกระทำการใดๆ ที่เป็นการรบกวนการทำงานของระบบ ทำลายข้อมูล หรือใช้โปรแกรมอัตโนมัติในการโจมตีเซิร์ฟเวอร์</p>
                     <p>4. <strong>การปฏิเสธความรับผิดชอบ (Disclaimer):</strong> ข้อมูลร้านอาหารและราคาอาหารเป็นการรวบรวมเพื่อความสะดวก โปรดตรวจสอบกับทางร้านก่อนสั่งซื้อจริงทุกครั้ง</p>
                     <p>5. <strong>การระงับการให้บริการ:</strong> ผู้ดูแลระบบขอสงวนสิทธิ์ในการระงับบัญชีผู้ใช้งานที่ละเมิดข้อกำหนดหรือมีพฤติกรรมไม่เหมาะสม</p>
@@ -1328,22 +1253,52 @@
     <!-- ============================================================================== -->
     <div id="modal-inapp-feedback" class="modal" onclick="if (event.target === this) this.classList.remove('active');">
         <div class="modal-content glass" style="max-width: 520px; width: 92%; max-height: 90vh; overflow-y: auto; position: relative;">
-            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.8rem; margin-bottom: 0.8rem;">
-                <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
-                    <i class="fa-solid fa-comments text-accent"></i> ติชม & ประเมินการใช้งาน GINDER
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.75rem; margin-bottom: 0.75rem;">
+                <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; margin: 0; color: var(--text-primary);">
+                    <i class="fa-solid fa-comments text-accent"></i> ติชม &amp; ประเมินการใช้งาน GINDER
                 </h3>
                 <button id="btn-close-feedback-modal" type="button" onclick="document.getElementById('modal-inapp-feedback').classList.remove('active');" aria-label="ปิดหน้าต่าง" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; color: #ffffff; cursor: pointer; font-size: 1.05rem; transition: all 0.2s ease; z-index: 10;">
                     <i class="fa-solid fa-xmark" style="pointer-events: none;"></i>
                 </button>
             </div>
 
-            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: -0.4rem; line-height: 1.5;">
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: -0.3rem; margin-bottom: 0.85rem; line-height: 1.5;">
                 ช่วยพวกเราประเมินสั้นๆ 15 วินาที เพื่อนำข้อมูลไปวิเคราะห์และพัฒนาส่งโปรเจกต์ครับ 🙏
             </p>
 
-            <!-- 1. Star Rating -->
-            <div style="text-align: center; margin: 0.4rem 0;">
-                <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary); display: block;">
+            <!-- 1. Contact / Name at TOP (User Request: เอาชื่อไว้บน กรอกชื่อจริง หรือ Facebook / Line) -->
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 0.85rem 0.95rem; margin-bottom: 0.85rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.35rem;">
+                    <label for="feedback-input-contact" style="font-size: 0.88rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.4rem; margin: 0;">
+                        <i class="fa-solid fa-address-card text-accent"></i> ชื่อของคุณ / ช่องทางติดต่อกลับ:
+                    </label>
+                    <span style="font-size: 0.74rem; color: var(--accent-orange); font-weight: 600;">(ช่องทางติดต่อ)</span>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 0.5rem; line-height: 1.4;">
+                    กรอกชื่อจริง หรือ บัญชี Facebook / LINE ID เพื่อให้ทีมงานติดต่อกลับได้:
+                </div>
+                
+                <div style="position: relative;">
+                    <input type="text" id="feedback-input-contact" class="form-control" placeholder="เช่น กิตติลักษณ์ สุขเมือง, FB: Kittilak S., LINE: kittilak070" style="padding-left: 2.35rem; font-size: 0.88rem; height: 42px; background: rgba(0, 0, 0, 0.28); border-color: rgba(255, 255, 255, 0.16);">
+                    <i class="fa-solid fa-user-pen" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--accent-orange); font-size: 0.9rem; pointer-events: none;"></i>
+                </div>
+
+                <div style="display: flex; gap: 0.4rem; margin-top: 0.45rem; flex-wrap: wrap;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; color: var(--text-secondary); background: rgba(255,255,255,0.06); padding: 0.2rem 0.5rem; border-radius: 6px;">
+                        <i class="fa-solid fa-id-card text-accent"></i> ชื่อจริง-นามสกุล
+                    </span>
+                    <span style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; color: #60a5fa; background: rgba(24, 119, 242, 0.14); border: 1px solid rgba(24, 119, 242, 0.28); padding: 0.2rem 0.5rem; border-radius: 6px;">
+                        <i class="fa-brands fa-facebook"></i> Facebook
+                    </span>
+                    <span style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; color: #4ade80; background: rgba(6, 199, 85, 0.14); border: 1px solid rgba(6, 199, 85, 0.28); padding: 0.2rem 0.5rem; border-radius: 6px;">
+                        <i class="fa-brands fa-line"></i> LINE ID
+                    </span>
+                </div>
+            </div>
+
+            <!-- 2. Star Rating -->
+            <div style="text-align: center; margin: 0 0 0.85rem; background: rgba(255, 255, 255, 0.025); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem 0.5rem;">
+                <label style="font-size: 0.88rem; font-weight: 600; color: var(--text-primary); display: block;">
                     ความพึงพอใจและความง่ายในการใช้งานภาพรวม
                 </label>
                 <div class="feedback-stars-wrapper" id="feedback-stars-container">
@@ -1356,57 +1311,62 @@
                 <div id="feedback-emotion-label" class="feedback-emotion-text">😍 5 ดาว: ยอดเยี่ยม ประทับใจมาก!</div>
             </div>
 
-            <!-- Demographic: Role & Age -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin: 0.4rem 0;">
-                <div>
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
-                        🎓 สถานะของคุณ:
-                    </label>
-                    <div class="feedback-chips-grid" id="feedback-role-chips">
-                        <div class="feedback-chip active" data-val="นักศึกษา">นักศึกษา</div>
-                        <div class="feedback-chip" data-val="วัยทำงาน">วัยทำงาน</div>
-                        <div class="feedback-chip" data-val="ทั่วไป">ทั่วไป</div>
+            <!-- 3. Demographic: Role, Age, Frequency, Mode (Clean Structured 2x2 Grid) -->
+            <div style="background: rgba(255, 255, 255, 0.025); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.85rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <!-- Role -->
+                    <div>
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+                            🎓 สถานะของคุณ:
+                        </label>
+                        <div class="feedback-chips-grid" id="feedback-role-chips">
+                            <div class="feedback-chip active" data-val="นักศึกษา">นักศึกษา</div>
+                            <div class="feedback-chip" data-val="วัยทำงาน">วัยทำงาน</div>
+                            <div class="feedback-chip" data-val="ทั่วไป">ทั่วไป</div>
+                        </div>
+                    </div>
+                    <!-- Age -->
+                    <div>
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+                            🎂 ช่วงอายุ:
+                        </label>
+                        <div class="feedback-chips-grid" id="feedback-age-chips">
+                            <div class="feedback-chip" data-val="<18">&lt;18</div>
+                            <div class="feedback-chip active" data-val="18-22">18-22</div>
+                            <div class="feedback-chip" data-val="23-28">23-28</div>
+                            <div class="feedback-chip" data-val="29+">29+</div>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
-                        🎂 ช่วงอายุ:
-                    </label>
-                    <div class="feedback-chips-grid" id="feedback-age-chips">
-                        <div class="feedback-chip" data-val="<18">&lt;18</div>
-                        <div class="feedback-chip active" data-val="18-22">18-22</div>
-                        <div class="feedback-chip" data-val="23-28">23-28</div>
-                        <div class="feedback-chip" data-val="29+">29+</div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                    <!-- Frequency -->
+                    <div>
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+                            🤔 เจอปัญหากินอะไรดีบ่อยแค่ไหน:
+                        </label>
+                        <div class="feedback-chips-grid" id="feedback-freq-chips">
+                            <div class="feedback-chip active" data-val="เกือบทุกวัน">🔥 เกือบทุกวัน</div>
+                            <div class="feedback-chip" data-val="2-3วัน/สัปดาห์">2-3 วัน/สัปดาห์</div>
+                            <div class="feedback-chip" data-val="นานๆครั้ง">นานๆ ครั้ง</div>
+                        </div>
+                    </div>
+                    <!-- Mode -->
+                    <div>
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+                            🎮 โหมดที่ได้ลองเล่น:
+                        </label>
+                        <div class="feedback-chips-grid" id="feedback-mode-chips">
+                            <div class="feedback-chip active" data-val="สุ่มคนเดียว">👤 คนเดียว</div>
+                            <div class="feedback-chip" data-val="เล่นกับเพื่อน">👥 กับเพื่อน</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Demographic: Frequency & Mode -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-bottom: 0.5rem;">
-                <div>
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
-                        🤔 เจอปัญหากินอะไรดีบ่อยแค่ไหน:
-                    </label>
-                    <div class="feedback-chips-grid" id="feedback-freq-chips">
-                        <div class="feedback-chip active" data-val="เกือบทุกวัน">🔥 เกือบทุกวัน</div>
-                        <div class="feedback-chip" data-val="2-3วัน/สัปดาห์">2-3 วัน/สัปดาห์</div>
-                        <div class="feedback-chip" data-val="นานๆครั้ง">นานๆ ครั้ง</div>
-                    </div>
-                </div>
-                <div>
-                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
-                        🎮 โหมดที่ได้ลองเล่น:
-                    </label>
-                    <div class="feedback-chips-grid" id="feedback-mode-chips">
-                        <div class="feedback-chip active" data-val="สุ่มคนเดียว">👤 คนเดียว</div>
-                        <div class="feedback-chip" data-val="เล่นกับเพื่อน">👥 กับเพื่อน</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. Quick Tags (Pain Points & Suggestions) -->
-            <div>
-                <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+            <!-- 4. Quick Tags (Pain Points & Suggestions) -->
+            <div style="margin-bottom: 0.85rem;">
+                <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
                     จุดที่ติดขัดหรือสิ่งที่อยากให้พัฒนาเพิ่ม (เลือกได้หลายข้อ):
                 </label>
                 <div class="feedback-chips-grid" id="feedback-chips-container">
@@ -1419,27 +1379,20 @@
                 </div>
             </div>
 
-            <!-- 3. Qualitative Comment -->
-            <div class="form-group" style="margin-top: 0.5rem;">
-                <label for="feedback-input-desc" style="font-size: 0.85rem; color: var(--text-secondary);">
+            <!-- 5. Qualitative Comment -->
+            <div class="form-group" style="margin-bottom: 0.9rem;">
+                <label for="feedback-input-desc" style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
                     ข้อเสนอแนะเพิ่มเติม / บ่นให้ทีมพัฒนาฟังได้เต็มที่เลยครับ (ถ้ามี):
                 </label>
                 <textarea id="feedback-input-desc" class="form-control" rows="3" placeholder="เช่น อยากให้มีร้านย่านมหาวิทยาลัยเพิ่ม, อยากให้สุ่มซ้ำได้..." style="font-size: 0.88rem; resize: vertical;"></textarea>
             </div>
 
-            <!-- 4. Optional Contact -->
-            <div class="form-group">
-                <label for="feedback-input-contact" style="font-size: 0.8rem; color: var(--text-muted);">
-                    ชื่อเล่น หรือ บัญชีโซเชียล (ไม่ระบุก็ได้):
-                </label>
-                <input type="text" id="feedback-input-contact" class="form-control" placeholder="เช่น เพื่อนเบสท์, @twitter_user" style="font-size: 0.85rem; padding: 0.45rem 0.8rem;">
-            </div>
-
-            <div style="display: flex; gap: 0.6rem; margin-top: 0.5rem;">
-                <button type="button" id="btn-cancel-feedback" class="btn btn-secondary" style="flex: 1; padding: 0.7rem;">
+            <!-- 6. Action Buttons -->
+            <div style="display: flex; gap: 0.65rem; margin-top: 0.5rem;">
+                <button type="button" id="btn-cancel-feedback" class="btn btn-secondary" style="flex: 1; padding: 0.75rem; border-radius: 12px; font-weight: 500;">
                     ปิด
                 </button>
-                <button type="button" id="btn-submit-inapp-feedback" class="btn btn-primary" style="flex: 2; padding: 0.7rem; font-weight: 700;">
+                <button type="button" id="btn-submit-inapp-feedback" class="btn btn-primary" style="flex: 2; padding: 0.75rem; font-weight: 700; border-radius: 12px;">
                     <i class="fa-solid fa-paper-plane"></i> ส่งข้อเสนอแนะ
                 </button>
             </div>
@@ -1454,6 +1407,7 @@
     <!-- Supabase JS Client for Real OAuth -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        window.APP_URL = "https://ginder.onrender.com";
         window.SUPABASE_URL = "https://icksdmnzcdswiscusrep.supabase.co";
         window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlja3NkbW56Y2Rzd2lzY3VzcmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMTE3ODEsImV4cCI6MjA5OTU4Nzc4MX0.RjNqKuh2Tr0ugcXyCTtnluBRP-g7jefAVCO9kqtXXPg";
     </script>
@@ -1483,6 +1437,12 @@
 
         function openFeedbackModal() {
             if (modal) modal.classList.add('active');
+            const contactInput = document.getElementById('feedback-input-contact');
+            if (contactInput && !contactInput.value.trim()) {
+                if (typeof state !== 'undefined' && state.name) {
+                    contactInput.value = state.name;
+                }
+            }
         }
         function closeFeedbackModal() {
             if (modal) modal.classList.remove('active');
