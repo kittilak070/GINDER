@@ -261,6 +261,28 @@ async function runSuite() {
         assert.ok(res.data.callbackUrl.includes('supabase.co/auth/v1/callback'), 'Callback URL should point to Supabase');
     });
 
+    // 16. Admin Whitelist Authorization (Skill 09 & OWASP A01: Broken Access Control)
+    await runTest('POST /api/auth/oauth-login elevates whitelisted admin email and prefix to role=admin', async () => {
+        const res = await makeRequest('/api/auth/oauth-login', { method: 'POST' }, {
+            provider: 'google',
+            email: '674295027@parichat.skru.ac.th',
+            name: 'Admin User 5027'
+        });
+        assert.strictEqual(res.statusCode, 200);
+        assert.strictEqual(res.data.role, 'admin', 'Whitelisted admin email/prefix must have role admin');
+    });
+
+    // 17. Admin Access Revocation for Non-Whitelisted Email (OWASP A01)
+    await runTest('POST /api/auth/oauth-login strictly revokes or demotes non-whitelisted email to role=user', async () => {
+        const res = await makeRequest('/api/auth/oauth-login', { method: 'POST' }, {
+            provider: 'google',
+            email: 'kittiluksukmaung@gmail.com',
+            name: 'Kittiluk Revoked'
+        });
+        assert.strictEqual(res.statusCode, 200);
+        assert.strictEqual(res.data.role, 'user', 'Removed email must strictly be demoted or stay as user');
+    });
+
     console.log(`\n========================================`);
     console.log(`  TEST RESULTS: ${passedCount} PASSED, ${failedCount} FAILED`);
     console.log(`========================================\n`);
