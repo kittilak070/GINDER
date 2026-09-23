@@ -3663,6 +3663,7 @@ function setupCardGestures(card) {
     let currentX = 0;
     let currentY = 0;
     let isDragging = false;
+    let hasMoved = false;
 
     const likeStamp = card.querySelector('.card-stamp-like');
     const dislikeStamp = card.querySelector('.card-stamp-dislike');
@@ -3679,8 +3680,11 @@ function setupCardGestures(card) {
 
         clearSwipeAffordance();
         isDragging = true;
+        hasMoved = false;
         startX = e.clientX;
         startY = e.clientY;
+        currentX = e.clientX;
+        currentY = e.clientY;
         card.classList.add('dragging');
         card.style.transition = 'none';
         try {
@@ -3695,6 +3699,9 @@ function setupCardGestures(card) {
         currentY = e.clientY;
 
         const dX = currentX - startX;
+        if (Math.abs(dX) > 8) {
+            hasMoved = true;
+        }
 
         // Calculate rotation based strictly on horizontal movement
         const rotate = dX / 15;
@@ -3721,16 +3728,16 @@ function setupCardGestures(card) {
         card.classList.remove('dragging');
 
         const dX = currentX - startX;
-        const threshold = 120; // threshold for a swipe
+        const threshold = 120; // threshold for deliberate swipe
 
-        if (e.type !== 'pointercancel' && dX > threshold) {
+        if (hasMoved && e.type !== 'pointercancel' && dX > threshold) {
             // Swipe right (Like)
             executeSwipeAction(card, 'right', dX, 0);
-        } else if (e.type !== 'pointercancel' && dX < -threshold) {
+        } else if (hasMoved && e.type !== 'pointercancel' && dX < -threshold) {
             // Swipe left (Dislike)
             executeSwipeAction(card, 'left', dX, 0);
         } else {
-            // Snap back
+            // Just a click/tap or minor drag below threshold: snap back cleanly, NEVER swipe away
             card.style.transition = 'transform 0.2s ease-out';
             card.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
             likeStamp.style.opacity = 0;

@@ -142,6 +142,15 @@ test('UX/UI: .swipe-card:nth-last-child(2) shows clean card silhouette without p
     assert(jsContent.includes("nextCard.classList.add('card-revealed')"), 'app.js should reveal next card on swipe flyout');
 });
 
+// Test 16: JS: Card gestures require intentional drag and do not swipe on tap/click
+test('UX/UI: setupCardGestures prevents accidental swipe on click/tap', () => {
+    const freshJs = fs.readFileSync(jsPath, 'utf8');
+    assert(freshJs.includes('let hasMoved = false;'), 'setupCardGestures must track hasMoved state');
+    assert(freshJs.includes('currentX = e.clientX;'), 'currentX must be initialized on pointerdown');
+    assert(freshJs.includes('hasMoved && e.type !== \'pointercancel\' && dX > threshold'), 'Must require hasMoved for right swipe');
+    assert(freshJs.includes('hasMoved && e.type !== \'pointercancel\' && dX < -threshold'), 'Must require hasMoved for left swipe');
+});
+
 console.log('\n========================================');
 console.log(`  TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
 console.log('========================================\n');
