@@ -1287,33 +1287,53 @@
                 ช่วยพวกเราประเมินสั้นๆ 15 วินาที เพื่อนำข้อมูลไปวิเคราะห์และพัฒนาส่งโปรเจกต์ครับ 🙏
             </p>
 
-            <!-- 1. Contact / Name at TOP (User Request: เอาชื่อไว้บน กรอกชื่อจริง หรือ Facebook / Line) -->
+            <!-- 1. Nickname, Email & Referral Source (User Request) -->
             <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 0.85rem 0.95rem; margin-bottom: 0.85rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.35rem;">
-                    <label for="feedback-input-contact" style="font-size: 0.88rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.4rem; margin: 0;">
-                        <i class="fa-solid fa-address-card text-accent"></i> ชื่อของคุณ / ช่องทางติดต่อกลับ:
-                    </label>
-                    <span style="font-size: 0.74rem; color: var(--accent-orange); font-weight: 600;">(ช่องทางติดต่อ)</span>
-                </div>
-                <div style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 0.5rem; line-height: 1.4;">
-                    กรอกชื่อจริง หรือ บัญชี Facebook / LINE ID เพื่อให้ทีมงานติดต่อกลับได้:
-                </div>
-                
-                <div style="position: relative;">
-                    <input type="text" id="feedback-input-contact" class="form-control" placeholder="เช่น กิตติลักษณ์ สุขเมือง, FB: Kittilak S., LINE: kittilak070" style="padding-left: 2.35rem; font-size: 0.88rem; height: 42px; background: rgba(0, 0, 0, 0.28); border-color: rgba(255, 255, 255, 0.16);">
-                    <i class="fa-solid fa-user-pen" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--accent-orange); font-size: 0.9rem; pointer-events: none;"></i>
+                <!-- 1.1 Nickname & Email -->
+                <div class="feedback-contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <label for="feedback-input-nickname" style="font-size: 0.82rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.3rem;">
+                            <i class="fa-solid fa-user text-accent"></i> ชื่อเล่น:
+                        </label>
+                        <div style="position: relative;">
+                            <input type="text" id="feedback-input-nickname" class="form-control" placeholder="เช่น น้องหมูกรอบ, บอย, ส้ม" maxlength="50" style="padding-left: 2.1rem; font-size: 0.86rem; height: 40px; background: rgba(0, 0, 0, 0.28); border-color: rgba(255, 255, 255, 0.16);">
+                            <i class="fa-solid fa-user-tag" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--accent-orange); font-size: 0.82rem; pointer-events: none;"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="feedback-input-email" style="font-size: 0.82rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.3rem;">
+                            <i class="fa-solid fa-envelope text-accent"></i> กรอกอีเมล:
+                        </label>
+                        <div style="position: relative;">
+                            <input type="email" id="feedback-input-email" class="form-control" placeholder="เช่น example@gmail.com" maxlength="100" style="padding-left: 2.1rem; font-size: 0.86rem; height: 40px; background: rgba(0, 0, 0, 0.28); border-color: rgba(255, 255, 255, 0.16);">
+                            <i class="fa-solid fa-at" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--accent-orange); font-size: 0.82rem; pointer-events: none;"></i>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="display: flex; gap: 0.4rem; margin-top: 0.45rem; flex-wrap: wrap;">
-                    <span style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; color: var(--text-secondary); background: rgba(255,255,255,0.06); padding: 0.2rem 0.5rem; border-radius: 6px;">
-                        <i class="fa-solid fa-id-card text-accent"></i> ชื่อจริง-นามสกุล
-                    </span>
-                    <span style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; color: #60a5fa; background: rgba(24, 119, 242, 0.14); border: 1px solid rgba(24, 119, 242, 0.28); padding: 0.2rem 0.5rem; border-radius: 6px;">
-                        <i class="fa-brands fa-facebook"></i> Facebook
-                    </span>
-                    <span style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; color: #4ade80; background: rgba(6, 199, 85, 0.14); border: 1px solid rgba(6, 199, 85, 0.28); padding: 0.2rem 0.5rem; border-radius: 6px;">
-                        <i class="fa-brands fa-line"></i> LINE ID
-                    </span>
+                <!-- 1.2 Referral Source (เจอเว็บนี้จากทางไหน) -->
+                <div>
+                    <label style="font-size: 0.82rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.35rem;">
+                        <i class="fa-solid fa-bullhorn text-accent"></i> เจอเว็บนี้จากทางไหน:
+                    </label>
+                    <div class="feedback-chips-grid feedback-source-chips-grid" id="feedback-source-chips" style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                        <div class="feedback-chip active" data-val="Facebook">
+                            <i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook
+                        </div>
+                        <div class="feedback-chip" data-val="Twitter">
+                            <i class="fa-brands fa-x-twitter"></i> Twitter
+                        </div>
+                        <div class="feedback-chip" data-val="Lemon8">
+                            <i class="fa-solid fa-lemon" style="color: #facc15;"></i> Lemon8
+                        </div>
+                        <div class="feedback-chip" data-val="TikTok">
+                            <i class="fa-brands fa-tiktok"></i> TikTok
+                        </div>
+                        <div class="feedback-chip" data-val="IG">
+                            <i class="fa-brands fa-instagram" style="color: #e1306c;"></i> IG
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1458,11 +1478,17 @@
 
         function openFeedbackModal() {
             if (modal) modal.classList.add('active');
-            const contactInput = document.getElementById('feedback-input-contact');
-            if (contactInput && !contactInput.value.trim()) {
+            const nickInput = document.getElementById('feedback-input-nickname');
+            if (nickInput && !nickInput.value.trim()) {
                 if (typeof state !== 'undefined' && state.name) {
-                    contactInput.value = state.name;
+                    nickInput.value = state.name;
+                } else if (typeof state !== 'undefined' && state.currentUser) {
+                    nickInput.value = state.currentUser.displayName || state.currentUser.username || '';
                 }
+            }
+            const emailInput = document.getElementById('feedback-input-email');
+            if (emailInput && !emailInput.value.trim() && typeof state !== 'undefined' && state.currentUser && state.currentUser.email) {
+                emailInput.value = state.currentUser.email;
             }
         }
         function closeFeedbackModal() {
@@ -1501,7 +1527,7 @@
             if (emotionLabel) emotionLabel.innerText = ratingEmotions[rating] || "";
         }
 
-        // Single-select helper for demographic chip groups
+        // Single-select helper for demographic & referral chip groups
         function setupSingleSelectChips(containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -1514,6 +1540,7 @@
             });
         }
 
+        setupSingleSelectChips('feedback-source-chips');
         setupSingleSelectChips('feedback-role-chips');
         setupSingleSelectChips('feedback-age-chips');
         setupSingleSelectChips('feedback-freq-chips');
@@ -1532,6 +1559,10 @@
         // Submit handler
         if (btnSubmit) {
             btnSubmit.addEventListener('click', async () => {
+                const nickname = (document.getElementById('feedback-input-nickname')?.value || '').trim();
+                const email = (document.getElementById('feedback-input-email')?.value || '').trim();
+                const source = document.querySelector('#feedback-source-chips .feedback-chip.active')?.dataset.val || 'Facebook';
+
                 const role = document.querySelector('#feedback-role-chips .feedback-chip.active')?.dataset.val || 'นักศึกษา';
                 const ageRange = document.querySelector('#feedback-age-chips .feedback-chip.active')?.dataset.val || '18-22';
                 const frequency = document.querySelector('#feedback-freq-chips .feedback-chip.active')?.dataset.val || 'เกือบทุกวัน';
@@ -1542,8 +1573,13 @@
                     .filter(Boolean);
 
                 const desc = (document.getElementById('feedback-input-desc')?.value || '').trim();
-                const contact = (document.getElementById('feedback-input-contact')?.value || '').trim();
                 const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+                const formattedContact = [
+                    nickname ? `ชื่อเล่น: ${nickname}` : '',
+                    email ? `Email: ${email}` : '',
+                    `ที่มา: ${source}`
+                ].filter(Boolean).join(' | ');
 
                 btnSubmit.disabled = true;
                 btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังส่ง...';
@@ -1555,14 +1591,17 @@
                         body: JSON.stringify({
                             type: 'usability_research',
                             rating: currentRating,
+                            nickname: nickname,
+                            email: email,
+                            source: source,
                             role: role,
                             ageRange: ageRange,
                             frequency: frequency,
                             modeTested: modeTested,
                             tags: selectedTags,
-                            title: `ประเมินการใช้งาน ${currentRating} ดาว (${role}, ${ageRange} ปี, ${isMobile ? 'Mobile' : 'Desktop'})`,
+                            title: `ประเมินการใช้งาน ${currentRating} ดาว (${nickname || role}, ${ageRange} ปี, ${isMobile ? 'Mobile' : 'Desktop'})`,
                             description: desc || (selectedTags.length ? `เลือกประเด็น: ${selectedTags.join(', ')}` : 'ไม่ได้ระบุข้อความเพิ่มเติม'),
-                            contactInfo: contact || (isMobile ? 'ผู้ใช้มือถือ' : 'ผู้ใช้คอมพิวเตอร์'),
+                            contactInfo: formattedContact,
                             device: isMobile ? 'Mobile' : 'Desktop'
                         })
                     });
@@ -1575,8 +1614,10 @@
                         // Reset form
                         const descEl = document.getElementById('feedback-input-desc');
                         if (descEl) descEl.value = '';
-                        const contactEl = document.getElementById('feedback-input-contact');
-                        if (contactEl) contactEl.value = '';
+                        const nickEl = document.getElementById('feedback-input-nickname');
+                        if (nickEl) nickEl.value = '';
+                        const emailEl = document.getElementById('feedback-input-email');
+                        if (emailEl) emailEl.value = '';
                         if (tagChipsContainer) {
                             tagChipsContainer.querySelectorAll('.feedback-chip').forEach(c => c.classList.remove('active'));
                         }

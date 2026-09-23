@@ -2677,11 +2677,32 @@
                     ratingStars = '<span style="color: #f59e0b; margin-right: 0.5rem; font-size: 1.05rem;">' + '★'.repeat(fb.rating) + '☆'.repeat(5 - fb.rating) + '</span>';
                 }
 
-                // Contact info (Name / Facebook / LINE)
+                // Contact info (Nickname, Email, Source or legacy contactVal)
                 const contactVal = (fb.contact || fb.contactInfo || '').trim();
-                let contactBadge = '';
-                if (contactVal && contactVal !== 'ผู้ใช้มือถือ' && contactVal !== 'ผู้ใช้คอมพิวเตอร์') {
-                    contactBadge = `
+                let contactBadges = '';
+                if (fb.nickname) {
+                    contactBadges += `
+                        <span class="badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.35); font-size: 0.82rem; font-weight: 600; padding: 0.22rem 0.65rem; border-radius: 999px; display: inline-flex; align-items: center; gap: 0.35rem;">
+                            <i class="fa-solid fa-user"></i> ${escapeHtml(fb.nickname)}
+                        </span>
+                    `;
+                }
+                if (fb.email) {
+                    contactBadges += `
+                        <span class="badge" style="background: rgba(37, 99, 235, 0.14); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.32); font-size: 0.82rem; font-weight: 600; padding: 0.22rem 0.65rem; border-radius: 999px; display: inline-flex; align-items: center; gap: 0.35rem;">
+                            <i class="fa-solid fa-envelope"></i> ${escapeHtml(fb.email)}
+                        </span>
+                    `;
+                }
+                if (fb.source) {
+                    contactBadges += `
+                        <span class="badge" style="background: rgba(236, 72, 153, 0.14); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.32); font-size: 0.82rem; font-weight: 600; padding: 0.22rem 0.65rem; border-radius: 999px; display: inline-flex; align-items: center; gap: 0.35rem;">
+                            <i class="fa-solid fa-compass"></i> มาจาก: ${escapeHtml(fb.source)}
+                        </span>
+                    `;
+                }
+                if (!contactBadges && contactVal && contactVal !== 'ผู้ใช้มือถือ' && contactVal !== 'ผู้ใช้คอมพิวเตอร์') {
+                    contactBadges = `
                         <span class="badge" style="background: rgba(37, 99, 235, 0.14); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.32); font-size: 0.82rem; font-weight: 600; padding: 0.22rem 0.65rem; border-radius: 999px; display: inline-flex; align-items: center; gap: 0.35rem;">
                             <i class="fa-solid fa-address-book"></i> ติดต่อ: ${escapeHtml(contactVal)}
                         </span>
@@ -2705,9 +2726,9 @@
                 }
 
                 const createdAt = (fb.createdAt || fb.created_at) ? new Date(fb.createdAt || fb.created_at).toLocaleString('th-TH') : '-';
-                const mainName = contactVal && contactVal !== 'ผู้ใช้มือถือ' && contactVal !== 'ผู้ใช้คอมพิวเตอร์' 
+                const mainName = fb.nickname || (contactVal && contactVal !== 'ผู้ใช้มือถือ' && contactVal !== 'ผู้ใช้คอมพิวเตอร์' 
                     ? contactVal 
-                    : (fb.user_name || 'ผู้ประเมินทั่วไป');
+                    : (fb.user_name || 'ผู้ประเมินทั่วไป'));
 
                 const commentText = fb.description || fb.comment || fb.message || '';
 
@@ -2716,7 +2737,7 @@
                         <div style="display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap;">
                             ${ratingStars}
                             <strong style="color: var(--text-main); font-size: 0.95rem;">${escapeHtml(mainName)}</strong>
-                            ${contactBadge}
+                            ${contactBadges}
                             <span style="color: var(--text-muted); font-size: 0.8rem;">${createdAt}</span>
                         </div>
                         <button class="btn btn-delete btn-sm" onclick="deleteFeedback('${fb.id}')" title="ลบข้อความ"><i class="fa-solid fa-trash"></i> ลบ</button>

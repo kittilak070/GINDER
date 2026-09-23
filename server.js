@@ -195,8 +195,11 @@ async function saveHistoryItem(item) {
     } catch (e) {}
 }
 
-function encodeFeedbackDescription(description, rating, tags, device, role, ageRange, frequency, modeTested) {
+function encodeFeedbackDescription(description, rating, tags, device, role, ageRange, frequency, modeTested, nickname, email, source) {
     const metaParts = [];
+    if (nickname) metaParts.push(`👤 ชื่อเล่น: ${nickname}`);
+    if (email) metaParts.push(`📧 อีเมล: ${email}`);
+    if (source) metaParts.push(`🌐 ที่มา: ${source}`);
     if (rating) metaParts.push(`⭐ ${rating}/5 ดาว`);
     if (role) metaParts.push(`🎓 ${role}`);
     if (ageRange) metaParts.push(`🎂 ${ageRange}`);
@@ -213,7 +216,7 @@ function encodeFeedbackDescription(description, rating, tags, device, role, ageR
 }
 
 function parseFeedbackDescription(rawDescription) {
-    if (!rawDescription) return { description: '', rating: null, tags: [], device: '', role: '', ageRange: '', frequency: '', modeTested: '' };
+    if (!rawDescription) return { description: '', rating: null, tags: [], device: '', role: '', ageRange: '', frequency: '', modeTested: '', nickname: '', email: '', source: '' };
     
     let description = rawDescription;
     let rating = null;
@@ -223,12 +226,24 @@ function parseFeedbackDescription(rawDescription) {
     let ageRange = '';
     let frequency = '';
     let modeTested = '';
+    let nickname = '';
+    let email = '';
+    let source = '';
     
     const metaMatch = rawDescription.match(/^\[\s*(.*?)\s*\]\n\n([\s\S]*)$/);
     if (metaMatch) {
         const metaStr = metaMatch[1];
         description = metaMatch[2].trim();
         
+        const nickMatch = metaStr.match(/👤\s*(?:ชื่อเล่น:\s*)?([^|]+)/);
+        if (nickMatch) nickname = nickMatch[1].trim();
+
+        const emailMatch = metaStr.match(/📧\s*(?:อีเมล:\s*)?([^|]+)/);
+        if (emailMatch) email = emailMatch[1].trim();
+
+        const sourceMatch = metaStr.match(/🌐\s*(?:ที่มา:\s*)?([^|]+)/);
+        if (sourceMatch) source = sourceMatch[1].trim();
+
         const ratingMatch = metaStr.match(/⭐\s*(\d+)\/5/);
         if (ratingMatch) rating = parseInt(ratingMatch[1]);
 
@@ -255,7 +270,7 @@ function parseFeedbackDescription(rawDescription) {
         }
     }
     
-    return { description, rating, tags, device, role, ageRange, frequency, modeTested };
+    return { description, rating, tags, device, role, ageRange, frequency, modeTested, nickname, email, source };
 }
 
 async function getFeedback() {
@@ -277,6 +292,9 @@ async function getFeedback() {
                 description: parsed.description || item.description || '',
                 contact: item.contact_info,
                 contactInfo: item.contact_info,
+                nickname: parsed.nickname || '',
+                email: parsed.email || '',
+                source: parsed.source || '',
                 rating: item.rating !== undefined && item.rating !== null ? item.rating : parsed.rating,
                 tags: (item.tags && item.tags.length > 0) ? item.tags : parsed.tags,
                 device: item.device || parsed.device || '',
@@ -303,7 +321,10 @@ async function saveFeedback(item) {
             item.role,
             item.ageRange,
             item.frequency,
-            item.modeTested
+            item.modeTested,
+            item.nickname,
+            item.email,
+            item.source
         );
 
         const isValidUuid = typeof item.userId === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(item.userId);
@@ -1877,17 +1898,26 @@ app.get('/api/admin/analytics', async (req, res) => {
 
 // --- FEEDBACK & SUGGESTIONS ROUTES ---
 app.post('/api/feedback', feedbackLimiter, async (req, res) => {
-    const { type, title, description, contactInfo, rating, tags, device, role, ageRange, frequency, modeTested } = req.body;
+    const { type, title, description, contactInfo, rating, tags, device, role, ageRange, frequency, modeTested, nickname, email, source } = req.body;
     if (!title && !description && !rating) {
         return res.status(400).json({ message: "กรุณาระบุคะแนนความพึงพอใจหรือรายละเอียดข้อความ" });
     }
     const numRating = rating ? Math.max(1, Math.min(5, parseInt(rating) || 5)) : null;
+    const finalContactInfo = (contactInfo || [
+        nickname ? `ชื่อเล่น: ${nickname}` : '',
+        email ? `อีเมล: ${email}` : '',
+        source ? `ช่องทาง: ${source}` : ''
+    ].filter(Boolean).join(' | ') || '').trim().slice(0, 150);
+
     const item = {
         id: 'fb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
         type: (type || (numRating ? 'usability_research' : 'general')).slice(0, 50),
         title: (title ? title.trim().slice(0, 100) : (numRating ? `ประเมินความพึงพอใจ ${numRating} ดาว` : 'ข้อเสนอแนะทั่วไป')),
         description: (description ? description.trim().slice(0, 2000) : ''),
-        contactInfo: (contactInfo || '').trim().slice(0, 100),
+        contactInfo: finalContactInfo,
+        nickname: (nickname || '').trim().slice(0, 50),
+        email: (email || '').trim().slice(0, 100),
+        source: (source || '').trim().slice(0, 50),
         rating: numRating,
         role: (role || '').trim().slice(0, 50),
         ageRange: (ageRange || '').trim().slice(0, 30),
@@ -2062,7 +2092,7 @@ app.get('/api/admin/reports/export/:type', async (req, res) => {
         } else if (exportType === 'feedbacks') {
             filename = `GINDER_Feedbacks_${nowStr}.csv`;
             const feedbacks = await getFeedback();
-            rows.push(['รหัสฟีดแบ็ก', 'ประเภท', 'หัวข้อ', 'คะแนน (Rating)', 'กลุ่มผู้ใช้ (Role)', 'ช่วงอายุ (Age)', 'ความถี่ปัญหา (Frequency)', 'โหมดที่ทดสอบ (Mode)', 'แท็กประเด็น/ปัญหา (Tags)', 'รายละเอียด', 'อุปกรณ์', 'ข้อมูลติดต่อ', 'วันที่ส่ง']);
+            rows.push(['รหัสฟีดแบ็ก', 'ประเภท', 'หัวข้อ', 'คะแนน (Rating)', 'กลุ่มผู้ใช้ (Role)', 'ช่วงอายุ (Age)', 'ความถี่ปัญหา (Frequency)', 'โหมดที่ทดสอบ (Mode)', 'แท็กประเด็น/ปัญหา (Tags)', 'ชื่อเล่น (Nickname)', 'อีเมล (Email)', 'เจอจากทางไหน (Source)', 'รายละเอียด', 'อุปกรณ์', 'ข้อมูลติดต่อ', 'วันที่ส่ง']);
             feedbacks.forEach(f => {
                 const tagStr = Array.isArray(f.tags) ? f.tags.join(', ') : (f.tags || '-');
                 rows.push([
@@ -2075,6 +2105,9 @@ app.get('/api/admin/reports/export/:type', async (req, res) => {
                     f.frequency || '-',
                     f.modeTested || '-',
                     tagStr,
+                    f.nickname || '-',
+                    f.email || '-',
+                    f.source || '-',
                     f.description || '',
                     f.device || '-',
                     f.contact || f.contactInfo || '',

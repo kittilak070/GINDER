@@ -5213,6 +5213,9 @@ body:has(#view-swipe.active) .app-footer,
     .feedback-star-btn {
         font-size: 1.8rem;
     }
+    .feedback-contact-grid {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 /* ==========================================================================

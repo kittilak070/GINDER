@@ -261,6 +261,26 @@ async function runSuite() {
         assert.ok(res.data.callbackUrl.includes('supabase.co/auth/v1/callback'), 'Callback URL should point to Supabase');
     });
 
+    // 16. Feedback API: Nickname, Email, and Referral Source submission
+    await runTest('POST /api/feedback saves feedback with nickname, email, and referral source', async () => {
+        const payload = {
+            rating: 5,
+            nickname: 'กวินท์',
+            email: 'gavin@example.com',
+            source: 'Lemon8',
+            role: 'นักศึกษา',
+            ageRange: '18-22',
+            frequency: 'เกือบทุกวัน',
+            modeTested: 'กับเพื่อน',
+            tags: ['UI ลื่นไหล', 'เจอร้านไว'],
+            description: 'ระบบสแกน QR และ UI ฟีดแบ็กใหม่ใช้งานง่ายมากครับ'
+        };
+        const res = await makeRequest('/api/feedback', { method: 'POST' }, payload);
+        assert.strictEqual(res.statusCode, 200, `Expected 200, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, true);
+        assert.ok(res.data.message.includes('ขอบคุณสำหรับข้อเสนอแนะ'));
+    });
+
     console.log(`\n========================================`);
     console.log(`  TEST RESULTS: ${passedCount} PASSED, ${failedCount} FAILED`);
     console.log(`========================================\n`);
