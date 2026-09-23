@@ -3563,9 +3563,36 @@ function renderDeck() {
         const distNum = (r.distance !== null && r.distance !== undefined) ? parseFloat(r.distance) : NaN;
         const distDisplay = !isNaN(distNum) ? `${distNum.toFixed(1)} กม.` : 'ไม่ระบุระยะทาง';
 
+        // Prepare multi-image list (Tinder / Omi story style)
+        const images = (Array.isArray(r.images) && r.images.length > 0)
+            ? r.images
+            : (r.image ? [r.image] : ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop']);
+        card._images = images;
+        card._currentImgIndex = 0;
+
+        const storyBarsHtml = images.length > 1
+            ? `<div class="card-story-bars">
+                ${images.map((_, idx) => `<div class="story-bar ${idx === 0 ? 'active' : ''}" data-idx="${idx}"></div>`).join('')}
+               </div>
+               <div class="card-photo-tap card-photo-tap-left" title="แตะดูรูปก่อนหน้า"></div>
+               <div class="card-photo-tap card-photo-tap-right" title="แตะดูรูปถัดไป"></div>
+               <div class="card-photo-nav-hint hint-left"><i class="fa-solid fa-chevron-left"></i></div>
+               <div class="card-photo-nav-hint hint-right"><i class="fa-solid fa-chevron-right"></i></div>`
+            : '';
+
+        const drawerGalleryHtml = images.length > 1
+            ? `<div class="drawer-photo-gallery">
+                <strong><i class="fa-solid fa-images"></i> รูปภาพและเมนู (${images.length} รูป):</strong>
+                <div class="drawer-photo-strip">
+                    ${images.map((imgUrl, idx) => `<img src="${imgUrl}" class="drawer-thumb" alt="มุม ${idx + 1}" onclick="jumpCardPhoto('${r.id}', ${idx})">`).join('')}
+                </div>
+               </div>`
+            : '';
+
         card.innerHTML = `
             <div class="card-image-wrapper">
-                <img src="${r.image}" class="card-image" alt="${r.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
+                ${storyBarsHtml}
+                <img src="${images[0]}" class="card-image" alt="${r.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
                 <div class="card-stamp card-stamp-like">อยากกิน</div>
                 <div class="card-stamp card-stamp-dislike">ไม่กิน</div>
                 <div class="card-info-badge"><i class="fa-solid fa-location-arrow"></i> ${distDisplay}</div>
@@ -3594,6 +3621,7 @@ function renderDeck() {
                     <p><strong>ราคาเฉลี่ยต่อคน:</strong> ~${r.avgPrice} บาท (${r.priceRange})</p>
                     <p><strong>ระยะทาง:</strong> ห่างออกไป ${r.distance} กิโลเมตร</p>
                     <p><strong>ที่ตั้ง:</strong> ${r.address}</p>
+                    ${drawerGalleryHtml}
                     ${r.allergens && r.allergens.length ? `
                         <div>
                             <strong>สารก่อภูมิแพ้ในร้าน:</strong>
@@ -3742,6 +3770,26 @@ function setupCardGestures(card) {
             card.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
             likeStamp.style.opacity = 0;
             dislikeStamp.style.opacity = 0;
+
+            // Photo tap navigation (Tinder / Omi / Story style)
+            if (!hasMoved && e.type !== 'pointercancel') {
+                const imgWrapper = e.target.closest('.card-image-wrapper');
+                if (imgWrapper && card._images && card._images.length > 1) {
+                    if (e.target.classList.contains('card-photo-tap-left')) {
+                        switchCardPhoto(card, -1);
+                    } else if (e.target.classList.contains('card-photo-tap-right')) {
+                        switchCardPhoto(card, 1);
+                    } else {
+                        const rect = imgWrapper.getBoundingClientRect();
+                        const tapX = currentX - rect.left;
+                        if (tapX < rect.width / 2) {
+                            switchCardPhoto(card, -1);
+                        } else {
+                            switchCardPhoto(card, 1);
+                        }
+                    }
+                }
+            }
         }
 
         try {
@@ -3752,6 +3800,52 @@ function setupCardGestures(card) {
     card.addEventListener('pointerup', handlePointerEnd);
     card.addEventListener('pointercancel', handlePointerEnd);
 }
+
+// --- TINDER / OMI MULTI-PHOTO SWITCHING ---
+function switchCardPhoto(card, direction) {
+    if (!card || !card._images || card._images.length <= 1) return;
+    const total = card._images.length;
+    let nextIdx = (card._currentImgIndex || 0) + direction;
+    if (nextIdx < 0) nextIdx = total - 1;
+    if (nextIdx >= total) nextIdx = 0;
+
+    if (nextIdx === card._currentImgIndex) return;
+    card._currentImgIndex = nextIdx;
+
+    const img = card.querySelector('.card-image');
+    const bars = card.querySelectorAll('.story-bar');
+
+    if (img) {
+        img.style.opacity = '0.35';
+        setTimeout(() => {
+            img.src = card._images[nextIdx];
+            img.style.opacity = '1';
+        }, 70);
+    }
+
+    bars.forEach((bar, i) => {
+        if (i === nextIdx) {
+            bar.classList.add('active');
+            bar.style.background = '#ffffff';
+        } else if (i < nextIdx) {
+            bar.classList.remove('active');
+            bar.style.background = 'rgba(255, 255, 255, 0.85)';
+        } else {
+            bar.classList.remove('active');
+            bar.style.background = 'rgba(255, 255, 255, 0.38)';
+        }
+    });
+
+    if (navigator.vibrate) navigator.vibrate(8);
+}
+
+window.jumpCardPhoto = function(restaurantId, targetIdx) {
+    const card = document.querySelector(`.swipe-card[data-id="${restaurantId}"]`);
+    if (!card || !card._images || !card._images[targetIdx]) return;
+    const diff = targetIdx - (card._currentImgIndex || 0);
+    switchCardPhoto(card, diff);
+};
+
 
 function executeSwipeAction(card, direction, dX = 150, dY = 0) {
     clearSwipeAffordance();

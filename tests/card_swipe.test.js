@@ -151,6 +151,47 @@ test('UX/UI: setupCardGestures prevents accidental swipe on click/tap', () => {
     assert(freshJs.includes('hasMoved && e.type !== \'pointercancel\' && dX < -threshold'), 'Must require hasMoved for left swipe');
 });
 
+// Test 17: CSS: Tinder / Omi Story Progress Indicators & Tap Zones
+test('Tinder/Omi: CSS defines card story bars, active state, and tap zones', () => {
+    const freshCss = fs.readFileSync(cssPath, 'utf8');
+    assert(freshCss.includes('.card-story-bars'), 'Missing .card-story-bars selector in CSS');
+    assert(freshCss.includes('.story-bar'), 'Missing .story-bar selector in CSS');
+    assert(freshCss.includes('.story-bar.active'), 'Missing .story-bar.active selector in CSS');
+    assert(freshCss.includes('.card-photo-tap-left'), 'Missing .card-photo-tap-left in CSS');
+    assert(freshCss.includes('.card-photo-tap-right'), 'Missing .card-photo-tap-right in CSS');
+});
+
+// Test 18: JS: Multi-Photo navigation logic (switchCardPhoto, jumpCardPhoto, tap detection)
+test('Tinder/Omi: JS renders story bars and implements switchCardPhoto & jumpCardPhoto', () => {
+    const freshJs = fs.readFileSync(jsPath, 'utf8');
+    assert(freshJs.includes('function switchCardPhoto(card, direction)'), 'Missing switchCardPhoto function');
+    assert(freshJs.includes('window.jumpCardPhoto = function(restaurantId, targetIdx)'), 'Missing window.jumpCardPhoto function');
+    assert(freshJs.includes('card-story-bars'), 'renderDeck must render card-story-bars');
+    assert(freshJs.includes('switchCardPhoto(card, -1)'), 'Must support previous photo tap (-1)');
+    assert(freshJs.includes('switchCardPhoto(card, 1)'), 'Must support next photo tap (1)');
+});
+
+// Test 19: Drawer: Multi-Photo Strip in Drawer
+test('Tinder/Omi: Drawer includes multi-photo gallery strip and styles', () => {
+    const freshCss = fs.readFileSync(cssPath, 'utf8');
+    const freshJs = fs.readFileSync(jsPath, 'utf8');
+    assert(freshCss.includes('.drawer-photo-gallery'), 'Missing .drawer-photo-gallery in CSS');
+    assert(freshCss.includes('.drawer-photo-strip'), 'Missing .drawer-photo-strip in CSS');
+    assert(freshCss.includes('.drawer-thumb'), 'Missing .drawer-thumb in CSS');
+    assert(freshJs.includes('drawer-photo-gallery'), 'renderDeck drawer must render drawer-photo-gallery');
+});
+
+// Test 20: Admin: Multi-Image Manager in Admin Dashboard
+test('Admin CMS: Multi-photo inputs, file upload, and thumbnail preview strip are present', () => {
+    const adminPath = path.join(__dirname, '../templates/admin.html');
+    const adminContent = fs.readFileSync(adminPath, 'utf8');
+    assert(adminContent.includes('id="form-image-urls"'), 'Missing #form-image-urls in admin.html');
+    assert(adminContent.includes('id="form-image-files"'), 'Missing #form-image-files file upload input in admin.html');
+    assert(adminContent.includes('id="admin-image-previews"'), 'Missing #admin-image-previews container in admin.html');
+    assert(adminContent.includes('function renderAdminImagePreviews()'), 'Missing renderAdminImagePreviews function in admin.html');
+    assert(adminContent.includes('window.removeAdminImage = function'), 'Missing window.removeAdminImage function in admin.html');
+});
+
 console.log('\n========================================');
 console.log(`  TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
 console.log('========================================\n');
@@ -158,3 +199,4 @@ console.log('========================================\n');
 if (failed > 0) {
     process.exit(1);
 }
+

@@ -1808,10 +1808,44 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="form-image">ลิงก์รูปภาพ (URL)</label>
-                    <input type="url" id="form-image" class="form-control"
-                        placeholder="https://images.unsplash.com/...">
+                <!-- Tinder / Omi Multi-Photo Manager -->
+                <div class="form-group" style="background: rgba(255, 255, 255, 0.03); padding: 1.1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 1.25rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <label style="font-weight: 600; font-size: 0.95rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-images" style="color: var(--color-primary);"></i> รูปภาพร้าน / เมนูเด็ด (สไตล์ Tinder/Omi)
+                        </label>
+                        <span class="badge" id="admin-img-count-badge" style="background: rgba(255, 255, 255, 0.1); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.15); padding: 2px 8px; border-radius: 6px; font-size: 0.8rem;">0 รูป</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+                        สามารถใส่ได้หลายรูป (รูปหน้าร้าน, เมนูเด็ด, บรรยากาศ) เพื่อให้ผู้ใช้แตะปัดดูมุมต่างๆ ได้
+                    </p>
+
+                    <!-- URL input (Multiple lines / comma separated) -->
+                    <div style="margin-bottom: 0.75rem;">
+                        <label for="form-image-urls" style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 4px; display: block;">
+                            ลิงก์รูปภาพ (URL) - <em>ขึ้นบรรทัดใหม่ หรือคั่นด้วยจุลภาค (,) เมื่อมีหลายรูป</em>
+                        </label>
+                        <textarea id="form-image-urls" class="form-control" rows="3"
+                            placeholder="https://images.unsplash.com/photo-1...&#10;https://images.unsplash.com/photo-2..."></textarea>
+                        <input type="hidden" id="form-image">
+                    </div>
+
+                    <!-- Local Image Upload & Action Row -->
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 0.85rem;">
+                        <input type="file" id="form-image-files" accept="image/*" multiple style="display: none;">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('form-image-files').click()" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; padding: 0.45rem 0.9rem;">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> เลือกไฟล์รูปภาพจากเครื่อง
+                        </button>
+                        <span id="form-image-file-info" style="font-size: 0.8rem; color: var(--text-muted);">เลือกได้หลายไฟล์พร้อมกัน</span>
+                    </div>
+
+                    <!-- Visual Thumbnail Strip with Delete badges -->
+                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500;">
+                        ภาพตัวอย่าง (แตะปุ่ม × เพื่อลบรูป):
+                    </div>
+                    <div id="admin-image-previews" style="display: flex; gap: 10px; overflow-x: auto; padding: 8px 4px; min-height: 85px; align-items: center; background: rgba(0,0,0,0.25); border-radius: 8px; border: 1px dashed rgba(255, 255, 255, 0.12);">
+                        <span style="font-size: 0.82rem; color: var(--text-muted); padding: 0.5rem; font-style: italic;">ยังไม่มีรูปภาพ ให้กรอก URL ด้านบน หรือคลิกเลือกไฟล์รูป</span>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -2021,7 +2055,54 @@
             }
         }
 
-        // ---------------- RESTAURANTS (CMS) ----------------
+        // ---------------- RESTAURANTS (CMS) & MULTI-IMAGE GALLERY ----------------
+        let currentRestaurantImages = [];
+
+        function renderAdminImagePreviews() {
+            const container = document.getElementById('admin-image-previews');
+            const badge = document.getElementById('admin-img-count-badge');
+            const hiddenImage = document.getElementById('form-image');
+            if (!container) return;
+
+            if (currentRestaurantImages.length === 0) {
+                container.innerHTML = '<span style="font-size: 0.82rem; color: var(--text-muted); padding: 0.5rem; font-style: italic;">ยังไม่มีรูปภาพ ให้กรอก URL ด้านบน หรือคลิกเลือกไฟล์รูป</span>';
+                if (badge) badge.innerText = '0 รูป';
+                if (hiddenImage) hiddenImage.value = '';
+                return;
+            }
+
+            if (badge) badge.innerText = `${currentRestaurantImages.length} รูป`;
+            if (hiddenImage) hiddenImage.value = currentRestaurantImages[0] || '';
+
+            container.innerHTML = currentRestaurantImages.map((src, idx) => `
+                <div style="position: relative; width: 76px; height: 76px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 2px solid ${idx === 0 ? 'var(--color-primary)' : 'rgba(255,255,255,0.15)'}; background: #000;">
+                    <img src="${src}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'">
+                    <span style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: #fff; font-size: 0.65rem; text-align: center; padding: 1px 0; font-weight: 600;">
+                        ${idx === 0 ? '★ รูปหลัก' : 'มุม ' + (idx + 1)}
+                    </span>
+                    <button type="button" onclick="removeAdminImage(${idx})" style="position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: #ef4444; color: #fff; border: none; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; line-height: 1;" title="ลบรูปนี้">×</button>
+                </div>
+            `).join('');
+        }
+
+        window.removeAdminImage = function(index) {
+            currentRestaurantImages.splice(index, 1);
+            const urlTextarea = document.getElementById('form-image-urls');
+            if (urlTextarea) {
+                urlTextarea.value = currentRestaurantImages.filter(x => !x.startsWith('data:')).join('\n');
+            }
+            renderAdminImagePreviews();
+        };
+
+        function syncImagesFromTextarea() {
+            const urlTextarea = document.getElementById('form-image-urls');
+            if (!urlTextarea) return;
+            const lines = urlTextarea.value.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+            const dataUrls = currentRestaurantImages.filter(x => x.startsWith('data:'));
+            currentRestaurantImages = [...lines, ...dataUrls];
+            renderAdminImagePreviews();
+        }
+
         function loadRestaurants() {
             fetch('/api/admin/restaurants')
                 .then(res => res.json())
@@ -2057,7 +2138,12 @@
                 const lngNum = parseFloat(r.longitude);
                 const gpsText = (!isNaN(latNum) && !isNaN(lngNum)) ? latNum.toFixed(4) + ', ' + lngNum.toFixed(4) : '<span style="color: var(--text-muted);">ไม่มีพิกัด</span>';
                 tr.innerHTML = `
-                    <td><img src="${r.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'}" class="restaurant-img" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'"></td>
+                    <td>
+                        <div style="position: relative; display: inline-block;">
+                            <img src="${r.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'}" class="restaurant-img" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'">
+                            ${(Array.isArray(r.images) && r.images.length > 1) ? `<span style="position: absolute; bottom: 3px; right: 3px; background: rgba(0,0,0,0.8); color: #fff; font-size: 0.68rem; padding: 1px 4px; border-radius: 4px; display: inline-flex; align-items: center; gap: 3px;"><i class="fa-solid fa-images"></i> ${r.images.length}</span>` : ''}
+                        </div>
+                    </td>
                     <td style="font-weight: 600;">${escapeHtml(r.name)}</td>
                     <td>${typeBadges}</td>
                     <td>${r.avgPrice || 0}฿</td>
@@ -2162,6 +2248,17 @@
                     if (latInput) latInput.value = '';
                     if (lngInput) lngInput.value = '';
                     if (gpsStatus) gpsStatus.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--text-muted);"></i> วางลิงก์ Google Maps หรือพิกัดเพื่อดึงค่าอัตโนมัติ';
+                    
+                    // Reset multi-image state
+                    currentRestaurantImages = [];
+                    const imgUrlsEl = document.getElementById('form-image-urls');
+                    if (imgUrlsEl) imgUrlsEl.value = '';
+                    const hiddenImgEl = document.getElementById('form-image');
+                    if (hiddenImgEl) hiddenImgEl.value = '';
+                    const fileInput = document.getElementById('form-image-files');
+                    if (fileInput) fileInput.value = '';
+                    renderAdminImagePreviews();
+
                     formModal.classList.add('active');
                 });
             }
@@ -2194,13 +2291,18 @@
                     if (avgPrice > 300) priceRange = '$$$';
                     else if (avgPrice >= 100) priceRange = '$$';
 
+                    syncImagesFromTextarea();
+                    const cleanImages = currentRestaurantImages.filter(Boolean);
+                    const primaryImage = cleanImages[0] || (document.getElementById('form-image') ? document.getElementById('form-image').value.trim() : '') || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500';
+
                     const payload = {
                         name: document.getElementById('form-name').value.trim(),
                         type: restaurantTypes.length > 0 ? restaurantTypes : ['อาหารจานเดียว'],
                         rating: parseFloat(document.getElementById('form-rating').value) || 4.0,
                         avgPrice: avgPrice,
                         priceRange: priceRange,
-                        image: document.getElementById('form-image').value.trim() || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500',
+                        images: cleanImages.length > 0 ? cleanImages : [primaryImage],
+                        image: primaryImage,
                         allergens: allergens,
                         description: document.getElementById('form-description').value.trim(),
                         address: addressInput ? addressInput.value.trim() : '',
@@ -2235,6 +2337,35 @@
                 });
             }
 
+            // Multi-image listeners
+            const imageUrlsInput = document.getElementById('form-image-urls');
+            if (imageUrlsInput) {
+                imageUrlsInput.addEventListener('input', syncImagesFromTextarea);
+            }
+
+            const imageFileInput = document.getElementById('form-image-files');
+            if (imageFileInput) {
+                imageFileInput.addEventListener('change', (e) => {
+                    const files = Array.from(e.target.files || []);
+                    if (files.length === 0) return;
+                    let loaded = 0;
+                    files.forEach(file => {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            if (event.target && event.target.result) {
+                                currentRestaurantImages.push(event.target.result);
+                                loaded++;
+                                if (loaded === files.length) {
+                                    renderAdminImagePreviews();
+                                }
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                    imageFileInput.value = '';
+                });
+            }
+
             // User Search
             const userSearchInput = document.getElementById('user-search-input');
             if (userSearchInput) {
@@ -2259,7 +2390,18 @@
             document.getElementById('form-name').value = r.name;
             document.getElementById('form-rating').value = r.rating || 4.0;
             document.getElementById('form-price').value = r.avgPrice || 100;
-            document.getElementById('form-image').value = r.image || '';
+            
+            // Populate multi-image gallery
+            const rImages = (Array.isArray(r.images) && r.images.length > 0)
+                ? r.images
+                : (r.image ? [r.image] : []);
+            currentRestaurantImages = [...rImages];
+            const urlInput = document.getElementById('form-image-urls');
+            if (urlInput) urlInput.value = currentRestaurantImages.join('\n');
+            const hiddenImg = document.getElementById('form-image');
+            if (hiddenImg) hiddenImg.value = currentRestaurantImages[0] || '';
+            renderAdminImagePreviews();
+
             document.getElementById('form-description').value = r.description || '';
             
             const latInput = document.getElementById('form-lat');

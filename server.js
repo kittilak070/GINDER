@@ -689,6 +689,29 @@ function formatRestaurant(r) {
         }
     }
 
+    let images = [];
+    if (r.image) {
+        const rawImg = String(r.image).trim();
+        if (rawImg.startsWith('[') && rawImg.endsWith(']')) {
+            try {
+                const parsed = JSON.parse(rawImg);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    images = parsed.filter(u => typeof u === 'string' && u.trim());
+                }
+            } catch (e) {}
+        } else if (rawImg.includes('\n')) {
+            images = rawImg.split('\n').map(u => u.trim()).filter(Boolean);
+        } else if (rawImg.includes(',')) {
+            images = rawImg.split(',').map(u => u.trim()).filter(Boolean);
+        }
+        if (images.length === 0 && rawImg) {
+            images = [rawImg];
+        }
+    }
+    if (images.length === 0) {
+        images = ['https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800'];
+    }
+
     return {
         id: String(r.id || ''),
         name: r.name || '',
@@ -698,7 +721,8 @@ function formatRestaurant(r) {
         distance: parseFloat(r.distance) || 1.0,
         type: Array.isArray(typeVal) ? typeVal : [String(typeVal)],
         allergens: Array.isArray(allergens) ? allergens : [],
-        image: r.image || '',
+        image: images[0],
+        images: images,
         description: r.description || '',
         address: r.address || '',
         latitude: parseFloat(r.latitude) || null,
@@ -1488,6 +1512,24 @@ app.post('/api/admin/restaurants', async (req, res) => {
     payload.avg_price = payload.avgPrice || 100;
     delete payload.priceRange;
     delete payload.avgPrice;
+
+    // Process multiple images array
+    let imageList = [];
+    if (Array.isArray(payload.images)) {
+        imageList = payload.images.filter(x => typeof x === 'string' && x.trim());
+    } else if (typeof payload.images === 'string' && payload.images.trim()) {
+        try {
+            const p = JSON.parse(payload.images);
+            if (Array.isArray(p)) imageList = p;
+        } catch(e) {
+            imageList = payload.images.split(/[\n,]+/).map(x => x.trim()).filter(Boolean);
+        }
+    }
+    if (imageList.length === 0 && payload.image) {
+        imageList = [String(payload.image).trim()];
+    }
+    delete payload.images;
+    payload.image = imageList.length > 1 ? JSON.stringify(imageList) : (imageList[0] || '');
     
     const { error } = await supabase.from('restaurants').insert(payload);
     if (error) return res.status(500).json({ message: `ไม่สามารถเพิ่มข้อมูลได้: ${error.message}` });
@@ -1519,6 +1561,24 @@ app.put('/api/admin/restaurants/:id', async (req, res) => {
     payload.avg_price = payload.avgPrice || 100;
     delete payload.priceRange;
     delete payload.avgPrice;
+
+    // Process multiple images array
+    let imageList = [];
+    if (Array.isArray(payload.images)) {
+        imageList = payload.images.filter(x => typeof x === 'string' && x.trim());
+    } else if (typeof payload.images === 'string' && payload.images.trim()) {
+        try {
+            const p = JSON.parse(payload.images);
+            if (Array.isArray(p)) imageList = p;
+        } catch(e) {
+            imageList = payload.images.split(/[\n,]+/).map(x => x.trim()).filter(Boolean);
+        }
+    }
+    if (imageList.length === 0 && payload.image) {
+        imageList = [String(payload.image).trim()];
+    }
+    delete payload.images;
+    payload.image = imageList.length > 1 ? JSON.stringify(imageList) : (imageList[0] || '');
     
     const { error } = await supabase.from('restaurants').update(payload).eq('id', req.params.id);
     if (error) return res.status(500).json({ message: `ไม่สามารถแก้ไขข้อมูลได้: ${error.message}` });
