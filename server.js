@@ -709,7 +709,7 @@ function formatRestaurant(r) {
 async function getAllRestaurants() {
     try {
         const { data, error } = await supabase.from('restaurants').select('*');
-        if (error || !data || data.length === 0) {
+        if (error || !data) {
             if (error) console.error("[Supabase Error] get restaurants:", error);
             const localPath = path.join(__dirname, 'data', 'mock_restaurants.json');
             if (fs.existsSync(localPath)) {

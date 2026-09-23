@@ -123,7 +123,7 @@ async function runSuite() {
         assert.strictEqual(res.statusCode, 200);
         assert.strictEqual(res.data.success, true);
         assert.ok(Array.isArray(res.data.restaurants), 'restaurants should be an array');
-        assert.ok(res.data.restaurants.length > 0, 'restaurants count should be > 0');
+        assert.ok(typeof res.data.totalCount === 'number', 'totalCount should be a number');
     });
 
     // 5. Room Verification (Skill 01: Error Prevention & Usability)
