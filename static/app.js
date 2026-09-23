@@ -994,6 +994,16 @@ window.handleSocialLogin = handleSocialLogin;
 
 // --- INITIALIZE & ROUTING ---
 window.addEventListener('DOMContentLoaded', async () => {
+    // 1. Read Room ID & autoJoin from URL query params FIRST to prevent modals or race conditions
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomIdParam = urlParams.get('roomId');
+    if (roomIdParam) {
+        state.targetRoomId = roomIdParam.trim().toUpperCase();
+        state.autoJoin = true;
+        const joinInput = document.getElementById('join-room-id');
+        if (joinInput) joinInput.value = state.targetRoomId;
+    }
+
     setupGlobalRipples();
     setupEventListeners();
     setupProfileAndFeedback();
@@ -1005,16 +1015,6 @@ window.addEventListener('DOMContentLoaded', async () => {
         checkCurrentUser();
     }
     requestUserLocation();
-
-    // Check if Room ID is in the query params (scanned QR code or direct link)
-    const urlParams = new URLSearchParams(window.location.search);
-    const roomIdParam = urlParams.get('roomId');
-    if (roomIdParam) {
-        state.targetRoomId = roomIdParam.trim().toUpperCase();
-        state.autoJoin = true;
-        const joinInput = document.getElementById('join-room-id');
-        if (joinInput) joinInput.value = state.targetRoomId;
-    }
 
     // Check if redirected from /admin for admin authentication
     if (urlParams.get('login') === 'admin') {
@@ -3013,6 +3013,55 @@ async function startSoloSwipe() {
 }
 
 
+function renderLobbyQRCode(joinUrl) {
+    const canvas = document.getElementById('lobby-qr');
+    const container = document.getElementById('lobby-qr-container');
+    if (!canvas) return;
+
+    try {
+        if (typeof QRious !== 'undefined') {
+            new QRious({
+                element: canvas,
+                value: joinUrl,
+                size: 260,
+                level: 'M',
+                background: '#ffffff',
+                foreground: '#100923'
+            });
+        } else {
+            console.warn('[QR] QRious not loaded yet, trying online QR generator fallback...');
+            const fallbackImg = new Image();
+            fallbackImg.crossOrigin = 'anonymous';
+            fallbackImg.onload = () => {
+                const ctx = canvas.getContext('2d');
+                canvas.width = 260;
+                canvas.height = 260;
+                ctx.drawImage(fallbackImg, 0, 0, 260, 260);
+            };
+            fallbackImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=4&data=${encodeURIComponent(joinUrl)}`;
+        }
+    } catch (err) {
+        console.error('[QR] Failed to render lobby QR code:', err);
+    }
+
+    if (container && !container._hasCopyListener) {
+        container._hasCopyListener = true;
+        container.addEventListener('click', () => {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(joinUrl).then(() => {
+                    if (navigator.vibrate) navigator.vibrate(30);
+                    soundFx.playCopy();
+                    showToast('คัดลอกลิงก์ห้องเรียบร้อยแล้ว! ✨', 'success');
+                }).catch(() => {
+                    showToast(`ลิงก์เข้าห้อง: ${joinUrl}`, 'info');
+                });
+            } else {
+                showToast(`ลิงก์เข้าห้อง: ${joinUrl}`, 'info');
+            }
+        });
+    }
+}
+
 // --- SOCKET EVENTS ---
 
 socket.on('room_created', (data) => {
@@ -3044,13 +3093,7 @@ socket.on('join_success', (data) => {
         baseUrl = state.networkBaseUrl.replace(/\/+$/, '');
     }
     const joinUrl = `${baseUrl}/?roomId=${data.roomId}&autoJoin=1`;
-    new QRious({
-        element: document.getElementById('lobby-qr'),
-        value: joinUrl,
-        size: 200,
-        background: '#ffffff',
-        foreground: '#100923'
-    });
+    renderLobbyQRCode(joinUrl);
 
     const qrHelp = document.querySelector('.qr-help');
     if (qrHelp) {
@@ -4207,80 +4250,216 @@ function triggerConfettiExplosion() {
     }());
 }
 
-// --- QR SCANNER FUNCTIONALITY ---
+// --- QR SCANNER FUNCTIONALITY (ULTRA-FAST & ROBUST) ---
 let html5QrCode = null;
+let availableCameras = [];
+let currentCameraIndex = 0;
+let lastInvalidToastTime = 0;
+
+function extractRoomIdFromScannedText(decodedText) {
+    if (!decodedText) return null;
+    const text = String(decodedText).trim();
+
+    // 1. Direct 4-8 alphanumeric room code (e.g. "ABCD", "X9K2")
+    if (/^[A-Z0-9]{4,8}$/i.test(text)) {
+        return text.toUpperCase();
+    }
+
+    // 2. Parse as URL
+    try {
+        const urlStr = /^[a-zA-Z]+:\/\//i.test(text) ? text : `https://${text}`;
+        const url = new URL(urlStr);
+        const roomId = url.searchParams.get("roomId") || url.searchParams.get("room");
+        if (roomId && /^[A-Z0-9]{4,8}$/i.test(roomId.trim())) {
+            return roomId.trim().toUpperCase();
+        }
+        // Check pathname format e.g. /room/ABCD or /join/ABCD
+        const pathMatch = url.pathname.match(/\/(?:room|join)\/([A-Z0-9]{4,8})/i);
+        if (pathMatch) {
+            return pathMatch[1].toUpperCase();
+        }
+    } catch (e) {
+        // Fallback for tricky URLs
+    }
+
+    // 3. RegEx search for roomId query parameter pattern anywhere inside string
+    const match = text.match(/[?&]roomId=([A-Z0-9]{4,8})/i) || text.match(/[?&]room=([A-Z0-9]{4,8})/i);
+    if (match) {
+        return match[1].toUpperCase();
+    }
+
+    return null;
+}
 
 function startQRScanner() {
     const qrModal = document.getElementById('qr-scanner-modal');
+    if (!qrModal) return;
     qrModal.classList.remove('hidden');
 
-    html5QrCode = new Html5Qrcode("qr-reader");
+    const btnSwitchCam = document.getElementById('btn-switch-camera');
+    const hintEl = document.getElementById('qr-scanner-hint');
+    const hudEl = document.getElementById('qr-scanner-hud');
+
+    if (hudEl) hudEl.classList.remove('qr-scan-success-flash');
+    if (hintEl) {
+        hintEl.innerHTML = '<i class="fa-solid fa-bolt text-accent"></i> ตรวจจับความเร็วสูง เล็งกล้องไปที่ QR Code ได้เลย';
+    }
+
+    // Clean up any stale scanner instance before starting
+    if (html5QrCode) {
+        try {
+            if (html5QrCode.isScanning) html5QrCode.stop().catch(() => {});
+            html5QrCode.clear();
+        } catch (e) {}
+        html5QrCode = null;
+    }
+
+    // Initialize with Hardware-Accelerated Native BarcodeDetector
+    try {
+        html5QrCode = new Html5Qrcode("qr-reader", {
+            experimentalFeatures: {
+                useBarCodeDetectorIfSupported: true
+            },
+            verbose: false
+        });
+    } catch (err) {
+        console.warn("[QR Scanner] Hardware acceleration fallback:", err);
+        html5QrCode = new Html5Qrcode("qr-reader");
+    }
+
+    let isHandled = false;
 
     const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-        console.log(`QR Code Scanned: ${decodedText}`);
-        let roomId = null;
-        try {
-            const url = new URL(decodedText);
-            roomId = url.searchParams.get("roomId");
-        } catch (e) {
-            // If not a URL, check if raw 4-character alphanumeric code
-            if (/^[A-Z0-9]{4}$/i.test(decodedText.trim())) {
-                roomId = decodedText.trim().toUpperCase();
-            }
-        }
+        if (isHandled) return;
+        const roomId = extractRoomIdFromScannedText(decodedText);
+        console.log(`[QR Fast Scan] Detected raw: "${decodedText}", Extracted roomId: "${roomId}"`);
 
         if (roomId) {
+            isHandled = true;
+
+            // Visual flash & Audio/Haptic instant feedback
+            if (hudEl) hudEl.classList.add('qr-scan-success-flash');
+            if (navigator.vibrate) navigator.vibrate([40, 30, 60]);
+            if (window.soundFx && typeof soundFx.playPop === 'function') soundFx.playPop();
+
+            if (hintEl) {
+                hintEl.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #00FF88;"></i> พบห้อง <strong>${roomId}</strong> กำลังเข้าร่วม...`;
+            }
+
+            // Immediately stop camera to free resources
             stopQRScanner();
-            showToast('กำลังตรวจสอบห้อง...', 'info');
+
+            showToast(`พบห้อง ${roomId} กำลังเข้าห้องกลุ่ม... ✨`, 'info', 2000);
+            state.targetRoomId = roomId;
+
             verifyRoomExists(roomId).then(check => {
                 if (check.exists && !check.started) {
-                    showView('join');
-                    const joinRoomIdEl = document.getElementById('join-room-id');
-                    if (joinRoomIdEl) joinRoomIdEl.value = roomId;
-
-                    const joinNameInput = document.getElementById('join-name');
-                    if (joinNameInput && !joinNameInput.value.trim()) {
-                        joinNameInput.value = state.currentUser ? (state.currentUser.displayName || state.currentUser.username) : getRandomFoodNickname();
-                    }
-                    showToast(check.message, 'success');
+                    attemptAutoJoinRoom();
+                    showToast(`เข้าร่วมห้อง ${roomId} สำเร็จ! 🎉`, 'success', 2500);
+                } else if (check.exists && check.started) {
+                    showToast(check.message || `ห้อง "${roomId}" เริ่มการโหวตไปแล้ว ไม่สามารถเข้าร่วมได้`, 'warning', 3500);
+                    state.targetRoomId = null;
                 } else {
-                    showToast(check.message || `ไม่พบห้อง "${roomId}" หรือห้องอาจถูกปิดไปแล้ว`, 'error');
+                    showToast(check.message || `ไม่พบห้อง "${roomId}" ในระบบ`, 'error', 3500);
+                    state.targetRoomId = null;
                 }
+            }).catch(err => {
+                showToast(`เกิดข้อผิดพลาดในการตรวจสอบห้อง: ${err.message}`, 'error');
             });
         } else {
-            showToast("QR Code ไม่ถูกต้อง สำหรับเข้าร่วมห้อง GINDER", "warning");
+            // Invalid QR code warning (rate-limited so it doesn't spam)
+            if (Date.now() - lastInvalidToastTime > 2500) {
+                lastInvalidToastTime = Date.now();
+                showToast("QR Code นี้ไม่ใช่ห้องของ GINDER", "warning", 2000);
+            }
         }
     };
 
-    const config = { fps: 10, qrbox: { width: 220, height: 220 } };
+    // Ultra-Fast Scanner Configuration (25 FPS, Responsive Wide Area)
+    const config = {
+        fps: 25,
+        qrbox: (viewfinderWidth, viewfinderHeight) => {
+            const minDim = Math.min(viewfinderWidth, viewfinderHeight);
+            const boxSize = Math.max(180, Math.floor(minDim * 0.85));
+            return { width: boxSize, height: boxSize };
+        },
+        aspectRatio: 1.0,
+        disableFlip: false,
+        experimentalFeatures: {
+            useBarCodeDetectorIfSupported: true
+        }
+    };
 
-    // Start scanning using the back/environment camera
-    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
+    // Continuous Autofocus & High-Definition Video Constraints
+    const videoConstraints = {
+        facingMode: { ideal: "environment" },
+        width: { ideal: 1280, min: 640 },
+        height: { ideal: 720, min: 480 },
+        focusMode: { ideal: "continuous" }
+    };
+
+    // Discover available camera devices to enable camera switch button
+    Html5Qrcode.getCameras().then(cameras => {
+        if (cameras && cameras.length > 1) {
+            availableCameras = cameras;
+            if (btnSwitchCam) {
+                btnSwitchCam.style.display = 'inline-flex';
+                btnSwitchCam.onclick = () => switchCamera(config, qrCodeSuccessCallback);
+            }
+        } else if (btnSwitchCam) {
+            btnSwitchCam.style.display = 'none';
+        }
+    }).catch(() => {
+        if (btnSwitchCam) btnSwitchCam.style.display = 'none';
+    });
+
+    // Start with environment camera first, fallback smoothly
+    html5QrCode.start(videoConstraints, config, qrCodeSuccessCallback)
         .catch(err => {
-            console.warn("Back camera failed, trying front camera...", err);
-            // Fallback to front camera or default camera
-            html5QrCode.start({ facingMode: "user" }, config, qrCodeSuccessCallback)
+            console.warn("[QR Scanner] Primary back camera failed, falling back to basic environment...", err);
+            html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
                 .catch(err2 => {
-                    showToast("ไม่สามารถเข้าถึงกล้องถ่ายภาพได้: " + err2, 'error');
-                    stopQRScanner();
+                    console.warn("[QR Scanner] Environment camera failed, trying front/user camera...", err2);
+                    html5QrCode.start({ facingMode: "user" }, config, qrCodeSuccessCallback)
+                        .catch(err3 => {
+                            console.error("[QR Scanner] All camera access attempts failed:", err3);
+                            showToast("ไม่สามารถเข้าถึงกล้องถ่ายภาพได้ กรุณาอนุญาตสิทธิ์การใช้กล้องในเบราว์เซอร์", 'error', 4000);
+                            stopQRScanner();
+                        });
                 });
         });
 }
 
+function switchCamera(config, callback) {
+    if (!html5QrCode || availableCameras.length < 2) return;
+    currentCameraIndex = (currentCameraIndex + 1) % availableCameras.length;
+    const targetCameraId = availableCameras[currentCameraIndex].id;
+
+    if (html5QrCode.isScanning) {
+        html5QrCode.stop().then(() => {
+            html5QrCode.start(targetCameraId, config, callback).catch(err => {
+                console.error("Failed to switch camera:", err);
+            });
+        }).catch(err => console.error("Error stopping during camera switch:", err));
+    }
+}
+
 function stopQRScanner() {
     const qrModal = document.getElementById('qr-scanner-modal');
-    qrModal.classList.add('hidden');
+    if (qrModal) qrModal.classList.add('hidden');
 
     if (html5QrCode) {
-        if (html5QrCode.isScanning) {
-            html5QrCode.stop().then(() => {
-                html5QrCode.clear();
-                html5QrCode = null;
+        const instance = html5QrCode;
+        html5QrCode = null;
+        if (instance.isScanning) {
+            instance.stop().then(() => {
+                instance.clear();
             }).catch(err => {
-                console.error("Failed to stop QR scanner camera thread", err);
+                console.warn("QR scanner stop error:", err);
+                try { instance.clear(); } catch (e) {}
             });
         } else {
-            html5QrCode = null;
+            try { instance.clear(); } catch (e) {}
         }
     }
 }
@@ -4318,9 +4497,9 @@ function routeAfterAuth() {
 function attemptAutoJoinRoom() {
     if (!state.targetRoomId) return;
 
-    let displayName = (state.currentUser && state.currentUser.displayName) 
-        ? state.currentUser.displayName 
-        : `เพื่อนนักชิม ${Math.floor(100 + Math.random() * 900)}`;
+    let displayName = (state.currentUser && (state.currentUser.displayName || state.currentUser.username)) 
+        ? (state.currentUser.displayName || state.currentUser.username) 
+        : (state.name || getRandomFoodNickname());
     const userAllergies = (state.currentUser && state.currentUser.allergies) 
         ? state.currentUser.allergies 
         : [];

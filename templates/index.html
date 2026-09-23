@@ -18,11 +18,17 @@
     <!-- CSS Icons & Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- QR Code Scanner Library -->
+    <!-- QR Code Generator & Scanner Libraries -->
+    <script src="/static/qrious.min.js"></script>
+    <script>
+        if (typeof QRious === 'undefined') {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"><\/script>');
+        }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
     <!-- Dynamic Theme Styling -->
-    <link rel="stylesheet" href="/static/style.css?v=2.0.4">
+    <link rel="stylesheet" href="/static/style.css?v=2.2.0">
 </head>
 
 <body>
@@ -581,7 +587,7 @@
                                 <i class="fa-solid fa-share-nodes"></i> คัดลอกลิงก์
                             </button>
                         </div>
-                        <div class="qr-container">
+                        <div class="qr-container" id="lobby-qr-container" title="แตะเพื่อคัดลอกลิงก์หรือดู QR Code" style="cursor: pointer;">
                             <canvas id="lobby-qr"></canvas>
                         </div>
                         <p class="qr-help">สแกน QR Code หรือส่งรหัสห้องให้เพื่อน</p>
@@ -807,18 +813,33 @@
         <div class="qr-modal-content glass">
             <div class="qr-modal-header"
                 style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem; margin-bottom: 0.8rem;">
-                <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0;"><i
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.5rem;"><i
                         class="fa-solid fa-qrcode text-accent"></i> สแกน QR Code เพื่อเข้าห้อง</h3>
-                <button id="btn-close-scanner"
-                    style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; padding: 0.2rem;"><i
-                        class="fa-solid fa-times"></i></button>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button id="btn-switch-camera" class="btn-scanner-action" title="สลับกล้องหน้า/หลัง" style="display: none; background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); color: var(--text-primary); border-radius: 8px; padding: 0.35rem 0.65rem; font-size: 0.85rem; cursor: pointer;">
+                        <i class="fa-solid fa-camera-rotate"></i>
+                    </button>
+                    <button id="btn-close-scanner"
+                        style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; padding: 0.2rem;"><i
+                            class="fa-solid fa-times"></i></button>
+                </div>
             </div>
-            <div id="qr-reader"
-                style="width: 100%; border-radius: var(--border-radius-md); overflow: hidden; background: #000; aspect-ratio: 1/1; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <div class="qr-reader-wrapper">
+                <div id="qr-reader"
+                    style="width: 100%; border-radius: var(--border-radius-md); overflow: hidden; background: #000; aspect-ratio: 1/1; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                </div>
+                <!-- Fast Scanner HUD Overlay -->
+                <div id="qr-scanner-hud" class="qr-scanner-hud">
+                    <div class="qr-hud-corner corner-tl"></div>
+                    <div class="qr-hud-corner corner-tr"></div>
+                    <div class="qr-hud-corner corner-bl"></div>
+                    <div class="qr-hud-corner corner-br"></div>
+                    <div class="qr-hud-laser"></div>
+                </div>
             </div>
-            <p
-                style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 0.6rem; line-height: 1.4;">
-                หันกล้องหน้า/หลังไปทาง QR Code ห้อง GINDER ของเพื่อน
+            <p id="qr-scanner-hint"
+                style="font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 0.6rem; line-height: 1.4;">
+                <i class="fa-solid fa-bolt text-accent"></i> ตรวจจับความเร็วสูง เล็งกล้องไปที่ QR Code ของเพื่อนได้เลย
             </p>
         </div>
     </div>
@@ -1412,7 +1433,7 @@
         window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlja3NkbW56Y2Rzd2lzY3VzcmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMTE3ODEsImV4cCI6MjA5OTU4Nzc4MX0.RjNqKuh2Tr0ugcXyCTtnluBRP-g7jefAVCO9kqtXXPg";
     </script>
     <!-- App entry logic -->
-    <script src="/static/app.js?v=2.1.1"></script>
+    <script src="/static/app.js?v=2.2.0"></script>
 
     <!-- In-App Feedback Widget Script -->
     <script>

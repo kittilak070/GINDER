@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "node tests/card_swipe.test.js && node tests/security_hardening.test.js && node tests/api.test.js && node tests/micro_interactions.test.js && node tests/password_validation.test.js"
+    "test": "node tests/card_swipe.test.js && node tests/security_hardening.test.js && node tests/api.test.js && node tests/micro_interactions.test.js && node tests/qr_system.test.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.43.0",
