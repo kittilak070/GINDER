@@ -977,7 +977,6 @@ function isAuthorizedAdmin(userOrIdentifier) {
 
     // Strict Email-Only Admin Whitelist (OWASP A01 Access Control)
     if (email && adminEmails.has(email)) return true;
-    if (user.role === 'admin') return true;
 
     return false;
 }
@@ -993,7 +992,9 @@ async function getUserRole(req) {
 
     // Check if user is an authorized admin from whitelist
     const isSessionAdminEmail = req.session.userEmail && isExactAdminEmail(req.session.userEmail);
-    if (isAuthorizedAdmin(user) || isSessionAdminEmail) {
+    const isAllowedAdmin = isAuthorizedAdmin(user) || isSessionAdminEmail;
+
+    if (isAllowedAdmin) {
         if (user.role !== 'admin') {
             user.role = 'admin';
             try {
@@ -1002,8 +1003,17 @@ async function getUserRole(req) {
             } catch (e) {}
         }
         return 'admin';
+    } else {
+        // Immediate Revocation: If user was admin but their email was removed from ADMIN_EMAILS, demote to user
+        if (user.role === 'admin') {
+            user.role = 'user';
+            try {
+                await supabase.from('users').update({ role: 'user' }).eq('id', user.id);
+                console.log(`[Admin Security] Revoked admin role for ${user.username} (${user.id}) - not in ADMIN_EMAILS`);
+            } catch (e) {}
+        }
+        return user.role || 'user';
     }
-    return user.role;
 }
 
 // Routes
@@ -1233,11 +1243,15 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
     }
 
     if (user) {
-        // Elevate to admin if authorized in admin whitelist
+        // Sync admin status strictly based on current ADMIN_EMAILS whitelist
         if (isUserAdmin && user.role !== 'admin') {
             await supabase.from('users').update({ role: 'admin' }).eq('id', user.id);
             user.role = 'admin';
             console.log(`[Admin Security] Elevated role to admin for authorized whitelist identity: ${email || username}`);
+        } else if (!isUserAdmin && user.role === 'admin') {
+            await supabase.from('users').update({ role: 'user' }).eq('id', user.id);
+            user.role = 'user';
+            console.log(`[Admin Security] Revoked admin role for removed identity: ${email || username}`);
         }
     } else {
         // 2. Auto-provision new user in Supabase with Principle of Least Privilege (Default: 'user')
