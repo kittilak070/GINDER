@@ -1806,8 +1806,6 @@
                         <label for="form-price">ราคาเริ่มต้น (บาท)</label>
                         <input type="number" id="form-price" class="form-control" min="1" value="100">
                     </div>
-                    <input type="hidden" id="form-lat">
-                    <input type="hidden" id="form-lng">
                 </div>
 
                 <div class="form-group">
@@ -1837,12 +1835,24 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="form-address">ที่อยู่/ลิงก์ Google Maps นำทาง</label>
+                    <label for="form-address">ที่อยู่ / ลิงก์ Google Maps นำทาง</label>
                     <input type="text" id="form-address" class="form-control"
-                        placeholder="ใส่ที่อยู่ หรือ วางลิงก์ Google Maps เพื่อให้ปุ่มนำทางลิงก์โดยตรง">
-                    <span id="gps-status"
-                        style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; display: block;"><i
-                            class="fa-solid fa-location-crosshairs"></i> ยังไม่ได้รับตำแหน่ง GPS</span>
+                        placeholder="วางลิงก์ Google Maps, วางพิกัด (เช่น 13.7462, 100.5347) หรือใส่ที่อยู่">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.35rem; flex-wrap: wrap; gap: 0.5rem;">
+                        <span id="gps-status" style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-solid fa-location-crosshairs"></i> วางลิงก์ Google Maps หรือพิกัดเพื่อดึงค่าอัตโนมัติ</span>
+                        <button type="button" id="btn-use-my-gps" class="btn btn-secondary" style="padding: 0.25rem 0.65rem; font-size: 0.75rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.35rem;"><i class="fa-solid fa-crosshairs"></i> ใช้พิกัดปัจจุบันของฉัน</button>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 0.5rem;">
+                    <div class="form-group">
+                        <label for="form-lat"><i class="fa-solid fa-map-pin" style="color: var(--primary);"></i> ละติจูด (Latitude)</label>
+                        <input type="text" id="form-lat" class="form-control" placeholder="เช่น 13.74624">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-lng"><i class="fa-solid fa-map-pin" style="color: var(--primary);"></i> ลองจิจูด (Longitude)</label>
+                        <input type="text" id="form-lng" class="form-control" placeholder="เช่น 100.53472">
+                    </div>
                 </div>
 
                 <div class="modal-actions">
@@ -2102,15 +2112,41 @@
                 });
             }
 
-            // Parse coordinates from URL
+            // Parse coordinates from URL or raw numbers (e.g. 13.7462, 100.5347)
             if (addressInput && latInput && lngInput && gpsStatus) {
                 addressInput.addEventListener('input', (e) => {
                     const val = e.target.value.trim();
-                    const match = val.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || val.match(/query=(-?\d+\.\d+),(-?\d+\.\d+)/) || val.match(/place\/(-?\d+\.\d+),(-?\d+\.\d+)/);
+                    // Matches @lat,lng or query=lat,lng or place/lat,lng or direct "13.7462, 100.5347"
+                    const match = val.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || 
+                                  val.match(/query=(-?\d+\.\d+),(-?\d+\.\d+)/) || 
+                                  val.match(/place\/(-?\d+\.\d+),(-?\d+\.\d+)/) ||
+                                  val.match(/(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)/);
                     if (match) {
                         latInput.value = match[1];
                         lngInput.value = match[2];
-                        gpsStatus.innerHTML = '<i class="fa-solid fa-location-dot" style="color: var(--color-success);"></i> ตรวจจับพิกัดจากลิงก์: ' + parseFloat(match[1]).toFixed(4) + ', ' + parseFloat(match[2]).toFixed(4);
+                        gpsStatus.innerHTML = '<i class="fa-solid fa-location-dot" style="color: var(--color-success);"></i> ตรวจจับพิกัดสำเร็จ: ' + parseFloat(match[1]).toFixed(4) + ', ' + parseFloat(match[2]).toFixed(4);
+                    }
+                });
+            }
+
+            // Optional button to use device GPS
+            const btnUseMyGps = document.getElementById('btn-use-my-gps');
+            if (btnUseMyGps && latInput && lngInput && gpsStatus) {
+                btnUseMyGps.addEventListener('click', () => {
+                    if (navigator.geolocation) {
+                        gpsStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังดึงตำแหน่งพิกัดของคุณ...';
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                latInput.value = position.coords.latitude.toFixed(6);
+                                lngInput.value = position.coords.longitude.toFixed(6);
+                                gpsStatus.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--color-success);"></i> ใช้ตำแหน่ง GPS ปัจจุบันของคุณสำเร็จ (' + position.coords.latitude.toFixed(4) + ', ' + position.coords.longitude.toFixed(4) + ')';
+                            },
+                            (error) => {
+                                console.warn("Geolocation error:", error);
+                                gpsStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: var(--color-danger);"></i> ไม่สามารถดึงตำแหน่ง GPS ได้ (กรุณาวางลิงก์ Google Maps หรือกรอกพิกัดเอง)';
+                            },
+                            { timeout: 8000 }
+                        );
                     }
                 });
             }
@@ -2125,22 +2161,7 @@
                     if (formId) formId.value = '';
                     if (latInput) latInput.value = '';
                     if (lngInput) lngInput.value = '';
-                    if (gpsStatus) gpsStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังดึงตำแหน่งพิกัดปัจจุบันของคุณ...';
-
-                    if (navigator.geolocation && latInput && lngInput && gpsStatus) {
-                        navigator.geolocation.getCurrentPosition(
-                            (position) => {
-                                latInput.value = position.coords.latitude;
-                                lngInput.value = position.coords.longitude;
-                                gpsStatus.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--color-success);"></i> ใช้ตำแหน่ง GPS ปัจจุบันของคุณสำเร็จ';
-                            },
-                            (error) => {
-                                console.warn("Geolocation error:", error);
-                                gpsStatus.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--text-muted);"></i> ไม่สามารถดึงตำแหน่ง GPS ได้ (กรุณาวางลิงก์ Google Maps)';
-                            },
-                            { timeout: 5000 }
-                        );
-                    }
+                    if (gpsStatus) gpsStatus.innerHTML = '<i class="fa-solid fa-location-crosshairs" style="color: var(--text-muted);"></i> วางลิงก์ Google Maps หรือพิกัดเพื่อดึงค่าอัตโนมัติ';
                     formModal.classList.add('active');
                 });
             }
