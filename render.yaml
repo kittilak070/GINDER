@@ -10,5 +10,3 @@ services:
         value: production
       - key: APP_URL
         value: https://ginder.onrender.com
-      - key: ADMIN_EMAILS
-        value: 674295027@parichat.skru.ac.th

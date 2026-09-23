@@ -949,26 +949,12 @@ async function findUserByEmail(email) {
 }
 
 function getAdminEmails() {
-    const raw = process.env.ADMIN_EMAILS || '674295027@parichat.skru.ac.th';
+    const raw = process.env.ADMIN_EMAILS || '';
     return new Set(
         raw.split(',')
             .map(e => e.trim().toLowerCase())
             .filter(Boolean)
     );
-}
-
-function getAdminPrefixes() {
-    const adminEmails = getAdminEmails();
-    const prefixes = new Set();
-    for (const email of adminEmails) {
-        const atIdx = email.indexOf('@');
-        if (atIdx !== -1) {
-            prefixes.add(email.substring(0, atIdx).toLowerCase());
-        } else {
-            prefixes.add(email.toLowerCase());
-        }
-    }
-    return prefixes;
 }
 
 function isExactAdminEmail(email) {
@@ -980,28 +966,17 @@ function isExactAdminEmail(email) {
 function isAuthorizedAdmin(userOrIdentifier) {
     if (!userOrIdentifier) return false;
     const adminEmails = getAdminEmails();
-    const adminPrefixes = getAdminPrefixes();
 
     if (typeof userOrIdentifier === 'string') {
         const val = userOrIdentifier.trim().toLowerCase();
-        if (adminEmails.has(val)) return true;
-        const stripped = val.replace(/^(google_|facebook_)/i, '');
-        if (adminPrefixes.has(stripped)) return true;
-        return false;
+        return adminEmails.has(val);
     }
 
     const user = userOrIdentifier;
     const email = (user.email || user.recovery_email || '').trim().toLowerCase();
 
-    // Strict Email Whitelist (OWASP A01 Access Control)
+    // Strict Email-Only Admin Whitelist (OWASP A01 Access Control)
     if (email && adminEmails.has(email)) return true;
-
-    // Check username prefix (Supabase users table stores OAuth username without separate email column)
-    if (user.username) {
-        const u = user.username.trim().toLowerCase();
-        const stripped = u.replace(/^(google_|facebook_)/i, '');
-        if (adminPrefixes.has(stripped)) return true;
-    }
 
     return false;
 }
@@ -1258,8 +1233,8 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
         displayName = provider === 'google' ? 'Google User' : 'Facebook User';
     }
 
-    // Secure Admin Determination: Strict exact email whitelist match or prefix match from server .env (OWASP A01 Access Control)
-    const isUserAdmin = isExactAdminEmail(rawEmail) || isExactAdminEmail(email) || isAuthorizedAdmin(username);
+    // Secure Admin Determination: Strict exact email whitelist match from server .env (OWASP A01 Access Control)
+    const isUserAdmin = isExactAdminEmail(rawEmail) || isExactAdminEmail(email);
 
     // 1. Check if user already exists in Supabase users table
     let user = await findUserByUsername(username);
