@@ -739,6 +739,18 @@ function filterRestaurantsByCriteria(allR, pref = {}, allergiesList = [], coords
 
     let list = [...allR];
 
+    // Deduplicate restaurants by ID and normalized name to prevent duplicate cards during swiping
+    const seenIds = new Set();
+    const seenNames = new Set();
+    list = list.filter(r => {
+        if (!r || !r.id) return false;
+        const normName = (r.name || '').trim().toLowerCase();
+        if (seenIds.has(r.id) || (normName && seenNames.has(normName))) return false;
+        seenIds.add(r.id);
+        if (normName) seenNames.add(normName);
+        return true;
+    });
+
     // Calculate real GPS distance with Haversine if user provided coordinates
     const hasGPS = coords && !isNaN(parseFloat(coords.latitude)) && !isNaN(parseFloat(coords.longitude));
     if (hasGPS) {
@@ -1452,9 +1464,23 @@ app.get('/api/admin/restaurants', async (req, res) => {
 
 app.post('/api/admin/restaurants', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
-    if (!req.body.name) return res.status(400).json({ message: "กรุณาระบุชื่อร้านอาหาร" });
+    const trimmedName = (req.body.name || '').trim();
+    if (!trimmedName) return res.status(400).json({ message: "กรุณาระบุชื่อร้านอาหาร" });
     
-    const payload = { ...req.body };
+    // Check if restaurant with same name already exists in Supabase
+    try {
+        const { data: existing } = await supabase.from('restaurants').select('id, name').ilike('name', trimmedName).limit(1);
+        if (existing && existing.length > 0) {
+            return res.status(409).json({ 
+                success: false, 
+                message: `ร้าน "${existing[0].name}" มีอยู่ในระบบแล้ว หากต้องการปรับปรุงข้อมูลกรุณากดแก้ไข (Edit) ร้านเดิมแทน` 
+            });
+        }
+    } catch (err) {
+        console.warn("[Admin Check Duplicate Warning]:", err.message);
+    }
+
+    const payload = { ...req.body, name: trimmedName };
     payload.id = payload.id || 'r' + Date.now();
     payload.type = JSON.stringify(payload.type || []);
     payload.allergens = JSON.stringify(payload.allergens || []);
@@ -1470,9 +1496,23 @@ app.post('/api/admin/restaurants', async (req, res) => {
 
 app.put('/api/admin/restaurants/:id', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
-    if (!req.body.name) return res.status(400).json({ message: "กรุณาระบุชื่อร้านอาหาร" });
+    const trimmedName = (req.body.name || '').trim();
+    if (!trimmedName) return res.status(400).json({ message: "กรุณาระบุชื่อร้านอาหาร" });
     
-    const payload = { ...req.body };
+    // Check if another restaurant already uses this name
+    try {
+        const { data: existing } = await supabase.from('restaurants').select('id, name').ilike('name', trimmedName).neq('id', req.params.id).limit(1);
+        if (existing && existing.length > 0) {
+            return res.status(409).json({ 
+                success: false, 
+                message: `ชื่อร้าน "${existing[0].name}" ซ้ำกับร้านอื่นที่มีอยู่ในระบบแล้ว` 
+            });
+        }
+    } catch (err) {
+        console.warn("[Admin Check Duplicate Warning]:", err.message);
+    }
+
+    const payload = { ...req.body, name: trimmedName };
     payload.type = JSON.stringify(payload.type || []);
     payload.allergens = JSON.stringify(payload.allergens || []);
     payload.price_range = payload.priceRange || '$$';
