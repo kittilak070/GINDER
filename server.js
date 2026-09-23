@@ -949,7 +949,7 @@ async function findUserByEmail(email) {
 }
 
 function getAdminEmails() {
-    const raw = process.env.ADMIN_EMAILS || '';
+    const raw = process.env.ADMIN_EMAILS || process.env.ADMIN_EMAIL || process.env.admin_emails || process.env.admin_email || '';
     return new Set(
         raw.split(',')
             .map(e => e.trim().toLowerCase())
