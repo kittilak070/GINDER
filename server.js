@@ -28,7 +28,7 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
 // Canonical Base Application URL for OAuth Redirects & Room Links
-const APP_URL = (process.env.APP_URL || 'https://ginder.onrender.com').replace(/\/+$/, '');
+const APP_URL = (process.env.APP_URL || process.env.BASE_URL || 'https://ginder.onrender.com').replace(/\/+$/, '');
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
