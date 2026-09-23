@@ -192,6 +192,19 @@ test('Admin CMS: Multi-photo inputs, file upload, and thumbnail preview strip ar
     assert(adminContent.includes('window.removeAdminImage = function'), 'Missing window.removeAdminImage function in admin.html');
 });
 
+// Test 21: Multi-photo sliding gesture (เลื่อนรูป) and click discrimination logic
+test('Tinder/Omi: Multi-photo slide gesture (เลื่อนรูป) and click discrimination logic', () => {
+    const freshJs = fs.readFileSync(jsPath, 'utf8');
+    const freshCss = fs.readFileSync(cssPath, 'utf8');
+    assert(freshJs.includes('isDownOnPhoto'), 'setupCardGestures must track isDownOnPhoto');
+    assert(freshJs.includes('dX < -20'), 'Must support sliding left for next photo');
+    assert(freshJs.includes('dX > 20'), 'Must support sliding right for previous photo');
+    assert(freshJs.includes('((nextIdx % total) + total) % total'), 'switchCardPhoto must safely normalize index using modulo');
+    assert(freshJs.includes('hintLeft.addEventListener'), 'hintLeft must have dedicated event listener');
+    assert(freshJs.includes('hintRight.addEventListener'), 'hintRight must have dedicated event listener');
+    assert(freshCss.includes('.card-photo-nav-hint:hover'), 'Missing hover style for photo navigation hint');
+});
+
 console.log('\n========================================');
 console.log(`  TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
 console.log('========================================\n');

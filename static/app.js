@@ -3570,14 +3570,22 @@ function renderDeck() {
         card._images = images;
         card._currentImgIndex = 0;
 
+        // Preload next images in background for instant responsiveness
+        if (images.length > 1) {
+            images.forEach(imgUrl => {
+                const p = new Image();
+                p.src = imgUrl;
+            });
+        }
+
         const storyBarsHtml = images.length > 1
             ? `<div class="card-story-bars">
                 ${images.map((_, idx) => `<div class="story-bar ${idx === 0 ? 'active' : ''}" data-idx="${idx}"></div>`).join('')}
                </div>
                <div class="card-photo-tap card-photo-tap-left" title="แตะดูรูปก่อนหน้า"></div>
                <div class="card-photo-tap card-photo-tap-right" title="แตะดูรูปถัดไป"></div>
-               <div class="card-photo-nav-hint hint-left"><i class="fa-solid fa-chevron-left"></i></div>
-               <div class="card-photo-nav-hint hint-right"><i class="fa-solid fa-chevron-right"></i></div>`
+               <button type="button" class="card-photo-nav-hint hint-left" aria-label="รูปก่อนหน้า" title="รูปก่อนหน้า"><i class="fa-solid fa-chevron-left"></i></button>
+               <button type="button" class="card-photo-nav-hint hint-right" aria-label="รูปถัดไป" title="รูปถัดไป"><i class="fa-solid fa-chevron-right"></i></button>`
             : '';
 
         const drawerGalleryHtml = images.length > 1
@@ -3698,9 +3706,35 @@ function setupCardGestures(card) {
     let currentY = 0;
     let isDragging = false;
     let hasMoved = false;
+    let pointerDownTarget = null;
+    let isDownOnPhoto = false;
 
     const likeStamp = card.querySelector('.card-stamp-like');
     const dislikeStamp = card.querySelector('.card-stamp-dislike');
+
+    // Dedicated click listeners for photo arrow navigation buttons
+    const hintLeft = card.querySelector('.card-photo-nav-hint.hint-left');
+    const hintRight = card.querySelector('.card-photo-nav-hint.hint-right');
+
+    if (hintLeft) {
+        hintLeft.addEventListener('pointerdown', (e) => {
+            e.stopPropagation();
+        });
+        hintLeft.addEventListener('click', (e) => {
+            e.stopPropagation();
+            switchCardPhoto(card, -1);
+        });
+    }
+
+    if (hintRight) {
+        hintRight.addEventListener('pointerdown', (e) => {
+            e.stopPropagation();
+        });
+        hintRight.addEventListener('click', (e) => {
+            e.stopPropagation();
+            switchCardPhoto(card, 1);
+        });
+    }
 
     card.addEventListener('pointerdown', (e) => {
         // Prevent action inside buttons or open drawer
@@ -3715,10 +3749,27 @@ function setupCardGestures(card) {
         clearSwipeAffordance();
         isDragging = true;
         hasMoved = false;
+        pointerDownTarget = e.target;
         startX = e.clientX;
         startY = e.clientY;
         currentX = e.clientX;
         currentY = e.clientY;
+
+        // Check if pointerdown occurred on the photo area
+        const imgWrapper = card.querySelector('.card-image-wrapper');
+        if (imgWrapper) {
+            const imgRect = imgWrapper.getBoundingClientRect();
+            if (e.target.closest('.card-image-wrapper') ||
+                (e.clientY >= imgRect.top && e.clientY <= imgRect.bottom &&
+                 e.clientX >= imgRect.left && e.clientX <= imgRect.right)) {
+                isDownOnPhoto = true;
+            } else {
+                isDownOnPhoto = false;
+            }
+        } else {
+            isDownOnPhoto = false;
+        }
+
         card.classList.add('dragging');
         card.style.transition = 'none';
         try {
@@ -3762,6 +3813,9 @@ function setupCardGestures(card) {
         card.classList.remove('dragging');
 
         const dX = currentX - startX;
+        const dY = currentY - startY;
+        const absX = Math.abs(dX);
+        const absY = Math.abs(dY);
         const threshold = 120; // threshold for deliberate swipe
 
         if (hasMoved && e.type !== 'pointercancel' && dX > threshold) {
@@ -3777,16 +3831,27 @@ function setupCardGestures(card) {
             likeStamp.style.opacity = 0;
             dislikeStamp.style.opacity = 0;
 
-            // Photo tap navigation (Tinder / Omi / Story style)
-            if (!hasMoved && e.type !== 'pointercancel') {
-                const imgWrapper = e.target.closest('.card-image-wrapper');
-                if (imgWrapper && card._images && card._images.length > 1) {
-                    if (e.target.classList.contains('card-photo-tap-left')) {
+            // Multi-photo navigation (Tinder / Omi style: supports both Click/Tap and Horizontal Slide)
+            if (e.type !== 'pointercancel' && card._images && card._images.length > 1 && isDownOnPhoto) {
+                // If user slid/swiped horizontally across the photo ("เลื่อนรูปต่อไป")
+                if (absX >= 20 && absX <= threshold && absX > absY * 0.7) {
+                    if (dX < -20) {
+                        // Slid left -> next photo
+                        switchCardPhoto(card, 1);
+                    } else if (dX > 20) {
+                        // Slid right -> previous photo
                         switchCardPhoto(card, -1);
-                    } else if (e.target.classList.contains('card-photo-tap-right')) {
+                    }
+                }
+                // If user tapped or clicked on the photo ("กดรูปต่อไป")
+                else if (absX < 20 && absY < 25) {
+                    if (pointerDownTarget && (pointerDownTarget.classList.contains('card-photo-tap-left') || pointerDownTarget.classList.contains('hint-left') || pointerDownTarget.closest('.hint-left'))) {
+                        switchCardPhoto(card, -1);
+                    } else if (pointerDownTarget && (pointerDownTarget.classList.contains('card-photo-tap-right') || pointerDownTarget.classList.contains('hint-right') || pointerDownTarget.closest('.hint-right'))) {
                         switchCardPhoto(card, 1);
                     } else {
-                        const rect = imgWrapper.getBoundingClientRect();
+                        const imgEl = card.querySelector('.card-image-wrapper') || card;
+                        const rect = imgEl.getBoundingClientRect();
                         const tapX = currentX - rect.left;
                         if (tapX < rect.width / 2) {
                             switchCardPhoto(card, -1);
@@ -3812,8 +3877,7 @@ function switchCardPhoto(card, direction) {
     if (!card || !card._images || card._images.length <= 1) return;
     const total = card._images.length;
     let nextIdx = (card._currentImgIndex || 0) + direction;
-    if (nextIdx < 0) nextIdx = total - 1;
-    if (nextIdx >= total) nextIdx = 0;
+    nextIdx = ((nextIdx % total) + total) % total;
 
     if (nextIdx === card._currentImgIndex) return;
     card._currentImgIndex = nextIdx;
