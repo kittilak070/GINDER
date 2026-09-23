@@ -2758,6 +2758,24 @@ if (require.main === module) {
     server.listen(PORT, '0.0.0.0', () => {
         console.log(`Server running on port ${PORT}`);
     });
+
+    // Local dev helper: if port 3000 is free and PORT is not 3000, forward legacy Supabase redirect to active app
+    if (PORT !== 3000 && process.env.NODE_ENV !== 'production') {
+        try {
+            const helperServer = http.createServer((req, res) => {
+                res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+                res.end(`<!DOCTYPE html><html><head><title>GINDER OAuth Redirect</title><script>
+                    const targetPort = ${PORT};
+                    const targetUrl = 'http://' + window.location.hostname + ':' + targetPort + '/' + window.location.search + window.location.hash;
+                    window.location.replace(targetUrl);
+                </script></head><body style="background:#100923;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">กำลังพาคุณกลับเข้าสู่ระบบ GINDER...</body></html>`);
+            });
+            helperServer.on('error', () => {});
+            helperServer.listen(3000, '0.0.0.0', () => {
+                console.log(`[OAuth Helper] Port 3000 active: auto-forwarding Supabase redirects to port ${PORT}`);
+            });
+        } catch (e) {}
+    }
 }
 
 module.exports = { app, server };
