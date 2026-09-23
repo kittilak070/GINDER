@@ -1005,5 +1005,523 @@
     "address": "หาดแก้ว ตำบลชิงโค อำเภอสิงหนคร สงขลา",
     "latitude": 7.228,
     "longitude": 100.564
+  },
+  {
+    "id": "r_songkhla_41",
+    "name": "ก๋วยเตี๋ยวเรืออยุธยา ป้าปุ๊ สงขลา",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 60,
+    "distance": 2.2,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ก๋วยเตี๋ยวเรือน้ำตกสูตรอยุธยาแท้ น้ำซุปข้นคลั่กหอมเครื่องเทศสมุนไพร เนื้อเปื่อยตุ๋นจนนุ่มละลาย หมูตุ๋นเอ็นเด้ง กากหมูเจียวสดใหม่กรอบฟิน",
+    "address": "ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.189,
+    "longitude": 100.596
+  },
+  {
+    "id": "r_songkhla_42",
+    "name": "ก๋วยเตี๋ยวเป็ดต้มฟัก โกเด้ง (ถนนพัทลุง)",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1.1,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1552611052-33e04de081de?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1552611052-33e04de081de?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านเป็ดพะโล้ระดับตำนานเมืองสงขลา เนื้อเป็ดตุ๋นนุ่มไร้กลิ่นสาบ น้ำซุปตุ๋นยาจีนใส่ฟักมะนาวดองรสกลมกล่อมซดคล่องคอ เลือดเป็ดนุ่มละมุน",
+    "address": "ถนนพัทลุง ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.191,
+    "longitude": 100.5925
+  },
+  {
+    "id": "r_songkhla_43",
+    "name": "เจ๊เฮียง บะหมี่ลูกชิ้นปลาทำเอง (ถนนนางงาม)",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 65,
+    "distance": 0.7,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "ลูกชิ้นปลาอินทรีแท้ 100% ตีสดเด้งธรรมชาติไม่ผสมแป้ง ฮือก้วยทอดหอมกรุ่น บะหมี่ไข่เส้นเหนียวนุ่มทำเอง ซุปกระดูกปลากระพงหวานธรรมชาติ",
+    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.195,
+    "longitude": 100.5902
+  },
+  {
+    "id": "r_songkhla_44",
+    "name": "ก๋วยเตี๋ยวต้มยำหมูกรอบ เจ๊ดา (หน้า รพ.สงขลา)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 75,
+    "distance": 4.2,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
+    ],
+    "description": "หมูกรอบหนังพองฟูกรอบสะท้านต้มยำมะนาวคั้นสดรสจี๊ดจ๊าด ไข่ต้มยางมะตูมเยิ้ม หมูเด้งแผ่นใหญ่ ถั่วลิสงคั่วบดใหม่หอมมัน",
+    "address": "หน้าโรงพยาบาลสงขลา ถนนกาญจนวนิช ตำบลพะวง อำเภอเมืองสงขลา",
+    "latitude": 7.152,
+    "longitude": 100.601
+  },
+  {
+    "id": "r_songkhla_45",
+    "name": "ก๋วยเตี๋ยวเนื้อนายดำ (ถนนสงขลา-นาทวี)",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 90,
+    "distance": 3.8,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
+    ],
+    "description": "ตำนานก๋วยเตี๋ยวเนื้อตุ๋นยาจีนแห่งสงขลา เนื้อเปื่อยนุ่มฉ่ำ เอ็นแก้วตุ๋นละลายในปาก ลิ้นวัวนุ่มหนึบ ซุปกระดูกวัวเคี่ยวนานข้ามคืนรสเข้มข้น",
+    "address": "ถนนสงขลา-นาทวี ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.165,
+    "longitude": 100.608
+  },
+  {
+    "id": "r_songkhla_46",
+    "name": "บะหมี่เกี๊ยวปูสะพานเหล็ก สงขลา",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 85,
+    "distance": 1.3,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "เนื้อปูม้าสดแกะเป็นก้อนๆ โปะหน้าบะหมี่ เกี๊ยวหมูหมักน้ำมันงาแป้งบางไส้แน่น น้ำซุปกระดูกหมูหวานธรรมชาติ ปรุงแห้งเหยาะจิ๊กโฉ่วโบราณ",
+    "address": "เชิงสะพานเหล็ก ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.188,
+    "longitude": 100.597
+  },
+  {
+    "id": "r_songkhla_47",
+    "name": "โกแค๊ก ข้าวขาหมูและก๋วยจั๊บน้ำข้น (ถนนรามวิถี)",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 60,
+    "distance": 1.5,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "ข้าวขาหมูเนื้อหนังนุ่มละมุนลิ้น และก๋วยจั๊บเส้นเหนียวนุ่มน้ำพะโล้เข้มข้น หมูกรอบชิ้นโต ไส้อ่อนล้างสะอาดไร้กลิ่น ไข่พะโล้ยางมะตูม",
+    "address": "ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1905,
+    "longitude": 100.595
+  },
+  {
+    "id": "r_songkhla_48",
+    "name": "ก๋วยเตี๋ยวต้มยำทะเล เจ๊หมวย (วชิรา)",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 80,
+    "distance": 2.8,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
+    ],
+    "description": "ต้มยำทะเลเครื่องสดแน่นชาม กุ้งแชบ๊วยตัวใหญ่ หมึกกล้วยไข่แน่น ปลากะพงสองเลสดลวก ปรุงรสต้มยำมะนาวพริกเผารสจัดจ้านถึงใจ",
+    "address": "ย่านวชิรา ถนนทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.176,
+    "longitude": 100.609
+  },
+  {
+    "id": "r_songkhla_49",
+    "name": "ก๋วยเตี๋ยวราดหน้ายอดผัก โกฮวด (ถนนนครนอก)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 65,
+    "distance": 0.6,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+    ],
+    "description": "เส้นใหญ่ผัดเตาถ่านหอมกลิ่นกระทะไหม้กำลังดี น้ำราดหน้าเหนียวใสรสกลมกล่อม หมูหมักนุ่มชิ้นใหญ่ ยอดคะน้าฮ่องกงสดกรอบหวาน",
+    "address": "ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.196,
+    "longitude": 100.5885
+  },
+  {
+    "id": "r_songkhla_50",
+    "name": "เจ๊เพ็ญ ก๋วยเตี๋ยวไก่มะระบุฟเฟต์ สงขลา",
+    "rating": 4.4,
+    "priceRange": "$",
+    "avgPrice": 55,
+    "distance": 2.5,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ก๋วยเตี๋ยวไก่ตุ๋นซุปยาจีนหอมเข้มข้น น่องไก่ชิ้นโต ข้อไก่ตีนไก่ตุ๋นจนเปื่อยล่อน มะระตุ๋นไม่ขม ผักสดและมะระสดหยิบได้ไม่อั้น",
+    "address": "ถนนไทรบุรี ซอย 35 ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.182,
+    "longitude": 100.601
+  },
+  {
+    "id": "r_songkhla_51",
+    "name": "ก๋วยเตี๋ยวสุโขทัย สูตรโบราณ (ถนนเพชรคีรี)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 60,
+    "distance": 0.9,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่ว",
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ก๋วยเตี๋ยวต้มยำหมูแดงสูตรสุโขทัยแท้ ปรุงน้ำมะนาวแท้ น้ำตาลปี๊บ ถั่วลิสงคั่วบดเองใหม่ๆ ใส่ถั่วฝักยาวซอย กุ้งแห้งทอด และกากหมูทอดกรอบ",
+    "address": "ถนนเพชรคีรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1928,
+    "longitude": 100.5918
+  },
+  {
+    "id": "r_songkhla_52",
+    "name": "บะหมี่ต้มยำโบราณ เจ๊หงษ์ (เก้าเส้ง)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 60,
+    "distance": 3.5,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "ถั่ว"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
+    ],
+    "description": "ร้านบะหมี่ริมหาดเก้าเส้ง เส้นบะหมี่ไข่เหนียวนุ่ม หมูสับแผ่นใหญ่ เกี๊ยวหมูทอดกรอบ ต้มยำพริกเผารสจัดจ้านรับลมทะเลอ่าวไทย",
+    "address": "ชุมชนเก้าเส้ง ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.17,
+    "longitude": 100.618
+  },
+  {
+    "id": "r_songkhla_53",
+    "name": "ก๋วยเตี๋ยวเรือโกเบิ้ม สงขลา (สูตรอยุธยาแท้)",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 60,
+    "distance": 3.1,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
+    ],
+    "description": "ก๋วยเตี๋ยวเรือรสเด็ดไม่ต้องปรุง ซุปเลือดเข้มข้นหอมกะทิและสมุนไพร เนื้อใบพายสไลด์ลวกกำลังดี แคบหมูและกากหมูเจียวสดใหม่ตักไม่อั้น",
+    "address": "ถนนกาญจนวนิช ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
+    "latitude": 7.168,
+    "longitude": 100.605
+  },
+  {
+    "id": "r_songkhla_54",
+    "name": "ข้าวมันไก่โกเข่ง (สี่แยกวัดมัชฌิมาวาส)",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 65,
+    "distance": 0.8,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ข้าวมันไก่ตอนเนื้อฉ่ำนุ่ม หนังกรึบ ข้าวหุงเตาถ่านหอมขิงกระเทียมเรียงเม็ดสวย น้ำจิ้มเต้าเจี้ยวพริกขิงสูตรลับโบราณ น้ำซุปฟักหวานชุ่มคอ",
+    "address": "สี่แยกวัดมัชฌิมาวาส ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1935,
+    "longitude": 100.591
+  },
+  {
+    "id": "r_songkhla_55",
+    "name": "ก๋วยเตี๋ยวแคะ เจ๊เตียง (ถนนไทรบุรี)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 60,
+    "distance": 1.4,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "อาหารทะเล",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "ลูกชิ้นแคะทำเองสูตรชาวจีนแคะดั้งเดิม เต้าหู้ขาวและเต้าหู้ทอดยัดไส้หมูสับ ลูกชิ้นหมูนึ่ง ลูกชิ้นกุ้งทอด น้ำซุปใสหอมหวานกลมกล่อม",
+    "address": "ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1895,
+    "longitude": 100.5965
+  },
+  {
+    "id": "r_songkhla_56",
+    "name": "ก๋วยเตี๋ยวปลาอินทรีสด แหลมทราย",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 85,
+    "distance": 1.6,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "ซีฟู้ด"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
+    ],
+    "description": "ปลาอินทรีสดจากเรือประมงสงขลา แล่สดๆ ลวกเนื้อหวานเด้ง ไร้กลิ่นคาว น้ำซุปเคี่ยวจากกระดูกปลาและหัวไชเท้า เสิร์ฟคู่น้ำจิ้มเต้าเจี้ยวมะนาวสดรสเด็ด",
+    "address": "ถนนแหลมทราย ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.204,
+    "longitude": 100.587
+  },
+  {
+    "id": "r_songkhla_57",
+    "name": "ผัดไทยโบราณ ป้าแมว (หน้าวิทยาลัยอาชีวะสงขลา)",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 65,
+    "distance": 1.2,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "ไข่",
+      "ถั่ว",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ผัดไทยกุ้งสดผัดเตาถ่านหอมกรุ่น เส้นจันท์เหนียวนุ่มคลุกเคล้าซอสมะขามเปียกเคี่ยวเองรสเปรี้ยวอมหวาน กุ้งแม่น้ำตัวสด กากหมูกรอบ เต้าหู้เหลือง",
+    "address": "หน้าวิทยาลัยอาชีวศึกษาสงขลา ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1915,
+    "longitude": 100.594
+  },
+  {
+    "id": "r_songkhla_58",
+    "name": "บะหมี่หมูแดงอบน้ำผึ้ง เจ๊หมวยเล็ก (ถนนทะเลหลวง)",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 65,
+    "distance": 2.7,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "อาหารทะเล",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
+    ],
+    "description": "หมูแดงอบน้ำผึ้งย่างเตาถ่านขอบไหม้นิดๆ เนื้อนุ่มฉ่ำ เกี๊ยวกุ้งผสมหมูสับแป้งบางไส้ทะลัก เส้นบะหมี่ไข่เส้นเล็กคลุกน้ำมันกระเทียมเจียวหอมๆ",
+    "address": "ถนนทะเลหลวง ย่านวชิรา ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.177,
+    "longitude": 100.6085
+  },
+  {
+    "id": "r_songkhla_59",
+    "name": "ก๋วยเตี๋ยวเย็นตาโฟหม้อไฟ โกมล (วชิรา)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 85,
+    "distance": 2.9,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "อาหารทะเล",
+      "แป้งสาลี/กลูเตน",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
+    ],
+    "description": "เย็นตาโฟหม้อไฟเสิร์ฟเดือดปุดๆ ซอสเต้าหู้ยี้แดงสูตรโบราณหอมเข้มข้น หมึกกรอบ เลือดหมูนุ่ม ลูกชิ้นปลาแท้ แมงกะพรุนกรุบกรอบ เกี๊ยวทอดตัวโต",
+    "address": "ซอย 18 ทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1755,
+    "longitude": 100.6095
+  },
+  {
+    "id": "r_songkhla_60",
+    "name": "ก๋วยเตี๋ยวคั่วไก่กระทะเหล็ก ลุงเสริม (ถนนนางงาม)",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 65,
+    "distance": 0.7,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "อาหารจานเดียว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่",
+      "อาหารทะเล",
+      "ถั่วเหลือง"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
+    ],
+    "description": "ก๋วยเตี๋ยวคั่วไก่เตาถ่านไฟแรง ผัดในกระทะเหล็กโบราณหอมกลิ่นควันกระทะ เส้นกรอบนอกนุ่มใน เนื้อไก่หมักนุ่ม ปลาหมึกกรอบ ปาท่องโก๋กรอบจิ้มซอสพริก",
+    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
+    "latitude": 7.1942,
+    "longitude": 100.5908
   }
 ]
