@@ -679,28 +679,6 @@
                         <i class="fa-solid fa-heart"></i>
                     </button>
                 </div>
-
-                <!-- GROUP REAL-TIME PROGRESS WIDGET -->
-                <div class="group-progress-widget glass">
-                    <h4><i class="fa-solid fa-chart-line text-accent"></i> ความคืบหน้าของกลุ่ม</h4>
-                    <div id="group-progress-list" class="group-progress-list">
-                        <!-- Progress of users in real time -->
-                    </div>
-                </div>
-
-                <!-- LIVE ROOM REACTION FLOATING BAR (DOCKED AT BOTTOM) -->
-                <div id="room-reaction-bar" class="room-reaction-bar hidden">
-                    <span class="reaction-label"><i class="fa-solid fa-face-smile text-accent"></i> ปฏิกิริยา:</span>
-                    <div class="reaction-emojis">
-                        <button type="button" class="btn-reaction" data-emoji="❤️">❤️</button>
-                        <button type="button" class="btn-reaction" data-emoji="🤤">🤤</button>
-                        <button type="button" class="btn-reaction" data-emoji="🔥">🔥</button>
-                        <button type="button" class="btn-reaction" data-emoji="🍕">🍕</button>
-                        <button type="button" class="btn-reaction" data-emoji="🍻">🍻</button>
-                        <button type="button" class="btn-reaction" data-emoji="🌶️">🌶️</button>
-                        <button type="button" class="btn-reaction" data-emoji="👏">👏</button>
-                    </div>
-                </div>
             </section>
 
             <!-- VIEW 6: RESULT / MATCH SCREEN -->
@@ -869,6 +847,31 @@
             <button id="btn-copy-qr-zoom-link" class="btn btn-primary btn-sm full-width" style="border-radius: 12px; font-size: 0.85rem; padding: 0.5rem 1rem;">
                 <i class="fa-regular fa-copy"></i> คัดลอกลิงก์ห้อง
             </button>
+        </div>
+    </div>
+
+    <!-- GROUP PROGRESS POPUP MODAL -->
+    <div id="modal-group-progress" class="qr-modal hidden">
+        <div class="qr-modal-content glass" style="max-width: 380px; width: 95%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem; margin-bottom: 0.8rem;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.45rem;">
+                    <i class="fa-solid fa-chart-line text-accent"></i> ความคืบหน้าของกลุ่ม
+                </h3>
+                <button id="btn-close-group-progress" style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; padding: 0.2rem;">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                สมาชิกกำลังปัดการ์ดร้านอาหาร (<span id="modal-group-finished-count">0/0</span> เสร็จแล้ว)
+            </p>
+            <div id="group-progress-list" class="group-progress-list" style="max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.55rem; padding-right: 0.2rem;">
+                <!-- Real-time user progress cards -->
+            </div>
+            <div style="margin-top: 1rem;">
+                <button id="btn-dismiss-group-progress" class="btn btn-secondary full-width" style="min-height: 38px; padding: 0.45rem 1rem; font-size: 0.85rem; border-radius: 12px;">
+                    ปิดหน้าต่าง
+                </button>
+            </div>
         </div>
     </div>
 

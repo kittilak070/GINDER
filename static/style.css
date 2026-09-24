@@ -2397,20 +2397,20 @@ body {
 }
 
 .group-progress-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
 }
 
 .progress-user-card {
     display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    padding: 0.4rem 0.6rem;
-    border-radius: 8px;
-    font-size: 0.8rem;
+    flex-direction: column;
+    gap: 0.35rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
 }
 
 .progress-dot {
@@ -4227,26 +4227,41 @@ body {
     font-weight: 500;
 }
 
-/* 5. Live Room Reactions Floating Bar (Docked / Sticky at Bottom Edge) */
-.room-reaction-bar {
-    position: sticky;
-    bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px));
-    z-index: 90;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.55rem;
-    background: rgba(18, 10, 36, 0.88);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 999px;
-    padding: 0.35rem 0.85rem;
-    margin: auto auto calc(0.35rem + env(safe-area-inset-bottom, 0px)) auto;
-    max-width: 380px;
-    width: 95%;
-    box-shadow: 0 4px 22px rgba(0, 0, 0, 0.55), 0 0 15px rgba(255, 51, 119, 0.18);
-    transition: transform 0.2s ease, opacity 0.2s ease;
+/* 5. Live Room Reactions Floating Bar (Hidden per user request) */
+.room-reaction-bar,
+#room-reaction-bar {
+    display: none !important;
+}
+
+/* Interactive Group Mode Progress Badge in Header Status Bar */
+.swipe-mode-badge.group-mode {
+    cursor: pointer !important;
+    background: rgba(255, 51, 119, 0.16) !important;
+    border: 1px solid rgba(255, 51, 119, 0.4) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    user-select: none;
+}
+
+.swipe-mode-badge.group-mode:hover {
+    background: rgba(255, 51, 119, 0.26) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 10px rgba(255, 51, 119, 0.25);
+}
+
+.swipe-mode-badge.group-mode:active {
+    transform: scale(0.96);
+}
+
+.badge-mini-tag {
+    background: rgba(255, 51, 119, 0.3);
+    border: 1px solid rgba(255, 51, 119, 0.5);
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.08rem 0.35rem;
+    border-radius: 10px;
+    margin-left: 0.25rem;
+    display: inline-block;
 }
 
 /* Hide app footer during active swipe gameplay so reaction bar docks cleanly at bottom */

@@ -1161,13 +1161,14 @@ function showView(viewName) {
         const roomReactionEl = document.getElementById('room-reaction-bar');
 
         if (state.isSolo) {
-            // ในตอนปัดการ์ดคนเดียว ปฏิกิริยาเอาออกเลย เพราะปัดคนเดียว
             if (roomReactionEl) {
                 roomReactionEl.classList.add('hidden');
                 roomReactionEl.style.display = 'none';
             }
             if (swipeModeBadge) {
                 swipeModeBadge.className = 'swipe-mode-badge';
+                swipeModeBadge.style.cursor = 'default';
+                swipeModeBadge.title = '';
                 const typeText = state.preferences && state.preferences.foodTypes && state.preferences.foodTypes.length > 0 
                     ? state.preferences.foodTypes.join(', ')
                     : 'ทั้งหมด';
@@ -1178,24 +1179,27 @@ function showView(viewName) {
             if (groupProgressWidget) groupProgressWidget.style.display = 'none';
             const timerContainer = document.getElementById('swipe-timer-container');
             if (timerContainer) {
-                timerContainer.style.display = 'none'; // ซ่อนในโหมดเดี่ยว เพื่อไม่ให้บังปุ่มกรองและจำนวนการ์ด
+                timerContainer.style.display = 'none'; // ซ่อนในโหมดเดี่ยว
             }
         } else {
-            // โหมดกลุ่ม: มีเพื่อนในห้อง สามารถส่งปฏิกิริยาหากันได้
+            // โหมดกลุ่ม: ซ่อนแถบปฏิกิริยาตามคำขอ และตั้งค่าปุ่มดูความคืบหน้าของกลุ่ม
             if (roomReactionEl) {
-                roomReactionEl.classList.remove('hidden');
-                roomReactionEl.style.display = '';
+                roomReactionEl.classList.add('hidden');
+                roomReactionEl.style.display = 'none';
             }
             if (swipeModeBadge) {
                 swipeModeBadge.className = 'swipe-mode-badge group-mode';
-                swipeModeBadge.innerHTML = '<i class="fa-solid fa-users"></i> <span class="swipe-mode-text">โหมดกลุ่ม</span>';
+                swipeModeBadge.style.cursor = 'pointer';
+                swipeModeBadge.title = 'แตะเพื่อเปิดดูความคืบหน้าของเพื่อนในกลุ่ม';
+                swipeModeBadge.innerHTML = '<i class="fa-solid fa-users text-accent"></i> <span class="swipe-mode-text">ความคืบหน้ากลุ่ม</span> <span id="badge-group-progress-count" class="badge-mini-tag">0/0</span>';
                 swipeModeBadge.style.display = 'inline-flex';
             }
-            if (groupProgressWidget) groupProgressWidget.style.display = '';
+            if (groupProgressWidget) groupProgressWidget.style.display = 'none';
             const timerContainer = document.getElementById('swipe-timer-container');
             if (timerContainer) {
                 timerContainer.style.display = 'flex';
             }
+            updateGroupProgressWidget();
         }
     } else {
         const roomReactionEl = document.getElementById('room-reaction-bar');
@@ -2206,6 +2210,39 @@ function setupEventListeners() {
                 });
             } else {
                 showToast(`ลิงก์เข้าห้อง: ${joinUrl}`, 'info');
+            }
+        });
+    }
+
+    // Swipe Mode Group Progress Popup Handlers
+    const swipeModeBadgeEl = document.getElementById('swipe-mode-badge');
+    if (swipeModeBadgeEl) {
+        swipeModeBadgeEl.addEventListener('click', () => {
+            if (!state.isSolo) {
+                openGroupProgressModal();
+            }
+        });
+    }
+
+    const btnCloseGroupProgress = document.getElementById('btn-close-group-progress');
+    if (btnCloseGroupProgress) {
+        btnCloseGroupProgress.addEventListener('click', () => {
+            closeGroupProgressModal();
+        });
+    }
+
+    const btnDismissGroupProgress = document.getElementById('btn-dismiss-group-progress');
+    if (btnDismissGroupProgress) {
+        btnDismissGroupProgress.addEventListener('click', () => {
+            closeGroupProgressModal();
+        });
+    }
+
+    const modalGroupProgress = document.getElementById('modal-group-progress');
+    if (modalGroupProgress) {
+        modalGroupProgress.addEventListener('click', (e) => {
+            if (e.target === modalGroupProgress) {
+                closeGroupProgressModal();
             }
         });
     }
@@ -3844,31 +3881,67 @@ function updateProgressBar() {
 
 function updateGroupProgressWidget() {
     const widgetList = document.getElementById('group-progress-list');
+    if (!widgetList) return;
     widgetList.innerHTML = '';
 
     const total = state.restaurants.length || 1;
+    let finishedCount = 0;
 
-    state.users.forEach(user => {
+    (state.users || []).forEach(user => {
         const userProgress = user.progress || 0;
-        const pct = Math.round((userProgress / total) * 100);
         const isFinished = userProgress >= total;
+        if (isFinished) finishedCount++;
 
         let statusClass = '';
+        let statusText = 'กำลังปัดการ์ด';
         if (isFinished) {
             statusClass = 'finished';
+            statusText = 'ปัดครบแล้ว ✓';
         } else if (userProgress > 0) {
             statusClass = 'active';
+            statusText = `${userProgress}/${total} ใบ`;
+        } else {
+            statusText = `0/${total} ใบ`;
         }
+
+        const pct = Math.min(100, Math.round((userProgress / total) * 100));
 
         const card = document.createElement('div');
         card.className = 'progress-user-card';
         card.innerHTML = `
-            <div class="progress-dot ${statusClass}"></div>
-            <span class="progress-user-text">${escapeHtml(user.name)}</span>
-            <span class="progress-user-val">${userProgress}/${total}</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 0.2rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div class="progress-dot ${statusClass}"></div>
+                    <span class="progress-user-text" style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">${escapeHtml(user.name)}</span>
+                </div>
+                <span class="progress-user-val" style="font-size: 0.8rem; font-weight: 500; color: ${isFinished ? '#00FF88' : 'var(--text-secondary)'};">${statusText}</span>
+            </div>
+            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden;">
+                <div style="width: ${pct}%; height: 100%; background: ${isFinished ? '#00FF88' : 'var(--accent-gradient)'}; border-radius: 99px; transition: width 0.3s ease;"></div>
+            </div>
         `;
         widgetList.appendChild(card);
     });
+
+    const totalUsers = (state.users || []).length || 1;
+    const finishedEl = document.getElementById('modal-group-finished-count');
+    if (finishedEl) finishedEl.textContent = `${finishedCount}/${totalUsers}`;
+
+    const badgeCount = document.getElementById('badge-group-progress-count');
+    if (badgeCount) badgeCount.textContent = `${finishedCount}/${totalUsers}`;
+}
+
+function openGroupProgressModal() {
+    const modal = document.getElementById('modal-group-progress');
+    if (!modal) return;
+    if (window.soundFx && typeof soundFx.playPop === 'function') soundFx.playPop();
+    updateGroupProgressWidget();
+    modal.classList.remove('hidden');
+}
+
+function closeGroupProgressModal() {
+    const modal = document.getElementById('modal-group-progress');
+    if (modal) modal.classList.add('hidden');
 }
 
 // --- POINTER SWIPE GESTURES ---
