@@ -3785,6 +3785,46 @@ function setupCardGestures(card) {
 
     const likeStamp = card.querySelector('.card-stamp-like');
     const dislikeStamp = card.querySelector('.card-stamp-dislike');
+    const likeBtn = document.getElementById('btn-swipe-right');
+    const dislikeBtn = document.getElementById('btn-swipe-left');
+
+    const updateSwipeButtonHints = (deltaX) => {
+        if (!likeBtn || !dislikeBtn) return;
+        if (deltaX > 15) {
+            // Dragging Right -> Like: scale up like button with glow, dim dislike button
+            const progress = Math.min((deltaX - 15) / 105, 1);
+            likeBtn.style.transform = `scale(${1 + progress * 0.28})`;
+            likeBtn.classList.add('swipe-hint-active');
+            likeBtn.classList.remove('swipe-hint-dimmed');
+
+            dislikeBtn.style.transform = `scale(${1 - progress * 0.12})`;
+            dislikeBtn.classList.remove('swipe-hint-active');
+            dislikeBtn.classList.add('swipe-hint-dimmed');
+        } else if (deltaX < -15) {
+            // Dragging Left -> Dislike: scale up dislike button with glow, dim like button
+            const progress = Math.min((-deltaX - 15) / 105, 1);
+            dislikeBtn.style.transform = `scale(${1 + progress * 0.28})`;
+            dislikeBtn.classList.add('swipe-hint-active');
+            dislikeBtn.classList.remove('swipe-hint-dimmed');
+
+            likeBtn.style.transform = `scale(${1 - progress * 0.12})`;
+            likeBtn.classList.remove('swipe-hint-active');
+            likeBtn.classList.add('swipe-hint-dimmed');
+        } else {
+            resetSwipeButtonHints();
+        }
+    };
+
+    const resetSwipeButtonHints = () => {
+        if (likeBtn) {
+            likeBtn.style.transform = '';
+            likeBtn.classList.remove('swipe-hint-active', 'swipe-hint-dimmed');
+        }
+        if (dislikeBtn) {
+            dislikeBtn.style.transform = '';
+            dislikeBtn.classList.remove('swipe-hint-active', 'swipe-hint-dimmed');
+        }
+    };
 
     // Dedicated click listeners for photo arrow navigation buttons
     const hintLeft = card.querySelector('.card-photo-nav-hint.hint-left');
@@ -3879,12 +3919,16 @@ function setupCardGestures(card) {
             likeStamp.style.opacity = 0;
             dislikeStamp.style.opacity = 0;
         }
+
+        // Dynamic button expansion & glow while dragging
+        updateSwipeButtonHints(dX);
     });
 
     const handlePointerEnd = (e) => {
         if (!isDragging) return;
         isDragging = false;
         card.classList.remove('dragging');
+        resetSwipeButtonHints();
 
         const dX = currentX - startX;
         const dY = currentY - startY;
@@ -4029,6 +4073,18 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
 
     const rId = card.dataset.id;
     const currentR = state.restaurants.find(r => String(r.id) === String(rId));
+
+    // Reset drag hints on buttons before executing flyout
+    const likeBtn = document.getElementById('btn-swipe-right');
+    const dislikeBtn = document.getElementById('btn-swipe-left');
+    if (likeBtn) {
+        likeBtn.style.transform = '';
+        likeBtn.classList.remove('swipe-hint-active', 'swipe-hint-dimmed');
+    }
+    if (dislikeBtn) {
+        dislikeBtn.style.transform = '';
+        dislikeBtn.classList.remove('swipe-hint-active', 'swipe-hint-dimmed');
+    }
 
     // Save history for Undo
     state.swipeHistory = state.swipeHistory || [];
