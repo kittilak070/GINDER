@@ -2174,6 +2174,42 @@ function setupEventListeners() {
         });
     }
 
+    const btnCloseQrZoom = document.getElementById('btn-close-qr-zoom');
+    if (btnCloseQrZoom) {
+        btnCloseQrZoom.addEventListener('click', () => {
+            closeQRZoomModal();
+        });
+    }
+
+    const qrZoomModal = document.getElementById('qr-zoom-modal');
+    if (qrZoomModal) {
+        qrZoomModal.addEventListener('click', (e) => {
+            if (e.target === qrZoomModal) {
+                closeQRZoomModal();
+            }
+        });
+    }
+
+    const btnCopyQrZoomLink = document.getElementById('btn-copy-qr-zoom-link');
+    if (btnCopyQrZoomLink) {
+        btnCopyQrZoomLink.addEventListener('click', () => {
+            const joinUrl = state.networkBaseUrl 
+                ? `${state.networkBaseUrl}/?roomId=${state.roomId}&autoJoin=1` 
+                : `${window.location.origin}/?roomId=${state.roomId}&autoJoin=1`;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(joinUrl).then(() => {
+                    if (navigator.vibrate) navigator.vibrate(30);
+                    soundFx.playCopy();
+                    showToast('คัดลอกลิงก์ห้องเรียบร้อยแล้ว! 🔗', 'success');
+                }).catch(() => {
+                    showToast(`ลิงก์เข้าห้อง: ${joinUrl}`, 'info');
+                });
+            } else {
+                showToast(`ลิงก์เข้าห้อง: ${joinUrl}`, 'info');
+            }
+        });
+    }
+
     // Leave Room Handler
     const handleLeaveRoom = () => {
         socket.disconnect();
@@ -3056,7 +3092,7 @@ function renderLobbyQRCode(joinUrl) {
             new QRious({
                 element: canvas,
                 value: joinUrl,
-                size: 260,
+                size: 280,
                 level: 'M',
                 background: '#ffffff',
                 foreground: '#100923'
@@ -3067,32 +3103,79 @@ function renderLobbyQRCode(joinUrl) {
             fallbackImg.crossOrigin = 'anonymous';
             fallbackImg.onload = () => {
                 const ctx = canvas.getContext('2d');
-                canvas.width = 260;
-                canvas.height = 260;
-                ctx.drawImage(fallbackImg, 0, 0, 260, 260);
+                canvas.width = 280;
+                canvas.height = 280;
+                ctx.drawImage(fallbackImg, 0, 0, 280, 280);
             };
-            fallbackImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=4&data=${encodeURIComponent(joinUrl)}`;
+            fallbackImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=4&data=${encodeURIComponent(joinUrl)}`;
         }
     } catch (err) {
         console.error('[QR] Failed to render lobby QR code:', err);
     }
 
+    // Also render zoom QR code for enlarged modal
+    const zoomCanvas = document.getElementById('lobby-qr-zoom');
+    if (zoomCanvas) {
+        try {
+            if (typeof QRious !== 'undefined') {
+                new QRious({
+                    element: zoomCanvas,
+                    value: joinUrl,
+                    size: 340,
+                    level: 'M',
+                    background: '#ffffff',
+                    foreground: '#100923'
+                });
+            } else {
+                const fallbackZoomImg = new Image();
+                fallbackZoomImg.crossOrigin = 'anonymous';
+                fallbackZoomImg.onload = () => {
+                    const zctx = zoomCanvas.getContext('2d');
+                    zoomCanvas.width = 340;
+                    zoomCanvas.height = 340;
+                    zctx.drawImage(fallbackZoomImg, 0, 0, 340, 340);
+                };
+                fallbackZoomImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=340x340&margin=4&data=${encodeURIComponent(joinUrl)}`;
+            }
+        } catch (e) {}
+    }
+
+    const zoomRoomIdEl = document.getElementById('qr-zoom-room-id');
+    if (zoomRoomIdEl && state.roomId) {
+        zoomRoomIdEl.textContent = state.roomId;
+    }
+
     if (container && !container._hasCopyListener) {
         container._hasCopyListener = true;
         container.addEventListener('click', () => {
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(joinUrl).then(() => {
-                    if (navigator.vibrate) navigator.vibrate(30);
-                    soundFx.playCopy();
-                    showToast('คัดลอกลิงก์ห้องเรียบร้อยแล้ว! ✨', 'success');
-                }).catch(() => {
-                    showToast(`ลิงก์เข้าห้อง: ${joinUrl}`, 'info');
-                });
-            } else {
-                showToast(`ลิงก์เข้าห้อง: ${joinUrl}`, 'info');
-            }
+            openQRZoomModal(joinUrl);
         });
     }
+}
+
+function openQRZoomModal(joinUrl) {
+    const modal = document.getElementById('qr-zoom-modal');
+    if (!modal) return;
+    if (window.soundFx && typeof soundFx.playPop === 'function') soundFx.playPop();
+
+    const zoomRoomIdEl = document.getElementById('qr-zoom-room-id');
+    if (zoomRoomIdEl && state.roomId) {
+        zoomRoomIdEl.textContent = state.roomId;
+    }
+
+    modal.classList.remove('hidden');
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(joinUrl).then(() => {
+            if (navigator.vibrate) navigator.vibrate(30);
+            showToast('คัดลอกลิงก์ห้องแล้ว! ✨ และขยาย QR Code เต็มจอ', 'success', 2000);
+        }).catch(() => {});
+    }
+}
+
+function closeQRZoomModal() {
+    const modal = document.getElementById('qr-zoom-modal');
+    if (modal) modal.classList.add('hidden');
 }
 
 // --- SOCKET EVENTS ---
