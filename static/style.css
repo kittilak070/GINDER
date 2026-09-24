@@ -5185,6 +5185,16 @@ body:has(#view-swipe.active) .app-footer,
     transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Hide floating feedback button during active card swipe gameplay */
+body.in-swipe-game .btn-floating-feedback,
+body:has(#view-swipe.active) .btn-floating-feedback {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    transform: translateY(20px) scale(0.8) !important;
+}
+
 .btn-floating-feedback:hover {
     transform: translateY(-3px) scale(1.04);
     box-shadow: 0 8px 30px rgba(255, 51, 119, 0.6);

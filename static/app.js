@@ -1133,6 +1133,16 @@ function showView(viewName) {
         }
     }
 
+    // Hide floating feedback button during card swiping, restore when round ends or on other views
+    const btnFloatingFeedback = document.getElementById('btn-floating-feedback');
+    if (btnFloatingFeedback) {
+        if (viewName === 'swipe') {
+            btnFloatingFeedback.style.display = 'none';
+        } else {
+            btnFloatingFeedback.style.display = '';
+        }
+    }
+
     // Adapt UI components based on mode (Solo vs Group)
     const swipeModeBadge = document.getElementById('swipe-mode-badge');
     const groupProgressWidget = document.querySelector('.group-progress-widget');
@@ -3500,6 +3510,11 @@ function undoLastSwipe() {
         emptyEl.classList.add('hidden');
     }
 
+    // Hide floating feedback button again if a card is restored into play
+    const btnFeedback = document.getElementById('btn-floating-feedback');
+    if (btnFeedback) btnFeedback.style.display = 'none';
+    document.body.classList.add('in-swipe-game');
+
     // If it was a solo right-swipe, pop from soloLiked
     if (state.isSolo && last.direction === 'right') {
         const idx = state.soloLiked ? state.soloLiked.findLastIndex(r => String(r.id) === String(last.restaurant.id)) : -1;
@@ -4109,6 +4124,11 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
                 if (emptyTitle) emptyTitle.innerText = 'คุณปัดครบแล้ว!';
                 if (emptyDesc) emptyDesc.innerText = 'กำลังรอเพื่อนๆ ปัดจนครบ...';
             }
+
+            // Restore floating feedback button now that player is done swiping
+            const btnFeedback = document.getElementById('btn-floating-feedback');
+            if (btnFeedback) btnFeedback.style.display = '';
+            document.body.classList.remove('in-swipe-game');
         }
     }, 300);
 }
