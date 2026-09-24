@@ -106,6 +106,13 @@ test('JS: attemptAutoJoinRoom and scan success trigger seamless room entry', () 
     assert(appJs.includes("socket.emit('join_room'"), 'Must emit join_room to socket');
 });
 
+test('UX & Compatibility: scanQRFromImageFile and playsinline video enforcement exist', () => {
+    assert(appJs.includes('scanQRFromImageFile('), 'Must define scanQRFromImageFile');
+    assert(appJs.includes('enforceVideoPlaysInline()'), 'Must define enforceVideoPlaysInline for iOS WebKit');
+    assert(indexHtml.includes('id="btn-scan-qr-file"'), 'Must contain btn-scan-qr-file button');
+    assert(indexHtml.includes('id="qr-file-input"'), 'Must contain qr-file-input input');
+});
+
 console.log('\n========================================');
 console.log(`  TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
 console.log('========================================\n');

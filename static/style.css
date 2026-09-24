@@ -2698,13 +2698,35 @@ body {
 .qr-reader-wrapper {
     position: relative;
     width: 100%;
+    min-height: 260px;
     border-radius: var(--border-radius-md);
     overflow: hidden;
     background: #000;
 }
 
-.qr-reader-wrapper video {
+#qr-reader {
+    width: 100% !important;
+    min-height: 260px !important;
+    border: none !important;
+    position: relative !important;
+}
+
+#qr-reader__scan_region {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 260px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.qr-reader-wrapper video,
+#qr-reader video {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 260px !important;
     object-fit: cover !important;
+    display: block !important;
     border-radius: var(--border-radius-md);
 }
 
