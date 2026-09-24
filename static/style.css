@@ -1455,10 +1455,10 @@ body {
     flex: 1 1 auto;
     position: relative;
     width: 100%;
-    min-height: 250px;
-    max-height: 420px;
-    height: clamp(260px, 46dvh, 390px);
-    margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
+    min-height: 0;
+    height: clamp(380px, 62dvh, 620px);
+    max-height: calc(100dvh - 195px);
+    margin-bottom: clamp(0.5rem, 1.6vh, 1rem);
     perspective: 1000px;
 }
 
@@ -1915,14 +1915,16 @@ body {
 }
 
 .card-details {
-    padding: clamp(0.85rem, 2.5vh, 1.15rem);
+    padding: clamp(0.75rem, 2vh, 1rem) clamp(0.85rem, 2.5vw, 1.15rem);
     flex: 1;
     display: flex;
     flex-direction: column;
     background: #190e36;
     background: linear-gradient(180deg, #1e1140 0%, #130a2a 100%);
     position: relative;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    gap: 0.35rem;
+    min-height: 0;
 }
 
 .card-title-row {
@@ -2080,7 +2082,9 @@ body {
     justify-content: center;
     align-items: center;
     gap: clamp(1.2rem, 5vw, 2.2rem);
-    margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
+    margin-top: auto;
+    margin-bottom: clamp(0.5rem, 1.8vh, 1.1rem);
+    flex-shrink: 0;
 }
 
 .control-btn {
@@ -3026,8 +3030,9 @@ body {
     }
 
     .deck-container {
-        height: clamp(220px, 42dvh, 320px);
-        margin-bottom: 0.5rem;
+        height: clamp(300px, 55dvh, 460px);
+        max-height: calc(100dvh - 170px);
+        margin-bottom: 0.4rem;
     }
 
     .swipe-controls {
@@ -5185,7 +5190,7 @@ body:has(#view-swipe.active) .app-footer,
     transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Hide floating feedback button during active card swipe gameplay */
+/* Hide floating feedback button and optimize layout during active card swipe gameplay */
 body.in-swipe-game .btn-floating-feedback,
 body:has(#view-swipe.active) .btn-floating-feedback {
     display: none !important;
@@ -5193,6 +5198,21 @@ body:has(#view-swipe.active) .btn-floating-feedback {
     pointer-events: none !important;
     visibility: hidden !important;
     transform: translateY(20px) scale(0.8) !important;
+}
+
+body.in-swipe-game .app-content {
+    padding-top: clamp(0.4rem, 1.2vh, 0.75rem);
+    padding-bottom: calc(clamp(0.4rem, 1.2vh, 0.75rem) + env(safe-area-inset-bottom, 0px));
+    min-height: 0;
+}
+
+body.in-swipe-game #view-swipe.active {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    justify-content: space-between;
 }
 
 .btn-floating-feedback:hover {
