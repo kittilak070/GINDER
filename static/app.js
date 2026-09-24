@@ -3389,6 +3389,10 @@ function renderResultScreen(r, options = {}) {
         cardContainer.innerHTML = `
             <div class="matched-image-wrapper">
                 <img src="${r.image}" alt="${r.name}" class="matched-image" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
+                <div class="restaurant-watermark-overlay" aria-hidden="true">
+                    <span class="watermark-text">ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
+                </div>
+                <div class="card-mockup-badge"><i class="fa-solid fa-camera"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ</div>
             </div>
             <div class="matched-details">
                 <div class="matched-title-row">
@@ -3633,9 +3637,17 @@ function renderDeck() {
 
         const drawerGalleryHtml = images.length > 1
             ? `<div class="drawer-photo-gallery">
-                <strong><i class="fa-solid fa-images"></i> รูปภาพและเมนู (${images.length} รูป):</strong>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+                    <strong><i class="fa-solid fa-images"></i> รูปภาพและเมนู (${images.length} รูป):</strong>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);"><i class="fa-solid fa-circle-info"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
+                </div>
                 <div class="drawer-photo-strip">
-                    ${images.map((imgUrl, idx) => `<img src="${imgUrl}" class="drawer-thumb" alt="มุม ${idx + 1}" onclick="jumpCardPhoto('${r.id}', ${idx})">`).join('')}
+                    ${images.map((imgUrl, idx) => `
+                        <div class="drawer-thumb-wrap">
+                            <img src="${imgUrl}" class="drawer-thumb" alt="มุม ${idx + 1}" onclick="jumpCardPhoto('${r.id}', ${idx})">
+                            <span class="drawer-thumb-watermark">ภาพจำลองเว็บ</span>
+                        </div>
+                    `).join('')}
                 </div>
                </div>`
             : '';
@@ -3649,6 +3661,10 @@ function renderDeck() {
             <div class="card-image-wrapper">
                 ${storyBarsHtml}
                 <img src="${images[0]}" class="card-image" alt="${r.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
+                <div class="restaurant-watermark-overlay" aria-hidden="true">
+                    <span class="watermark-text">ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
+                </div>
+                <div class="card-mockup-badge"><i class="fa-solid fa-camera"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ</div>
                 <div class="card-stamp card-stamp-like">อยากกิน</div>
                 <div class="card-stamp card-stamp-dislike">ไม่กิน</div>
                 <div class="card-info-badge"><i class="fa-solid fa-location-arrow"></i> ${distDisplay}</div>
@@ -5123,7 +5139,10 @@ function loadMatchHistory() {
                 const card = document.createElement('div');
                 card.style.cssText = 'background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.8rem; display: flex; gap: 0.8rem; align-items: center;';
                 card.innerHTML = `
-                    <img src="${r.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; flex-shrink: 0;" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'">
+                    <div style="position: relative; width: 55px; height: 55px; border-radius: 8px; overflow: hidden; flex-shrink: 0;">
+                        <img src="${r.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'">
+                        <span style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.78); color: #fff; font-size: 0.52rem; text-align: center; padding: 1px 0; font-weight: 500;">ภาพจำลองเว็บ</span>
+                    </div>
                     <div style="flex: 1; min-width: 0;">
                         <div style="font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${r.name || 'ไม่ระบุชื่อร้าน'}</div>
                         <div style="font-size: 0.75rem; color: var(--text-secondary); margin: 0.15rem 0;">

@@ -1818,6 +1818,102 @@ body {
     gap: 4px;
 }
 
+/* ==========================================================================
+   RESTAURANT IMAGE WATERMARK / MOCKUP DISCLAIMER OVERLAY
+   ========================================================================== */
+
+.restaurant-watermark-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-14deg);
+    pointer-events: none;
+    z-index: 7;
+    user-select: none;
+    text-align: center;
+    width: 88%;
+    max-width: 320px;
+}
+
+.restaurant-watermark-overlay .watermark-text {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(16, 9, 35, 0.55);
+    color: rgba(255, 255, 255, 0.88);
+    border: 1.5px dashed rgba(255, 255, 255, 0.55);
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-family: 'Mitr', 'Noto Sans Thai', sans-serif;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
+    white-space: nowrap;
+}
+
+.card-mockup-badge {
+    position: absolute;
+    top: 24px;
+    left: 12px;
+    background: rgba(16, 9, 35, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3.5px 9px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 8;
+    pointer-events: none;
+    user-select: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.2px;
+}
+
+.card-mockup-badge i {
+    color: #ffb703;
+    font-size: 0.75rem;
+}
+
+.matched-image-wrapper .card-mockup-badge {
+    top: 10px;
+    left: 10px;
+}
+
+.matched-image-wrapper .restaurant-watermark-overlay .watermark-text {
+    font-size: 0.95rem;
+    padding: 5px 14px;
+}
+
+.drawer-thumb-wrap {
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.drawer-thumb-watermark {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    background: rgba(0, 0, 0, 0.82);
+    color: #ffffff;
+    font-size: 0.58rem;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 0 0 6px 6px;
+    padding: 1px 0;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 0.2px;
+}
+
 .card-details {
     padding: clamp(0.85rem, 2.5vh, 1.15rem);
     flex: 1;
