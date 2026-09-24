@@ -570,7 +570,7 @@ const soundFx = (() => {
     };
 })();
 
-// --- PARTICLE BURST GENERATOR ---
+// --- PARTICLE BURST GENERATOR (LIGHTWEIGHT & 60FPS OPTIMIZED) ---
 function spawnParticleBurst(x, y, type = 'heart') {
     let container = document.querySelector('.particle-burst-container');
     if (!container) {
@@ -579,30 +579,38 @@ function spawnParticleBurst(x, y, type = 'heart') {
         document.body.appendChild(container);
     }
 
-    const icons = type === 'heart' ? ['❤️', '💖', '✨', '🔥'] : ['✨', '⭐', '🌟'];
-    const count = 7;
+    // Cap active DOM particles to prevent micro-stutter on mobile WebKit
+    if (container.children.length >= 6) {
+        return;
+    }
+
+    // Subtle, elegant particles (2 hearts max, 3 sparkles max)
+    const icons = type === 'heart' ? ['❤️', '✨'] : ['✨', '⭐'];
+    const count = type === 'heart' ? 2 : 3;
 
     for (let i = 0; i < count; i++) {
         const p = document.createElement('div');
         p.className = 'micro-particle';
-        p.innerText = icons[Math.floor(Math.random() * icons.length)];
-        p.style.fontSize = `${Math.random() * 8 + 14}px`;
+        p.innerText = icons[i % icons.length];
+        p.style.fontSize = `${Math.random() * 4 + 13}px`;
         p.style.left = `${x}px`;
         p.style.top = `${y}px`;
 
-        // Radial dispersion with slight upward bias
-        const angle = (Math.PI * 2 * i) / count + (Math.random() * 0.4 - 0.2);
-        const distance = Math.random() * 65 + 35;
+        // Gentle, compact dispersion
+        const angle = (Math.PI * 2 * i) / count + (Math.random() * 0.3 - 0.15);
+        const distance = Math.random() * 25 + 15;
         const dx = Math.cos(angle) * distance;
-        const dy = Math.sin(angle) * distance - 35;
-        const rot = (Math.random() * 60 - 30) + 'deg';
+        const dy = Math.sin(angle) * distance - 20;
+        const rot = (Math.random() * 40 - 20) + 'deg';
 
         p.style.setProperty('--dx', `${dx}px`);
         p.style.setProperty('--dy', `${dy}px`);
         p.style.setProperty('--rot', rot);
 
         container.appendChild(p);
-        setTimeout(() => p.remove(), 900);
+        setTimeout(() => {
+            if (p.parentNode) p.parentNode.removeChild(p);
+        }, 450);
     }
 }
 
@@ -3336,19 +3344,12 @@ function renderResultScreen(r, options = {}) {
     // End of round: reset combo counter so next round starts fresh from 1
     resetComboStreak();
 
-    // Play confetti explosion!
+    // Play lightweight celebratory confetti (optimized for 60fps, no lag)
     triggerConfettiExplosion();
 
-    // Play celebratory sound & vibrations
+    // Play celebratory sound & gentle vibration
     soundFx.playMatch();
-    if (navigator.vibrate) navigator.vibrate([50, 70, 50, 70, 100]);
-
-    // Particle bursts from center of result screen
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight * 0.35;
-    spawnParticleBurst(centerX, centerY, 'heart');
-    setTimeout(() => spawnParticleBurst(centerX - 60, centerY + 25, 'star'), 180);
-    setTimeout(() => spawnParticleBurst(centerX + 60, centerY + 25, 'star'), 360);
+    if (navigator.vibrate) navigator.vibrate([30, 50]);
 
     showView('result');
 
@@ -3891,42 +3892,55 @@ function setupCardGestures(card) {
         } catch (err) {}
     });
 
+    let rafId = null;
+
     card.addEventListener('pointermove', (e) => {
         if (!isDragging) return;
 
         currentX = e.clientX;
         currentY = e.clientY;
 
-        const dX = currentX - startX;
-        if (Math.abs(dX) > 8) {
-            hasMoved = true;
+        if (!rafId) {
+            rafId = requestAnimationFrame(() => {
+                rafId = null;
+                if (!isDragging) return;
+
+                const dX = currentX - startX;
+                if (Math.abs(dX) > 8) {
+                    hasMoved = true;
+                }
+
+                // Calculate rotation based strictly on horizontal movement
+                const rotate = dX / 15;
+
+                // Apply transform strictly along horizontal axis (lock Y to 0)
+                card.style.transform = `translate3d(${dX}px, 0, 0) rotate(${rotate}deg)`;
+
+                // Fade in Stamps
+                if (dX > 20) { // dragging right -> Like
+                    likeStamp.style.opacity = Math.min((dX - 20) / 100, 0.9);
+                    dislikeStamp.style.opacity = 0;
+                } else if (dX < -20) { // dragging left -> Dislike
+                    dislikeStamp.style.opacity = Math.min((-dX - 20) / 100, 0.9);
+                    likeStamp.style.opacity = 0;
+                } else {
+                    likeStamp.style.opacity = 0;
+                    dislikeStamp.style.opacity = 0;
+                }
+
+                // Dynamic button expansion & glow while dragging
+                updateSwipeButtonHints(dX);
+            });
         }
-
-        // Calculate rotation based strictly on horizontal movement
-        const rotate = dX / 15;
-
-        // Apply transform strictly along horizontal axis (lock Y to 0)
-        card.style.transform = `translate3d(${dX}px, 0, 0) rotate(${rotate}deg)`;
-
-        // Fade in Stamps
-        if (dX > 20) { // dragging right -> Like
-            likeStamp.style.opacity = Math.min((dX - 20) / 100, 0.9);
-            dislikeStamp.style.opacity = 0;
-        } else if (dX < -20) { // dragging left -> Dislike
-            dislikeStamp.style.opacity = Math.min((-dX - 20) / 100, 0.9);
-            likeStamp.style.opacity = 0;
-        } else {
-            likeStamp.style.opacity = 0;
-            dislikeStamp.style.opacity = 0;
-        }
-
-        // Dynamic button expansion & glow while dragging
-        updateSwipeButtonHints(dX);
     });
 
     const handlePointerEnd = (e) => {
         if (!isDragging) return;
         isDragging = false;
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
         card.classList.remove('dragging');
         resetSwipeButtonHints();
 
@@ -4046,12 +4060,13 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
     // Audio & Haptic feedback + Particles
     if (direction === 'right') {
         soundFx.playLike();
-        if (navigator.vibrate) navigator.vibrate([15, 30, 20]);
-        // Trigger celebratory particles from card position
-        const rect = card.getBoundingClientRect();
-        const burstX = rect.left + rect.width / 2;
-        const burstY = rect.top + rect.height * 0.35;
-        spawnParticleBurst(burstX, burstY, 'heart');
+        if (navigator.vibrate) navigator.vibrate([15, 25]);
+        // Subtle particle near the like button instead of cluttering food photo
+        const likeBtn = document.getElementById('btn-swipe-right');
+        if (likeBtn) {
+            const rect = likeBtn.getBoundingClientRect();
+            spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'heart');
+        }
     } else {
         soundFx.playPass();
         if (navigator.vibrate) navigator.vibrate(10);
@@ -4314,32 +4329,36 @@ function updateTimerUI(timeLeft) {
     }
 }
 
-// --- CELEBRATORY CONFETTI ---
+// --- CELEBRATORY CONFETTI (LIGHTWEIGHT 60FPS OPTIMIZED) ---
 function triggerConfettiExplosion() {
     if (typeof confetti !== 'function') return;
-    const duration = 3 * 1000;
-    const end = Date.now() + duration;
-
-    (function frame() {
+    try {
+        // Quick, crisp celebratory pop (~36 particles total, zero frame drop on mobile)
         confetti({
-            particleCount: 3,
+            particleCount: 18,
             angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: ['#FF3377', '#EE7816', '#00FF26']
+            spread: 45,
+            origin: { x: 0.05, y: 0.75 },
+            colors: ['#FF3377', '#EE7816', '#00FF26'],
+            ticks: 75,
+            gravity: 1.2,
+            scalar: 0.75,
+            disableForReducedMotion: true
         });
         confetti({
-            particleCount: 3,
+            particleCount: 18,
             angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: ['#FF3377', '#EE7816', '#00FF26']
+            spread: 45,
+            origin: { x: 0.95, y: 0.75 },
+            colors: ['#FF3377', '#EE7816', '#00FF26'],
+            ticks: 75,
+            gravity: 1.2,
+            scalar: 0.75,
+            disableForReducedMotion: true
         });
-
-        if (Date.now() < end) {
-            requestAnimationFrame(frame);
-        }
-    }());
+    } catch (e) {
+        console.warn('Confetti error:', e);
+    }
 }
 
 // --- QR SCANNER FUNCTIONALITY (ULTRA-FAST & ROBUST) ---
