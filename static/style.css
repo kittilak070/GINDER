@@ -2469,12 +2469,14 @@ body {
 .matched-card {
     border-radius: var(--border-radius-lg);
     overflow: hidden;
+    padding: 0 !important;
     margin-bottom: 1rem;
-    box-shadow: var(--glass-shadow);
-    border: 1px solid var(--glass-border);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), 0 0 1px rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     position: relative;
     animation: scale-up 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    background: var(--bg-card);
+    background: #190e36;
+    background: linear-gradient(180deg, #1d1140 0%, #130a28 100%);
 }
 
 .matched-card::after {
