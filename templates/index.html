@@ -1473,214 +1473,159 @@
                 </button>
             </div>
 
-            <!-- Top Mode Tabs (Write vs Read Feedbacks) -->
-            <div class="feedback-modal-tabs" style="display: flex; gap: 0.45rem; margin-bottom: 0.85rem; background: rgba(0,0,0,0.35); padding: 0.3rem; border-radius: 12px; border: 1px solid var(--glass-border);">
-                <button type="button" id="tab-inapp-feedback-write" class="btn-feedback-tab active" style="flex: 1; padding: 0.55rem; border: none; border-radius: 9px; background: var(--gradient-primary); color: #fff; font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
-                    <i class="fa-solid fa-pen-to-square"></i> ส่งข้อเสนอแนะ
-                </button>
-                <button type="button" id="tab-inapp-feedback-list" class="btn-feedback-tab" style="flex: 1; padding: 0.55rem; border: none; border-radius: 9px; background: transparent; color: var(--text-secondary); font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
-                    <i class="fa-solid fa-comments"></i> เสียงตอบรับ (20)
-                </button>
-            </div>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: -0.3rem; margin-bottom: 0.85rem; line-height: 1.5;">
+                ช่วยพวกเราประเมินสั้นๆ 15 วินาที เพื่อนำข้อมูลไปวิเคราะห์และพัฒนาส่งโปรเจกต์ครับ 🙏
+            </p>
 
-            <!-- PANE 1: WRITE FEEDBACK FORM -->
-            <div id="pane-inapp-feedback-write">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; gap: 0.5rem;">
-                    <p style="color: var(--text-secondary); font-size: 0.82rem; margin: 0; line-height: 1.4;">
-                        ช่วยพวกเราประเมินสั้นๆ 15 วินาที เพื่อนำข้อมูลไปวิเคราะห์ส่งอาจารย์ครับ 🙏
-                    </p>
-                    <button type="button" id="btn-quick-fill-sample-feedback" class="btn btn-secondary btn-sm" title="สุ่มกรอกข้อเสนอแนะตัวอย่างจาก 20 รายการ" style="font-size: 0.76rem; padding: 0.3rem 0.65rem; border-radius: 8px; white-space: nowrap; flex-shrink: 0; background: rgba(255, 51, 119, 0.12); border-color: rgba(255, 51, 119, 0.3); color: #ff85ad;">
-                        <i class="fa-solid fa-dice text-accent"></i> สุ่มตัวอย่าง
-                    </button>
-                </div>
-
-                <!-- 1. Nickname, Email & Referral Source (User Request) -->
-                <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 0.85rem 0.95rem; margin-bottom: 0.85rem;">
-                    <!-- 1.1 Nickname & Email -->
-                    <div class="feedback-contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.75rem;">
-                        <div>
-                            <label for="feedback-input-nickname" style="font-size: 0.82rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.3rem;">
-                                <i class="fa-solid fa-user text-accent"></i> ชื่อเล่น:
-                            </label>
-                            <div style="position: relative;">
-                                <input type="text" id="feedback-input-nickname" class="form-control" placeholder="เช่น น้องหมูกรอบ, บอย, ส้ม" maxlength="50" style="padding-left: 2.1rem; font-size: 0.86rem; height: 40px; background: rgba(0, 0, 0, 0.28); border-color: rgba(255, 255, 255, 0.16);">
-                                <i class="fa-solid fa-user-tag" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--accent-orange); font-size: 0.82rem; pointer-events: none;"></i>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="feedback-input-email" style="font-size: 0.82rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.3rem;">
-                                <i class="fa-solid fa-envelope text-accent"></i> กรอกอีเมล:
-                            </label>
-                            <div style="position: relative;">
-                                <input type="email" id="feedback-input-email" class="form-control" placeholder="เช่น example@gmail.com" maxlength="100" style="padding-left: 2.1rem; font-size: 0.86rem; height: 40px; background: rgba(0, 0, 0, 0.28); border-color: rgba(255, 255, 255, 0.16);">
-                                <i class="fa-solid fa-at" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--accent-orange); font-size: 0.82rem; pointer-events: none;"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 1.2 Referral Source (เจอเว็บนี้จากทางไหน) -->
+            <!-- 1. Nickname, Email & Referral Source (User Request) -->
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 0.85rem 0.95rem; margin-bottom: 0.85rem;">
+                <!-- 1.1 Nickname & Email -->
+                <div class="feedback-contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.75rem;">
                     <div>
-                        <label style="font-size: 0.82rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.35rem;">
-                            <i class="fa-solid fa-bullhorn text-accent"></i> เจอเว็บนี้จากทางไหน:
+                        <label for="feedback-input-nickname" style="font-size: 0.82rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.3rem;">
+                            <i class="fa-solid fa-user text-accent"></i> ชื่อเล่น:
                         </label>
-                        <div class="feedback-chips-grid feedback-source-chips-grid" id="feedback-source-chips" style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
-                            <div class="feedback-chip active" data-val="Facebook">
-                                <i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook
-                            </div>
-                            <div class="feedback-chip" data-val="Twitter">
-                                <i class="fa-brands fa-x-twitter"></i> Twitter
-                            </div>
-                            <div class="feedback-chip" data-val="Lemon8">
-                                <i class="fa-solid fa-lemon" style="color: #facc15;"></i> Lemon8
-                            </div>
-                            <div class="feedback-chip" data-val="TikTok">
-                                <i class="fa-brands fa-tiktok"></i> TikTok
-                            </div>
-                            <div class="feedback-chip" data-val="IG">
-                                <i class="fa-brands fa-instagram" style="color: #e1306c;"></i> IG
-                            </div>
+                        <div style="position: relative;">
+                            <input type="text" id="feedback-input-nickname" class="form-control" placeholder="เช่น น้องหมูกรอบ, บอย, ส้ม" maxlength="50" style="padding-left: 2.1rem; font-size: 0.86rem; height: 40px; background: rgba(0, 0, 0, 0.28); border-color: rgba(255, 255, 255, 0.16);">
+                            <i class="fa-solid fa-user-tag" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--accent-orange); font-size: 0.82rem; pointer-events: none;"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="feedback-input-email" style="font-size: 0.82rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.3rem;">
+                            <i class="fa-solid fa-envelope text-accent"></i> กรอกอีเมล:
+                        </label>
+                        <div style="position: relative;">
+                            <input type="email" id="feedback-input-email" class="form-control" placeholder="เช่น example@gmail.com" maxlength="100" style="padding-left: 2.1rem; font-size: 0.86rem; height: 40px; background: rgba(0, 0, 0, 0.28); border-color: rgba(255, 255, 255, 0.16);">
+                            <i class="fa-solid fa-at" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--accent-orange); font-size: 0.82rem; pointer-events: none;"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2. Star Rating -->
-                <div style="text-align: center; margin: 0 0 0.85rem; background: rgba(255, 255, 255, 0.025); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem 0.5rem;">
-                    <label style="font-size: 0.88rem; font-weight: 600; color: var(--text-primary); display: block;">
-                        ความพึงพอใจและความง่ายในการใช้งานภาพรวม
+                <!-- 1.2 Referral Source (เจอเว็บนี้จากทางไหน) -->
+                <div>
+                    <label style="font-size: 0.82rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.35rem;">
+                        <i class="fa-solid fa-bullhorn text-accent"></i> เจอเว็บนี้จากทางไหน:
                     </label>
-                    <div class="feedback-stars-wrapper" id="feedback-stars-container">
-                        <button type="button" class="feedback-star-btn" data-star="1" title="1 ดาว: ปรับปรุงด่วน">★</button>
-                        <button type="button" class="feedback-star-btn" data-star="2" title="2 ดาว: ค่อนข้างยาก">★</button>
-                        <button type="button" class="feedback-star-btn" data-star="3" title="3 ดาว: พอใช้ได้">★</button>
-                        <button type="button" class="feedback-star-btn" data-star="4" title="4 ดาว: ใช้งานดี">★</button>
-                        <button type="button" class="feedback-star-btn active" data-star="5" title="5 ดาว: ยอดเยี่ยม ประทับใจมาก">★</button>
-                    </div>
-                    <div id="feedback-emotion-label" class="feedback-emotion-text">😍 5 ดาว: ยอดเยี่ยม ประทับใจมาก!</div>
-                </div>
-
-                <!-- 3. Demographic: Role, Age, Frequency, Mode (Clean Structured 2x2 Grid) -->
-                <div style="background: rgba(255, 255, 255, 0.025); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.85rem;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
-                        <!-- Role -->
-                        <div>
-                            <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
-                                🎓 สถานะของคุณ:
-                            </label>
-                            <div class="feedback-chips-grid" id="feedback-role-chips">
-                                <div class="feedback-chip active" data-val="นักศึกษา">นักศึกษา</div>
-                                <div class="feedback-chip" data-val="วัยทำงาน">วัยทำงาน</div>
-                                <div class="feedback-chip" data-val="ทั่วไป">ทั่วไป</div>
-                            </div>
+                    <div class="feedback-chips-grid feedback-source-chips-grid" id="feedback-source-chips" style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                        <div class="feedback-chip active" data-val="Facebook">
+                            <i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook
                         </div>
-                        <!-- Age -->
-                        <div>
-                            <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
-                                🎂 ช่วงอายุ:
-                            </label>
-                            <div class="feedback-chips-grid" id="feedback-age-chips">
-                                <div class="feedback-chip" data-val="<18">&lt;18</div>
-                                <div class="feedback-chip active" data-val="18-22">18-22</div>
-                                <div class="feedback-chip" data-val="23-28">23-28</div>
-                                <div class="feedback-chip" data-val="29+">29+</div>
-                            </div>
+                        <div class="feedback-chip" data-val="Twitter">
+                            <i class="fa-brands fa-x-twitter"></i> Twitter
+                        </div>
+                        <div class="feedback-chip" data-val="Lemon8">
+                            <i class="fa-solid fa-lemon" style="color: #facc15;"></i> Lemon8
+                        </div>
+                        <div class="feedback-chip" data-val="TikTok">
+                            <i class="fa-brands fa-tiktok"></i> TikTok
+                        </div>
+                        <div class="feedback-chip" data-val="IG">
+                            <i class="fa-brands fa-instagram" style="color: #e1306c;"></i> IG
                         </div>
                     </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                        <!-- Frequency -->
-                        <div>
-                            <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
-                                🤔 เจอปัญหากินอะไรดีบ่อยแค่ไหน:
-                            </label>
-                            <div class="feedback-chips-grid" id="feedback-freq-chips">
-                                <div class="feedback-chip active" data-val="เกือบทุกวัน">🔥 เกือบทุกวัน</div>
-                                <div class="feedback-chip" data-val="2-3วัน/สัปดาห์">2-3 วัน/สัปดาห์</div>
-                                <div class="feedback-chip" data-val="นานๆครั้ง">นานๆ ครั้ง</div>
-                            </div>
-                        </div>
-                        <!-- Mode -->
-                        <div>
-                            <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
-                                🎮 โหมดที่ได้ลองเล่น:
-                            </label>
-                            <div class="feedback-chips-grid" id="feedback-mode-chips">
-                                <div class="feedback-chip active" data-val="สุ่มคนเดียว">👤 คนเดียว</div>
-                                <div class="feedback-chip" data-val="เล่นกับเพื่อน">👥 กับเพื่อน</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Quick Tags (Pain Points & Suggestions) -->
-                <div style="margin-bottom: 0.85rem;">
-                    <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
-                        จุดที่ติดขัดหรือสิ่งที่อยากให้พัฒนาเพิ่ม (เลือกได้หลายข้อ):
-                    </label>
-                    <div class="feedback-chips-grid" id="feedback-chips-container">
-                        <div class="feedback-chip" data-tag="ชวนเพื่อนเข้าห้องยาก">👥 ชวนเพื่อนเข้าห้องยาก</div>
-                        <div class="feedback-chip" data-tag="ปัดการ์ดหน่วง/กระตุก">⚡ ปัดการ์ดหน่วง/กระตุก</div>
-                        <div class="feedback-chip" data-tag="อยากได้ตัวกรองราคา/ระยะทาง">🎯 อยากได้ตัวกรองราคา/ระยะทาง</div>
-                        <div class="feedback-chip" data-tag="ข้อมูลร้านอาหารน้อยไป">🍜 ข้อมูลร้านอาหารน้อยไป</div>
-                        <div class="feedback-chip" data-tag="อยากให้แชร์เข้า LINE ได้ง่ายขึ้น">📲 อยากให้แชร์เข้า LINE ง่ายขึ้น</div>
-                        <div class="feedback-chip" data-tag="ชอบแอนิเมชันตอนแมตช์เจอ">✨ ชอบแอนิเมชันตอนแมตช์เจอ</div>
-                    </div>
-                </div>
-
-                <!-- 5. Qualitative Comment -->
-                <div class="form-group" style="margin-bottom: 0.9rem;">
-                    <label for="feedback-input-desc" style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
-                        ข้อเสนอแนะเพิ่มเติม / บ่นให้ทีมพัฒนาฟังได้เต็มที่เลยครับ (ถ้ามี):
-                    </label>
-                    <textarea id="feedback-input-desc" class="form-control" rows="3" placeholder="เช่น อยากให้มีร้านย่านมหาวิทยาลัยเพิ่ม, อยากให้สุ่มซ้ำได้..." style="font-size: 0.88rem; resize: vertical;"></textarea>
-                </div>
-
-                <!-- 6. Action Buttons -->
-                <div style="display: flex; gap: 0.65rem; margin-top: 0.5rem;">
-                    <button type="button" id="btn-cancel-feedback" class="btn btn-secondary" style="flex: 1; padding: 0.75rem; border-radius: 12px; font-weight: 500;">
-                        ปิด
-                    </button>
-                    <button type="button" id="btn-submit-inapp-feedback" class="btn btn-primary" style="flex: 2; padding: 0.75rem; font-weight: 700; border-radius: 12px;">
-                        <i class="fa-solid fa-paper-plane"></i> ส่งข้อเสนอแนะ
-                    </button>
                 </div>
             </div>
 
-            <!-- PANE 2: 20 USER TESTIMONIALS & FEEDBACK WALL -->
-            <div id="pane-inapp-feedback-list" class="hidden">
-                <!-- Summary Card -->
-                <div style="background: linear-gradient(135deg, rgba(255, 51, 119, 0.15), rgba(238, 120, 22, 0.15)); border: 1px solid rgba(255, 51, 119, 0.3); border-radius: 14px; padding: 0.85rem; margin-bottom: 0.85rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-                        <div>
-                            <div style="display: flex; align-items: baseline; gap: 0.35rem;">
-                                <span id="feedback-wall-avg-score" style="font-size: 1.7rem; font-weight: 800; color: #ffdd44;">4.65</span>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">/ 5.0</span>
-                                <span style="color: #ffdd44; font-size: 1rem; margin-left: 0.2rem;">★★★★★</span>
-                            </div>
-                            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;">
-                                จากผลประเมินผู้ใช้จริง 20 รายการ (มรภ.สงขลา &amp; พื้นที่สงขลา)
-                            </div>
+            <!-- 2. Star Rating -->
+            <div style="text-align: center; margin: 0 0 0.85rem; background: rgba(255, 255, 255, 0.025); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem 0.5rem;">
+                <label style="font-size: 0.88rem; font-weight: 600; color: var(--text-primary); display: block;">
+                    ความพึงพอใจและความง่ายในการใช้งานภาพรวม
+                </label>
+                <div class="feedback-stars-wrapper" id="feedback-stars-container">
+                    <button type="button" class="feedback-star-btn" data-star="1" title="1 ดาว: ปรับปรุงด่วน">★</button>
+                    <button type="button" class="feedback-star-btn" data-star="2" title="2 ดาว: ค่อนข้างยาก">★</button>
+                    <button type="button" class="feedback-star-btn" data-star="3" title="3 ดาว: พอใช้ได้">★</button>
+                    <button type="button" class="feedback-star-btn" data-star="4" title="4 ดาว: ใช้งานดี">★</button>
+                    <button type="button" class="feedback-star-btn active" data-star="5" title="5 ดาว: ยอดเยี่ยม ประทับใจมาก">★</button>
+                </div>
+                <div id="feedback-emotion-label" class="feedback-emotion-text">😍 5 ดาว: ยอดเยี่ยม ประทับใจมาก!</div>
+            </div>
+
+            <!-- 3. Demographic: Role, Age, Frequency, Mode (Clean Structured 2x2 Grid) -->
+            <div style="background: rgba(255, 255, 255, 0.025); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.85rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <!-- Role -->
+                    <div>
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+                            🎓 สถานะของคุณ:
+                        </label>
+                        <div class="feedback-chips-grid" id="feedback-role-chips">
+                            <div class="feedback-chip active" data-val="นักศึกษา">นักศึกษา</div>
+                            <div class="feedback-chip" data-val="วัยทำงาน">วัยทำงาน</div>
+                            <div class="feedback-chip" data-val="ทั่วไป">ทั่วไป</div>
                         </div>
-                        <div style="text-align: right;">
-                            <span class="badge" style="background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3); padding: 0.3rem 0.65rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">
-                                <i class="fa-solid fa-circle-check"></i> 95% พึงพอใจมาก
-                            </span>
+                    </div>
+                    <!-- Age -->
+                    <div>
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+                            🎂 ช่วงอายุ:
+                        </label>
+                        <div class="feedback-chips-grid" id="feedback-age-chips">
+                            <div class="feedback-chip" data-val="<18">&lt;18</div>
+                            <div class="feedback-chip active" data-val="18-22">18-22</div>
+                            <div class="feedback-chip" data-val="23-28">23-28</div>
+                            <div class="feedback-chip" data-val="29+">29+</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Star Rating Filter Chips -->
-                <div style="display: flex; gap: 0.4rem; margin-bottom: 0.85rem; overflow-x: auto; padding-bottom: 0.2rem;" id="feedback-wall-filters">
-                    <button type="button" class="wall-filter-chip active" data-rating="all" style="background: var(--gradient-primary); color: #fff; border: none; padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600; cursor: pointer; white-space: nowrap;">ทั้งหมด (20)</button>
-                    <button type="button" class="wall-filter-chip" data-rating="5" style="background: rgba(255,255,255,0.06); color: var(--text-secondary); border: 1px solid var(--glass-border); padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 500; cursor: pointer; white-space: nowrap;">⭐ 5 ดาว (14)</button>
-                    <button type="button" class="wall-filter-chip" data-rating="4" style="background: rgba(255,255,255,0.06); color: var(--text-secondary); border: 1px solid var(--glass-border); padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 500; cursor: pointer; white-space: nowrap;">⭐ 4 ดาว (5)</button>
-                    <button type="button" class="wall-filter-chip" data-rating="3" style="background: rgba(255,255,255,0.06); color: var(--text-secondary); border: 1px solid var(--glass-border); padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 500; cursor: pointer; white-space: nowrap;">⭐ 3 ดาว (1)</button>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                    <!-- Frequency -->
+                    <div>
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+                            🤔 เจอปัญหากินอะไรดีบ่อยแค่ไหน:
+                        </label>
+                        <div class="feedback-chips-grid" id="feedback-freq-chips">
+                            <div class="feedback-chip active" data-val="เกือบทุกวัน">🔥 เกือบทุกวัน</div>
+                            <div class="feedback-chip" data-val="2-3วัน/สัปดาห์">2-3 วัน/สัปดาห์</div>
+                            <div class="feedback-chip" data-val="นานๆครั้ง">นานๆ ครั้ง</div>
+                        </div>
+                    </div>
+                    <!-- Mode -->
+                    <div>
+                        <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+                            🎮 โหมดที่ได้ลองเล่น:
+                        </label>
+                        <div class="feedback-chips-grid" id="feedback-mode-chips">
+                            <div class="feedback-chip active" data-val="สุ่มคนเดียว">👤 คนเดียว</div>
+                            <div class="feedback-chip" data-val="เล่นกับเพื่อน">👥 กับเพื่อน</div>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <!-- Feedbacks Cards Stream Container -->
-                <div id="feedback-wall-list" style="display: flex; flex-direction: column; gap: 0.65rem; max-height: 48vh; overflow-y: auto; padding-right: 0.2rem;">
-                    <!-- Dynamically rendered feedback cards -->
+            <!-- 4. Quick Tags (Pain Points & Suggestions) -->
+            <div style="margin-bottom: 0.85rem;">
+                <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                    จุดที่ติดขัดหรือสิ่งที่อยากให้พัฒนาเพิ่ม (เลือกได้หลายข้อ):
+                </label>
+                <div class="feedback-chips-grid" id="feedback-chips-container">
+                    <div class="feedback-chip" data-tag="ชวนเพื่อนเข้าห้องยาก">👥 ชวนเพื่อนเข้าห้องยาก</div>
+                    <div class="feedback-chip" data-tag="ปัดการ์ดหน่วง/กระตุก">⚡ ปัดการ์ดหน่วง/กระตุก</div>
+                    <div class="feedback-chip" data-tag="อยากได้ตัวกรองราคา/ระยะทาง">🎯 อยากได้ตัวกรองราคา/ระยะทาง</div>
+                    <div class="feedback-chip" data-tag="ข้อมูลร้านอาหารน้อยไป">🍜 ข้อมูลร้านอาหารน้อยไป</div>
+                    <div class="feedback-chip" data-tag="อยากให้แชร์เข้า LINE ได้ง่ายขึ้น">📲 อยากให้แชร์เข้า LINE ง่ายขึ้น</div>
+                    <div class="feedback-chip" data-tag="ชอบแอนิเมชันตอนแมตช์เจอ">✨ ชอบแอนิเมชันตอนแมตช์เจอ</div>
                 </div>
+            </div>
+
+            <!-- 5. Qualitative Comment -->
+            <div class="form-group" style="margin-bottom: 0.9rem;">
+                <label for="feedback-input-desc" style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">
+                    ข้อเสนอแนะเพิ่มเติม / บ่นให้ทีมพัฒนาฟังได้เต็มที่เลยครับ (ถ้ามี):
+                </label>
+                <textarea id="feedback-input-desc" class="form-control" rows="3" placeholder="เช่น อยากให้มีร้านย่านมหาวิทยาลัยเพิ่ม, อยากให้สุ่มซ้ำได้..." style="font-size: 0.88rem; resize: vertical;"></textarea>
+            </div>
+
+            <!-- 6. Action Buttons -->
+            <div style="display: flex; gap: 0.65rem; margin-top: 0.5rem;">
+                <button type="button" id="btn-cancel-feedback" class="btn btn-secondary" style="flex: 1; padding: 0.75rem; border-radius: 12px; font-weight: 500;">
+                    ปิด
+                </button>
+                <button type="button" id="btn-submit-inapp-feedback" class="btn btn-primary" style="flex: 2; padding: 0.75rem; font-weight: 700; border-radius: 12px;">
+                    <i class="fa-solid fa-paper-plane"></i> ส่งข้อเสนอแนะ
+                </button>
             </div>
         </div>
     </div>
@@ -1879,213 +1824,6 @@
                 } finally {
                     btnSubmit.disabled = false;
                     btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ส่งข้อเสนอแนะ';
-                }
-            });
-        }
-
-        // Tab switching: Write vs Feedback Wall
-        const tabWrite = document.getElementById('tab-inapp-feedback-write');
-        const tabList = document.getElementById('tab-inapp-feedback-list');
-        const paneWrite = document.getElementById('pane-inapp-feedback-write');
-        const paneList = document.getElementById('pane-inapp-feedback-list');
-
-        if (tabWrite && tabList && paneWrite && paneList) {
-            tabWrite.addEventListener('click', () => {
-                tabWrite.classList.add('active');
-                tabWrite.style.background = 'var(--gradient-primary)';
-                tabWrite.style.color = '#fff';
-                tabList.classList.remove('active');
-                tabList.style.background = 'transparent';
-                tabList.style.color = 'var(--text-secondary)';
-                paneWrite.classList.remove('hidden');
-                paneList.classList.add('hidden');
-            });
-
-            tabList.addEventListener('click', () => {
-                tabList.classList.add('active');
-                tabList.style.background = 'var(--gradient-primary)';
-                tabList.style.color = '#fff';
-                tabWrite.classList.remove('active');
-                tabWrite.style.background = 'transparent';
-                tabWrite.style.color = 'var(--text-secondary)';
-                paneList.classList.remove('hidden');
-                paneWrite.classList.add('hidden');
-                loadFeedbackWall();
-            });
-        }
-
-        // 20 Seed/Fallback Testimonials Data
-        const sampleFeedbacks = [
-            { nickname: 'กานต์', role: 'นักศึกษา ITDI ปี 3', rating: 5, timeAgo: '5 วันที่แล้ว', tags: ['ชอบแอนิเมชันตอนแมตช์เจอ'], description: 'แอนิเมชันตอนปัดการ์ดลื่นไหลมาก เหมือนเล่นแอป Tinder จริงๆ ธีมสีโทน Dark mode สบายตาและดูทันสมัย ไม่ลายตาเลยครับ', source: 'Facebook', email: 'karn.itdi@gmail.com' },
-            { nickname: 'พลอย', role: 'นักศึกษา ครุศาสตร์ ปี 2', rating: 5, timeAgo: '5 วันที่แล้ว', tags: ['ชอบแอนิเมชันตอนแมตช์เจอ'], description: 'ชอบมากกก ปกติพักเที่ยงเถียงกับเพื่อนในแก๊งตลอดว่า กินอะไรก็ได้ จนหมดเวลา พอใช้แอปนี้เข้าห้องกลุ่ม ช่วยตัดปัญหาเพื่อนไม่ยอมตัดสินใจได้เด็ดขาดเลย', source: 'Facebook', email: 'ploy.edu@parichat.skru.ac.th' },
-            { nickname: 'บิ๊ก', role: 'นักศึกษา มรภ.สงขลา ปี 4', rating: 5, timeAgo: '4 วันที่แล้ว', tags: ['ชอบแอนิเมชันตอนแมตช์เจอ'], description: 'ฟังก์ชันห้องกลุ่มเจ๋งตรงที่ไม่ต้องโหลดแอป แค่สแกน QR Code หรือพิมพ์รหัส 4 หลักก็เข้าห้องได้เลย เพื่อนใช้คนละยี่ห้อโทรศัพท์ก็เปิดเล่นพร้อมกันได้หมด', source: 'LINE', email: 'big.skru64@gmail.com' },
-            { nickname: 'แนน', role: 'นักศึกษา การตลาด', rating: 5, timeAgo: '4 วันที่แล้ว', tags: ['กรองอาหารทะเล'], description: 'เป็นแอปอาหารแอปแรกที่เห็นว่ามีให้ติ๊กแพ้อาหารก่อนเข้าห้อง ส่วนตัวแพ้อาหารทะเล พอติ๊กแล้วระบบตัดร้านซีฟู้ดออกให้ทั้งห้อง ปลอดภัยขึ้นเยอะเลยค่ะ', source: 'IG', email: 'nan.mkt@hotmail.com' },
-            { nickname: 'อาจารย์วิทวัส', role: 'อาจารย์ มรภ.สงขลา', rating: 5, timeAgo: '4 วันที่แล้ว', tags: ['นวัตกรรมดีเด่น'], description: 'เป็นโครงงานที่จับ Insight ปัญหาของนักศึกษาได้ตรงจุด การเอาแนวคิด Game Mechanics (Tinder Swipe) มาจับคู่ความต้องการแบบเอกฉันท์ ถือเป็นไอเดียที่ดีมาก', source: 'Facebook', email: 'wittawat.skru@gmail.com' },
-            { nickname: 'นัท', role: 'วัยทำงาน (ย่านวชิรา)', rating: 4, timeAgo: '3 วันที่แล้ว', tags: ['อยากได้ตัวกรองราคา/ระยะทาง'], description: 'เลือกระยะทาง < 2 กม. ได้ร้านรอบๆ หาดสมิหลากับวชิราตรงตามที่อยู่จริง พิกัดแม่นยำดี อยากให้มีรูปเมนูแนะนำประกอบเพิ่มในอนาคตครับ', source: 'Facebook', email: 'nut_wachira@yahoo.com' },
-            { nickname: 'ข้าวฟ่าง', role: 'นักศึกษา มนุษยศาสตร์ ปี 1', rating: 5, timeAgo: '3 วันที่แล้ว', tags: ['ชอบแอนิเมชันตอนแมตช์เจอ'], description: 'บางวันต้องกินข้าวคนเดียว ใช้โหมดเดี่ยวปัดเพลินมาก ร้านอาหารเด็ดๆ แถวหน้ามอมารวมอยู่ในนี้เพียบ ได้ลองกินร้านที่ไม่เคยรู้จักด้วย', source: 'TikTok', email: 'khao.fang@gmail.com' },
-            { nickname: 'ต้า', role: 'นักศึกษา วิทยาการคอมพิวเตอร์', rating: 5, timeAgo: '3 วันที่แล้ว', tags: ['เว็บโหลดเร็ว'], description: 'หน้าเว็บโหลดเร็ว ไม่อืดเลย ตอนแมตช์ได้ร้านมีเอฟเฟกต์พลุขึ้นให้ฟีลดีมาก และเห็นว่าทำ Responsive บนมือถือได้ดี ไม่ตกขอบ', source: 'Facebook', email: 'tar.cs.skru@gmail.com' },
-            { nickname: 'พี่หมู', role: 'เจ้าของร้านข้าวแกงย่านราชภัฏ', rating: 5, timeAgo: '3 วันที่แล้ว', tags: ['ข้อมูลร้านอาหารน้อยไป'], description: 'เป็นช่องทางช่วยโปรโมตร้านเล็กๆ รอบรั้วมหาลัยได้ดีเลย เด็กๆ ไม่ต้องเดินสุ่มหา ถ้าเปิดให้ร้านค้าลงโปรโมชันหรือแจกส่วนลดเพิ่มได้จะยิ่งเยี่ยมเลยครับ', source: 'Facebook', email: 'moo.foodskru@gmail.com' },
-            { nickname: 'มายด์', role: 'นักศึกษา นิเทศศาสตร์ ปี 3', rating: 4, timeAgo: '2 วันที่แล้ว', tags: ['แผนที่แม่นยำ'], description: 'ร้านที่แสดงมีทั้งเบอร์โทร เวลาเปิด-ปิด และปุ่มกดเปิด Google Maps นำทางไปหน้าร้านได้ทันที สะดวกมากไม่ต้องพิมพ์หาทางเอง', source: 'IG', email: 'mind.commarts@gmail.com' },
-            { nickname: 'โจ้', role: 'นักศึกษา ศิลปกรรมศาสตร์', rating: 4, timeAgo: '2 วันที่แล้ว', tags: ['อยากให้แชร์เข้า LINE ได้ง่ายขึ้น'], description: 'ปุ่มคัดลอกลิงก์ห้องกดแล้วส่งเข้ากลุ่ม LINE เพื่อนกดลิงก์แล้วเด้งเข้าห้องโหวตได้เลย ไม่ต้องคอยบอกเลขห้องทีละตัว สะดวกดีครับ', source: 'LINE', email: 'joe.art@gmail.com' },
-            { nickname: 'แอม', role: 'นักศึกษา พยาบาลศาสตร์', rating: 5, timeAgo: '2 วันที่แล้ว', tags: ['ความปลอดภัยอาหาร'], description: 'ประทับใจฟีเจอร์ความปลอดภัยของอาหารค่ะ สำหรับคนแพ้นมหรือกลูเตน ระบบช่วยเซฟสุขภาพได้ดี อยากให้เพิ่มตัวเลือก มังสวิรัติ หรืออาหารฮาลาล เพิ่มอีกค่ะ', source: 'Facebook', email: 'aem.nurse.skru@gmail.com' },
-            { nickname: 'เคน', role: 'ไรเดอร์ส่งอาหารสงขลา', rating: 4, timeAgo: '2 วันที่แล้ว', tags: ['ข้อมูลร้านอาหาร'], description: 'รวบรวมร้านอาหารในตัวเมืองสงขลาได้ค่อนข้างครอบคลุม ทั้งโซนถนนนางงาม ถนนรามวิถี และแถววชิรา เหมาะกับนักท่องเที่ยวต่างถิ่นด้วย', source: 'Facebook', email: 'ken.rider.sk@gmail.com' },
-            { nickname: 'ดรีม', role: 'นักศึกษา วิทยาศาสตร์ ปี 2', rating: 3, timeAgo: '1 วันที่แล้ว', tags: ['ปัดการ์ดหน่วง/กระตุก'], description: 'ระบบปัดและจับคู่ไวมาก แต่บางช่วงเวลาอินเทอร์เน็ตหอพักช้า อาจมีช่วงโหลดรูปภาพร้านนิดนึง ถ้ามีระบบจำรูปร้านไว้ล่วงหน้า (Cache) จะสมบูรณ์แบบมาก', source: 'TikTok', email: 'dream.science@gmail.com' },
-            { nickname: 'โอม', role: 'นักศึกษา สถาปัตย์', rating: 5, timeAgo: '1 วันที่แล้ว', tags: ['ซาวด์เอฟเฟกต์'], description: 'ชอบที่มี Sound Effects ตอนปัดการ์ด ซาวด์ตอนแมตช์สำเร็จ และลูกเล่นสั่นบนมือถือ รู้สึกว่าใส่ใจรายละเอียดเล็กๆ น้อยๆ ได้ดีมาก', source: 'Facebook', email: 'ohm.arch@gmail.com' },
-            { nickname: 'เฟิร์น', role: 'นักศึกษา บริหารธุรกิจ ปี 4', rating: 4, timeAgo: '1 วันที่แล้ว', tags: ['อยากได้ตัวกรองราคา/ระยะทาง'], description: 'ตัวกรองงบประมาณตามช่วงราคา (เช่น < 100 บาท) ตอบโจทย์เงินในกระเป๋าช่วงสิ้นเดือนมาก ทำให้ตัดร้านที่ราคาเกินงบออกไปได้หมด', source: 'Facebook', email: 'fern.bba.skru@gmail.com' },
-            { nickname: 'วิน', role: 'นักศึกษา วิศวกรรมศาสตร์', rating: 5, timeAgo: '1 วันที่แล้ว', tags: ['ห้องกลุ่มเสถียร'], description: 'ลองเข้าห้องพร้อมกัน 5 คน แล้วช่วยกันปัด ผลโหวตสรุปออกมาเป็นเอกฉันท์ได้ตรงกันทุกคน ไม่มีดีเลย์หรือห้องหลุดเลยครับ เสถียรดีมาก', source: 'Facebook', email: 'win.eng.songkhla@gmail.com' },
-            { nickname: 'แบม', role: 'นักศึกษา นิติศาสตร์ ปี 3', rating: 4, timeAgo: 'วันนี้', tags: ['PDPA ชัดเจน'], description: 'ชอบที่แอปไม่ต้องบังคับสมัครสมาชิกให้ยุ่งยาก เข้าใช้งานแบบ Guest หรือชวนเพื่อนเล่นได้เลย และมีนโยบาย PDPA แจ้งชัดเจนก่อนใช้งาน', source: 'Facebook', email: 'bam.law.skru@gmail.com' },
-            { nickname: 'ต้น', role: 'ศิษย์เก่า มรภ.สงขลา', rating: 5, timeAgo: 'วันนี้', tags: ['ชุมชนสงขลา'], description: 'ภูมิใจที่เห็นรุ่นน้องไอที มรภ.สงขลา ทำแอปช่วยโปรโมตเศรษฐกิจร้านอาหารในสงขลา ใช้งานง่ายและช่วยนักศึกษาได้จริง สนับสนุนให้ทำต่อเป็น Startup เลยครับ', source: 'Facebook', email: 'ton.alumni.skru@gmail.com' },
-            { nickname: 'กิ๊ฟ', role: 'นักศึกษา ศึกษาศาสตร์', rating: 4, timeAgo: 'วันนี้', tags: ['ข้อมูลร้านอาหารน้อยไป'], description: 'ใช้งานครั้งแรกไม่งงเลย มีคำแนะนำบอกขั้นตอนชัดเจน อยากให้ทีมพัฒนาขยายฐานข้อมูลร้านอาหารให้ครอบคลุมไปถึงโซนเก้าเส้งกับสิงหนครด้วยค่ะ', source: 'IG', email: 'gift.edu.skru@gmail.com' }
-        ];
-
-        let cachedFeedbacks = sampleFeedbacks;
-        let currentFilterRating = 'all';
-
-        function renderFeedbackWall(items, filter) {
-            const listEl = document.getElementById('feedback-wall-list');
-            if (!listEl) return;
-            listEl.innerHTML = '';
-
-            const filtered = filter === 'all' 
-                ? items 
-                : items.filter(it => it.rating === parseInt(filter));
-
-            if (!filtered.length) {
-                const emptyMsg = document.createElement('div');
-                emptyMsg.style.cssText = 'text-align: center; color: var(--text-secondary); padding: 1.5rem 0; font-size: 0.88rem;';
-                emptyMsg.textContent = 'ไม่พบข้อเสนอแนะในหมวดนี้';
-                listEl.appendChild(emptyMsg);
-                return;
-            }
-
-            filtered.forEach(it => {
-                const card = document.createElement('div');
-                card.style.cssText = 'background: rgba(255, 255, 255, 0.035); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem 0.85rem; display: flex; flex-direction: column; gap: 0.35rem; transition: transform 0.15s ease;';
-
-                const headerRow = document.createElement('div');
-                headerRow.style.cssText = 'display: flex; justify-content: space-between; align-items: center;';
-
-                const userMeta = document.createElement('div');
-                userMeta.style.cssText = 'display: flex; align-items: center; gap: 0.45rem;';
-
-                const avatar = document.createElement('span');
-                avatar.style.cssText = 'width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange)); color: #fff; font-size: 0.78rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;';
-                avatar.textContent = (it.nickname || 'G').charAt(0).toUpperCase();
-
-                const nameWrap = document.createElement('div');
-                const nameEl = document.createElement('strong');
-                nameEl.style.cssText = 'font-size: 0.85rem; color: #fff; display: block; line-height: 1.2;';
-                nameEl.textContent = it.nickname || 'ผู้ใช้งาน';
-
-                const roleBadge = document.createElement('span');
-                roleBadge.style.cssText = 'font-size: 0.72rem; color: var(--text-secondary);';
-                roleBadge.textContent = it.role || 'นักศึกษา';
-
-                nameWrap.appendChild(nameEl);
-                nameWrap.appendChild(roleBadge);
-                userMeta.appendChild(avatar);
-                userMeta.appendChild(nameWrap);
-
-                const starWrap = document.createElement('div');
-                starWrap.style.cssText = 'text-align: right;';
-                const starsSpan = document.createElement('span');
-                starsSpan.style.cssText = 'color: #ffdd44; font-size: 0.85rem; letter-spacing: 1px;';
-                starsSpan.textContent = '★'.repeat(it.rating || 5);
-                const timeSpan = document.createElement('div');
-                timeSpan.style.cssText = 'font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 1px;';
-                timeSpan.textContent = it.timeAgo || 'เร็วๆ นี้';
-                starWrap.appendChild(starsSpan);
-                starWrap.appendChild(timeSpan);
-
-                headerRow.appendChild(userMeta);
-                headerRow.appendChild(starWrap);
-
-                const descEl = document.createElement('p');
-                descEl.style.cssText = 'font-size: 0.82rem; color: rgba(255,255,255,0.88); margin: 0.2rem 0 0.1rem; line-height: 1.45;';
-                descEl.textContent = `"${it.description || ''}"`;
-
-                card.appendChild(headerRow);
-                card.appendChild(descEl);
-
-                if (Array.isArray(it.tags) && it.tags.length > 0) {
-                    const tagRow = document.createElement('div');
-                    tagRow.style.cssText = 'display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.2rem;';
-                    it.tags.forEach(t => {
-                        const tBadge = document.createElement('span');
-                        tBadge.style.cssText = 'font-size: 0.68rem; background: rgba(255, 51, 119, 0.12); color: #ff85ad; border: 1px solid rgba(255, 51, 119, 0.25); border-radius: 6px; padding: 0.12rem 0.4rem;';
-                        tBadge.textContent = t;
-                        tagRow.appendChild(tBadge);
-                    });
-                    card.appendChild(tagRow);
-                }
-
-                listEl.appendChild(card);
-            });
-        }
-
-        async function loadFeedbackWall() {
-            renderFeedbackWall(cachedFeedbacks, currentFilterRating);
-            try {
-                const res = await fetch('/api/feedbacks/public');
-                const data = await res.json();
-                if (data.success && Array.isArray(data.feedbacks) && data.feedbacks.length >= 10) {
-                    cachedFeedbacks = data.feedbacks;
-                    const avgScoreEl = document.getElementById('feedback-wall-avg-score');
-                    if (avgScoreEl && data.averageRating) {
-                        avgScoreEl.textContent = data.averageRating.toFixed(2);
-                    }
-                    renderFeedbackWall(cachedFeedbacks, currentFilterRating);
-                }
-            } catch (e) {
-                // Keep rendered preloaded feedbacks on network glitch
-            }
-        }
-
-        // Filter button listeners
-        const filterBtns = document.querySelectorAll('#feedback-wall-filters .wall-filter-chip');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => {
-                    b.classList.remove('active');
-                    b.style.background = 'rgba(255,255,255,0.06)';
-                    b.style.color = 'var(--text-secondary)';
-                });
-                btn.classList.add('active');
-                btn.style.background = 'var(--gradient-primary)';
-                btn.style.color = '#fff';
-                currentFilterRating = btn.dataset.rating || 'all';
-                renderFeedbackWall(cachedFeedbacks, currentFilterRating);
-            });
-        });
-
-        // Quick-fill sample feedback button
-        const btnQuickFill = document.getElementById('btn-quick-fill-sample-feedback');
-        if (btnQuickFill) {
-            btnQuickFill.addEventListener('click', () => {
-                const randomItem = sampleFeedbacks[Math.floor(Math.random() * sampleFeedbacks.length)];
-                if (!randomItem) return;
-
-                const nickInput = document.getElementById('feedback-input-nickname');
-                if (nickInput) nickInput.value = randomItem.nickname;
-
-                const emailInput = document.getElementById('feedback-input-email');
-                if (emailInput) emailInput.value = randomItem.email;
-
-                const descInput = document.getElementById('feedback-input-desc');
-                if (descInput) descInput.value = randomItem.description;
-
-                currentRating = randomItem.rating || 5;
-                updateStarDisplay(currentRating);
-
-                // Set referral source chip if matching
-                const srcChips = document.querySelectorAll('#feedback-source-chips .feedback-chip');
-                srcChips.forEach(chip => {
-                    const match = chip.dataset.val && randomItem.source && chip.dataset.val.toLowerCase().includes(randomItem.source.toLowerCase());
-                    chip.classList.toggle('active', !!match);
-                });
-
-                if (typeof showToast === 'function') {
-                    showToast(`สุ่มตัวอย่างฟีดแบ็กของ "${randomItem.nickname}" เรียบร้อย 🎲`, 'info', 2500);
                 }
             });
         }

@@ -1989,36 +1989,6 @@ app.post('/api/feedback', feedbackLimiter, async (req, res) => {
     }
 });
 
-app.get('/api/feedbacks/public', async (req, res) => {
-    try {
-        const list = await getFeedback();
-        const publicList = list
-            .filter(f => f.type === 'usability_research' || (f.rating && f.description))
-            .slice(0, 30)
-            .map(f => ({
-                id: f.id,
-                nickname: f.nickname || 'ผู้ใช้งาน GINDER',
-                role: f.role || 'นักศึกษา',
-                rating: f.rating || 5,
-                description: f.description || '',
-                tags: Array.isArray(f.tags) ? f.tags : [],
-                source: f.source || '',
-                createdAt: f.createdAt
-            }));
-        const ratings = publicList.map(f => f.rating).filter(r => typeof r === 'number' && r > 0);
-        const avg = ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(2) : '4.65';
-        res.json({
-            success: true,
-            feedbacks: publicList,
-            averageRating: parseFloat(avg),
-            totalReviews: publicList.length
-        });
-    } catch (e) {
-        console.error("Error in GET /api/feedbacks/public:", e);
-        res.status(500).json({ success: false, message: "ไม่สามารถดึงข้อมูลได้" });
-    }
-});
-
 app.get('/api/admin/feedback', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
     const list = await getFeedback();
