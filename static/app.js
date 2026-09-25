@@ -3017,7 +3017,10 @@ function setupEventListeners() {
                 if (feedbackTextEl) feedbackTextEl.textContent = 'รูปแบบอีเมลไม่ถูกต้อง';
                 inputEl.style.borderColor = '#ef4444';
                 inputEl.setCustomValidity('รูปแบบอีเมลไม่ถูกต้อง');
-                feedbackEl.classList.add('hidden');
+                return;
+            }
+
+            feedbackEl.classList.add('hidden');
             feedbackEl.style.display = 'none';
             inputEl.style.borderColor = '';
             inputEl.setCustomValidity('');
