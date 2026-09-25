@@ -3948,17 +3948,17 @@ function renderResultScreen(r, options = {}) {
             </div>
             <div class="matched-details">
                 <div class="matched-title-row">
-                    <h2 class="matched-name">${r.name}</h2>
+                    <h2 class="matched-name">${escapeHtml(r.name)}</h2>
                     <div class="card-rating"><i class="fa-solid fa-star"></i> ${r.rating}</div>
                 </div>
-                <p class="matched-desc">${r.description}</p>
+                <p class="matched-desc">${escapeHtml(r.description)}</p>
                 <div class="matched-pills">
-                    <span class="matched-pill"><i class="fa-solid fa-utensils"></i> ${Array.isArray(r.type) ? r.type.join(', ') : r.type}</span>
+                    <span class="matched-pill"><i class="fa-solid fa-utensils"></i> ${Array.isArray(r.type) ? r.type.map(escapeHtml).join(', ') : escapeHtml(r.type)}</span>
                     <span class="matched-pill"><i class="fa-solid fa-tag"></i> ~${r.avgPrice}฿ / คน</span>
                     <span class="matched-pill"><i class="fa-solid fa-location-arrow"></i> ${distDisplay}</span>
                 </div>
                 <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">
-                    <i class="fa-solid fa-map-marker-alt"></i> ${r.address}
+                    <i class="fa-solid fa-map-marker-alt"></i> ${escapeHtml(r.address)}
                 </p>
             </div>
         `;
@@ -4233,14 +4233,14 @@ function renderDeck() {
             </div>
             <div class="card-details">
                 <div class="card-title-row">
-                    <span class="card-name">${r.name}</span>
+                    <span class="card-name">${escapeHtml(r.name)}</span>
                     <span class="card-rating"><i class="fa-solid fa-star"></i> ${r.rating}</span>
                 </div>
                 <div class="card-meta-row">
-                    <span><i class="fa-solid fa-bowl-food"></i> ${Array.isArray(r.type) ? r.type.map(t => t === 'อาหารฮาลาล' ? '<span class="halal-text-badge"><i class="fa-solid fa-star-and-crescent"></i> ฮาลาล</span>' : t).join(', ') : r.type}</span>
-                    <span><i class="fa-solid fa-money-bill-wave"></i> ${r.priceRange} (~${r.avgPrice}฿)</span>
+                    <span><i class="fa-solid fa-bowl-food"></i> ${Array.isArray(r.type) ? r.type.map(t => t === 'อาหารฮาลาล' ? '<span class="halal-text-badge"><i class="fa-solid fa-star-and-crescent"></i> ฮาลาล</span>' : escapeHtml(t)).join(', ') : escapeHtml(r.type)}</span>
+                    <span><i class="fa-solid fa-money-bill-wave"></i> ${escapeHtml(r.priceRange)} (~${r.avgPrice}฿)</span>
                 </div>
-                <p class="card-description">${r.description}</p>
+                <p class="card-description">${escapeHtml(r.description)}</p>
             </div>
             
             <!-- Hidden info drawer slide up -->
@@ -4250,11 +4250,11 @@ function renderDeck() {
                     <button class="btn-close-drawer"><i class="fa-solid fa-times"></i></button>
                 </div>
                 <div class="drawer-content">
-                    <p><strong>ชื่อร้าน:</strong> ${r.name}</p>
-                    <p><strong>ประเภท:</strong> ${Array.isArray(r.type) ? r.type.map(t => t === 'อาหารฮาลาล' ? '<span class="halal-pill"><i class="fa-solid fa-star-and-crescent"></i> อาหารฮาลาล</span>' : t).join(', ') : r.type}</p>
-                    <p><strong>ราคาเฉลี่ยต่อคน:</strong> ~${r.avgPrice} บาท (${r.priceRange})</p>
+                    <p><strong>ชื่อร้าน:</strong> ${escapeHtml(r.name)}</p>
+                    <p><strong>ประเภท:</strong> ${Array.isArray(r.type) ? r.type.map(t => t === 'อาหารฮาลาล' ? '<span class="halal-pill"><i class="fa-solid fa-star-and-crescent"></i> อาหารฮาลาล</span>' : escapeHtml(t)).join(', ') : escapeHtml(r.type)}</p>
+                    <p><strong>ราคาเฉลี่ยต่อคน:</strong> ~${r.avgPrice} บาท (${escapeHtml(r.priceRange)})</p>
                     <p><strong>ระยะทาง:</strong> ห่างออกไป ${r.distance} กิโลเมตร</p>
-                    <p><strong>ที่ตั้ง:</strong> ${r.address}</p>
+                    <p><strong>ที่ตั้ง:</strong> ${escapeHtml(r.address)}</p>
                     ${drawerGalleryHtml}
                     ${r.allergens && r.allergens.length ? `
                         <div>

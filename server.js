@@ -54,13 +54,34 @@ app.use((req, res, next) => {
         "base-uri 'self'; " +
         "frame-ancestors 'self';"
     );
+    res.setHeader('Permissions-Policy', 'camera=(self), geolocation=(self), microphone=(), payment=()');
     next();
 });
 
 // OWASP Payload Size Limit (Skill 09: Defense against memory flooding / DoS)
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
-app.use(cors());
+
+// Restrict CORS origins to authorized app domains & local development
+const allowedOrigins = [
+    'https://ginder.onrender.com',
+    APP_URL,
+    'http://localhost:3000',
+    'http://localhost:5000',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:5000'
+].filter(Boolean);
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin) || (typeof origin === 'string' && origin.endsWith('.onrender.com'))) {
+            callback(null, true);
+        } else {
+            callback(null, false);
+        }
+    },
+    credentials: true
+}));
 app.use('/static', express.static(path.join(__dirname, 'static'), {
     setHeaders: (res, filePath) => {
         if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
@@ -1775,25 +1796,14 @@ app.put('/api/user/security', authLimiter, async (req, res) => {
     res.json({ success: true, message: "บันทึกข้อมูลความปลอดภัยเรียบร้อยแล้ว" });
 });
 
-// Check if email is available for registration/update
+// Check if email is valid (neutral response to prevent email enumeration / harvesting)
 app.get('/api/auth/check-email', authLimiter, async (req, res) => {
     const email = (req.query.email || '').trim().toLowerCase();
-    if (!email) return res.json({ available: false, message: "กรุณาระบุอีเมล" });
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!email || !emailRegex.test(email)) {
         return res.json({ available: false, validFormat: false, message: "รูปแบบอีเมลไม่ถูกต้อง" });
     }
-    const existing = await findUserByEmail(email);
-    if (existing) {
-        if (req.session.userId) {
-            const currentUser = await findUserById(req.session.userId);
-            if (currentUser && existing.username && currentUser.username && existing.username.toLowerCase() === currentUser.username.toLowerCase()) {
-                return res.json({ available: true, validFormat: true });
-            }
-        }
-        return res.json({ available: false, validFormat: true, message: "อีเมลนี้ถูกใช้งานในระบบแล้ว" });
-    }
-    return res.json({ available: true, validFormat: true });
+    return res.json({ available: true, validFormat: true, message: "รูปแบบอีเมลถูกต้อง" });
 });
 
 // --- PASSWORD RECOVERY ROUTES (DISABLED - GOOGLE & FACEBOOK OAUTH ONLY) ---
