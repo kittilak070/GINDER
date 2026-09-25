@@ -99,6 +99,24 @@ test('Backend: Socket.io bounds member names (50 chars) and reactions (10 chars)
     assert(serverContent.includes("emoji.trim().slice(0, 10)"), 'Socket reaction emoji must be bounded');
 });
 
+// Test 12: Account Takeover Mitigation - OAuth token verification
+test('Backend: /api/auth/oauth-login enforces Supabase access token verification', () => {
+    assert(serverContent.includes('supabase.auth.getUser(accessToken)'), 'Must verify access token with Supabase');
+    assert(serverContent.includes('req.body.access_token'), 'Must check req.body.access_token');
+});
+
+// Test 13: Stored XSS Mitigation - Member name sanitization on server
+test('Backend: Member names are stripped of HTML tags and special characters', () => {
+    assert(serverContent.includes('sanitizeMemberName'), 'Must define sanitizeMemberName');
+    assert(serverContent.includes('name = sanitizeMemberName(name)'), 'Must sanitize join_room name');
+});
+
+// Test 14: DOM XSS Mitigation - Client escapes kick button data attributes & showToast
+test('Frontend: Member kick button attributes and showToast escape raw strings', () => {
+    assert(appContent.includes('data-name="${escapeHtml(user.name)}"'), 'btn-kick data-name must use escapeHtml');
+    assert(appContent.includes('<span class="toast-msg">${escapeHtml(message)}</span>'), 'showToast must use escapeHtml');
+});
+
 console.log('\n========================================');
 console.log(`  TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
 console.log('========================================\n');

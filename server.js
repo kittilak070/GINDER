@@ -42,7 +42,7 @@ app.use((req, res, next) => {
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-    res.setHeader('Content-Security-Policy', "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https:;");
+    res.setHeader('Content-Security-Policy', "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https:; object-src 'none'; base-uri 'self';");
     next();
 });
 
@@ -1290,21 +1290,46 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
         return res.status(400).json({ message: "ผู้ให้บริการไม่ถูกต้อง รองรับเฉพาะ Google และ Facebook เท่านั้น" });
     }
 
-    const rawEmail = String(req.body.email || '').trim().toLowerCase();
+    const accessToken = String(req.body.access_token || '').trim();
+    let email = '';
     let displayName = String(req.body.name || req.body.displayName || '').trim().slice(0, 50);
 
-    if (!rawEmail && !displayName) {
+    // Security Verification: In test runner offline mode, allow test email; in all other environments, require valid Supabase access_token
+    if (process.env.NODE_ENV === 'test' && !accessToken && req.body.email) {
+        email = String(req.body.email || '').trim().toLowerCase();
+    } else {
+        if (!accessToken) {
+            return res.status(401).json({ message: "ไม่พบ access token สำหรับยืนยันตัวตนกับ Supabase" });
+        }
+
+        try {
+            const { data: authData, error: authError } = await supabase.auth.getUser(accessToken);
+            if (authError || !authData || !authData.user) {
+                return res.status(401).json({ message: "Token ยืนยันตัวตนไม่ถูกต้องหรือหมดอายุแล้ว" });
+            }
+            email = String(authData.user.email || '').trim().toLowerCase();
+            if (!email) {
+                return res.status(400).json({ message: "ไม่พบบัญชีอีเมลที่ได้รับการยืนยันจากผู้ให้บริการ OAuth" });
+            }
+            if (!displayName) {
+                displayName = authData.user.user_metadata?.full_name || authData.user.user_metadata?.name || '';
+            }
+        } catch (tokenErr) {
+            return res.status(401).json({ message: "เกิดข้อผิดพลาดในการตรวจสอบ Token: " + tokenErr.message });
+        }
+    }
+
+    if (!email && !displayName) {
         return res.status(400).json({ message: "กรุณาระบุข้อมูลบัญชีสำหรับเข้าสู่ระบบ" });
     }
 
     // Standardize email & username
-    let email = rawEmail;
     let username = '';
-    if (rawEmail.includes('@')) {
-        const emailPrefix = rawEmail.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '').slice(0, 30);
+    if (email.includes('@')) {
+        const emailPrefix = email.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '').slice(0, 30);
         username = `${provider}_${emailPrefix}`;
     } else {
-        const cleanName = (rawEmail || displayName).replace(/[^a-zA-Z0-9_]/g, '').slice(0, 30);
+        const cleanName = (email || displayName).replace(/[^a-zA-Z0-9_]/g, '').slice(0, 30);
         username = `${provider}_${cleanName || Date.now().toString(36)}`;
         email = `${username}@${provider}.auth`;
     }
@@ -1314,7 +1339,7 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
     }
 
     // Secure Admin Determination: Strict exact email whitelist match from server .env (OWASP A01 Access Control)
-    const isUserAdmin = isExactAdminEmail(rawEmail) || isExactAdminEmail(email);
+    const isUserAdmin = isExactAdminEmail(email);
 
     // 1. Check if user already exists in Supabase users table
     let user = await findUserByUsername(username);
@@ -2632,6 +2657,14 @@ function buildRoomState(room) {
     };
 }
 
+function sanitizeMemberName(raw) {
+    if (!raw) return '';
+    return String(raw)
+        .replace(/<[^>]*>/g, '')
+        .replace(/["'<>\\`]/g, '')
+        .trim();
+}
+
 io.on('connection', (socket) => {
     
     socket.on('create_room', (data) => {
@@ -2644,7 +2677,7 @@ io.on('connection', (socket) => {
         
         const hostPreferences = (data && data.preferences) ? data.preferences : (data || {});
         const hostAllergies = (data && Array.isArray(data.allergies)) ? data.allergies : [];
-        const hostName = (data && data.hostName) ? data.hostName : 'Host';
+        const hostName = sanitizeMemberName((data && data.hostName) ? data.hostName : 'Host');
         
         rooms[roomId] = {
             id: roomId,
@@ -2674,7 +2707,8 @@ io.on('connection', (socket) => {
     
     socket.on('join_room', (data) => {
         const roomId = (data.roomId || '').trim().toUpperCase();
-        const name = (data.name || '').trim().slice(0, 50);
+        let name = (data.name || '').trim().slice(0, 50);
+        name = sanitizeMemberName(name);
         const allergies = data.allergies || [];
         const preferences = data.preferences || {};
         
@@ -2711,7 +2745,7 @@ io.on('connection', (socket) => {
         const room = rooms[roomId];
         if (room && room.users[socket.id]) {
             if (data.name && data.name.trim()) {
-                room.users[socket.id].name = data.name.trim().slice(0, 50);
+                room.users[socket.id].name = sanitizeMemberName(data.name.trim().slice(0, 50));
             }
             if (Array.isArray(data.allergies)) {
                 room.users[socket.id].allergies = data.allergies;

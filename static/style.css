@@ -6052,6 +6052,30 @@ body.in-swipe-game #view-swipe.active {
     }
 }
 
+@media (max-width: 480px) {
+    .btn-floating-feedback {
+        bottom: 14px;
+        right: 14px;
+        width: 46px;
+        height: 46px;
+        padding: 0;
+        border-radius: 50%;
+        justify-content: center;
+        box-shadow: 0 4px 18px rgba(255, 51, 119, 0.5);
+    }
+    .btn-floating-feedback span:not(.pulse-dot) {
+        display: none !important;
+    }
+    .btn-floating-feedback i {
+        font-size: 1.15rem;
+    }
+    .btn-floating-feedback .pulse-dot {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+    }
+}
+
 /* ==========================================================================
    GOOGLE & FACEBOOK SOCIAL AUTH & ACCOUNT CHOOSER STYLES
    ========================================================================== */

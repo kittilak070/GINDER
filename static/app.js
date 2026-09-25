@@ -60,7 +60,7 @@ function showToast(message, type = 'info', duration = 3200) {
 
     toast.innerHTML = `
         ${iconHtml}
-        <span class="toast-msg">${message}</span>
+        <span class="toast-msg">${escapeHtml(message)}</span>
     `;
 
     container.appendChild(toast);
@@ -838,6 +838,7 @@ async function handleOAuthCallback() {
             const { data, error } = await supabaseClient.auth.exchangeCodeForSession(code);
             if (data && data.user && !error) {
                 const user = data.user;
+                const token = data.session?.access_token || '';
                 const email = user.email || '';
                 const name = user.user_metadata?.full_name || user.user_metadata?.name || email.split('@')[0];
                 const provider = user.app_metadata?.provider || 'google';
@@ -845,7 +846,7 @@ async function handleOAuthCallback() {
                 const res = await fetch('/api/auth/oauth-login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ provider, email, name })
+                    body: JSON.stringify({ access_token: token, provider, email, name })
                 });
 
                 if (res.ok) {
@@ -877,7 +878,7 @@ async function handleOAuthCallback() {
                 const res = await fetch('/api/auth/oauth-login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ provider, email, name })
+                    body: JSON.stringify({ access_token: accessToken, provider, email, name })
                 });
 
                 if (res.ok) {
@@ -901,6 +902,7 @@ async function handleOAuthCallback() {
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (session && session.user) {
                 const user = session.user;
+                const token = session.access_token || '';
                 const email = user.email || '';
                 const name = user.user_metadata?.full_name || user.user_metadata?.name || email.split('@')[0];
                 const provider = user.app_metadata?.provider || 'google';
@@ -908,7 +910,7 @@ async function handleOAuthCallback() {
                 const res = await fetch('/api/auth/oauth-login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ provider, email, name })
+                    body: JSON.stringify({ access_token: token, provider, email, name })
                 });
 
                 if (res.ok) {
@@ -2775,7 +2777,7 @@ function setupEventListeners() {
     const joinRoomInput = document.getElementById('join-room-id');
     if (joinRoomInput) {
         joinRoomInput.addEventListener('input', () => {
-            const raw = joinRoomInput.value.toUpperCase();
+            const raw = joinRoomInput.value.toUpperCase().slice(0, 4);
             joinRoomInput.value = raw;
             joinRoomInput.classList.remove('input-char-pop');
             void joinRoomInput.offsetWidth;
@@ -3666,7 +3668,7 @@ socket.on('room_state', (data) => {
                 rightSideHtml = `
                     <div class="member-right">
                         <span class="member-status ready"><i class="fa-solid fa-check"></i> พร้อม</span>
-                        <button class="btn-kick" data-id="${user.id}" data-name="${user.name}" title="เตะออกจากห้อง">
+                        <button class="btn-kick" data-id="${escapeHtml(user.id)}" data-name="${escapeHtml(user.name)}" title="เตะออกจากห้อง">
                             <i class="fa-solid fa-user-minus"></i>
                         </button>
                     </div>
@@ -6063,6 +6065,9 @@ function requestUserLocation() {
             },
             (error) => {
                 console.warn("User location retrieval failed:", error);
+                if (error && error.code === error.PERMISSION_DENIED) {
+                    showToast('คุณปฏิเสธการเข้าถึง GPS ระบบจะคำนวณตำแหน่งจากใจกลางเมืองสงขลาแทน 📍', 'info', 4000);
+                }
             },
             { timeout: 8000 }
         );
