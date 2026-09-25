@@ -683,17 +683,35 @@
 
             <!-- VIEW 6: RESULT / MATCH SCREEN -->
             <section id="view-result" class="view-section">
-                <div class="result-header">
-                    <div class="match-stamp-wrapper">
-                        <div class="match-stamp animate-bounce" id="result-stamp">
-                            <i class="fa-solid fa-heart"></i> MATCHED!
+                <!-- CELEBRATION POPUP MODAL (DECIDED / MATCHED / SOLO) -->
+                <div id="result-celebration-popup" class="match-celebration-overlay hidden" role="dialog" aria-modal="true" aria-label="ผลลัพธ์การแมตช์">
+                    <div class="match-celebration-backdrop"></div>
+                    <div class="match-celebration-card">
+                        <button type="button" id="btn-close-celebration-popup" class="match-celebration-close" aria-label="ปิด" title="ปิด">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <div class="celebration-particles" aria-hidden="true">
+                            <span class="particle p1">🎉</span>
+                            <span class="particle p2">✨</span>
+                            <span class="particle p3">🔥</span>
+                            <span class="particle p4">✨</span>
                         </div>
-                        <div class="match-ring-wave"></div>
+                        <div class="result-header">
+                            <div class="match-stamp-wrapper">
+                                <div class="match-stamp animate-bounce" id="result-stamp">
+                                    <i class="fa-solid fa-heart"></i> MATCHED!
+                                </div>
+                                <div class="match-ring-wave"></div>
+                            </div>
+                            <div class="match-consensus-badge" id="match-consensus-badge">
+                                <i class="fa-solid fa-fire text-accent"></i> <span id="match-consensus-percent">100</span>% มติเอกฉันท์
+                            </div>
+                            <p id="result-subtitle" class="result-subtitle">ทุกคนปัดขวาใจตรงกันที่ร้านนี้!</p>
+                        </div>
+                        <div class="celebration-dismiss-hint">
+                            <i class="fa-solid fa-hand-pointer"></i> แตะที่ใดก็ได้เพื่อดูร้านอาหาร
+                        </div>
                     </div>
-                    <div class="match-consensus-badge" id="match-consensus-badge">
-                        <i class="fa-solid fa-fire text-accent"></i> <span id="match-consensus-percent">100</span>% มติเอกฉันท์
-                    </div>
-                    <p id="result-subtitle" class="result-subtitle">ทุกคนปัดขวาใจตรงกันที่ร้านนี้!</p>
                 </div>
 
                 <div id="matched-restaurant-card" class="matched-card">
@@ -701,15 +719,17 @@
                 </div>
 
                 <div class="result-actions">
-                    <a id="btn-open-map" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg full-width">
+                    <a id="btn-open-map" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg full-width btn-hero-nav">
                         <i class="fa-solid fa-map-location-dot"></i> นำทางด้วย Google Maps
                     </a>
-                    <button id="btn-solo-retry" class="btn btn-secondary btn-lg full-width hidden">
-                        <i class="fa-solid fa-rotate-right text-accent"></i> สุ่มใหม่ / ปัดใหม่อีกรอบ
-                    </button>
-                    <button id="btn-restart" class="btn btn-secondary btn-lg full-width">
-                        <i class="fa-solid fa-rotate-left"></i> กลับหน้าหลัก
-                    </button>
+                    <div class="result-secondary-actions">
+                        <button id="btn-solo-retry" class="btn btn-secondary btn-lg full-width hidden">
+                            <i class="fa-solid fa-rotate-right text-accent"></i> สุ่มใหม่ / ปัดใหม่อีกรอบ
+                        </button>
+                        <button id="btn-restart" class="btn btn-secondary btn-lg full-width">
+                            <i class="fa-solid fa-rotate-left"></i> กลับหน้าหลัก
+                        </button>
+                    </div>
                 </div>
             </section>
         </main>

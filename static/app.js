@@ -1129,12 +1129,19 @@ function showView(viewName) {
         badge.room.classList.add('hidden');
     }
 
-    // Toggle footer during swipe view to give maximum screen space and let reaction bar dock cleanly at bottom
+    // Toggle result screen active body class and dismiss popup when leaving result view
+    document.body.classList.toggle('view-result-active', viewName === 'result');
+    if (viewName !== 'result' && typeof dismissCelebrationPopup === 'function') {
+        dismissCelebrationPopup();
+    }
+
+    // Toggle footer during swipe and result views to give maximum screen space for card and buttons
     const appFooter = document.querySelector('.app-footer');
     if (appFooter) {
-        if (viewName === 'swipe') {
+        if (viewName === 'swipe' || viewName === 'result') {
             appFooter.style.display = 'none';
-            document.body.classList.add('in-swipe-game');
+            if (viewName === 'swipe') document.body.classList.add('in-swipe-game');
+            else document.body.classList.remove('in-swipe-game');
         } else {
             appFooter.style.display = '';
             document.body.classList.remove('in-swipe-game');
@@ -1233,6 +1240,7 @@ function resetApplicationState() {
     resetComboStreak();
     const roomReactionEl = document.getElementById('room-reaction-bar');
     if (roomReactionEl) roomReactionEl.classList.add('hidden');
+    if (typeof dismissCelebrationPopup === 'function') dismissCelebrationPopup();
 
     // Clear HTML fields
     const landingRoomEl = document.getElementById('landing-room-id');
@@ -2819,6 +2827,21 @@ function setupEventListeners() {
         });
     }
 
+    // Result Celebration Popup (Decided / Matched / Solo)
+    const celebrationPopup = document.getElementById('result-celebration-popup');
+    if (celebrationPopup) {
+        celebrationPopup.addEventListener('click', () => {
+            dismissCelebrationPopup();
+        });
+    }
+    const closeCelebrationBtn = document.getElementById('btn-close-celebration-popup');
+    if (closeCelebrationBtn) {
+        closeCelebrationBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dismissCelebrationPopup();
+        });
+    }
+
     // Quick Guest / Return to Main App
     const btnQuickGuest = document.getElementById('btn-quick-guest-login');
     if (btnQuickGuest) {
@@ -3474,6 +3497,43 @@ socket.on('match_found', (data) => {
     }, 350);
 });
 
+// Celebration Popup Manager (Auto-dismiss popup for DECIDED / MATCHED / SOLO)
+let celebrationPopupTimer = null;
+
+function triggerMatchCelebrationPopup(options = {}) {
+    const popup = document.getElementById('result-celebration-popup');
+    if (!popup) return;
+
+    if (celebrationPopupTimer) {
+        clearTimeout(celebrationPopupTimer);
+        celebrationPopupTimer = null;
+    }
+
+    popup.classList.remove('hidden', 'fade-out');
+    popup.classList.add('active');
+
+    // Auto-dismiss after 2.5s so user can focus on the matched card and navigation button
+    celebrationPopupTimer = setTimeout(() => {
+        dismissCelebrationPopup();
+    }, 2500);
+}
+
+function dismissCelebrationPopup() {
+    const popup = document.getElementById('result-celebration-popup');
+    if (!popup || popup.classList.contains('hidden')) return;
+
+    if (celebrationPopupTimer) {
+        clearTimeout(celebrationPopupTimer);
+        celebrationPopupTimer = null;
+    }
+
+    popup.classList.add('fade-out');
+    setTimeout(() => {
+        popup.classList.add('hidden');
+        popup.classList.remove('active', 'fade-out');
+    }, 320);
+}
+
 // Render Match / Solo Result Screen
 function renderResultScreen(r, options = {}) {
     // End of round: reset combo counter so next round starts fresh from 1
@@ -3526,6 +3586,9 @@ function renderResultScreen(r, options = {}) {
         }
     }
 
+    // Trigger celebratory popup announcement that auto-dismisses
+    triggerMatchCelebrationPopup(options);
+
     const cardContainer = document.getElementById('matched-restaurant-card');
 
     if (r) {
@@ -3539,6 +3602,9 @@ function renderResultScreen(r, options = {}) {
                     <span class="watermark-text">ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
                 </div>
                 <div class="card-mockup-badge"><i class="fa-solid fa-camera"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ</div>
+                <div class="matched-result-corner-badge ${options.isFallback ? 'decided' : (options.isSolo ? 'solo' : 'match')}">
+                    ${options.isFallback ? '<i class="fa-solid fa-dice animate-dice-roll"></i> DECIDED' : (options.isSolo ? '<i class="fa-solid fa-utensils"></i> WINNER' : '<i class="fa-solid fa-heart"></i> MATCHED')}
+                </div>
             </div>
             <div class="matched-details">
                 <div class="matched-title-row">
@@ -3579,6 +3645,10 @@ function renderResultScreen(r, options = {}) {
         document.getElementById('btn-open-map').classList.add('hidden');
     }
 }
+
+window.renderResultScreen = renderResultScreen;
+window.triggerMatchCelebrationPopup = triggerMatchCelebrationPopup;
+window.dismissCelebrationPopup = dismissCelebrationPopup;
 
 // --- SKELETON SHIMMER & UNDO MANAGEMENT ---
 function renderSkeletonDeck() {
