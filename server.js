@@ -2608,6 +2608,30 @@ function emitMatchFallback(roomId, winner) {
     });
 }
 
+function buildRoomState(room) {
+    if (!room) return null;
+    const allAllergiesSet = new Set(room.allergies || []);
+    Object.values(room.users || {}).forEach(u => {
+        (u.allergies || []).forEach(a => allAllergiesSet.add(a));
+    });
+    const allAllergies = Array.from(allAllergiesSet);
+
+    return {
+        roomId: room.id,
+        creatorId: room.creatorId,
+        users: Object.entries(room.users || {}).map(([sid, u]) => ({
+            id: sid,
+            name: u.name,
+            progress: u.progress,
+            allergies: u.allergies || []
+        })),
+        started: room.started,
+        preferences: room.preferences || {},
+        hostAllergies: room.allergies || [],
+        allAllergies: allAllergies
+    };
+}
+
 io.on('connection', (socket) => {
     
     socket.on('create_room', (data) => {
@@ -2641,6 +2665,8 @@ io.on('connection', (socket) => {
         socket.join(roomId);
         socket.emit('room_created', {
             roomId,
+            preferences: hostPreferences,
+            allergies: hostAllergies,
             appUrl: APP_URL,
             networkUrl: (process.env.NODE_ENV === 'production' || process.env.APP_URL) ? APP_URL : `http://${getLocalNetworkIp()}:${PORT}`
         });
@@ -2665,16 +2691,19 @@ io.on('connection', (socket) => {
         
         room.users[socket.id] = { name, allergies, preferences, progress: 0 };
         socket.join(roomId);
-        console.log(`[User Joined] ${name} joined room ${roomId} with preferences`, preferences);
+        console.log(`[User Joined] ${name} joined room ${roomId} with allergies`, allergies);
         
-        io.to(roomId).emit('room_state', {
+        const roomState = buildRoomState(room);
+        io.to(roomId).emit('room_state', roomState);
+        
+        socket.emit('join_success', {
+            userId: socket.id,
             roomId,
             creatorId: room.creatorId,
-            users: Object.entries(room.users).map(([sid, u]) => ({ id: sid, name: u.name, progress: u.progress, allergies: u.allergies })),
-            started: room.started
+            preferences: room.preferences || {},
+            hostAllergies: room.allergies || [],
+            allAllergies: roomState.allAllergies
         });
-        
-        socket.emit('join_success', { userId: socket.id, roomId, creatorId: room.creatorId });
     });
     
     socket.on('update_member', (data) => {
@@ -2687,12 +2716,7 @@ io.on('connection', (socket) => {
             if (Array.isArray(data.allergies)) {
                 room.users[socket.id].allergies = data.allergies;
             }
-            io.to(roomId).emit('room_state', {
-                roomId,
-                creatorId: room.creatorId,
-                users: Object.entries(room.users).map(([sid, u]) => ({ id: sid, name: u.name, progress: u.progress, allergies: u.allergies })),
-                started: room.started
-            });
+            io.to(roomId).emit('room_state', buildRoomState(room));
         }
     });
     
@@ -2711,12 +2735,7 @@ io.on('connection', (socket) => {
             const targetSocket = io.sockets.sockets.get(targetSid);
             if (targetSocket) targetSocket.leave(data.roomId);
             
-            io.to(data.roomId).emit('room_state', {
-                roomId: data.roomId,
-                creatorId: room.creatorId,
-                users: Object.entries(room.users).map(([sid, u]) => ({ id: sid, name: u.name, progress: u.progress, allergies: u.allergies })),
-                started: room.started
-            });
+            io.to(data.roomId).emit('room_state', buildRoomState(room));
         }
     });
     
@@ -2869,12 +2888,7 @@ io.on('connection', (socket) => {
                         }
                     }
 
-                    io.to(roomId).emit('room_state', {
-                        roomId,
-                        creatorId: room.creatorId,
-                        users: Object.entries(room.users).map(([sid, u]) => ({ id: sid, name: u.name, progress: u.progress, allergies: u.allergies })),
-                        started: room.started
-                    });
+                    io.to(roomId).emit('room_state', buildRoomState(room));
                     
                     if (room.started && !room.matchedRestaurant) {
                         const activeUserIds = Object.keys(room.users);

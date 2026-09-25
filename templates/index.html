@@ -28,7 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
     <!-- Dynamic Theme Styling -->
-    <link rel="stylesheet" href="/static/style.css?v=2.3.0">
+    <link rel="stylesheet" href="/static/style.css?v=2.4.0">
 </head>
 
 <body>
@@ -535,34 +535,14 @@
                         <div class="allergy-pill" data-allergen="ถั่ว">
                             <i class="fa-solid fa-seedling"></i> ถั่ว
                         </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label><i class="fa-solid fa-utensils text-accent"></i> อาหารที่อยากกิน (กรองประเภทร้านที่ต้องการ)</label>
-                    <div class="food-type-selector join-food-type-selector">
-                        <div class="type-pill active" data-type="all" id="join-food-type-all">
-                            <i class="fa-solid fa-check-double"></i> เลือกทั้งหมด
-                        </div>
-                        <div class="type-pill active" data-type="อาหารไทย / อาหารใต้">
-                            <i class="fa-solid fa-bowl-food"></i> อาหารไทย / อาหารใต้
-                        </div>
-                        <div class="type-pill active" data-type="จานด่วน / ก๋วยเตี๋ยว">
-                            <i class="fa-solid fa-bowl-rice"></i> จานด่วน / ก๋วยเตี๋ยว
-                        </div>
-                        <div class="type-pill active" data-type="อาหารทะเล / ซีฟู้ด">
-                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล / ซีฟู้ด
-                        </div>
-                        <div class="type-pill active" data-type="ปิ้งย่าง / ชาบู">
-                            <i class="fa-solid fa-fire"></i> ปิ้งย่าง / ชาบู
-                        </div>
-                        <div class="type-pill active" data-type="คาเฟ่ / ของหวาน">
-                            <i class="fa-solid fa-ice-cream"></i> คาเฟ่ / ของหวาน
-                        </div>
-                        <div class="type-pill active" data-type="อาหารฮาลาล">
-                            <i class="fa-solid fa-star-and-crescent"></i> อาหารฮาลาล
+                        <div class="allergy-pill" data-allergen="อาหารทะเล">
+                            <i class="fa-solid fa-shrimp"></i> อาหารทะเล
                         </div>
                     </div>
+                    <p class="allergy-sync-hint" style="font-size: 0.8rem; color: #4ade80; margin-top: 0.6rem; display: flex; align-items: center; gap: 0.45rem; background: rgba(74, 222, 128, 0.08); border: 1px solid rgba(74, 222, 128, 0.2); padding: 0.55rem 0.8rem; border-radius: 8px; line-height: 1.4;">
+                        <i class="fa-solid fa-shield-halved" style="font-size: 1rem; flex-shrink: 0;"></i>
+                        <span>ข้อมูลแพ้อาหารนี้จะเชื่อมโยงไปตัดร้านในห้องอัตโนมัติ เพื่อความปลอดภัยของทุกคน</span>
+                    </p>
                 </div>
 
                 <div class="action-buttons">
@@ -591,6 +571,46 @@
                             <canvas id="lobby-qr"></canvas>
                         </div>
                         <p class="qr-help"><i class="fa-solid fa-expand text-accent"></i> แตะที่ QR เพื่อขยายใหญ่ หรือส่งรหัสให้เพื่อน</p>
+                    </div>
+
+                    <!-- LOBBY HOST SETTINGS SUMMARY CARD -->
+                    <div class="lobby-host-settings" id="lobby-host-settings">
+                        <div class="lobby-settings-header">
+                            <span class="lobby-settings-title"><i class="fa-solid fa-crown text-accent"></i> เงื่อนไขห้องที่ Host กำหนด</span>
+                            <span class="lobby-settings-tag"><i class="fa-solid fa-lock"></i> ล็อคตาม Host</span>
+                        </div>
+                        <div class="host-settings-grid">
+                            <div class="host-setting-item">
+                                <span class="setting-item-label"><i class="fa-solid fa-utensils"></i> อาหารที่อยากกิน</span>
+                                <div class="setting-item-val" id="lobby-setting-food">
+                                    <span class="setting-pill pill-all"><i class="fa-solid fa-utensils"></i> ทุกประเภทอาหาร</span>
+                                </div>
+                            </div>
+                            <div class="host-setting-item">
+                                <span class="setting-item-label"><i class="fa-solid fa-location-dot"></i> ระยะทางสูงสุด</span>
+                                <div class="setting-item-val" id="lobby-setting-distance">
+                                    <span class="setting-pill"><i class="fa-solid fa-globe"></i> ไม่จำกัด (ทุกระยะ)</span>
+                                </div>
+                            </div>
+                            <div class="host-setting-item">
+                                <span class="setting-item-label"><i class="fa-solid fa-coins"></i> งบประมาณ</span>
+                                <div class="setting-item-val" id="lobby-setting-budget">
+                                    <span class="setting-pill"><i class="fa-solid fa-coins"></i> ทุกระดับราคา</span>
+                                </div>
+                            </div>
+                            <div class="host-setting-item full-width-item">
+                                <span class="setting-item-label">
+                                    <span><i class="fa-solid fa-shield-halved text-accent"></i> รายการแพ้อาหารที่ตัดออก</span>
+                                    <span class="allergy-auto-sync-badge"><i class="fa-solid fa-arrows-rotate"></i> รวมทุกคนในห้อง</span>
+                                </span>
+                                <div class="setting-item-val" id="lobby-setting-allergies">
+                                    <span class="setting-pill pill-safe"><i class="fa-solid fa-circle-check"></i> ไม่มีใครแพ้อะไร (ทานได้ทุกอย่าง)</span>
+                                </div>
+                                <div class="host-setting-note">
+                                    <i class="fa-solid fa-circle-info text-accent"></i> ระบบตัดร้านอาหารที่มีส่วนผสมที่ทุกคนในห้องแพ้ออกให้อัตโนมัติ
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="lobby-members">
@@ -1504,7 +1524,7 @@
         window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlja3NkbW56Y2Rzd2lzY3VzcmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMTE3ODEsImV4cCI6MjA5OTU4Nzc4MX0.RjNqKuh2Tr0ugcXyCTtnluBRP-g7jefAVCO9kqtXXPg";
     </script>
     <!-- App entry logic -->
-    <script src="/static/app.js?v=2.3.0"></script>
+    <script src="/static/app.js?v=2.4.0"></script>
 
     <!-- In-App Feedback Widget Script -->
     <script>

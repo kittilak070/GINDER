@@ -1264,10 +1264,6 @@ function resetApplicationState() {
         pill.classList.remove('active');
     });
 
-    document.querySelectorAll('.join-food-type-selector .type-pill').forEach(pill => {
-        pill.classList.add('active');
-    });
-
     // Reset Group Preferences Filter Box to defaults
     const groupAllergyChips = document.querySelectorAll('#group-allergy-chips .host-allergy-chip');
     groupAllergyChips.forEach(c => {
@@ -2439,7 +2435,6 @@ function setupEventListeners() {
     }
 
     initFoodTypeSelector('.pref-food-type-selector');
-    initFoodTypeSelector('.join-food-type-selector');
 
     // Create Room Request
     document.getElementById('btn-create-room').addEventListener('click', () => {
@@ -2634,14 +2629,8 @@ function setupEventListeners() {
         // Get selected allergies
         const allergies = [];
         document.querySelectorAll('#view-join .allergy-selector .allergy-pill.active').forEach(pill => {
-            allergies.push(pill.dataset.allergen);
-        });
-
-        // Get selected food craving types
-        const memberFoodTypes = [];
-        document.querySelectorAll('.join-food-type-selector .type-pill.active').forEach(pill => {
-            if (pill.dataset.type && pill.dataset.type !== 'all') {
-                memberFoodTypes.push(pill.dataset.type);
+            if (pill.dataset.allergen) {
+                allergies.push(pill.dataset.allergen);
             }
         });
 
@@ -2651,10 +2640,7 @@ function setupEventListeners() {
         socket.emit('join_room', {
             roomId: roomId,
             name: name,
-            allergies: allergies,
-            preferences: {
-                foodTypes: memberFoodTypes
-            }
+            allergies: allergies
         });
     });
 
@@ -3246,12 +3232,84 @@ function closeQRZoomModal() {
     if (modal) modal.classList.add('hidden');
 }
 
+/**
+ * Render Host room creation criteria in Lobby so Host and all members clearly see what was chosen
+ * @param {Object} preferences - Food types, max distance, min/max price set by host
+ * @param {Array} allAllergies - Aggregated allergies across host and all members in room
+ * @param {Array} hostAllergies - Allergies specified by host
+ */
+function renderLobbyHostSettings(preferences, allAllergies, hostAllergies) {
+    const container = document.getElementById('lobby-host-settings');
+    if (!container) return;
+
+    preferences = preferences || state.preferences || {};
+    const allergies = (Array.isArray(allAllergies) && allAllergies.length > 0)
+        ? allAllergies
+        : (Array.isArray(hostAllergies) && hostAllergies.length > 0 ? hostAllergies : (state.allergies || []));
+
+    // 1. Food types
+    const foodEl = document.getElementById('lobby-setting-food');
+    if (foodEl) {
+        const types = Array.isArray(preferences.foodTypes) ? preferences.foodTypes.filter(t => t && t !== 'all') : [];
+        if (types.length === 0) {
+            foodEl.innerHTML = `<span class="setting-pill pill-all"><i class="fa-solid fa-utensils"></i> ทุกประเภทอาหาร</span>`;
+        } else {
+            foodEl.innerHTML = types.map(t => `<span class="setting-pill"><i class="fa-solid fa-tag"></i> ${escapeHtml(t)}</span>`).join('');
+        }
+    }
+
+    // 2. Max distance
+    const distEl = document.getElementById('lobby-setting-distance');
+    if (distEl) {
+        const maxDist = preferences.maxDistance;
+        if (!maxDist || isNaN(maxDist) || parseFloat(maxDist) >= 20.0) {
+            distEl.innerHTML = `<span class="setting-pill"><i class="fa-solid fa-globe"></i> ไม่จำกัด (ทุกระยะ)</span>`;
+        } else {
+            distEl.innerHTML = `<span class="setting-pill"><i class="fa-solid fa-location-dot"></i> ไม่เกิน ${parseFloat(maxDist)} กม.</span>`;
+        }
+    }
+
+    // 3. Budget
+    const budgetEl = document.getElementById('lobby-setting-budget');
+    if (budgetEl) {
+        const minP = preferences.minPrice !== undefined ? parseInt(preferences.minPrice, 10) : 0;
+        const maxP = preferences.maxPrice !== undefined ? parseInt(preferences.maxPrice, 10) : 9999;
+        if (minP === 0 && maxP >= 9999) {
+            budgetEl.innerHTML = `<span class="setting-pill"><i class="fa-solid fa-coins"></i> ทุกระดับราคา</span>`;
+        } else if (maxP <= 99) {
+            budgetEl.innerHTML = `<span class="setting-pill"><i class="fa-solid fa-coins"></i> ต่ำกว่า 100฿ ($)</span>`;
+        } else if (minP >= 100 && maxP <= 300) {
+            budgetEl.innerHTML = `<span class="setting-pill"><i class="fa-solid fa-coins"></i> 100 - 300฿ ($$)</span>`;
+        } else if (minP >= 301) {
+            budgetEl.innerHTML = `<span class="setting-pill"><i class="fa-solid fa-coins"></i> มากกว่า 300฿ ($$$)</span>`;
+        } else {
+            budgetEl.innerHTML = `<span class="setting-pill"><i class="fa-solid fa-coins"></i> ${minP} - ${maxP}฿</span>`;
+        }
+    }
+
+    // 4. Allergies (Aggregated from all members in room)
+    const allergyEl = document.getElementById('lobby-setting-allergies');
+    if (allergyEl) {
+        if (!allergies || allergies.length === 0) {
+            allergyEl.innerHTML = `<span class="setting-pill pill-safe"><i class="fa-solid fa-circle-check"></i> ไม่มีใครแพ้อะไร (ทานได้ทุกอย่าง)</span>`;
+        } else {
+            allergyEl.innerHTML = allergies.map(a => `<span class="setting-pill pill-allergy"><i class="fa-solid fa-ban"></i> ตัดเมนูที่มี${escapeHtml(a)}</span>`).join('');
+        }
+    }
+}
+
 // --- SOCKET EVENTS ---
 
 socket.on('room_created', (data) => {
     state.roomId = data.roomId;
     if (data.networkUrl) state.networkBaseUrl = data.networkUrl;
     state.isCreator = true;
+
+    if (data.preferences || data.allergies) {
+        renderLobbyHostSettings(data.preferences, data.allergies, data.allergies);
+    } else if (state.preferences) {
+        renderLobbyHostSettings(state.preferences, state.allergies, state.allergies);
+    }
 
     // Host automatically joins their own room immediately
     socket.emit('join_room', {
@@ -3268,6 +3326,12 @@ socket.on('join_success', (data) => {
 
     showView('lobby');
     document.getElementById('lobby-room-id').innerText = data.roomId;
+
+    if (data.preferences || data.allAllergies) {
+        renderLobbyHostSettings(data.preferences, data.allAllergies, data.hostAllergies);
+    } else if (state.preferences) {
+        renderLobbyHostSettings(state.preferences, state.allergies, state.allergies);
+    }
 
     // Draw QR Code using canonical production URL or network Base URL
     let baseUrl = (window.APP_URL || 'https://ginder.onrender.com').replace(/\/+$/, '');
@@ -3315,6 +3379,11 @@ socket.on('room_state', (data) => {
     // Automatically sync host status if host changed/migrated
     if (data.creatorId) {
         state.isCreator = (data.creatorId === state.userId || (socket && data.creatorId === socket.id));
+    }
+
+    // Render Host Settings in Lobby
+    if (data.preferences || data.allAllergies) {
+        renderLobbyHostSettings(data.preferences, data.allAllergies, data.hostAllergies);
     }
 
     // Update Member counts & list
