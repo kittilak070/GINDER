@@ -6053,6 +6053,10 @@ body.in-swipe-game #view-swipe.active {
 }
 
 @media (max-width: 480px) {
+    #view-landing,
+    .app-content {
+        padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important;
+    }
     .btn-floating-feedback {
         bottom: 14px;
         right: 14px;

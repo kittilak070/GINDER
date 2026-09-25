@@ -1331,13 +1331,13 @@ app.post('/api/auth/oauth-login', authLimiter, async (req, res) => {
         email = String(req.body.email || '').trim().toLowerCase();
     } else {
         if (!accessToken) {
-            return res.status(401).json({ message: "ไม่พบ access token สำหรับยืนยันตัวตนกับ Supabase" });
+            return res.status(401).json({ success: false, message: "ไม่พบ access token สำหรับยืนยันตัวตนกับ Supabase" });
         }
 
         try {
             const { data: authData, error: authError } = await supabase.auth.getUser(accessToken);
             if (authError || !authData || !authData.user) {
-                return res.status(401).json({ message: "Token ยืนยันตัวตนไม่ถูกต้องหรือหมดอายุแล้ว" });
+                return res.status(401).json({ success: false, message: "Token ยืนยันตัวตนไม่ถูกต้องหรือหมดอายุแล้ว" });
             }
             email = String(authData.user.email || '').trim().toLowerCase();
             if (!email) {

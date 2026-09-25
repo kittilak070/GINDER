@@ -212,19 +212,17 @@ async function runSuite() {
         assert.strictEqual(res.statusCode, 400, `Expected 400, got ${res.statusCode}`);
     });
 
-    // 12. OAuth Login Successful Provisioning for Google & Facebook
-    await runTest('POST /api/auth/oauth-login provisions valid session for Google account', async () => {
+    // 12. OAuth Login Security Enforcement (Skill 09: Account Takeover Prevention via access_token)
+    await runTest('POST /api/auth/oauth-login rejects requests without valid access_token with HTTP 401', async () => {
         const testEmail = `oauth_test_${Date.now()}@google.auth`;
         const res = await makeRequest('/api/auth/oauth-login', { method: 'POST' }, {
             provider: 'google',
             email: testEmail,
             name: 'Somchai GoogleUser'
         });
-        assert.strictEqual(res.statusCode, 200, `Expected 200, got ${res.statusCode}`);
-        assert.strictEqual(res.data.logged_in, true);
-        assert.strictEqual(res.data.provider, 'google');
-        assert.strictEqual(res.data.isGuest, false);
-        assert.ok(res.data.displayName && res.data.displayName.includes('Somchai'));
+        assert.strictEqual(res.statusCode, 401, `Expected 401, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, false);
+        assert.ok(res.data.message && res.data.message.includes('access token'));
     });
 
     // 13. Guest Login Endpoint (Preserved Guest Mode)

@@ -111,10 +111,10 @@ test('Backend: Member names are stripped of HTML tags and special characters', (
     assert(serverContent.includes('name = sanitizeMemberName(name)'), 'Must sanitize join_room name');
 });
 
-// Test 14: DOM XSS Mitigation - Client escapes kick button data attributes & showToast
+// Test 14: DOM XSS Mitigation - Client escapes kick button data attributes & showToast uses textContent
 test('Frontend: Member kick button attributes and showToast escape raw strings', () => {
     assert(appContent.includes('data-name="${escapeHtml(user.name)}"'), 'btn-kick data-name must use escapeHtml');
-    assert(appContent.includes('<span class="toast-msg">${escapeHtml(message)}</span>'), 'showToast must use escapeHtml');
+    assert(appContent.includes("msgSpan.textContent = String(message || '')"), 'showToast must use textContent');
 });
 
 console.log('\n========================================');

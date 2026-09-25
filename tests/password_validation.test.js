@@ -7,11 +7,22 @@ const http = require('http');
 const assert = require('assert');
 const crypto = require('crypto');
 
-// Require server directly to ensure it is listening
-const { app, server } = require('../server.js');
+let serverInstance = null;
+const BASE_URL = process.env.TEST_BASE_URL || 'http://localhost:5000';
 
-const port = server.address() ? server.address().port : 5000;
-const BASE_URL = `http://localhost:${port}`;
+async function ensureServerRunning() {
+    try {
+        await makeRequest('/api/health');
+        return;
+    } catch (e) {
+        const s = require('../server.js');
+        serverInstance = s.server;
+        const port = new URL(BASE_URL).port || 5000;
+        await new Promise((resolve) => {
+            serverInstance.listen(port, '0.0.0.0', resolve);
+        });
+    }
+}
 
 function makeRequest(urlPath, options = {}, body = null, cookie = null) {
     return new Promise((resolve, reject) => {
@@ -154,10 +165,9 @@ async function runSuite() {
     }
 }
 
-// Allow server to finish listening before running
-setTimeout(() => {
+ensureServerRunning().then(() => {
     runSuite().catch(err => {
         console.error("Test execution error:", err);
         process.exit(1);
     });
-}, 500);
+});

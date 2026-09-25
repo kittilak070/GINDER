@@ -53,15 +53,20 @@ function showToast(message, type = 'info', duration = 3200) {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
 
-    let iconHtml = '<i class="fa-solid fa-circle-info toast-icon"></i>';
-    if (type === 'success') iconHtml = '<i class="fa-solid fa-circle-check toast-icon"></i>';
-    else if (type === 'error') iconHtml = '<i class="fa-solid fa-circle-exclamation toast-icon"></i>';
-    else if (type === 'warning') iconHtml = '<i class="fa-solid fa-triangle-exclamation toast-icon"></i>';
+    let iconClass = 'fa-solid fa-circle-info toast-icon';
+    if (type === 'success') iconClass = 'fa-solid fa-circle-check toast-icon';
+    else if (type === 'error') iconClass = 'fa-solid fa-circle-exclamation toast-icon';
+    else if (type === 'warning') iconClass = 'fa-solid fa-triangle-exclamation toast-icon';
 
-    toast.innerHTML = `
-        ${iconHtml}
-        <span class="toast-msg">${escapeHtml(message)}</span>
-    `;
+    const iconEl = document.createElement('i');
+    iconEl.className = iconClass;
+
+    const msgSpan = document.createElement('span');
+    msgSpan.className = 'toast-msg';
+    msgSpan.textContent = String(message || '');
+
+    toast.appendChild(iconEl);
+    toast.appendChild(msgSpan);
 
     container.appendChild(toast);
 
@@ -2777,7 +2782,7 @@ function setupEventListeners() {
     const joinRoomInput = document.getElementById('join-room-id');
     if (joinRoomInput) {
         joinRoomInput.addEventListener('input', () => {
-            const raw = joinRoomInput.value.toUpperCase().slice(0, 4);
+            const raw = joinRoomInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 4);
             joinRoomInput.value = raw;
             joinRoomInput.classList.remove('input-char-pop');
             void joinRoomInput.offsetWidth;
