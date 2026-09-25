@@ -74,11 +74,11 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin) || (typeof origin === 'string' && origin.endsWith('.onrender.com'))) {
-            callback(null, true);
-        } else {
-            callback(null, false);
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
         }
+        return callback(null, false);
     },
     credentials: true
 }));
@@ -145,6 +145,7 @@ function createRateLimiter({ windowMs = 60 * 1000, max = 20, message = "Too many
 const authLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 20, message: "คำขอเข้าสู่ระบบหรือลงทะเบียนถี่เกินไป กรุณารอ 1 นาที" });
 const otpLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 5, message: "ขอรหัส OTP ถี่เกินไป กรุณารอสักครู่" });
 const feedbackLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 10, message: "ส่งข้อเสนอแนะถี่เกินไป กรุณารอสักครู่" });
+const roomCheckLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 40, message: "ตรวจสอบรหัสห้องถี่เกินไป กรุณารอสักครู่" });
 
 // Healthcheck & Observability (Skill 05: API Design, Skill 10: DevOps)
 app.get('/api/health', (req, res) => {
@@ -1796,14 +1797,9 @@ app.put('/api/user/security', authLimiter, async (req, res) => {
     res.json({ success: true, message: "บันทึกข้อมูลความปลอดภัยเรียบร้อยแล้ว" });
 });
 
-// Check if email is valid (neutral response to prevent email enumeration / harvesting)
-app.get('/api/auth/check-email', authLimiter, async (req, res) => {
-    const email = (req.query.email || '').trim().toLowerCase();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
-        return res.json({ available: false, validFormat: false, message: "รูปแบบอีเมลไม่ถูกต้อง" });
-    }
-    return res.json({ available: true, validFormat: true, message: "รูปแบบอีเมลถูกต้อง" });
+// Check-email endpoint disabled to completely eliminate email enumeration & harvesting
+app.get('/api/auth/check-email', authLimiter, (req, res) => {
+    return res.status(404).json({ success: false, message: "Endpoint disabled to prevent user enumeration" });
 });
 
 // --- PASSWORD RECOVERY ROUTES (DISABLED - GOOGLE & FACEBOOK OAUTH ONLY) ---
@@ -2546,7 +2542,7 @@ function recordMatchHistory(room, restaurant, isFallback) {
 const rooms = {};
 
 // Verify Room Existence Endpoint (Error Prevention / Usability)
-app.get('/api/rooms/:roomId/check', (req, res) => {
+app.get('/api/rooms/:roomId/check', roomCheckLimiter, (req, res) => {
     const roomId = (req.params.roomId || '').trim().toUpperCase();
     if (!roomId || roomId.length !== 4) {
         return res.json({
@@ -2580,7 +2576,7 @@ app.get('/api/rooms/:roomId/check', (req, res) => {
     });
 });
 
-app.post('/api/check-room', (req, res) => {
+app.post('/api/check-room', roomCheckLimiter, (req, res) => {
     const roomId = (req.body && req.body.roomId ? req.body.roomId : '').trim().toUpperCase();
     if (!roomId || roomId.length !== 4) {
         return res.json({ exists: false, message: 'รหัสห้องต้องเป็นตัวอักษรหรือตัวเลข 4 หลัก' });

@@ -3017,28 +3017,10 @@ function setupEventListeners() {
                 if (feedbackTextEl) feedbackTextEl.textContent = 'รูปแบบอีเมลไม่ถูกต้อง';
                 inputEl.style.borderColor = '#ef4444';
                 inputEl.setCustomValidity('รูปแบบอีเมลไม่ถูกต้อง');
-                return;
-            }
-
-            timer = setTimeout(() => {
-                fetch(`/api/auth/check-email?email=${encodeURIComponent(val)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (!data.available) {
-                            feedbackEl.classList.remove('hidden');
-                            feedbackEl.style.display = 'flex';
-                            if (feedbackTextEl) feedbackTextEl.textContent = data.message || 'อีเมลนี้ถูกใช้งานในระบบแล้ว';
-                            inputEl.style.borderColor = '#ef4444';
-                            inputEl.setCustomValidity(data.message || 'อีเมลนี้ถูกใช้งานในระบบแล้ว');
-                        } else {
-                            feedbackEl.classList.add('hidden');
-                            feedbackEl.style.display = 'none';
-                            inputEl.style.borderColor = '';
-                            inputEl.setCustomValidity('');
-                        }
-                    })
-                    .catch(() => {});
-            }, 350);
+                feedbackEl.classList.add('hidden');
+            feedbackEl.style.display = 'none';
+            inputEl.style.borderColor = '';
+            inputEl.setCustomValidity('');
         });
     }
 
@@ -3942,7 +3924,7 @@ function renderResultScreen(r, options = {}) {
 
         cardContainer.innerHTML = `
             <div class="matched-image-wrapper">
-                <img src="${r.image}" alt="${r.name}" class="matched-image" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
+                <img src="${escapeHtml(r.image || '')}" alt="${escapeHtml(r.name || '')}" class="matched-image" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
                 <div class="restaurant-watermark-overlay" aria-hidden="true">
                     <span class="watermark-text">ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
                 </div>
@@ -4226,7 +4208,7 @@ function renderDeck() {
         card.innerHTML = `
             <div class="card-image-wrapper">
                 ${storyBarsHtml}
-                <img src="${images[0]}" class="card-image" alt="${r.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
+                <img src="${escapeHtml(images[0] || '')}" class="card-image" alt="${escapeHtml(r.name || '')}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
                 <div class="restaurant-watermark-overlay" aria-hidden="true">
                     <span class="watermark-text">ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
                 </div>
@@ -4265,7 +4247,7 @@ function renderDeck() {
                         <div>
                             <strong>สารก่อภูมิแพ้ในร้าน:</strong>
                             <div class="drawer-allergens">
-                                ${r.allergens.map(a => `<span class="allergen-tag">${a}</span>`).join('')}
+                                ${r.allergens.map(a => `<span class="allergen-tag">${escapeHtml(a)}</span>`).join('')}
                             </div>
                         </div>
                     ` : ''}
@@ -5893,13 +5875,13 @@ function loadMatchHistory() {
                 card.style.cssText = 'background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.8rem; display: flex; gap: 0.8rem; align-items: center;';
                 card.innerHTML = `
                     <div style="position: relative; width: 55px; height: 55px; border-radius: 8px; overflow: hidden; flex-shrink: 0;">
-                        <img src="${r.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'">
+                        <img src="${escapeHtml(r.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100')}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'">
                         <span style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.78); color: #fff; font-size: 0.52rem; text-align: center; padding: 1px 0; font-weight: 500;">ภาพจำลองเว็บ</span>
                     </div>
                     <div style="flex: 1; min-width: 0;">
-                        <div style="font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${r.name || 'ไม่ระบุชื่อร้าน'}</div>
+                        <div style="font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(r.name || 'ไม่ระบุชื่อร้าน')}</div>
                         <div style="font-size: 0.75rem; color: var(--text-secondary); margin: 0.15rem 0;">
-                            <span class="text-accent"><i class="fa-solid fa-star"></i> ${r.rating || '-'}</span> • <span>~${r.avgPrice || '-'}฿/คน</span> • <span>ห้อง: ${item.roomId || '-'}</span>
+                            <span class="text-accent"><i class="fa-solid fa-star"></i> ${r.rating || '-'}</span> • <span>~${r.avgPrice || '-'}฿/คน</span> • <span>ห้อง: ${escapeHtml(item.roomId || '-')}</span>
                         </div>
                         <div style="font-size: 0.7rem; color: var(--text-muted);">${dateStr}</div>
                     </div>
