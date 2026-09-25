@@ -6345,13 +6345,7 @@ function setupForgotPasswordModal() {
                         if (eStep1) eStep1.classList.add('hidden');
                         if (eStep2) eStep2.classList.remove('hidden');
 
-                        if (data.devMode && data.devOtp) {
-                            showToast(`${data.message} [Dev Mode OTP: ${data.devOtp}]`, 'info', 6000);
-                            const otpInput = document.getElementById('forgot-e-otp');
-                            if (otpInput) otpInput.value = data.devOtp;
-                        } else {
-                            showToast(data.message, 'success');
-                        }
+                        showToast(data.message, 'success');
                     } else {
                         showToast(data.message || 'ส่งรหัส OTP ไม่สำเร็จ', 'error');
                     }
