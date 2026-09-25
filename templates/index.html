@@ -28,7 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
     <!-- Dynamic Theme Styling -->
-    <link rel="stylesheet" href="/static/style.css?v=2.4.1">
+    <link rel="stylesheet" href="/static/style.css?v=2.5.0">
 </head>
 
 <body>
@@ -574,14 +574,17 @@
                     </div>
 
                     <!-- LOBBY HOST SETTINGS SUMMARY CARD (COLLAPSIBLE) -->
-                    <div class="lobby-host-settings open" id="lobby-host-settings">
+                    <div class="lobby-host-settings" id="lobby-host-settings">
                         <div class="lobby-settings-header" id="lobby-settings-header" role="button" tabindex="0" title="แตะเพื่อเปิด/ปิดรายละเอียดเงื่อนไขห้อง">
                             <div class="lobby-settings-header-left">
-                                <span class="lobby-settings-title"><i class="fa-solid fa-crown text-accent"></i> เงื่อนไขห้องที่ Host กำหนด</span>
-                                <span class="lobby-settings-tag"><i class="fa-solid fa-lock"></i> ล็อคตาม Host</span>
+                                <span class="lobby-settings-title"><i class="fa-solid fa-crown text-accent"></i> เงื่อนไขห้อง</span>
+                                <span id="lobby-settings-badge-guest" class="lobby-settings-tag"><i class="fa-solid fa-lock"></i> ล็อคตาม Host</span>
+                                <button type="button" id="btn-quick-edit-settings" class="lobby-settings-edit-btn hidden" title="แก้ไขเงื่อนไขห้อง">
+                                    <i class="fa-solid fa-pen-to-square"></i> แก้ไข
+                                </button>
                             </div>
                             <div class="lobby-settings-header-right">
-                                <span class="lobby-settings-hint" id="lobby-settings-hint">แตะเพื่อย่อ</span>
+                                <span class="lobby-settings-hint" id="lobby-settings-hint">แตะเพื่อดู</span>
                                 <i class="fa-solid fa-chevron-down lobby-toggle-chevron"></i>
                             </div>
                         </div>
@@ -617,6 +620,11 @@
                                         <i class="fa-solid fa-circle-info text-accent"></i> ระบบตัดร้านอาหารที่มีส่วนผสมที่ทุกคนในห้องแพ้ออกให้อัตโนมัติ
                                     </div>
                                 </div>
+                            </div>
+                            <div id="host-edit-settings-container" class="host-edit-action-row hidden">
+                                <button type="button" id="btn-open-edit-settings-modal" class="btn btn-secondary full-width btn-sm" style="border-color: rgba(255, 119, 51, 0.4); color: var(--accent-orange); font-size: 0.84rem; padding: 0.55rem; margin-top: 0.65rem;">
+                                    <i class="fa-solid fa-pen-to-square"></i> แก้ไขเงื่อนไขห้อง (Host)
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1349,6 +1357,109 @@
     </button>
 
     <!-- ============================================================================== -->
+    <!-- EDIT ROOM SETTINGS MODAL (HOST ONLY)                                         -->
+    <!-- ============================================================================== -->
+    <div id="modal-edit-room-settings" class="modal" onclick="if (event.target === this) this.classList.remove('active');">
+        <div class="modal-content glass" style="max-width: 520px; width: 94%; max-height: 90vh; overflow-y: auto; position: relative; padding: 1.25rem;">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; margin: 0; color: var(--text-primary);">
+                    <i class="fa-solid fa-sliders text-accent"></i> แก้ไขเงื่อนไขห้อง (Host)
+                </h3>
+                <button id="btn-close-edit-settings-modal" type="button" class="btn-close-modal" aria-label="ปิด" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: #ffffff; cursor: pointer;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- 1. FOOD TYPES -->
+                <div class="solo-subfilter-section">
+                    <div class="solo-subfilter-label" style="font-size: 0.88rem; margin-bottom: 0.4rem; color: #ffffff; font-weight: 600;">
+                        <i class="fa-solid fa-utensils text-accent"></i> ประเภทอาหารที่อยากกิน
+                    </div>
+                    <div id="edit-room-food-chips" class="solo-food-chips">
+                        <button type="button" class="solo-chip active" data-type="">
+                            <i class="fa-solid fa-check"></i> ทั้งหมด
+                        </button>
+                        <button type="button" class="solo-chip" data-type="อาหารไทย / อาหารใต้">
+                            <i class="fa-solid fa-bowl-food"></i> อาหารไทย/ใต้
+                        </button>
+                        <button type="button" class="solo-chip" data-type="จานด่วน / ก๋วยเตี๋ยว">
+                            <i class="fa-solid fa-bowl-rice"></i> ก๋วยเตี๋ยว/จานด่วน
+                        </button>
+                        <button type="button" class="solo-chip" data-type="ปิ้งย่าง / ชาบู">
+                            <i class="fa-solid fa-fire"></i> ปิ้งย่าง/ชาบู
+                        </button>
+                        <button type="button" class="solo-chip" data-type="อาหารทะเล / ซีฟู้ด">
+                            <i class="fa-solid fa-shrimp"></i> ซีฟู้ด
+                        </button>
+                        <button type="button" class="solo-chip" data-type="คาเฟ่ / ของหวาน">
+                            <i class="fa-solid fa-ice-cream"></i> คาเฟ่/ของหวาน
+                        </button>
+                        <button type="button" class="solo-chip" data-type="อาหารฮาลาล">
+                            <i class="fa-solid fa-star-and-crescent"></i> ฮาลาล
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. DISTANCE -->
+                <div class="solo-subfilter-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                        <div class="solo-subfilter-label" style="font-size: 0.88rem; color: #ffffff; font-weight: 600;">
+                            <i class="fa-solid fa-location-dot text-accent"></i> ระยะทางสูงสุด
+                        </div>
+                        <span id="edit-room-distance-val" class="range-value" style="font-size: 0.82rem; color: var(--accent-orange); font-weight: 600;">ไม่จำกัด (ทุกระยะ)</span>
+                    </div>
+                    <div class="solo-dist-pills" id="edit-room-dist-pills" style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.45rem;">
+                        <button type="button" class="solo-dist-pill active" data-dist="">
+                            <i class="fa-solid fa-globe"></i> ทุกระยะทาง
+                        </button>
+                        <button type="button" class="solo-dist-pill" data-dist="1.0">
+                            <i class="fa-solid fa-person-walking"></i> &lt; 1 กม.
+                        </button>
+                        <button type="button" class="solo-dist-pill" data-dist="2.0">
+                            <i class="fa-solid fa-bicycle"></i> &lt; 2 กม.
+                        </button>
+                        <button type="button" class="solo-dist-pill" data-dist="5.0">
+                            <i class="fa-solid fa-car"></i> &lt; 5 กม.
+                        </button>
+                    </div>
+                    <input type="range" id="edit-room-distance-slider" min="0.5" max="20.0" step="0.5" value="20.0" class="slider" style="margin-top: 0.2rem;">
+                </div>
+
+                <!-- 3. BUDGET -->
+                <div class="solo-subfilter-section">
+                    <div class="solo-subfilter-label" style="font-size: 0.88rem; margin-bottom: 0.4rem; color: #ffffff; font-weight: 600;">
+                        <i class="fa-solid fa-coins text-accent"></i> งบประมาณต่อคน
+                    </div>
+                    <div class="solo-budget-pills" id="edit-room-budget-pills" style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                        <button type="button" class="solo-budget-pill active" data-min="0" data-max="9999">
+                            <i class="fa-solid fa-check"></i> ทุกราคา
+                        </button>
+                        <button type="button" class="solo-budget-pill" data-min="0" data-max="99">
+                            <strong>$</strong> &lt; 100฿
+                        </button>
+                        <button type="button" class="solo-budget-pill" data-min="100" data-max="300">
+                            <strong>$$</strong> 100 - 300฿
+                        </button>
+                        <button type="button" class="solo-budget-pill" data-min="301" data-max="9999">
+                            <strong>$$$</strong> &gt; 300฿
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.6rem; margin-top: 1.25rem;">
+                <button type="button" id="btn-cancel-edit-settings" class="btn btn-secondary" style="flex: 1; padding: 0.65rem;">
+                    ยกเลิก
+                </button>
+                <button type="button" id="btn-save-edit-settings" class="btn btn-primary" style="flex: 1.5; padding: 0.65rem;">
+                    <i class="fa-solid fa-check"></i> บันทึกเงื่อนไข
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================== -->
     <!-- IN-APP FEEDBACK: USER RESEARCH MODAL                                          -->
     <!-- ============================================================================== -->
     <div id="modal-inapp-feedback" class="modal" onclick="if (event.target === this) this.classList.remove('active');">
@@ -1532,7 +1643,7 @@
         window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlja3NkbW56Y2Rzd2lzY3VzcmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMTE3ODEsImV4cCI6MjA5OTU4Nzc4MX0.RjNqKuh2Tr0ugcXyCTtnluBRP-g7jefAVCO9kqtXXPg";
     </script>
     <!-- App entry logic -->
-    <script src="/static/app.js?v=2.4.1"></script>
+    <script src="/static/app.js?v=2.5.0"></script>
 
     <!-- In-App Feedback Widget Script -->
     <script>

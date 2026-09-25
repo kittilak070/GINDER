@@ -1249,6 +1249,11 @@ function resetApplicationState() {
     if (joinRoomEl) joinRoomEl.value = '';
     const lobbyRoomEl = document.getElementById('lobby-room-id');
     if (lobbyRoomEl) lobbyRoomEl.innerText = '----';
+    const lobbySettingsCard = document.getElementById('lobby-host-settings');
+    if (lobbySettingsCard) lobbySettingsCard.classList.remove('open');
+    const lobbySettingsHint = document.getElementById('lobby-settings-hint');
+    if (lobbySettingsHint) lobbySettingsHint.innerText = 'แตะเพื่อดู';
+    if (typeof closeEditRoomModal === 'function') closeEditRoomModal();
     const prefNameEl = document.getElementById('pref-name');
     if (prefNameEl) prefNameEl.value = '';
 
@@ -2377,7 +2382,11 @@ function setupEventListeners() {
     const lobbySettingsCard = document.getElementById('lobby-host-settings');
     const lobbySettingsHint = document.getElementById('lobby-settings-hint');
     if (lobbySettingsHeader && lobbySettingsCard) {
-        const toggleLobbySettings = () => {
+        const toggleLobbySettings = (e) => {
+            // Ignore if clicked on edit button
+            if (e && e.target && (e.target.closest('#btn-quick-edit-settings') || e.target.closest('.lobby-settings-edit-btn'))) {
+                return;
+            }
             soundFx.playPop();
             if (navigator.vibrate) navigator.vibrate(8);
             const isOpen = lobbySettingsCard.classList.toggle('open');
@@ -2389,9 +2398,106 @@ function setupEventListeners() {
         lobbySettingsHeader.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                toggleLobbySettings();
+                toggleLobbySettings(e);
             }
         });
+    }
+
+    // Host Edit Room Settings Modal Interactions
+    const editFoodChips = document.querySelectorAll('#edit-room-food-chips .solo-chip');
+    editFoodChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            soundFx.playPop();
+            if (navigator.vibrate) navigator.vibrate(8);
+            const isAll = chip.dataset.type === '';
+            if (isAll) {
+                editFoodChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+            } else {
+                const allChip = document.querySelector('#edit-room-food-chips .solo-chip[data-type=""]');
+                if (allChip) allChip.classList.remove('active');
+                chip.classList.toggle('active');
+                const anyActive = Array.from(editFoodChips).some(c => c.dataset.type !== '' && c.classList.contains('active'));
+                if (!anyActive && allChip) allChip.classList.add('active');
+            }
+        });
+    });
+
+    const editDistSlider = document.getElementById('edit-room-distance-slider');
+    const editDistVal = document.getElementById('edit-room-distance-val');
+    const editDistPills = document.querySelectorAll('#edit-room-dist-pills .solo-dist-pill');
+
+    if (editDistSlider) {
+        editDistSlider.addEventListener('input', () => {
+            const val = parseFloat(editDistSlider.value);
+            if (val >= 20.0) {
+                if (editDistVal) editDistVal.innerText = 'ไม่จำกัด (ทุกระยะ)';
+            } else {
+                if (editDistVal) editDistVal.innerText = `< ${val} กม.`;
+            }
+            editDistPills.forEach(p => {
+                p.classList.toggle('active', p.dataset.dist && parseFloat(p.dataset.dist) === val);
+            });
+            if (val >= 20.0) {
+                const allDistPill = document.querySelector('#edit-room-dist-pills .solo-dist-pill[data-dist=""]');
+                if (allDistPill) allDistPill.classList.add('active');
+            }
+        });
+    }
+
+    editDistPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            soundFx.playPop();
+            if (navigator.vibrate) navigator.vibrate(8);
+            editDistPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            const dist = pill.dataset.dist;
+            if (!dist) {
+                if (editDistSlider) editDistSlider.value = '20.0';
+                if (editDistVal) editDistVal.innerText = 'ไม่จำกัด (ทุกระยะ)';
+            } else {
+                if (editDistSlider) editDistSlider.value = dist;
+                if (editDistVal) editDistVal.innerText = `< ${dist} กม.`;
+            }
+        });
+    });
+
+    const editBudgetPills = document.querySelectorAll('#edit-room-budget-pills .solo-budget-pill');
+    editBudgetPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            soundFx.playPop();
+            if (navigator.vibrate) navigator.vibrate(8);
+            editBudgetPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+        });
+    });
+
+    const btnQuickEdit = document.getElementById('btn-quick-edit-settings');
+    if (btnQuickEdit) {
+        btnQuickEdit.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openEditRoomModal();
+        });
+    }
+
+    const btnOpenEditModal = document.getElementById('btn-open-edit-settings-modal');
+    if (btnOpenEditModal) {
+        btnOpenEditModal.addEventListener('click', openEditRoomModal);
+    }
+
+    const btnCloseEditModal = document.getElementById('btn-close-edit-settings-modal');
+    if (btnCloseEditModal) {
+        btnCloseEditModal.addEventListener('click', closeEditRoomModal);
+    }
+
+    const btnCancelEdit = document.getElementById('btn-cancel-edit-settings');
+    if (btnCancelEdit) {
+        btnCancelEdit.addEventListener('click', closeEditRoomModal);
+    }
+
+    const btnSaveEdit = document.getElementById('btn-save-edit-settings');
+    if (btnSaveEdit) {
+        btnSaveEdit.addEventListener('click', saveEditRoomSettings);
     }
 
     // Preferences View Actions
@@ -3317,9 +3423,140 @@ function renderLobbyHostSettings(preferences, allAllergies, hostAllergies) {
             allergyEl.innerHTML = allergies.map(a => `<span class="setting-pill pill-allergy"><i class="fa-solid fa-ban"></i> ตัดเมนูที่มี${escapeHtml(a)}</span>`).join('');
         }
     }
+
+    // 5. Host vs Guest visibility
+    const btnQuickEdit = document.getElementById('btn-quick-edit-settings');
+    const guestBadge = document.getElementById('lobby-settings-badge-guest');
+    const hostActionRow = document.getElementById('host-edit-settings-container');
+
+    if (state.isCreator) {
+        if (btnQuickEdit) btnQuickEdit.classList.remove('hidden');
+        if (guestBadge) guestBadge.classList.add('hidden');
+        if (hostActionRow) hostActionRow.classList.remove('hidden');
+    } else {
+        if (btnQuickEdit) btnQuickEdit.classList.add('hidden');
+        if (guestBadge) guestBadge.classList.remove('hidden');
+        if (hostActionRow) hostActionRow.classList.add('hidden');
+    }
+}
+
+function openEditRoomModal() {
+    const modal = document.getElementById('modal-edit-room-settings');
+    if (!modal) return;
+
+    soundFx.playPop();
+    if (navigator.vibrate) navigator.vibrate(10);
+
+    const prefs = state.preferences || {};
+
+    // 1. Food chips
+    const foodChips = document.querySelectorAll('#edit-room-food-chips .solo-chip');
+    const activeFoodTypes = Array.isArray(prefs.foodTypes) ? prefs.foodTypes : [];
+    if (activeFoodTypes.length === 0 || activeFoodTypes.includes('all')) {
+        foodChips.forEach(c => {
+            if (c.dataset.type === '') c.classList.add('active');
+            else c.classList.remove('active');
+        });
+    } else {
+        foodChips.forEach(c => {
+            if (c.dataset.type === '') {
+                c.classList.remove('active');
+            } else {
+                c.classList.toggle('active', activeFoodTypes.includes(c.dataset.type));
+            }
+        });
+    }
+
+    // 2. Distance
+    const maxDist = prefs.maxDistance;
+    const distSlider = document.getElementById('edit-room-distance-slider');
+    const distVal = document.getElementById('edit-room-distance-val');
+    const distPills = document.querySelectorAll('#edit-room-dist-pills .solo-dist-pill');
+
+    if (!maxDist || isNaN(maxDist) || parseFloat(maxDist) >= 20.0) {
+        if (distSlider) distSlider.value = '20.0';
+        if (distVal) distVal.innerText = 'ไม่จำกัด (ทุกระยะ)';
+        distPills.forEach(p => p.classList.toggle('active', p.dataset.dist === ''));
+    } else {
+        const val = parseFloat(maxDist);
+        if (distSlider) distSlider.value = String(val);
+        if (distVal) distVal.innerText = `< ${val} กม.`;
+        distPills.forEach(p => p.classList.toggle('active', p.dataset.dist && parseFloat(p.dataset.dist) === val));
+    }
+
+    // 3. Budget
+    const minP = prefs.minPrice !== undefined ? parseInt(prefs.minPrice, 10) : 0;
+    const maxP = prefs.maxPrice !== undefined ? parseInt(prefs.maxPrice, 10) : 9999;
+    const budgetPills = document.querySelectorAll('#edit-room-budget-pills .solo-budget-pill');
+    let matchedBudget = false;
+    budgetPills.forEach(p => {
+        const pMin = parseInt(p.dataset.min, 10);
+        const pMax = parseInt(p.dataset.max, 10);
+        if (pMin === minP && pMax === maxP) {
+            p.classList.add('active');
+            matchedBudget = true;
+        } else {
+            p.classList.remove('active');
+        }
+    });
+    if (!matchedBudget && budgetPills.length > 0) {
+        budgetPills[0].classList.add('active');
+    }
+
+    modal.classList.add('active');
+}
+
+function closeEditRoomModal() {
+    const modal = document.getElementById('modal-edit-room-settings');
+    if (modal) modal.classList.remove('active');
+}
+
+function saveEditRoomSettings() {
+    const selectedFood = [];
+    document.querySelectorAll('#edit-room-food-chips .solo-chip.active').forEach(c => {
+        if (c.dataset.type) selectedFood.push(c.dataset.type);
+    });
+
+    const distSlider = document.getElementById('edit-room-distance-slider');
+    let maxDist = null;
+    if (distSlider && parseFloat(distSlider.value) < 20.0) {
+        maxDist = parseFloat(distSlider.value);
+    }
+
+    const activeBudget = document.querySelector('#edit-room-budget-pills .solo-budget-pill.active');
+    const minPrice = activeBudget ? parseInt(activeBudget.dataset.min, 10) : 0;
+    const maxPrice = activeBudget ? parseInt(activeBudget.dataset.max, 10) : 9999;
+
+    const newPrefs = {
+        foodTypes: selectedFood,
+        maxDistance: maxDist,
+        minPrice: minPrice,
+        maxPrice: maxPrice
+    };
+
+    state.preferences = newPrefs;
+    socket.emit('update_room_settings', {
+        roomId: state.roomId,
+        preferences: newPrefs
+    });
+
+    renderLobbyHostSettings(newPrefs);
+    closeEditRoomModal();
+    soundFx.playPop();
+    showToast('บันทึกการแก้ไขเงื่อนไขห้องแล้ว! ✨', 'success');
 }
 
 // --- SOCKET EVENTS ---
+
+socket.on('room_settings_updated', (data) => {
+    soundFx.playPop();
+    if (navigator.vibrate) navigator.vibrate(10);
+    showToast('Host ได้อัปเดตเงื่อนไขห้องแล้ว 🍲✨', 'info');
+    if (data.preferences) {
+        state.preferences = data.preferences;
+        renderLobbyHostSettings(data.preferences);
+    }
+});
 
 socket.on('room_created', (data) => {
     state.roomId = data.roomId;

@@ -2738,6 +2738,24 @@ io.on('connection', (socket) => {
             io.to(data.roomId).emit('room_state', buildRoomState(room));
         }
     });
+
+    socket.on('update_room_settings', (data) => {
+        const roomId = (data.roomId || '').trim().toUpperCase();
+        const room = rooms[roomId];
+        if (!room || room.creatorId !== socket.id || room.started) return;
+
+        if (data.preferences && typeof data.preferences === 'object') {
+            room.preferences = {
+                ...room.preferences,
+                ...data.preferences
+            };
+            console.log(`[Room Settings Updated] Room ${roomId} by Host ${socket.id}:`, room.preferences);
+            io.to(roomId).emit('room_state', buildRoomState(room));
+            io.to(roomId).emit('room_settings_updated', {
+                preferences: room.preferences
+            });
+        }
+    });
     
     socket.on('start_game', async (data) => {
         const roomId = (data.roomId || '').trim().toUpperCase();

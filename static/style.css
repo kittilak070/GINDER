@@ -1239,16 +1239,41 @@ body {
     font-weight: 500;
 }
 
+.lobby-settings-edit-btn {
+    font-family: 'Mitr', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent-orange);
+    background: rgba(255, 119, 51, 0.16);
+    border: 1px solid rgba(255, 119, 51, 0.35);
+    padding: 0.12rem 0.55rem;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.2s ease;
+}
+
+.lobby-settings-edit-btn:hover {
+    background: rgba(255, 119, 51, 0.28);
+    border-color: rgba(255, 119, 51, 0.55);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255, 119, 51, 0.2);
+}
+
 .lobby-settings-header-right {
     display: flex;
     align-items: center;
     gap: 0.45rem;
     color: var(--text-secondary);
+    flex-shrink: 0;
 }
 
 .lobby-settings-hint {
     font-size: 0.68rem;
     color: var(--text-muted);
+    white-space: nowrap;
 }
 
 .lobby-toggle-chevron {
