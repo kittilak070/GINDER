@@ -2372,6 +2372,27 @@ function setupEventListeners() {
         });
     }
 
+    // Toggle Lobby Host Settings Summary Card (เปิด/ปิด ดูเงื่อนไขของ Host)
+    const lobbySettingsHeader = document.getElementById('lobby-settings-header');
+    const lobbySettingsCard = document.getElementById('lobby-host-settings');
+    const lobbySettingsHint = document.getElementById('lobby-settings-hint');
+    if (lobbySettingsHeader && lobbySettingsCard) {
+        const toggleLobbySettings = () => {
+            soundFx.playPop();
+            if (navigator.vibrate) navigator.vibrate(8);
+            const isOpen = lobbySettingsCard.classList.toggle('open');
+            if (lobbySettingsHint) {
+                lobbySettingsHint.innerText = isOpen ? 'แตะเพื่อย่อ' : 'แตะเพื่อดู';
+            }
+        };
+        lobbySettingsHeader.addEventListener('click', toggleLobbySettings);
+        lobbySettingsHeader.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleLobbySettings();
+            }
+        });
+    }
 
     // Preferences View Actions
     document.getElementById('btn-back-to-landing').addEventListener('click', () => {
