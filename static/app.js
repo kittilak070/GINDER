@@ -2830,16 +2830,24 @@ function setupEventListeners() {
     // Result Celebration Popup (Decided / Matched / Solo)
     const celebrationPopup = document.getElementById('result-celebration-popup');
     if (celebrationPopup) {
-        celebrationPopup.addEventListener('click', () => {
+        const dismissAction = (e) => {
+            if (e && e.type === 'touchend') e.preventDefault();
             dismissCelebrationPopup();
-        });
+        };
+        celebrationPopup.addEventListener('click', dismissAction);
+        celebrationPopup.addEventListener('touchend', dismissAction, { passive: false });
     }
     const closeCelebrationBtn = document.getElementById('btn-close-celebration-popup');
     if (closeCelebrationBtn) {
-        closeCelebrationBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
+        const closeAction = (e) => {
+            if (e) {
+                e.stopPropagation();
+                if (e.type === 'touchend') e.preventDefault();
+            }
             dismissCelebrationPopup();
-        });
+        };
+        closeCelebrationBtn.addEventListener('click', closeAction);
+        closeCelebrationBtn.addEventListener('touchend', closeAction, { passive: false });
     }
 
     // Quick Guest / Return to Main App
@@ -3510,12 +3518,14 @@ function triggerMatchCelebrationPopup(options = {}) {
     }
 
     popup.classList.remove('hidden', 'fade-out');
+    // Force DOM reflow so WebKit / iOS Safari triggers CSS keyframe animation smoothly
+    void popup.offsetWidth;
     popup.classList.add('active');
 
-    // Auto-dismiss after 2.5s so user can focus on the matched card and navigation button
+    // Auto-dismiss after 2.4s so user can focus on the matched card and navigation button
     celebrationPopupTimer = setTimeout(() => {
         dismissCelebrationPopup();
-    }, 2500);
+    }, 2400);
 }
 
 function dismissCelebrationPopup() {
@@ -3528,10 +3538,11 @@ function dismissCelebrationPopup() {
     }
 
     popup.classList.add('fade-out');
+    popup.classList.remove('active');
     setTimeout(() => {
         popup.classList.add('hidden');
-        popup.classList.remove('active', 'fade-out');
-    }, 320);
+        popup.classList.remove('fade-out');
+    }, 280);
 }
 
 // Render Match / Solo Result Screen

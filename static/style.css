@@ -2465,8 +2465,42 @@ body {
     padding: 1.25rem;
     opacity: 1;
     visibility: visible;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition: opacity 0.32s cubic-bezier(0.4, 0, 0.2, 1),
-                visibility 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+                visibility 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.match-celebration-overlay.active {
+    animation: celebration-auto-fadeout 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes celebration-auto-fadeout {
+    0% {
+        opacity: 0;
+        visibility: visible;
+    }
+    10% {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    75% {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    92% {
+        opacity: 0;
+        transform: scale(0.92) translateY(-10px);
+        pointer-events: none;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.92) translateY(-10px);
+        pointer-events: none;
+        visibility: hidden;
+    }
 }
 
 .match-celebration-overlay.hidden {
@@ -2477,11 +2511,13 @@ body {
 }
 
 .match-celebration-overlay.fade-out {
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.95);
-    transition: opacity 0.32s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    transform: scale(0.92) translateY(-10px) !important;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .match-celebration-backdrop {

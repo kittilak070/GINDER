@@ -28,7 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
     <!-- Dynamic Theme Styling -->
-    <link rel="stylesheet" href="/static/style.css?v=2.2.0">
+    <link rel="stylesheet" href="/static/style.css?v=2.3.0">
 </head>
 
 <body>
@@ -684,10 +684,10 @@
             <!-- VIEW 6: RESULT / MATCH SCREEN -->
             <section id="view-result" class="view-section">
                 <!-- CELEBRATION POPUP MODAL (DECIDED / MATCHED / SOLO) -->
-                <div id="result-celebration-popup" class="match-celebration-overlay hidden" role="dialog" aria-modal="true" aria-label="ผลลัพธ์การแมตช์">
-                    <div class="match-celebration-backdrop"></div>
-                    <div class="match-celebration-card">
-                        <button type="button" id="btn-close-celebration-popup" class="match-celebration-close" aria-label="ปิด" title="ปิด">
+                <div id="result-celebration-popup" class="match-celebration-overlay hidden" role="dialog" aria-modal="true" aria-label="ผลลัพธ์การแมตช์" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
+                    <div class="match-celebration-backdrop" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();"></div>
+                    <div class="match-celebration-card" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
+                        <button type="button" id="btn-close-celebration-popup" class="match-celebration-close" aria-label="ปิด" title="ปิด" onclick="event.stopPropagation(); if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                         <div class="celebration-particles" aria-hidden="true">
@@ -1504,7 +1504,7 @@
         window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlja3NkbW56Y2Rzd2lzY3VzcmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMTE3ODEsImV4cCI6MjA5OTU4Nzc4MX0.RjNqKuh2Tr0ugcXyCTtnluBRP-g7jefAVCO9kqtXXPg";
     </script>
     <!-- App entry logic -->
-    <script src="/static/app.js?v=2.2.0"></script>
+    <script src="/static/app.js?v=2.3.0"></script>
 
     <!-- In-App Feedback Widget Script -->
     <script>
