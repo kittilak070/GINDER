@@ -4985,7 +4985,6 @@ body:has(#view-swipe.active) .app-footer,
         font-size: 0.7rem !important;
         padding: 0.15rem 0.38rem !important;
     }
-}
 
     /* Swipe Deck Status Bar & Badge Mobile Optimization */
     .game-status-bar {
