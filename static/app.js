@@ -589,9 +589,9 @@ function spawnParticleBurst(x, y, type = 'heart') {
         return;
     }
 
-    // Subtle, elegant particles (2 hearts max, 3 sparkles max)
-    const icons = type === 'heart' ? ['❤️', '✨'] : ['✨', '⭐'];
-    const count = type === 'heart' ? 2 : 3;
+    // Subtle, elegant particles (2 hearts max, 3 sparkles max, 3 flames max)
+    const icons = type === 'fire' ? ['🔥', '✨'] : (type === 'heart' ? ['❤️', '✨'] : ['✨', '⭐']);
+    const count = type === 'fire' ? 3 : (type === 'heart' ? 2 : 3);
 
     for (let i = 0; i < count; i++) {
         const p = document.createElement('div');
@@ -1361,26 +1361,23 @@ function setupEventListeners() {
 
 
     // --- LANDING VIEW MICRO-INTERACTIONS ---
-    const heroFoodBadge = document.getElementById('hero-food-badge');
-    if (heroFoodBadge) {
-        const foods = ['🍜', '🍕', '🍔', '🍣', '🌮', '🍲', '🍨', '🍗', '🍛', '🍱', '🥞', '🥐'];
-        let foodIdx = 0;
-        const handleFoodBadgeClick = () => {
-            foodIdx = (foodIdx + 1) % foods.length;
-            heroFoodBadge.innerText = foods[foodIdx];
-            heroFoodBadge.classList.remove('jelly-pop');
-            void heroFoodBadge.offsetWidth;
-            heroFoodBadge.classList.add('jelly-pop');
+    const heroFlameBadge = document.getElementById('hero-food-badge');
+    if (heroFlameBadge) {
+        const handleFlameBadgeClick = (e) => {
+            if (e) e.stopPropagation();
+            heroFlameBadge.classList.remove('jelly-pop');
+            void heroFlameBadge.offsetWidth;
+            heroFlameBadge.classList.add('jelly-pop');
             soundFx.playPop();
-            if (navigator.vibrate) navigator.vibrate(15);
-            const rect = heroFoodBadge.getBoundingClientRect();
-            spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'heart');
+            if (navigator.vibrate) navigator.vibrate(18);
+            const rect = heroFlameBadge.getBoundingClientRect();
+            spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'fire');
         };
-        heroFoodBadge.addEventListener('click', handleFoodBadgeClick);
-        heroFoodBadge.addEventListener('keydown', (e) => {
+        heroFlameBadge.addEventListener('click', handleFlameBadgeClick);
+        heroFlameBadge.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                handleFoodBadgeClick();
+                handleFlameBadgeClick(e);
             }
         });
     }
