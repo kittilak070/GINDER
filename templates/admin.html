@@ -1298,9 +1298,9 @@
                         <i class="fa-regular fa-moon" id="theme-icon"></i>
                     </button>
 
-                    <button class="btn-icon notification-btn" type="button" title="การแจ้งเตือน" onclick="switchAdminTab('tab-nav-feedback')">
+                    <button class="btn-icon notification-btn" type="button" title="ข้อเสนอแนะ & การแจ้งเตือน" onclick="switchAdminTab('tab-nav-feedback')">
                         <i class="fa-regular fa-bell"></i>
-                        <span class="notif-badge">3</span>
+                        <span class="notif-badge" id="admin-notif-badge">0</span>
                     </button>
 
                     <div class="user-profile-pill" id="user-profile-trigger" onclick="switchAdminTab('tab-nav-users')">
@@ -1318,7 +1318,7 @@
 
                 <!-- ================= 1. SECTION: DASHBOARD / ANALYTICS ================= -->
                 <div id="section-analytics" class="admin-section">
-                    <!-- Top 4 KPI Cards (Sample Image Layout - 100% Clickable!) -->
+                    <!-- Top 4 KPI Cards (100% Real Database Metrics) -->
                     <div class="kpi-row">
                         <!-- Card 1: Total Swipes & Matches (Click -> Reports) -->
                         <div class="kpi-card" onclick="switchAdminTab('tab-nav-reports')" title="คลิกเพื่อดูรายงานประวัติการแมตช์ทั้งหมด">
@@ -1326,26 +1326,24 @@
                                 <span class="kpi-title">ยอดการจับคู่อาหาร (Total Matches)</span>
                                 <i class="fa-solid fa-arrow-up-right-from-square kpi-info-icon"></i>
                             </div>
-                            <div class="kpi-value" id="stat-total-matches">154,430</div>
+                            <div class="kpi-value" id="stat-total-matches">0</div>
                             <div class="kpi-ratios">
-                                <span>Week ratio</span>
-                                <span class="ratio-badge ratio-up">13% <i class="fa-solid fa-caret-up"></i></span>
-                                <span style="margin-left: 0.25rem;">Day ratio</span>
-                                <span class="ratio-badge ratio-down">10% <i class="fa-solid fa-caret-down"></i></span>
+                                <span>แหล่งข้อมูล</span>
+                                <span class="ratio-badge ratio-up"><i class="fa-solid fa-database"></i> ฐานข้อมูลจริง 2026</span>
                             </div>
                             <div class="kpi-footer">
                                 <span>ยอดปัดจับคู่วันนี้</span>
-                                <strong id="kpi-day-swipes">1,420 ครั้ง</strong>
+                                <strong id="kpi-day-swipes">0 ครั้ง</strong>
                             </div>
                         </div>
 
                         <!-- Card 2: Visits / Users with Wave Chart (Click -> Users) -->
                         <div class="kpi-card" onclick="switchAdminTab('tab-nav-users')" title="คลิกเพื่อดูและจัดการผู้ใช้งานในระบบ">
                             <div class="kpi-top">
-                                <span class="kpi-title">ผู้เข้าใช้งานระบบ (Active Users)</span>
+                                <span class="kpi-title">ผู้เข้าใช้งานจริง (Registered Users)</span>
                                 <i class="fa-solid fa-arrow-up-right-from-square kpi-info-icon"></i>
                             </div>
-                            <div class="kpi-value" id="stat-total-users">6,480</div>
+                            <div class="kpi-value" id="stat-total-users">0</div>
                             <div class="kpi-visual">
                                 <!-- Smooth SVG Wave Chart -->
                                 <svg class="sparkline-svg" viewBox="0 0 160 45" preserveAspectRatio="none">
@@ -1361,7 +1359,7 @@
                             </div>
                             <div class="kpi-footer">
                                 <span>ผู้ใช้ใหม่วันนี้</span>
-                                <strong>120 คน</strong>
+                                <strong id="kpi-day-users">0 คน</strong>
                             </div>
                         </div>
 
@@ -1371,20 +1369,19 @@
                                 <span class="kpi-title">อัตราแมตช์อาหารสำเร็จ (Success Rate)</span>
                                 <i class="fa-solid fa-arrow-up-right-from-square kpi-info-icon"></i>
                             </div>
-                            <div class="kpi-value">88.5%</div>
+                            <div class="kpi-value" id="kpi-success-rate">100%</div>
                             <div class="kpi-visual">
-                                <!-- Mini 5 Bars (Sample image style) -->
                                 <div class="mini-bars-container">
-                                    <div class="mini-bar" style="height: 38%;"></div>
-                                    <div class="mini-bar" style="height: 85%;"></div>
-                                    <div class="mini-bar" style="height: 72%;"></div>
-                                    <div class="mini-bar" style="height: 48%;"></div>
+                                    <div class="mini-bar" style="height: 60%;"></div>
                                     <div class="mini-bar" style="height: 80%;"></div>
+                                    <div class="mini-bar" style="height: 75%;"></div>
+                                    <div class="mini-bar" style="height: 90%;"></div>
+                                    <div class="mini-bar" style="height: 100%;"></div>
                                 </div>
                             </div>
                             <div class="kpi-footer">
-                                <span>อัตราตกลงใจสำเร็จ</span>
-                                <strong>88.5%</strong>
+                                <span>มติเอกฉันท์ไม่ใช้สำรอง</span>
+                                <strong id="kpi-success-rate-footer">100%</strong>
                             </div>
                         </div>
 
@@ -1394,9 +1391,9 @@
                                 <span class="kpi-title">ความพร้อมระบบ (Operation Effect)</span>
                                 <i class="fa-solid fa-arrow-up-right-from-square kpi-info-icon"></i>
                             </div>
-                            <div class="kpi-value" style="font-size: 2.2rem; text-align: center; margin: auto 0; color: var(--color-primary);">99.9%</div>
+                            <div class="kpi-value" style="font-size: 2.2rem; text-align: center; margin: auto 0; color: var(--color-primary);" id="stat-system-readiness">100%</div>
                             <div class="kpi-footer" style="justify-content: center;">
-                                <span>ร้านอาหารและเมนูพร้อมใช้งาน 100%</span>
+                                <span>ร้านอาหารและเมนูพร้อมใช้งาน</span>
                             </div>
                         </div>
                     </div>
@@ -1413,12 +1410,12 @@
 
                                 <div class="period-filters">
                                     <button class="period-btn" type="button" onclick="setChartPeriod('day')">วันนี้</button>
-                                    <button class="period-btn" type="button" onclick="setChartPeriod('week')">สัปดาห์นี้</button>
+                                    <button class="period-btn" type="button" onclick="setChartPeriod('week')">7 วันล่าสุด</button>
                                     <button class="period-btn" type="button" onclick="setChartPeriod('month')">เดือนนี้</button>
                                     <button class="period-btn active" type="button" onclick="setChartPeriod('year')">ทั้งปี 2026</button>
-                                    <div class="date-range-badge">
+                                    <div class="date-range-badge" id="chart-date-range-badge">
                                         <i class="fa-regular fa-calendar"></i>
-                                        <span>2026-01-01 ~ 2026-12-31</span>
+                                        <span id="chart-date-range-badge-text">2026-01-01 ~ 2026-12-31</span>
                                     </div>
                                 </div>
                             </div>
@@ -2556,44 +2553,63 @@
                     if (elMatches) elMatches.innerText = (data.totalMatches || 0).toLocaleString();
                     if (elAvg) elAvg.innerText = '~' + (data.avgPrice || 0) + '฿';
 
-                    // Top restaurants (Sample image ranking style - 100% Clickable!)
+                    // Update KPI Cards with real stats
+                    const elDaySwipes = document.getElementById('kpi-day-swipes');
+                    if (elDaySwipes) elDaySwipes.innerText = `${(data.todayMatches || 0).toLocaleString()} ครั้ง`;
+
+                    const elDayUsers = document.getElementById('kpi-day-users');
+                    if (elDayUsers) elDayUsers.innerText = `${(data.todayUsers || 0).toLocaleString()} คน`;
+
+                    const elSuccessRate = document.getElementById('kpi-success-rate');
+                    const elSuccessRateFooter = document.getElementById('kpi-success-rate-footer');
+                    if (elSuccessRate) elSuccessRate.innerText = `${data.successRate || 100}%`;
+                    if (elSuccessRateFooter) elSuccessRateFooter.innerText = `${data.successRate || 100}%`;
+
+                    const elNotifBadge = document.getElementById('admin-notif-badge');
+                    if (elNotifBadge) {
+                        elNotifBadge.innerText = data.totalFeedback || 0;
+                        elNotifBadge.style.display = (data.totalFeedback > 0) ? 'inline-flex' : 'none';
+                    }
+
+                    // Top restaurants (100% Real Database match_history - Clickable!)
                     const topListEl = document.getElementById('analytics-top-restaurants');
                     if (topListEl) {
                         topListEl.innerHTML = '';
                         
                         let items = (data.topMatchedRestaurants && data.topMatchedRestaurants.length > 0)
                             ? data.topMatchedRestaurants
-                            : [
-                                { name: 'ข้าวมันไก่โกฮง (No. 0 Shop)', count: 432641 },
-                                { name: 'สุกี้ตี๋น้อย / ชาบูชิ (No. 1 Shop)', count: 382410 },
-                                { name: 'ตำแซ่บเวอร์ อีสานรสเด็ด (No. 2 Shop)', count: 295120 },
-                                { name: 'ก๋วยเตี๋ยวเรืออยุธยา (No. 3 Shop)', count: 218900 },
-                                { name: 'พิซซ่าเตาฟืน อิตาเลียน (No. 4 Shop)', count: 184500 },
-                                { name: 'ข้าวแกงปักษ์ใต้คุณนาย (No. 5 Shop)', count: 142300 },
-                                { name: 'เบอร์เกอร์ คิง คราฟต์ (No. 6 Shop)', count: 98400 }
-                            ];
+                            : [];
 
-                        items.slice(0, 7).forEach((r, idx) => {
-                            const badgeClass = idx === 0 ? 'top-1' : (idx === 1 ? 'top-2' : (idx === 2 ? 'top-3' : ''));
-                            const row = document.createElement('div');
-                            row.className = 'ranking-item';
-                            row.title = 'คลิกเพื่อดูร้าน ' + r.name + ' ในตารางจัดการ';
-                            row.onclick = () => {
-                                switchAdminTab('tab-nav-restaurants');
-                                if (searchInput) {
-                                    searchInput.value = r.name.split('(')[0].trim();
-                                    searchInput.dispatchEvent(new Event('input'));
-                                }
-                            };
-                            row.innerHTML = `
-                                <div class="ranking-left">
-                                    <span class="ranking-badge ${badgeClass}">${idx + 1}</span>
-                                    <span class="ranking-name" title="${escapeHtml(r.name)}">${escapeHtml(r.name)}</span>
+                        if (items.length === 0) {
+                            topListEl.innerHTML = `
+                                <div style="text-align: center; color: var(--text-muted); padding: 2rem; font-size: 0.88rem;">
+                                    <i class="fa-solid fa-utensils" style="font-size: 1.5rem; margin-bottom: 0.5rem; opacity: 0.35; display: block;"></i>
+                                    ยังไม่มีประวัติการแมตช์ร้านอาหารในฐานข้อมูล
                                 </div>
-                                <span class="ranking-count">${(r.count || 0).toLocaleString()} ครั้ง</span>
                             `;
-                            topListEl.appendChild(row);
-                        });
+                        } else {
+                            items.slice(0, 10).forEach((r, idx) => {
+                                const badgeClass = idx === 0 ? 'top-1' : (idx === 1 ? 'top-2' : (idx === 2 ? 'top-3' : ''));
+                                const row = document.createElement('div');
+                                row.className = 'ranking-item';
+                                row.title = 'คลิกเพื่อดูร้าน ' + r.name + ' ในตารางจัดการ';
+                                row.onclick = () => {
+                                    switchAdminTab('tab-nav-restaurants');
+                                    if (searchInput) {
+                                        searchInput.value = r.name.split('(')[0].trim();
+                                        searchInput.dispatchEvent(new Event('input'));
+                                    }
+                                };
+                                row.innerHTML = `
+                                    <div class="ranking-left">
+                                        <span class="ranking-badge ${badgeClass}">${idx + 1}</span>
+                                        <span class="ranking-name" title="${escapeHtml(r.name)}">${escapeHtml(r.name)}</span>
+                                    </div>
+                                    <span class="ranking-count">${(r.count || 0).toLocaleString()} ครั้ง</span>
+                                `;
+                                topListEl.appendChild(row);
+                            });
+                        }
                     }
 
                     // Categories breakdown
@@ -2622,6 +2638,10 @@
                             });
                         }
                     }
+
+                    // Cache trend data and render chart with real timelines
+                    window.adminTrendData = data.trendData || null;
+                    renderTrendChart();
                 })
                 .catch(err => {
                     console.error('Error loading analytics:', err);
@@ -3004,23 +3024,22 @@
             const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)';
             const textColor = isDark ? '#94a3b8' : '#64748b';
 
-            // Chart data based on period
-            let labels = ['2021', '2022', '2023', '2024', '2025', '2026'];
-            let dataMatches = [45, 20, 20, 10, 40, 58];
-            let dataUsers = [37, 30, 56, 35, 62, 72];
+            // Chart data based on period (100% Real Database Timestamps - ONLY Year 2026)
+            const trend = (window.adminTrendData && window.adminTrendData[currentChartPeriod]) || null;
 
-            if (currentChartPeriod === 'day') {
-                labels = ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00'];
-                dataMatches = [12, 45, 120, 65, 140, 95];
-                dataUsers = [18, 55, 135, 75, 160, 110];
-            } else if (currentChartPeriod === 'week') {
-                labels = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
-                dataMatches = [65, 70, 85, 90, 150, 180, 165];
-                dataUsers = [80, 95, 110, 120, 185, 210, 195];
-            } else if (currentChartPeriod === 'month') {
-                labels = ['สัปดาห์ 1', 'สัปดาห์ 2', 'สัปดาห์ 3', 'สัปดาห์ 4'];
-                dataMatches = [420, 560, 680, 890];
-                dataUsers = [510, 690, 810, 980];
+            // Default Year 2026 12-month array
+            let labels = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+            let dataMatches = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            let dataUsers = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+            if (trend) {
+                labels = trend.labels || labels;
+                dataMatches = trend.matches || dataMatches;
+                dataUsers = trend.users || dataUsers;
+                const badgeText = document.getElementById('chart-date-range-badge-text');
+                if (badgeText && trend.dateRange) {
+                    badgeText.innerText = trend.dateRange;
+                }
             }
 
             mainChartInstance = new Chart(ctx, {
@@ -3077,10 +3096,20 @@
             });
         }
 
-        window.setChartPeriod = function(period) {
+        window.setChartPeriod = function(period, evt) {
             currentChartPeriod = period;
             document.querySelectorAll('.period-btn').forEach(btn => btn.classList.remove('active'));
-            if (event && event.target) event.target.classList.add('active');
+            const e = evt || window.event;
+            const clickedBtn = e && e.target && e.target.closest('.period-btn');
+            if (clickedBtn) {
+                clickedBtn.classList.add('active');
+            } else {
+                document.querySelectorAll('.period-btn').forEach(btn => {
+                    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${period}'`)) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
             renderTrendChart();
         };
 

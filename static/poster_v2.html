@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>GINDER Promo Hero Version</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 1200px;
+            height: 1200px;
+            overflow: hidden;
+            background: #0b0914;
+            font-family: 'Prompt', 'Mitr', sans-serif;
+            color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 44px 50px 38px 50px;
+        }
+
+        .bg-glow-1 {
+            position: absolute;
+            top: -100px;
+            left: 30%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 75, 43, 0.3) 0%, rgba(255, 65, 108, 0.15) 50%, transparent 70%);
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .bg-glow-2 {
+            position: absolute;
+            bottom: -50px;
+            right: 5%;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.28) 0%, rgba(79, 70, 229, 0.12) 50%, transparent 75%);
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .flame-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #fff;
+            box-shadow: 0 0 25px rgba(255, 75, 43, 0.65);
+        }
+
+        .logo-title {
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff 40%, #ff8a65 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pill-free {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #ff9d5c;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-banner {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.25), rgba(249, 115, 22, 0.25));
+            border: 1px solid rgba(249, 115, 22, 0.45);
+            color: #ffaa5a;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hero-h1 {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.25;
+        }
+
+        .hero-h1 span.highlight {
+            background: linear-gradient(135deg, #ff4b2b 0%, #ff8a00 50%, #ffd000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 21px;
+            color: #cbd5e1;
+            margin-top: 4px;
+        }
+
+        /* CENTER STAGE */
+        .stage-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 540px;
+            margin: 10px 0;
+        }
+
+        /* Large Center Phone Mockup */
+        .phone-mockup {
+            width: 290px;
+            height: 520px;
+            background: #110e1c;
+            border-radius: 40px;
+            border: 5px solid #332d4d;
+            box-shadow: 
+                0 0 0 2px rgba(255, 255, 255, 0.12),
+                0 25px 60px rgba(0,0,0,0.8),
+                0 0 50px rgba(255, 75, 43, 0.35);
+            position: relative;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85px;
+            height: 15px;
+            background: #000000;
+            border-radius: 10px;
+            z-index: 10;
+        }
+
+        .phone-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 25%;
+        }
+
+        /* LEFT FLOATING REACTION CARD (FRIEND) */
+        .floating-friend-card {
+            position: absolute;
+            left: 20px;
+            top: 35px;
+            width: 380px;
+            background: rgba(22, 19, 36, 0.85);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 26px;
+            padding: 18px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.65);
+            z-index: 8;
+        }
+
+        .card-badge-red {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #ff6b6b;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .friend-img-box {
+            width: 100%;
+            height: 200px;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .friend-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 22%;
+            transform: scale(1.12);
+        }
+
+        .speech-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: rgba(10, 8, 20, 0.9);
+            border: 1.5px solid rgba(255, 205, 50, 0.5);
+            border-radius: 14px;
+            padding: 8px 12px;
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffda55;
+            text-align: center;
+        }
+
+        .dialogue-box {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 13.5px;
+            color: #cbd5e1;
+        }
+
+        .dialogue-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        .dialogue-line i { color: #ef4444; }
+
+        /* RIGHT FLOATING BENEFIT CARDS */
+        .floating-right-card {
+            position: absolute;
+            right: 20px;
+            top: 40px;
+            width: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 8;
+        }
+
+        .feature-pop-card {
+            background: rgba(22, 19, 36, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(20px);
+            border-radius: 22px;
+            padding: 16px 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.55);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .feature-pop-card.highlight {
+            border-color: rgba(34, 197, 94, 0.5);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(22, 19, 36, 0.9));
+        }
+
+        .pop-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 75, 43, 0.25), rgba(255, 65, 108, 0.25));
+            border: 1px solid rgba(255, 75, 43, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #ff6b4a;
+            flex-shrink: 0;
+        }
+
+        .pop-icon.green {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(16, 185, 129, 0.25));
+            border-color: rgba(34, 197, 94, 0.45);
+            color: #4ade80;
+        }
+
+        .pop-icon.blue {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(99, 102, 241, 0.25));
+            border-color: rgba(59, 130, 246, 0.45);
+            color: #60a5fa;
+        }
+
+        .pop-info h4 {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+
+        .pop-info p {
+            font-size: 13.5px;
+            color: #94a3b8;
+            line-height: 1.35;
+        }
+
+        /* BOTTOM 3 STEPS */
+        .bottom-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+        }
+
+        .step-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            font-size: 16px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .step-desc h5 { font-size: 15px; font-weight: 700; color: #fff; }
+        .step-desc p { font-size: 12.5px; color: #94a3b8; }
+
+        /* FOOTER */
+        .footer-banner {
+            background: linear-gradient(90deg, rgba(255, 75, 43, 0.18) 0%, rgba(147, 51, 234, 0.18) 100%);
+            border: 1.5px solid rgba(255, 100, 50, 0.35);
+            border-radius: 22px;
+            padding: 14px 26px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .footer-left i {
+            font-size: 30px;
+            color: #ff5238;
+        }
+
+        .footer-text h3 {
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .footer-text p {
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .footer-btn {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(255, 75, 43, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="content">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo-box">
+                <div class="flame-icon">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <div class="logo-title">GINDER</div>
+            </div>
+            <div class="pill-free">
+                <i class="fa-solid fa-sparkles"></i> สุ่มร้านอาหารสไตล์ Tinder • ปัดพร้อมเพื่อน ล็อคเป้า 100%
+            </div>
+        </div>
+
+        <!-- HERO HEADLINE -->
+        <div class="hero-banner">
+            <div class="hero-tag">
+                <i class="fa-solid fa-bolt"></i> ปัญหาโลกแตกเวลานัดกินข้าว
+            </div>
+            <h1 class="hero-h1">
+                "กินอะไรก็ได้..." <span class="highlight">แต่พอเสนอร้านไหนก็ไม่เอาสักร้าน!</span> 😤
+            </h1>
+            <p class="hero-subtitle">
+                เลิกเถียงกันเป็นชั่วโมง! ส่งลิงก์ GINDER ให้เพื่อนช่วยกันปัด รู้เรื่องใน 1 นาที 🚀
+            </p>
+        </div>
+
+        <!-- STAGE CONTAINER -->
+        <div class="stage-container">
+            <!-- LEFT: DELICIOUS FOOD SHOWCASE -->
+            <div class="floating-friend-card">
+                <div class="card-badge-red" style="background: rgba(245, 158, 11, 0.2); border-color: rgba(245, 158, 11, 0.45); color: #fbbf24;">
+                    <i class="fa-solid fa-fire text-accent"></i> รวมร้านเด็ดใกล้ตัวคุณ
+                </div>
+                <div class="friend-img-box">
+                    <img src="promo_food.jpg" alt="ร้านอาหารน่าทาน หมูกระทะ ชาบู" style="object-position: center 45%; transform: scale(1.0);">
+                    <div class="speech-tag">
+                        "เย็นนี้กินอะไรดี? ชาบู หมูกระทะ ซีฟู้ด 🤤🔥"
+                    </div>
+                </div>
+                <div class="dialogue-box">
+                    <div class="dialogue-line">
+                        <i class="fa-solid fa-utensils" style="color: #f59e0b;"></i> ปิ้งย่าง • ชาบู • หมูกระทะ • ซีฟู้ด
+                    </div>
+                    <div class="dialogue-line">
+                        <i class="fa-solid fa-location-dot" style="color: #3b82f6;"></i> สุ่มร้านใกล้ตัวจริง พร้อมระยะทางและราคา
+                    </div>
+                    <div class="dialogue-line">
+                        <i class="fa-solid fa-users" style="color: #ec4899;"></i> ชวนแก๊งเพื่อนมาช่วยกันปัดโหวตในห้อง
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER: REAL APP PHONE -->
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                <img class="phone-img" src="promo_swipe.png" alt="เว็บ GINDER ปัดเลือกร้านอาหาร">
+            </div>
+
+            <!-- RIGHT: FEATURE POP CARDS -->
+            <div class="floating-right-card">
+                <div class="feature-pop-card highlight">
+                    <div class="pop-icon green">
+                        <i class="fa-solid fa-heart-circle-check"></i>
+                    </div>
+                    <div class="pop-info">
+                        <h4>มติเอกฉันท์ 100%</h4>
+                        <p>ถ้าทุกคนในห้องปัดขวาตรงกัน ระบบล็อคเป้าร้านทันที หมดสิทธิ์งอแง!</p>
+                    </div>
+                </div>
+
+                <div class="feature-pop-card">
+                    <div class="pop-icon">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </div>
+                    <div class="pop-info">
+                        <h4>ชวนเพื่อนง่ายด้วย QR</h4>
+                        <p>สร้างห้อง ยื่น QR ให้แก๊งเพื่อนสแกนเข้าห้องได้ทันที ไม่ต้องสมัคร</p>
+                    </div>
+                </div>
+
+                <div class="feature-pop-card">
+                    <div class="pop-icon blue">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <div class="pop-info">
+                        <h4>พร้อมพิกัด Google Maps</h4>
+                        <p>สุ่มร้านใกล้ตัวตามงบ ได้ร้านแล้วกดนำทางไปกินได้เลย</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 STEPS -->
+        <div class="bottom-steps">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-desc">
+                    <h5>สร้างห้อง & ยื่น QR</h5>
+                    <p>เพื่อนสแกนเข้าห้องพร้อมกันใน 5 วินาที</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-desc">
+                    <h5>ปัดขวา = อยากกิน</h5>
+                    <p>ปัดซ้ายผ่าน ปัดขวาชอบ อิสระทุกคน</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-desc">
+                    <h5>ใจตรงกัน = ล็อคเป้า!</h5>
+                    <p>มติเอกฉันท์ 100% นำทางไปกินเลย</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER CTA -->
+        <div class="footer-banner">
+            <div class="footer-left">
+                <i class="fa-solid fa-fire-flame-curved"></i>
+                <div class="footer-text">
+                    <h3>เที่ยงนี้ / เย็นนี้ ส่งเข้ากลุ่มด่วน! มาดูกันว่าจะได้กินข้าวกี่โมง 👇</h3>
+                    <p>ไม่ต้องโหลดแอป • เข้าเล่นผ่านเว็บได้ฟรี 100%</p>
+                </div>
+            </div>
+            <a href="https://ginder.onrender.com/" class="footer-btn">
+                <span>ginder.onrender.com</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

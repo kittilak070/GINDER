@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>GINDER Promotional Poster</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 1200px;
+            height: 1200px;
+            overflow: hidden;
+            background: #0d0c16;
+            font-family: 'Prompt', 'Mitr', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 44px 50px 38px 50px;
+        }
+
+        /* Glowing background blobs */
+        .bg-glow-1 {
+            position: absolute;
+            top: -120px;
+            left: 20%;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(255, 75, 43, 0.28) 0%, rgba(255, 65, 108, 0.12) 45%, transparent 70%);
+            filter: blur(70px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-glow-2 {
+            position: absolute;
+            bottom: -80px;
+            right: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.25) 0%, rgba(79, 70, 229, 0.1) 50%, transparent 75%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-glow-3 {
+            position: absolute;
+            top: 40%;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, transparent 65%);
+            filter: blur(60px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Ambient grid overlay */
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-flame {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #ffffff;
+            box-shadow: 0 0 25px rgba(255, 75, 43, 0.65);
+        }
+
+        .logo-text {
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff 30%, #ff8a65 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-badge {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #ff9d5c;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        /* HERO TITLE */
+        .hero-title-wrap {
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));
+            border: 1px solid rgba(249, 115, 22, 0.45);
+            color: #ffaa5a;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-headline {
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-headline span.highlight {
+            background: linear-gradient(135deg, #ff4b2b 0%, #ff8a00 50%, #ffd000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 35px rgba(255, 107, 0, 0.4);
+        }
+
+        .hero-sub {
+            font-size: 21px;
+            color: #cbd5e1;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        /* MAIN BODY COMPARISON SHOWCASE */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 60px 1.18fr;
+            align-items: center;
+            gap: 18px;
+            margin: 18px 0;
+            height: 520px;
+        }
+
+        /* LEFT MEME / FRIEND CARD */
+        .friend-card {
+            background: rgba(26, 23, 42, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            position: relative;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+        }
+
+        .card-header-badge {
+            align-self: flex-start;
+            background: rgba(239, 68, 68, 0.18);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #ff6b6b;
+            padding: 5px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .friend-image-wrapper {
+            width: 100%;
+            height: 270px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .friend-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 22%;
+            transform: scale(1.08);
+        }
+
+        .speech-bubble {
+            position: absolute;
+            bottom: 12px;
+            left: 10px;
+            right: 10px;
+            background: rgba(12, 10, 22, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(255, 205, 50, 0.5);
+            border-radius: 16px;
+            padding: 9px 14px;
+            font-size: 16.5px;
+            font-weight: 800;
+            color: #ffe066;
+            text-align: center;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.65);
+        }
+
+        .friend-dialogues {
+            width: 100%;
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .dialogue-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14.5px;
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        .dialogue-item i {
+            color: #ef4444;
+            font-size: 15px;
+        }
+
+        .dialogue-summary {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 800;
+            color: #ff7675;
+        }
+
+        /* CENTER VS / ARROW */
+        .vs-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .vs-badge {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff4b2b, #9333ea);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #fff;
+            box-shadow: 0 0 25px rgba(255, 75, 43, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .vs-text {
+            font-size: 13px;
+            font-weight: 800;
+            color: #ff9d5c;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        /* RIGHT APP PHONE CARD */
+        .app-showcase-card {
+            background: rgba(26, 23, 42, 0.7);
+            border: 1.5px solid rgba(255, 75, 43, 0.3);
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+        }
+
+        .app-header-badge {
+            align-self: flex-start;
+            background: rgba(34, 197, 94, 0.16);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #4ade80;
+            padding: 5px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        /* Mockup Phone Frame */
+        .phone-frame {
+            width: 252px;
+            height: 442px;
+            background: #110e1c;
+            border-radius: 34px;
+            border: 4px solid #332d4d;
+            box-shadow: 
+                0 0 0 2px rgba(255, 255, 255, 0.1),
+                0 15px 35px rgba(0,0,0,0.65),
+                0 0 35px rgba(255, 75, 43, 0.25);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 7px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75px;
+            height: 14px;
+            background: #000000;
+            border-radius: 10px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+        }
+
+        /* FLOATING HIGHLIGHT PILL OVER PHONE */
+        .floating-pill {
+            position: absolute;
+            bottom: 25px;
+            right: -15px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 16px;
+            font-size: 14.5px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.45);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            z-index: 20;
+            white-space: nowrap;
+        }
+
+        .floating-pill-top {
+            position: absolute;
+            top: 60px;
+            left: -15px;
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 8px 22px rgba(255, 75, 43, 0.5);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            z-index: 20;
+        }
+
+        /* 3 FEATURE PILLARS */
+        .features-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin: 10px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255, 75, 43, 0.2), rgba(255, 65, 108, 0.2));
+            border: 1px solid rgba(255, 75, 43, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #ff764c;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .feature-text p {
+            font-size: 13.5px;
+            color: #94a3b8;
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* FOOTER CALL TO ACTION */
+        .footer-cta {
+            background: linear-gradient(90deg, rgba(255, 75, 43, 0.16) 0%, rgba(147, 51, 234, 0.16) 100%);
+            border: 1.5px solid rgba(255, 100, 50, 0.35);
+            border-radius: 24px;
+            padding: 16px 26px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .cta-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cta-icon-flame {
+            font-size: 32px;
+            color: #ff5238;
+            filter: drop-shadow(0 0 12px rgba(255, 82, 56, 0.6));
+        }
+
+        .cta-info h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .cta-info p {
+            font-size: 15px;
+            color: #cbd5e1;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            color: #ffffff;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(255, 75, 43, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Glow and Grid Background Elements -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-glow-3"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="content-layer">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="brand-logo">
+                <div class="logo-flame">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <div class="logo-text">GINDER</div>
+            </div>
+            <div class="header-badge">
+                <i class="fa-solid fa-sparkles"></i> เว็บสุ่มร้านอาหารแบบ Tinder • เล่นฟรี ไม่ต้องโหลดแอป!
+            </div>
+        </header>
+
+        <!-- HERO HEADLINE -->
+        <div class="hero-title-wrap">
+            <div class="hero-tag">
+                <i class="fa-solid fa-bolt"></i> จบปัญหาโลกแตกเวลานัดกินข้าว!
+            </div>
+            <h1 class="hero-headline">
+                "กินอะไรก็ได้..." <span class="highlight">แต่พอเสนอร้านไหนก็ไม่เอาสักร้าน!</span> 😤
+            </h1>
+            <p class="hero-sub">
+                ใครเคยยืนเถียงกับแก๊งเพื่อนหรือแฟนเป็นชั่วโมง? ให้ <strong>GINDER</strong> ตัดสินให้ใน 1 นาที!
+            </p>
+        </div>
+
+        <!-- MAIN SHOWCASE GRID -->
+        <div class="showcase-grid">
+            <!-- LEFT: DELICIOUS FOOD SHOWCASE -->
+            <div class="friend-card">
+                <div class="card-header-badge" style="background: rgba(245, 158, 11, 0.18); border-color: rgba(245, 158, 11, 0.4); color: #fbbf24;">
+                    <i class="fa-solid fa-fire text-accent"></i> รวมร้านเด็ดโดนใจใกล้ตัวคุณ
+                </div>
+                <div class="friend-image-wrapper">
+                    <img class="friend-image" src="promo_food.jpg" alt="ร้านอาหารน่าทาน หมูกระทะ ชาบู" style="object-position: center 45%; transform: scale(1.0);">
+                    <div class="speech-bubble">
+                        "เย็นนี้กินอะไรดี? ชาบู หมูกระทะ ซีฟู้ด 🤤🔥"
+                    </div>
+                </div>
+                <div class="friend-dialogues">
+                    <div class="dialogue-item">
+                        <i class="fa-solid fa-utensils" style="color: #f59e0b;"></i> ปิ้งย่าง • ชาบู • หมูกระทะ • ส้มตำ • อาหารใต้
+                    </div>
+                    <div class="dialogue-item">
+                        <i class="fa-solid fa-location-dot" style="color: #3b82f6;"></i> สุ่มร้านใกล้ตัวจริง พร้อมระยะทางและราคา
+                    </div>
+                    <div class="dialogue-item">
+                        <i class="fa-solid fa-users" style="color: #ec4899;"></i> ชวนแก๊งเพื่อนมาช่วยกันปัดโหวตในห้อง
+                    </div>
+                </div>
+                <div class="dialogue-summary" style="color: #4ade80;">
+                    ✨ ปัดใจตรงกันเมื่อไหร่ ล็อคเป้าไปกินเลย!
+                </div>
+            </div>
+
+            <!-- CENTER: VS / TRANSITION -->
+            <div class="vs-column">
+                <div class="vs-badge">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="vs-text">ปัดเลือก<br>ด้วย</div>
+            </div>
+
+            <!-- RIGHT: THE REAL GINDER APP SOLUTION -->
+            <div class="app-showcase-card">
+                <div class="app-header-badge">
+                    <i class="fa-solid fa-check-circle"></i> ปัดคู่เพื่อน • ล็อคเป้าทันที
+                </div>
+                <div class="floating-pill-top">
+                    <i class="fa-solid fa-fire"></i> สุ่มร้านเด็ดใกล้ตัว
+                </div>
+                <div class="phone-frame">
+                    <div class="phone-notch"></div>
+                    <img class="phone-screen" src="promo_swipe.png" alt="หน้าจอจริงของเว็บ GINDER">
+                </div>
+                <div class="floating-pill">
+                    <i class="fa-solid fa-heart-circle-check"></i> มติเอกฉันท์ 100% ล็อคเป้า!
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 EASY STEPS PILLARS -->
+        <div class="features-row">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-qrcode"></i>
+                </div>
+                <div class="feature-text">
+                    <h4>1. สร้างห้อง & ยื่น QR</h4>
+                    <p>ส่งลิงก์หรือยื่น QR ให้เพื่อนสแกนเข้าห้องใน 5 วินาที</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-hand-pointer"></i>
+                </div>
+                <div class="feature-text">
+                    <h4>2. ปัดขวา = อยากกิน</h4>
+                    <p>ปัดซ้ายผ่าน ปัดขวาชอบ ทุกคนเลือกตามใจตัวเอง</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </div>
+                <div class="feature-text">
+                    <h4>3. แมตช์ปุ๊บ เปิด Maps นำทาง</h4>
+                    <p>ใจตรงกันเมื่อไหร่ ล็อคเป้าร้านทันที หมดสิทธิ์งอแง!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER CTA -->
+        <div class="footer-cta">
+            <div class="cta-left">
+                <i class="fa-solid fa-fire-flame-curved cta-icon-flame"></i>
+                <div class="cta-info">
+                    <h3>เที่ยงนี้ / เย็นนี้ ส่งเข้ากลุ่มเพื่อนด่วน! 🚀</h3>
+                    <p>เล่นได้บนมือถือทุกรุ่น ผ่านเว็บเบราว์เซอร์ ไม่ต้องติดตั้งแอปใดๆ</p>
+                </div>
+            </div>
+            <a href="https://ginder.onrender.com/" class="cta-button">
+                <span>ginder.onrender.com</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

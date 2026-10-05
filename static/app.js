@@ -1095,10 +1095,15 @@ function setupWelcomeModal() {
         });
     }
 
-    // Auto display welcome pop-up modal on first visit (unless user checked skip or roomId is in URL)
     const urlParams = new URLSearchParams(window.location.search);
     const forceIntro = urlParams.get('intro') === '1';
-    const isSkipped = localStorage.getItem('ginder_skip_intro') === 'true';
+    const isSkipped = localStorage.getItem('ginder_skip_intro') === 'true' || urlParams.get('skip_intro') === '1';
+
+    if (urlParams.get('clean') === '1') {
+        const cleanStyle = document.createElement('style');
+        cleanStyle.innerHTML = '#toast-container, #btn-floating-feedback, #btn-floating-pdpa { display: none !important; }';
+        document.head.appendChild(cleanStyle);
+    }
 
     if (welcomeModal) {
         if (forceIntro || (!isSkipped && !state.targetRoomId)) {
@@ -1107,6 +1112,12 @@ function setupWelcomeModal() {
                 openModal();
             }, 300);
         }
+    }
+
+    if (urlParams.get('auto_solo') === '1') {
+        setTimeout(() => {
+            if (typeof startSoloSwipe === 'function') startSoloSwipe();
+        }, 500);
     }
 }
 

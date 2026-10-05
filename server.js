@@ -1895,7 +1895,7 @@ app.get('/api/admin/analytics', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
 
     const allRestaurants = await getAllRestaurants();
-    const { data: users } = await supabase.from('users').select('id, role');
+    const { data: users } = await supabase.from('users').select('id, role, created_at');
     const history = await getHistory();
     const feedbacks = await getFeedback();
 
@@ -1911,7 +1911,7 @@ app.get('/api/admin/analytics', async (req, res) => {
         });
     });
 
-    // Top matched restaurants
+    // Top matched restaurants (REAL exact numbers from match_history)
     const matchCounts = {};
     history.forEach(h => {
         if (h.restaurant && h.restaurant.name) {
@@ -1921,12 +1921,129 @@ app.get('/api/admin/analytics', async (req, res) => {
     const topMatched = Object.entries(matchCounts)
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count)
-        .slice(0, 6);
+        .slice(0, 10);
 
     // Calculate average price
     let totalPrice = 0;
     allRestaurants.forEach(r => totalPrice += (r.avgPrice || 0));
     const avgPriceAll = allRestaurants.length ? Math.round(totalPrice / allRestaurants.length) : 0;
+
+    // Direct match rate vs fallback
+    const totalMatches = history.length;
+    const directMatches = history.filter(h => !h.isFallback).length;
+    const successRate = totalMatches ? Number(((directMatches / totalMatches) * 100).toFixed(1)) : 100;
+
+    // Today & Recent stats
+    const now = new Date();
+    const todayStr = now.toISOString().split('T')[0];
+    const todayMatches = history.filter(h => h.matchedAt && h.matchedAt.startsWith(todayStr)).length;
+    const todayUsers = (users || []).filter(u => u.created_at && u.created_at.startsWith(todayStr)).length;
+
+    // --- Trend Data Generation (STRICTLY Year 2026 and real database timestamps) ---
+    // 1. Year 2026 (12 Months of 2026: ม.ค. - ธ.ค. 2026)
+    const yearLabels = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+    const yearMatches = Array(12).fill(0);
+    const yearUsers = Array(12).fill(0);
+
+    history.forEach(h => {
+        if (!h.matchedAt) return;
+        const d = new Date(h.matchedAt);
+        if (d.getFullYear() === 2026) {
+            yearMatches[d.getMonth()]++;
+        }
+    });
+
+    (users || []).forEach(u => {
+        if (!u.created_at) return;
+        const d = new Date(u.created_at);
+        if (d.getFullYear() === 2026) {
+            yearUsers[d.getMonth()]++;
+        }
+    });
+
+    // 2. Month (Weeks of current month in 2026)
+    const curYear = now.getFullYear();
+    const curMonth = now.getMonth();
+    const thaiMonthNames = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+    const curMonthName = thaiMonthNames[curMonth] || 'ต.ค.';
+    const monthLabels = [`1-7 ${curMonthName}`, `8-14 ${curMonthName}`, `15-21 ${curMonthName}`, `22-28 ${curMonthName}`, `29-31 ${curMonthName}`];
+    const monthMatches = Array(5).fill(0);
+    const monthUsers = Array(5).fill(0);
+
+    history.forEach(h => {
+        if (!h.matchedAt) return;
+        const d = new Date(h.matchedAt);
+        if (d.getFullYear() === curYear && d.getMonth() === curMonth) {
+            const dateNum = d.getDate();
+            const wIdx = Math.min(Math.floor((dateNum - 1) / 7), 4);
+            monthMatches[wIdx]++;
+        }
+    });
+
+    (users || []).forEach(u => {
+        if (!u.created_at) return;
+        const d = new Date(u.created_at);
+        if (d.getFullYear() === curYear && d.getMonth() === curMonth) {
+            const dateNum = d.getDate();
+            const wIdx = Math.min(Math.floor((dateNum - 1) / 7), 4);
+            monthUsers[wIdx]++;
+        }
+    });
+
+    // 3. Week (Last 7 days)
+    const weekLabels = [];
+    const weekMatches = Array(7).fill(0);
+    const weekUsers = Array(7).fill(0);
+    const dayMap = {};
+    for (let i = 6; i >= 0; i--) {
+        const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+        const dateKey = d.toISOString().split('T')[0];
+        const thaiDay = ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'][d.getDay()];
+        const label = `${thaiDay} ${d.getDate()}/${d.getMonth() + 1}`;
+        weekLabels.push(label);
+        dayMap[dateKey] = 6 - i;
+    }
+
+    history.forEach(h => {
+        if (!h.matchedAt) return;
+        const dateKey = h.matchedAt.split('T')[0];
+        if (dayMap[dateKey] !== undefined) {
+            weekMatches[dayMap[dateKey]]++;
+        }
+    });
+
+    (users || []).forEach(u => {
+        if (!u.created_at) return;
+        const dateKey = u.created_at.split('T')[0];
+        if (dayMap[dateKey] !== undefined) {
+            weekUsers[dayMap[dateKey]]++;
+        }
+    });
+
+    // 4. Day (Today hourly intervals: 00:00, 04:00, 08:00, 12:00, 16:00, 20:00)
+    const dayLabels = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'];
+    const dayMatches = Array(6).fill(0);
+    const dayUsers = Array(6).fill(0);
+
+    history.forEach(h => {
+        if (!h.matchedAt) return;
+        const d = new Date(h.matchedAt);
+        if (d.toISOString().split('T')[0] === todayStr) {
+            const hour = d.getHours();
+            const bucket = Math.min(Math.floor(hour / 4), 5);
+            dayMatches[bucket]++;
+        }
+    });
+
+    (users || []).forEach(u => {
+        if (!u.created_at) return;
+        const d = new Date(u.created_at);
+        if (d.toISOString().split('T')[0] === todayStr) {
+            const hour = d.getHours();
+            const bucket = Math.min(Math.floor(hour / 4), 5);
+            dayUsers[bucket]++;
+        }
+    });
 
     res.json({
         totalRestaurants: allRestaurants.length,
@@ -1935,12 +2052,41 @@ app.get('/api/admin/analytics', async (req, res) => {
         userCount,
         avgPrice: avgPriceAll,
         avgPriceAll,
-        totalMatches: history.length,
+        totalMatches,
         totalFeedback: feedbacks.length,
+        successRate,
+        todayMatches,
+        todayUsers,
         categories: categoryCounts,
         categoryCounts,
         topMatched,
-        topMatchedRestaurants: topMatched
+        topMatchedRestaurants: topMatched,
+        trendData: {
+            year: {
+                labels: yearLabels,
+                matches: yearMatches,
+                users: yearUsers,
+                dateRange: '2026-01-01 ~ 2026-12-31'
+            },
+            month: {
+                labels: monthLabels,
+                matches: monthMatches,
+                users: monthUsers,
+                dateRange: `2026-${String(curMonth + 1).padStart(2, '0')}-01 ~ 2026-${String(curMonth + 1).padStart(2, '0')}-31`
+            },
+            week: {
+                labels: weekLabels,
+                matches: weekMatches,
+                users: weekUsers,
+                dateRange: `${weekLabels[0]} ~ ${weekLabels[6]}`
+            },
+            day: {
+                labels: dayLabels,
+                matches: dayMatches,
+                users: dayUsers,
+                dateRange: `วันนี้ (${todayStr})`
+            }
+        }
     });
 });
 
