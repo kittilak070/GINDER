@@ -3966,10 +3966,14 @@ function renderResultScreen(r, options = {}) {
 
         // Update Maps URL
         const mapsBtn = document.getElementById('btn-open-map');
-        if (r.address && (r.address.startsWith('http://') || r.address.startsWith('https://'))) {
+        if (r.mapsUrl || r.googleMapsUri || r.google_maps_url) {
+            mapsBtn.href = r.mapsUrl || r.googleMapsUri || r.google_maps_url;
+        } else if (r.latitude && r.longitude) {
+            mapsBtn.href = `https://www.google.com/maps/search/?api=1&query=${r.latitude},${r.longitude}`;
+        } else if (r.address && (r.address.startsWith('http://') || r.address.startsWith('https://'))) {
             mapsBtn.href = r.address;
         } else {
-            mapsBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' ' + r.address)}`;
+            mapsBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' ' + (r.address || ''))}`;
         }
         mapsBtn.classList.remove('hidden');
     } else {

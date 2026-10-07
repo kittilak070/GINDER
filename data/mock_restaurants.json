@@ -2,7 +2,7 @@
   {
     "id": "r_songkhla_01",
     "name": "แต้เฮี้ยงอิ้ว (Tae Hiang Aew)",
-    "rating": 4.7,
+    "rating": 4.3,
     "priceRange": "$$",
     "avgPrice": 150,
     "distance": 0.8,
@@ -21,14 +21,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารจีน-ปักษ์ใต้ระดับตำนานกว่า 80 ปี เมนูชูโรงยำมะม่วงกุ้งแห้งตัวโต กุ้งแม่น้ำทอดกระเทียมพริกไทย และต้มยำแห้งปลากะพงรสจัดจ้าน",
-    "address": "85 ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1945,
-    "longitude": 100.5905
+    "address": "85 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195852,
+    "longitude": 100.590582,
+    "userRatingCount": 574,
+    "googleMapsUri": "https://maps.google.com/?cid=1881226228199161327&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJQ8N4CBozTTAR7331kUl1Gxo"
   },
   {
     "id": "r_songkhla_02",
     "name": "เกียดฟั่ง (ข้าวสตูสงขลา)",
-    "rating": 4.8,
+    "rating": 4.4,
     "priceRange": "$",
     "avgPrice": 70,
     "distance": 0.8,
@@ -47,9 +50,12 @@
       "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=800&auto=format&fit=crop"
     ],
     "description": "ข้าวสตูหมูเครื่องในในตำนานถนนนางงาม น้ำซุปกลิ่นเครื่องยาจีนหอมละมุน เสิร์ฟคู่ซาลาเปาลูกยักษ์ไส้หมูสับไข่เค็มสูตรโบราณ",
-    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.194,
-    "longitude": 100.5908
+    "address": "94 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.196688,
+    "longitude": 100.590626,
+    "userRatingCount": 585,
+    "googleMapsUri": "https://maps.google.com/?cid=5986554343316655342&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJiT9fDxozTTAR7gz2BXWDFFM"
   },
   {
     "id": "r_songkhla_03",
@@ -74,14 +80,17 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "เต้าคั่วหรือสลัดปักษ์ใต้ ประกอบด้วยเส้นหมี่ ผักบุ้ง แตงกวา กุ้งชุบแป้งทอดกรอบ เต้าหู้ทอด หูหมูพะโล้ ไข่ยางมะตูม ราดน้ำเชื่อมเคี่ยวเปรี้ยวหวาน",
-    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1938,
-    "longitude": 100.5909
+    "address": "58 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.197324,
+    "longitude": 100.590606,
+    "userRatingCount": 56,
+    "googleMapsUri": "https://maps.google.com/?cid=7237309261733662634&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJm3A-cogzTTARqo9Hu20WcGQ"
   },
   {
     "id": "r_songkhla_04",
     "name": "ข้าวมันไก่เบตง ตลาดทรัพย์สิน",
-    "rating": 4.5,
+    "rating": 4.6,
     "priceRange": "$",
     "avgPrice": 60,
     "distance": 0.6,
@@ -99,14 +108,17 @@
       "https://images.unsplash.com/photo-1562967914-608f82629710?w=800&auto=format&fit=crop"
     ],
     "description": "ไก่เบตงหนังตึงเนื้อนุ่มเคี้ยวหนึบ ราดน้ำซีอิ๊วสูตรพิเศษ ข้าวมันหอมกระเทียมเม็ดร่วน น้ำจิ้มเต้าเจี้ยวผสมขิงสดและพริกขี้หนูจัดจ้าน",
-    "address": "ใกล้ตลาดทรัพย์สิน ถนนพัทลุง ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1925,
-    "longitude": 100.5935
+    "address": "20 ถ ปละท่า ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.20275,
+    "longitude": 100.593094,
+    "userRatingCount": 83,
+    "googleMapsUri": "https://maps.google.com/?cid=15964480744570586406&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJT2qi8wczTTARJoWxW6c6jd0"
   },
   {
     "id": "r_songkhla_05",
     "name": "ก๋วยเตี๋ยวหางหมู ป้าเนี้ยว (ถนนนางงาม)",
-    "rating": 4.7,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 60,
     "distance": 0.9,
@@ -124,9 +136,12 @@
       "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
     ],
     "description": "บะหมี่ทำเองเส้นเหนียวนุ่ม เสิร์ฟพร้อมหางหมูตุ๋นยาจีนจนเปื่อยเอ็นกรุบเด้ง น้ำซุปกระดูกหมูหวานธรรมชาติ ปรุงต้มยำแห้งถั่วคั่วหอมมาก",
-    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1942,
-    "longitude": 100.5906
+    "address": "180 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.194796,
+    "longitude": 100.59107,
+    "userRatingCount": 191,
+    "googleMapsUri": "https://maps.google.com/?cid=6314639098337506811&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJ3-dAGRozTTAR-zUztc0aolc"
   },
   {
     "id": "r_songkhla_06",
@@ -150,14 +165,16 @@
       "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านน้ำชาโกปี๊สภากาแฟยามเช้าของชาวเมืองสงขลา ชาเย็นรสเข้มข้นถึงใจ กาแฟโบราณคั่วเตาถ่าน ขนมปังปิ้งเตาถ่านทาสังขยาใบเตยโบราณ",
-    "address": "ถนนรามัญ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1932,
-    "longitude": 100.5912
+    "address": "0 เมือง ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.200566,
+    "longitude": 100.588581,
+    "googleMapsUri": "https://maps.google.com/?cid=11313764339699080542&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJB5Qn-OIzTTARXt0-XLmQAp0"
   },
   {
     "id": "r_songkhla_07",
     "name": "ไอติมโอ่ง (ไอศกรีมโบราณสงขลา)",
-    "rating": 4.8,
+    "rating": 4.2,
     "priceRange": "$",
     "avgPrice": 35,
     "distance": 0.85,
@@ -176,14 +193,17 @@
       "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&auto=format&fit=crop"
     ],
     "description": "ไอศกรีมกะทิสดโฮมเมดเสิร์ฟในโอ่งดินเผาขนาดจิ๋ว เอกลักษณ์เฉพาะคือไอติมไข่แข็งโรยถั่วลิสง กล้วยหอม และไข่แดงมันวาว รสชาติหวานมันชื่นใจ",
-    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1943,
-    "longitude": 100.5907
+    "address": "69 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.196305,
+    "longitude": 100.590575,
+    "userRatingCount": 734,
+    "googleMapsUri": "https://maps.google.com/?cid=16881312313039131029&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJt-AHpBAzTTARlREgkRt4Ruo"
   },
   {
     "id": "r_songkhla_08",
     "name": "ข้าวยำป้าหนู สงขลา",
-    "rating": 4.6,
+    "rating": 4.4,
     "priceRange": "$",
     "avgPrice": 45,
     "distance": 1.1,
@@ -201,14 +221,17 @@
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop"
     ],
     "description": "ข้าวยำปักษ์ใต้สูตรโบราณ น้ำบูดูเคี่ยวสมุนไพรรสกลมกล่อม คลุกเคล้าผักสดหั่นฝอยกว่า 10 ชนิด มะพร้าวคั่ว กุ้งแห้งป่น และพริกไทยสด ดีต่อสุขภาพ",
-    "address": "ใกล้กำแพงเมืองเก่า ถนนจะนะ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1915,
-    "longitude": 100.594
+    "address": "44 6 ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.16516,
+    "longitude": 100.549704,
+    "userRatingCount": 67,
+    "googleMapsUri": "https://maps.google.com/?cid=9429840700970219444&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJzY-L1j8yTTARtLfZ9SeG3YI"
   },
   {
     "id": "r_songkhla_09",
     "name": "นายหวาน ข้าวหมูแดง-หมูกรอบ (ถนนนครใน)",
-    "rating": 4.7,
+    "rating": 4.2,
     "priceRange": "$",
     "avgPrice": 65,
     "distance": 0.9,
@@ -227,14 +250,17 @@
       "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
     ],
     "description": "ข้าวหมูกรอบเตาถ่านหนังฟูกรอบสะท้านฟัน หมูแดงย่างเนื้อนุ่มหอมกลิ่นควัน น้ำราดเคี่ยวสูตรลับรสหวานนำเค็มกลมกล่อม พร้อมไข่ต้มยางมะตูม",
-    "address": "ถนนนครใน ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1935,
-    "longitude": 100.5895
+    "address": "1 ซอย สวนหมาก ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.204735,
+    "longitude": 100.589892,
+    "userRatingCount": 385,
+    "googleMapsUri": "https://maps.google.com/?cid=8362737461535527291&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJR9DDs2kzTTARe1Gt4GlpDnQ"
   },
   {
     "id": "r_songkhla_10",
     "name": "เจ๊นิ ก๋วยเตี๋ยวต้มยำปลากะพง (เก้าเส้ง)",
-    "rating": 4.6,
+    "rating": 4.3,
     "priceRange": "$$",
     "avgPrice": 100,
     "distance": 2.5,
@@ -252,14 +278,17 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "ต้มยำน้ำข้นปลากะพงสดจากทะเลสาบสงขลา เนื้อปลาชิ้นหนาหวานสดไร้กลิ่นคาว น้ำซุปจัดจ้านมะนาวแท้ ใส่กุ้งและหมึกไข่สดๆ ลวกใหม่ชามต่อชาม",
-    "address": "ชุมชนชาวประมงเก้าเส้ง ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1725,
-    "longitude": 100.6125
+    "address": "5HWR+36X ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195243,
+    "longitude": 100.590612,
+    "userRatingCount": 142,
+    "googleMapsUri": "https://maps.google.com/?cid=508080244743756283&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJd-EvDhozTTAR-1lYaUoQDQc"
   },
   {
     "id": "r_songkhla_100",
     "name": "หมูกระทะ 99 สงขลา (สี่แยกวชิรา)",
-    "rating": 4.4,
+    "rating": 3.8,
     "priceRange": "$",
     "avgPrice": 149,
     "distance": 2.7,
@@ -277,14 +306,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "หมูกระทะราคาสบายกระเป๋า หมูหมักซอสเกาหลี เบคอนกรอบ กุ้งสด และน้ำจิ้มสุกี้โบราณรสเด็ด",
-    "address": "สี่แยกวชิรา ถนนทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.177,
-    "longitude": 100.607
+    "address": "ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.186511,
+    "longitude": 100.598666,
+    "userRatingCount": 8,
+    "googleMapsUri": "https://maps.google.com/?cid=17529357686907939100&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJlVl2SnYzTTARHCnpFPHJRPM"
   },
   {
     "id": "r_songkhla_101",
     "name": "Songkhla Station (สถานีสงขลา คาเฟ่)",
-    "rating": 4.7,
+    "rating": 4.2,
     "priceRange": "$$",
     "avgPrice": 90,
     "distance": 0.9,
@@ -303,14 +335,17 @@
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
     ],
     "description": "คาเฟ่บ้านไม้โบราณย้อนยุคริมทางรถไฟเก่า กาแฟดริปเมล็ดคั่วพิเศษ ขนมปังปิ้งเนยสังขยาใบเตยโบราณ ชาไทยเย็นเข้มข้น",
-    "address": "ถนนพัทลุง ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1925,
-    "longitude": 100.592
+    "address": "6H2V+GF5 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.201254,
+    "longitude": 100.59374,
+    "userRatingCount": 51,
+    "googleMapsUri": "https://maps.google.com/?cid=6609267024166168934&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJUyhPKBQzTTARZqkgUVfVuFs"
   },
   {
     "id": "r_songkhla_102",
     "name": "Heart Made Roastery (ถนนนครนอก)",
-    "rating": 4.8,
+    "rating": 4.6,
     "priceRange": "$$",
     "avgPrice": 110,
     "distance": 0.6,
@@ -326,14 +361,17 @@
       "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
     ],
     "description": "Specialty Coffee โรงคั่วกาแฟชื่อดังเมืองเก่าสงขลา Dirty Coffee นมเย็นจัดราดเอสเปรสโซ่เข้มข้น เมล็ดกาแฟ Single Origin คั่วเอง",
-    "address": "ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1965,
-    "longitude": 100.588
+    "address": "139 ถนน นครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195378,
+    "longitude": 100.589175,
+    "userRatingCount": 438,
+    "googleMapsUri": "https://maps.google.com/?cid=5014268826869671502&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJqfsm6hAzTTARTqbhae5ClkU"
   },
   {
     "id": "r_songkhla_103",
     "name": "โรตี ชาชัก ฟารีดา ฮาลาล (ถนนรามวิถี)",
-    "rating": 4.6,
+    "rating": 5,
     "priceRange": "$",
     "avgPrice": 50,
     "distance": 1.4,
@@ -352,14 +390,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "โรตีตบแป้งนุ่มหอมเนย ชาชักฟองหนานุ่มละมุน โรตีมะตะบะไก่รสเข้มข้น โรตีกรอบราดนมข้นหวาน ฮาลาล 100%",
-    "address": "ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1908,
-    "longitude": 100.595
+    "address": "76 9 ถ. สงขลา-นาทวี ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.162596,
+    "longitude": 100.61639,
+    "userRatingCount": 3,
+    "googleMapsUri": "https://maps.google.com/?cid=2642785782017147027&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJNQa7yOrNsjERk8CVqqoPrSQ"
   },
   {
     "id": "r_songkhla_104",
     "name": "Cafe Der See Nakornnok (คาเฟ่ เดอ ซี)",
-    "rating": 4.7,
+    "rating": 4.4,
     "priceRange": "$$",
     "avgPrice": 120,
     "distance": 0.7,
@@ -377,14 +418,17 @@
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop"
     ],
     "description": "คาเฟ่ริมทะเลสาบสงขลา ชมวิวพระอาทิตย์ตกดินสุดโรแมนติก เค้กมะพร้าวอ่อนน้ำหอม กาแฟส้มยูซุสดชื่น วาฟเฟิลอบร้อน",
-    "address": "ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1955,
-    "longitude": 100.5875
+    "address": "Nakornnok Street, ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.197137,
+    "longitude": 100.588798,
+    "userRatingCount": 618,
+    "googleMapsUri": "https://maps.google.com/?cid=12919822789188691697&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJH4M_iRAzTTAR8aaW5l9uTLM"
   },
   {
     "id": "r_songkhla_105",
     "name": "Lyn's The Shanghai Cafe (ลินส์ คาเฟ่ ถนนนครใน)",
-    "rating": 4.6,
+    "rating": 4.5,
     "priceRange": "$$",
     "avgPrice": 110,
     "distance": 0.8,
@@ -402,9 +446,12 @@
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
     ],
     "description": "คาเฟ่สไตล์ชิโนโปรตุกีสผสมเซี่ยงไฮ้วินเทจ ครัวซองต์เนยสดฝรั่งเศส เค้กช็อกโกแลตฟัดจ์เข้มข้น ชาเก๊กฮวยหิมะ",
-    "address": "ถนนนครใน ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.194,
-    "longitude": 100.5895
+    "address": "144, 146 นครใน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.196586,
+    "longitude": 100.589413,
+    "userRatingCount": 646,
+    "googleMapsUri": "https://maps.google.com/?cid=8815854144015008722&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJUejfmhAzTTAR0oOrtaI0WHo"
   },
   {
     "id": "r_songkhla_106",
@@ -428,14 +475,17 @@
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านน้ำชายอดนิยมริมหาดสมิหลา โรตีกรอบบาง ชาชักเมืองใต้แท้ๆ กือโป๊ะทอดกรอบจิ้มน้ำจิ้มหวาน นั่งรับลมทะเลชิลล์ยามค่ำคืน",
-    "address": "ริมหาดสมิหลา ถนนราชดำเนิน ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.212,
-    "longitude": 100.593
+    "address": "105 1 ถนนพัทลุง ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.193287,
+    "longitude": 100.590716,
+    "userRatingCount": 6,
+    "googleMapsUri": "https://maps.google.com/?cid=302410112692788046&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJna6vWz8zTTARThuKL2VgMgQ"
   },
   {
     "id": "r_songkhla_107",
     "name": "Ep's Cafe & Bakery สงขลา (ถนนปละท่า)",
-    "rating": 4.7,
+    "rating": 4.5,
     "priceRange": "$$",
     "avgPrice": 130,
     "distance": 1.2,
@@ -454,14 +504,17 @@
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
     ],
     "description": "เบเกอรี่และกาแฟระดับพรีเมียม ชีสเค้กหน้าไหม้ ช็อกโกแลตลาวาเยิ้มๆ ครัวซองต์อัลมอนด์ กาแฟคาราเมลมัคคิอาโต้",
-    "address": "ถนนปละท่า ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.198,
-    "longitude": 100.593
+    "address": "120 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.19552,
+    "longitude": 100.590887,
+    "userRatingCount": 141,
+    "googleMapsUri": "https://maps.google.com/?cid=11740080655200028305&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJR7KHBRozTTARkQaifycl7aI"
   },
   {
     "id": "r_songkhla_108",
     "name": "Studio 55 Songkhla (ถนนนครนอก)",
-    "rating": 4.6,
+    "rating": 4.5,
     "priceRange": "$$",
     "avgPrice": 110,
     "distance": 0.6,
@@ -479,14 +532,17 @@
       "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
     ],
     "description": "คาเฟ่ศิลปะริมทะเลสาบสงขลา ชาเขียวมัทฉะอุจิแท้ กาแฟ Cold Brew สกัดเย็น บราวนี่ดาร์กช็อกโกแลตเข้มข้น",
-    "address": "55 ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.197,
-    "longitude": 100.5878
+    "address": "55 ถนน นครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.197308,
+    "longitude": 100.588749,
+    "userRatingCount": 233,
+    "googleMapsUri": "https://maps.google.com/?cid=1475236453848851637&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJA_pMg48zTTARtSReF70XeRQ"
   },
   {
     "id": "r_songkhla_109",
     "name": "ไอศกรีมยิว (ไอติมถั่วเขียวสูตรโบราณถนนนางงาม)",
-    "rating": 4.7,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 40,
     "distance": 0.7,
@@ -503,14 +559,17 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "ไอศกรีมโบราณสูตรกว่า 80 ปี ไอติมกะทิสดไข่แข็งใส่ถั่วเขียวต้มน้ำตาลทรายแดง หวานมันเค็มกลมกล่อมชื่นใจ",
-    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1946,
-    "longitude": 100.5905
+    "address": "162 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195163,
+    "longitude": 100.590994,
+    "userRatingCount": 257,
+    "googleMapsUri": "https://maps.google.com/?cid=17177901987734217918&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJadYfGxozTTARvuRfbdgqZO4"
   },
   {
     "id": "r_songkhla_11",
     "name": "ร้านพะโล้สะเดา (เจ๊หยู)",
-    "rating": 4.5,
+    "rating": 5,
     "priceRange": "$",
     "avgPrice": 80,
     "distance": 0.7,
@@ -527,14 +586,17 @@
       "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=800&auto=format&fit=crop"
     ],
     "description": "ขาหมูพะโล้สูตรโบราณอำเภอสะเดา เคี่ยวจนหนังนุ่มละลายในปาก คากิ ไส้หมู ลิ้นหมูพะโล้ เสิร์ฟพร้อมผักกาดดองต้มและน้ำส้มพริกเหลืองตัดเลี่ยน",
-    "address": "ถนนพัทลุง ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.192,
-    "longitude": 100.593
+    "address": "8 ม 1 ถ.สายสนามบิน ตำบล ควนลัง อำเภอหาดใหญ่ สงขลา 90110",
+    "latitude": 6.982863,
+    "longitude": 100.427342,
+    "userRatingCount": 1,
+    "googleMapsUri": "https://maps.google.com/?cid=14283602778996802463&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJH_grxrsnTTARnwPjugyNOcY"
   },
   {
     "id": "r_songkhla_110",
     "name": "The Secret Garden Songkhla (คาเฟ่ในสวน)",
-    "rating": 4.6,
+    "rating": 4.4,
     "priceRange": "$$",
     "avgPrice": 120,
     "distance": 3.5,
@@ -553,14 +615,17 @@
       "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
     ],
     "description": "คาเฟ่ในสวนทรอปิคอลเขียวขจี มัทฉะลาเต้ เค้กแครอทครีมชีส วาฟเฟิลผลไม้รวมสดใหม่ บรรยากาศร่มรื่นเงียบสงบ",
-    "address": "ถนนสงขลา-นาทวี ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
-    "latitude": 7.163,
-    "longitude": 100.61
+    "address": "87 Thanon Raman, ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195381,
+    "longitude": 100.590222,
+    "userRatingCount": 431,
+    "googleMapsUri": "https://maps.google.com/?cid=1953336910758989358&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJsWL7DBozTTARLs5yNJKlGxs"
   },
   {
     "id": "r_songkhla_111",
     "name": "โรตี ชาชัก อาบู ฮาลาล (หน้า มรภ.สงขลา)",
-    "rating": 4.6,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 50,
     "distance": 3.2,
@@ -579,14 +644,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "โรตีชีสยืด โรตีภูเขาไฟราดผงโอวัลติน ชาเขียวชักเข้มข้นฟองนุ่ม นมสดร้อน ฮาลาล 100% ขวัญใจวัยรุ่นสงขลา",
-    "address": "ถนนกาญจนวนิช หน้า มรภ.สงขลา ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
-    "latitude": 7.1675,
-    "longitude": 100.605
+    "address": "39 ชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.212091,
+    "longitude": 100.598069,
+    "userRatingCount": 54,
+    "googleMapsUri": "https://maps.google.com/?cid=10828304207940492492&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJN_a-HAAzTTARzBwpak7dRZY"
   },
   {
     "id": "r_songkhla_112",
     "name": "Nakorn Cafe (นคร คาเฟ่ ถนนนครนอก)",
-    "rating": 4.5,
+    "rating": 4.8,
     "priceRange": "$$",
     "avgPrice": 100,
     "distance": 0.7,
@@ -604,14 +672,17 @@
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
     ],
     "description": "คาเฟ่วินเทจริมน้ำทะเลสาบ กาแฟ Cold Drip เค้กเลมอนเมอแรงก์เปรี้ยวหวานสดชื่น ชาผลไม้สกัดเย็น",
-    "address": "ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.195,
-    "longitude": 100.588
+    "address": "246 นครใน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.194383,
+    "longitude": 100.589861,
+    "userRatingCount": 16,
+    "googleMapsUri": "https://maps.google.com/?cid=11465500232900102916&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJPy4QPaszTTARBEsrCrejHZ8"
   },
   {
     "id": "r_songkhla_113",
     "name": "บ้านชา ชาชัก สงขลา (ย่านวชิรา)",
-    "rating": 4.5,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 45,
     "distance": 2.6,
@@ -630,14 +701,17 @@
       "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
     ],
     "description": "ชาชักเมืองใต้แท้ๆ กลิ่นหอมชาเข้มข้น โรตีกรอบราดคาราเมล ขนมปังปิ้งไส้ทะลักชาไทย กะหรี่ปั๊บไส้ไก่แป้งกรอบ",
-    "address": "ถนนทะเลหลวง ย่านวชิรา ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1785,
-    "longitude": 100.607
+    "address": "39 ชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.212091,
+    "longitude": 100.598069,
+    "userRatingCount": 54,
+    "googleMapsUri": "https://maps.google.com/?cid=10828304207940492492&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJN_a-HAAzTTARzBwpak7dRZY"
   },
   {
     "id": "r_songkhla_114",
     "name": "Coffee Beach หาดชลาทัศน์",
-    "rating": 4.6,
+    "rating": 4.8,
     "priceRange": "$$",
     "avgPrice": 110,
     "distance": 2.1,
@@ -655,14 +729,17 @@
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop"
     ],
     "description": "คาเฟ่สไตล์บาหลีริมหาดชลาทัศน์ กาแฟมะพร้าวน้ำหอมสด ครัวซองต์อัลมอนด์อบใหม่ สมูทตี้โบวล์ผลไม้สดรับลมทะเล",
-    "address": "ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.183,
-    "longitude": 100.612
+    "address": "3 ชลาทัศน์ ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.199821,
+    "longitude": 100.604608,
+    "userRatingCount": 15,
+    "googleMapsUri": "https://maps.google.com/?cid=843626425893238793&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJydI8LCUzTTARCbh_vsMptQs"
   },
   {
     "id": "r_songkhla_115",
     "name": "โกปี๊ฮับ สงขลา (Kope Hub)",
-    "rating": 4.8,
+    "rating": 4.6,
     "priceRange": "$$",
     "avgPrice": 120,
     "distance": 1.8,
@@ -683,14 +760,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ติ่มซำนึ่งสดและคาเฟ่ชาโบราณ ชาเย็นโกปี๊ฮับสูตรพรีเมียม ซาลาเปาลาวาไข่เค็ม ปาท่องโก๋ยักษ์ดิปสังขยาใบเตย",
-    "address": "ถนนกาญจนวนิช ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.185,
-    "longitude": 100.603
+    "address": "46 ซอย พูนสุขอุทิศ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.197934,
+    "longitude": 100.596969,
+    "userRatingCount": 14,
+    "googleMapsUri": "https://maps.google.com/?cid=10730961931437989751&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJgdW3EkYzTTARd9-ZhQUJ7JQ"
   },
   {
     "id": "r_songkhla_116",
     "name": "โรตีป้าหนู ฮาลาล (หน้าโรงเรียนสงขลาพัฒนาปัญญา)",
-    "rating": 4.6,
+    "rating": 4.4,
     "priceRange": "$",
     "avgPrice": 45,
     "distance": 3.6,
@@ -709,9 +789,12 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "โรตีใส่ไข่กล้วยหอม ชาชักสูตรสตูลหอมเข้มข้น โรตีทิชชู่วิปครีมฝอยทอง ฮาลาล 100% เปิดขายมายาวนาน",
-    "address": "ถนนสงขลา-นาทวี ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
-    "latitude": 7.162,
-    "longitude": 100.611
+    "address": "5HRV+MJG ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.191698,
+    "longitude": 100.594073,
+    "userRatingCount": 303,
+    "googleMapsUri": "https://maps.google.com/?cid=16061761871247161916&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJMw0q3hgzTTARPLqZslLX5t4"
   },
   {
     "id": "r_songkhla_117",
@@ -741,7 +824,7 @@
   {
     "id": "r_songkhla_118",
     "name": "Chao Cafe (ชาว คาเฟ่ เกาะยอ)",
-    "rating": 4.7,
+    "rating": 4.8,
     "priceRange": "$$",
     "avgPrice": 120,
     "distance": 8.5,
@@ -759,14 +842,17 @@
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
     ],
     "description": "คาเฟ่ชมวิวทะเลสาบเกาะยอจากมุมสูง กาแฟซิกเนเจอร์เกาะยอ ครัวซองต์ไข่เค็มลาวา ชาพีชโซดาคลายร้อน",
-    "address": "หมู่ 4 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.165,
-    "longitude": 100.537
+    "address": "5HVR+VCQ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.194719,
+    "longitude": 100.591106,
+    "userRatingCount": 33,
+    "googleMapsUri": "https://maps.google.com/?cid=3531995480382271765&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJc1dhGqIzTTARFXF4FC0rBDE"
   },
   {
     "id": "r_songkhla_119",
     "name": "Sweet Time บิงซู & ของหวาน สงขลา",
-    "rating": 4.5,
+    "rating": 5,
     "priceRange": "$$",
     "avgPrice": 99,
     "distance": 2.5,
@@ -784,14 +870,17 @@
       "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop"
     ],
     "description": "บิงซูเกล็ดหิมะเนียนนุ่ม บิงซูมะม่วงน้ำดอกไม้ บิงซูบัวลอยชาไทย โทสต์เนยสดไอศกรีมวานิลลาฉ่ำๆ",
-    "address": "ถนนทะเลหลวง ย่านวชิรา ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.178,
-    "longitude": 100.608
+    "address": "ซอย27 ตำบล เขารูปช้าง เมือง สงขลา 90000",
+    "latitude": 7.159705,
+    "longitude": 100.604707,
+    "userRatingCount": 2,
+    "googleMapsUri": "https://maps.google.com/?cid=12930404540413378285&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJAZiqsTAzTTAR7f5v2WsGcrM"
   },
   {
     "id": "r_songkhla_12",
     "name": "ครัวเจ๊ม่วย ข้าวแกงเมืองสงขลา",
-    "rating": 4.6,
+    "rating": 4.4,
     "priceRange": "$",
     "avgPrice": 60,
     "distance": 1,
@@ -807,14 +896,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ข้าวแกงปักษ์ใต้รสจัดจ้านดั้งเดิม แกงส้มปลากะพงยอดมะพร้าวเผ็ดเปรี้ยวถึงใจ คั่วกลิ้งหมูสับหอมพริกไทยสด แกงไตปลาผักเคียงเต็มถาดไม่อั้น",
-    "address": "ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.189,
-    "longitude": 100.598
+    "address": "ตำบล ท่ายาง อำเภอท่ายาง เพชรบุรี 76130",
+    "latitude": 12.97345,
+    "longitude": 99.89697,
+    "userRatingCount": 114,
+    "googleMapsUri": "https://maps.google.com/?cid=13595716082026531926&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJI6pwTQPg_DARVsxBUL6vrbw"
   },
   {
     "id": "r_songkhla_120",
     "name": "ชาชัก เจ๊แอ๋ว สงขลา (ถนนทะเลหลวง)",
-    "rating": 4.5,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 45,
     "distance": 2.7,
@@ -833,14 +925,17 @@
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop"
     ],
     "description": "ชาชักเข้มข้นฟองหนา โรตีมะตะบะเนื้อ ขนมปังชุบไข่ทอดหอมเนย นมสดคาราเมล บรรยากาศสตรีทฟู้ดกลางคืน",
-    "address": "ถนนทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1765,
-    "longitude": 100.6095
+    "address": "39 ชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.212091,
+    "longitude": 100.598069,
+    "userRatingCount": 54,
+    "googleMapsUri": "https://maps.google.com/?cid=10828304207940492492&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJN_a-HAAzTTARzBwpak7dRZY"
   },
   {
     "id": "r_songkhla_13",
     "name": "โรตีอาม่า (ถนนนครนอก)",
-    "rating": 4.7,
+    "rating": 4.5,
     "priceRange": "$",
     "avgPrice": 40,
     "distance": 0.95,
@@ -859,14 +954,17 @@
       "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop"
     ],
     "description": "โรตีกรอบแป้งบางฟูกรอบนอกนุ่มใน ราดนมข้นหวานฉ่ำ ชาชักหอมฟองนุ่ม มะตะบะไก่หอมเครื่องเทศกลิ่นยี่หร่าแท้ ทอดสดๆ หน้าเตายามค่ำคืน",
-    "address": "ถนนนครนอก ย่านเมืองเก่าสงขลา ตำบลบ่อยาง",
-    "latitude": 7.1948,
-    "longitude": 100.589
+    "address": "5HVR+65F ถนนพัทลุง ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.193062,
+    "longitude": 100.590435,
+    "userRatingCount": 160,
+    "googleMapsUri": "https://maps.google.com/?cid=2621119483774208091&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJh7V5yxszTTARW4g3gEgWYCQ"
   },
   {
     "id": "r_songkhla_14",
     "name": "ร้านอาหารมุสลิม ดารุสลาม (ข้าวหมกไก่สงขลา)",
-    "rating": 4.5,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 70,
     "distance": 1,
@@ -884,14 +982,17 @@
       "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=800&auto=format&fit=crop"
     ],
     "description": "ข้าวหมกไก่เม็ดข้าวยาวสีเหลืองทองหอมเครื่องเทศ ซุปหางวัวเนื้อเปื่อยนุ่มรสชาติจัดจ้านเปรี้ยวเผ็ดร้อนถึงใจ โรยหอมเจียวกรอบหอมไม่อั้น",
-    "address": "ถนนจะนะ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.191,
-    "longitude": 100.5945
+    "address": "5J64+RH7 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.162036,
+    "longitude": 100.606427,
+    "userRatingCount": 39,
+    "googleMapsUri": "https://maps.google.com/?cid=179104420757458119&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJg398Q7gyTTARx0zzkIVOfAI"
   },
   {
     "id": "r_songkhla_15",
     "name": "ลุงจิ๋ว ซีฟู้ด สวนสองทะเล",
-    "rating": 4.6,
+    "rating": 4.1,
     "priceRange": "$$",
     "avgPrice": 250,
     "distance": 2.8,
@@ -909,9 +1010,12 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลติดปากอ่าวทะเลสาบสงขลา ยำสาหร่ายผมนางของดีสงขลา ปูม้านึ่งเนื้อแน่นหวานสด แกงส้มไข่ปลาริวกิวหน่อไม้ดองสุดเข้มข้น",
-    "address": "แหลมสนอ่อน สวนสองทะเล อำเภอเมืองสงขลา",
-    "latitude": 7.2105,
-    "longitude": 100.584
+    "address": "ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.177973,
+    "longitude": 100.541967,
+    "userRatingCount": 723,
+    "googleMapsUri": "https://maps.google.com/?cid=18345837325024712305&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJperaNjAyTTARcVYzwdiBmf4"
   },
   {
     "id": "r_songkhla_16",
@@ -936,14 +1040,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารริมทะเลสาบเกาะยอ บรรยากาศวิวสะพานติณสูลานนท์ ปลากะพงทอดน้ำปลาตัวโตกรอบนอกนุ่มใน ยำกุ้งแก้วเกาะยอ ส้มตำสาหร่ายข้อ",
-    "address": "8/2 หมู่ 2 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.162,
-    "longitude": 100.536
+    "address": "8 2 เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.172295,
+    "longitude": 100.54619,
+    "userRatingCount": 9220,
+    "googleMapsUri": "https://maps.google.com/?cid=2116933769996833033&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJoYppRToyTTARCZGwPQzcYB0"
   },
   {
     "id": "r_songkhla_17",
     "name": "ขนมไทยป้าแอ๊ะ (ถนนนางงาม)",
-    "rating": 4.8,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 45,
     "distance": 0.85,
@@ -961,14 +1068,17 @@
       "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800&auto=format&fit=crop"
     ],
     "description": "ขนมหวานไทยโบราณตำรับชาววังเมืองสงขลา ขนมทองเอก สัมปันนี เสน่ห์จันทน์ ขนมขี้มอด ทำสดใหม่ทุกวัน กลิ่นหอมอบควันเทียนละมุนละไม",
-    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1944,
-    "longitude": 100.5906
+    "address": "60, 1 ถ. ไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.184904,
+    "longitude": 100.599949,
+    "userRatingCount": 11,
+    "googleMapsUri": "https://maps.google.com/?cid=6086476844134917947&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJM7foPgAzTTARO2dNNHGCd1Q"
   },
   {
     "id": "r_songkhla_18",
     "name": "บะหมี่เป็ดย่างเจ๊เค็ง",
-    "rating": 4.5,
+    "rating": 4.8,
     "priceRange": "$",
     "avgPrice": 65,
     "distance": 0.8,
@@ -987,14 +1097,17 @@
       "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=800&auto=format&fit=crop"
     ],
     "description": "เป็ดย่างหนังกรอบเนื้อนุ่ม ไร้กลิ่นสาบ เสิร์ฟพร้อมบะหมี่ไข่เส้นแบนเหนียวนุ่ม น้ำราดเป็ดปรุงรสด้วยเต้าเจี้ยวและเครื่องพะโล้หอมละมุนลิ้น",
-    "address": "ถนนรามัญ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.193,
-    "longitude": 100.591
+    "address": "5JJ8+8MQ ถ. เก้าแสน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.180824,
+    "longitude": 100.616752,
+    "userRatingCount": 12,
+    "googleMapsUri": "https://maps.google.com/?cid=7070361177655141692&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJ-5fE-4szTTARPOXY2wf4HmI"
   },
   {
     "id": "r_songkhla_19",
     "name": "ข้าวแกงแม่สมจิตต์ (สี่แยกพระพุทธ)",
-    "rating": 4.4,
+    "rating": 3.8,
     "priceRange": "$",
     "avgPrice": 50,
     "distance": 1.1,
@@ -1011,14 +1124,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ข้าวแกงขวัญใจคนตื่นเช้าแห่งสี่แยกพระพุทธ ไข่พะโล้โบราณสีเข้มเคี่ยวเข้าเนื้อ แกงเนื้อพริกสด หมูหวานทรงเครื่องรสกลมกล่อม",
-    "address": "สี่แยกพระพุทธ ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1895,
-    "longitude": 100.5975
+    "address": "เลขที่ 95 ถนน รถไฟ, ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.199479,
+    "longitude": 100.593333,
+    "userRatingCount": 4,
+    "googleMapsUri": "https://maps.google.com/?cid=6638669278445493510&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJs_m1ACozTTARBt0KG4lKIVw"
   },
   {
     "id": "r_songkhla_20",
     "name": "เรือนไทยปักษ์ใต้ สงขลา",
-    "rating": 4.6,
+    "rating": 4.7,
     "priceRange": "$$",
     "avgPrice": 180,
     "distance": 2.2,
@@ -1036,14 +1152,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "อาหารไทยปักษ์ใต้แท้บรรยากาศเรือนไทยริมสระบัว เมนูแนะนำ แกงคั่วปูใบชะพลูพร้อมเส้นหมี่ ปลากระบอกทอดขมิ้นกรอบนอกนุ่มใน น้ำพริกแมงดาผักเคียง",
-    "address": "ถนนชลาทัศน์ ใกล้สระบัว อำเภอเมืองสงขลา",
-    "latitude": 7.198,
-    "longitude": 100.605
+    "address": "55 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.196553,
+    "longitude": 100.590526,
+    "userRatingCount": 57,
+    "googleMapsUri": "https://maps.google.com/?cid=8144604078841593270&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJFxDln_ozTTARtv2M-0FyB3E"
   },
   {
     "id": "r_songkhla_21",
     "name": "คุณจิตซีวิว เกาะยอ (Khun Jitt Sea View)",
-    "rating": 4.7,
+    "rating": 4.4,
     "priceRange": "$$$",
     "avgPrice": 250,
     "distance": 8.2,
@@ -1061,14 +1180,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "จุดชมวิวสะพานติณสูลานนท์ที่สวยที่สุด กุ้งแม่น้ำเผาเตาถ่านมันเยิ้ม ปูม้านึ่งแกะพร้อมทาน กุ้งแชบ๊วยอบเกลือทะเล แกงส้มไข่ปลาริวกิว",
-    "address": "เชิงสะพานติณสูลานนท์ ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.171,
-    "longitude": 100.551
+    "address": "ถ.สงขลา-ระโนด ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.164805,
+    "longitude": 100.552018,
+    "userRatingCount": 794,
+    "googleMapsUri": "https://maps.google.com/?cid=12413907504520302491&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJAV9tVRUyTTARmw99iRoPR6w"
   },
   {
     "id": "r_songkhla_22",
     "name": "ร้านระเบียงทราย (หาดชลาทัศน์)",
-    "rating": 4.5,
+    "rating": 4.2,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 2.1,
@@ -1087,14 +1209,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลบรรยากาศเปิดโล่งรับลมทะเลหาดชลาทัศน์ หมึกไข่นึ่งมะนาวรสแซ่บ กุ้งอบวุ้นเส้น หอยนางรมสดสุราษฎร์ทรงเครื่อง",
-    "address": "ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.181,
-    "longitude": 100.613
+    "address": "491 ถนน นครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.189041,
+    "longitude": 100.594138,
+    "userRatingCount": 59,
+    "googleMapsUri": "https://maps.google.com/?cid=5399655087432216067&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJxdX24B4zTTARAy4HhLFt70o"
   },
   {
     "id": "r_songkhla_23",
     "name": "สมิหลาซีฟู้ด",
-    "rating": 4.4,
+    "rating": 4,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 1.8,
@@ -1113,14 +1238,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลติดแหลมสมิหลา ปูม้านึ่งสดหวาน ยำไข่แมงดาทะเลสูตรเข้มข้น ปลาสำลีแดดเดียวยำมะม่วงรสเด็ด",
-    "address": "แหลมสมิหลา ถนนราชดำเนิน ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.213,
-    "longitude": 100.592
+    "address": "ถนน ราชดำเนิน แหลม ส มิ หลา, 6H7R+JWP ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.214091,
+    "longitude": 100.59233,
+    "userRatingCount": 76,
+    "googleMapsUri": "https://maps.google.com/?cid=16017293461759411587&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJ35L7HmkzTTARg0VbS4rbSN4"
   },
   {
     "id": "r_songkhla_24",
     "name": "ทิวทัศน์ เกาะยอ",
-    "rating": 4.5,
+    "rating": 4.1,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 9,
@@ -1139,14 +1267,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "นั่งทานอาหารบนแพยื่นลงไปในทะเลสาบสงขลา ปลากะพงนึ่งมะนาว แกงส้มปูดำหน่อไม้ดอง ทอดมันกุ้งสดเนื้อแน่น",
-    "address": "หมู่ 1 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.155,
-    "longitude": 100.532
+    "address": "5G2F+5V9 ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.150406,
+    "longitude": 100.524726,
+    "userRatingCount": 118,
+    "googleMapsUri": "https://maps.google.com/?cid=15413659375609355005&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJwb-eoB8xTTAR_ZoQfIlR6NU"
   },
   {
     "id": "r_songkhla_25",
     "name": "ชมจันทร์ เกาะยอ",
-    "rating": 4.6,
+    "rating": 4,
     "priceRange": "$$$",
     "avgPrice": 250,
     "distance": 8.4,
@@ -1165,14 +1296,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารริมน้ำบรรยากาศโมเดิร์นโรแมนติก กุ้งราดซอสมะขามรสเปรี้ยวหวาน หอยนางรมสดทรงเครื่อง ปลากะพงทอดขมิ้นกรอบหอม",
-    "address": "ถนนรอบเกาะยอ ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.167,
-    "longitude": 100.545
+    "address": "5H32+H3R ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.153982,
+    "longitude": 100.550137,
+    "userRatingCount": 621,
+    "googleMapsUri": "https://maps.google.com/?cid=8999955587019253259&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJhTV4YQ0yTTARCyaTLuxD5nw"
   },
   {
     "id": "r_songkhla_26",
     "name": "เรอดัง เกาะยอ",
-    "rating": 4.5,
+    "rating": 4,
     "priceRange": "$$",
     "avgPrice": 180,
     "distance": 8.6,
@@ -1189,14 +1323,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ซีฟู้ดรสชาติพื้นบ้านเกาะยอดั้งเดิม ยำเคยสด (กุ้งเคยทะเลสาบ) ต้มส้มปลากระบอกไข่ ปลากะพงเผาเกลือเสิร์ฟคู่น้ำจิ้มซีฟู้ดมะนาวสด",
-    "address": "หมู่ 7 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.169,
-    "longitude": 100.548
+    "address": "ถนนบ้านสวนใหม่ ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.158877,
+    "longitude": 100.536679,
+    "userRatingCount": 269,
+    "googleMapsUri": "https://maps.google.com/?cid=1871253724254101583&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJ4waZ6xsyTTART-DKDlkH-Bk"
   },
   {
     "id": "r_songkhla_27",
     "name": "สุจินดาซีฟู้ด (หาดสมิหลา)",
-    "rating": 4.4,
+    "rating": 4.1,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 1.9,
@@ -1214,14 +1351,17 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านซีฟู้ดเก่าแก่ใกล้รูปปั้นนางเงือกทอง หอยชักตีนลวกจิ้ม กุ้งแชบ๊วยทอดกระเทียม ปลากะพง 3 รส ต้มยำกุ้งน้ำข้นสูตรดั้งเดิม",
-    "address": "แหลมสมิหลา ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.214,
-    "longitude": 100.591
+    "address": "6H7R+HQC ซอย ราชดำเนิน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.213926,
+    "longitude": 100.591896,
+    "userRatingCount": 1201,
+    "googleMapsUri": "https://maps.google.com/?cid=18293869003395156699&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJVaJ2LGkzTTAR28rl-u7g4P0"
   },
   {
     "id": "r_songkhla_28",
     "name": "ภูผาเพชร เกาะยอ",
-    "rating": 4.5,
+    "rating": 4.6,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 8.7,
@@ -1240,14 +1380,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านตั้งอยู่บนเนินเขาวิวทะเลสาบมุมสูง ปลากะพงลุยสวนเครื่องสมุนไพรแน่นๆ หมึกผัดไข่เค็มมันหอม กุ้งอบวุ้นเส้นหม้อดิน",
-    "address": "หมู่ 4 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.16,
-    "longitude": 100.538
+    "address": "4XFX+V77 ตำบล ปาล์มพัฒนา อำเภอ มะนัง สตูล 91130",
+    "latitude": 7.124675,
+    "longitude": 99.998176,
+    "userRatingCount": 527,
+    "googleMapsUri": "https://maps.google.com/?cid=6723971459520568706&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJuaNFDtoFTTARgp2W1GpYUF0"
   },
   {
     "id": "r_songkhla_29",
     "name": "น้าชม ทะเลสาบสงขลา",
-    "rating": 4.5,
+    "rating": 4.3,
     "priceRange": "$$",
     "avgPrice": 150,
     "distance": 8.5,
@@ -1264,14 +1407,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านซีฟู้ดชาวบ้านแท้ๆ ราคาเป็นมิตร กุ้งกุลาดำอบเกลือ ปลากระบอกต้มส้มยอดจาก กั้งทอดกระเทียมพริกไทยสด",
-    "address": "ริมทะเลสาบ ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.159,
-    "longitude": 100.542
+    "address": "6HGH+R25 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.227012,
+    "longitude": 100.577605,
+    "userRatingCount": 715,
+    "googleMapsUri": "https://maps.google.com/?cid=4375819619741378369&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJx3gAzH8zTTARQafek8IIujw"
   },
   {
     "id": "r_songkhla_30",
     "name": "เกาะน้ำซีฟู้ด เกาะยอ",
-    "rating": 4.4,
+    "rating": 4.2,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 8.9,
@@ -1289,9 +1435,12 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารบนเกาะกลางทะเลสาบ ปูม้าไข่นึ่งหวานสด แกงส้มชะอมกุ้งสด ยำปลาหมึกไข่รสจี๊ดจ๊าดสูตรเกาะยอ",
-    "address": "หมู่ 1 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.163,
-    "longitude": 100.534
+    "address": "5GHR+6P8 408 ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.178029,
+    "longitude": 100.541823,
+    "userRatingCount": 13,
+    "googleMapsUri": "https://maps.google.com/?cid=14993002379271893018&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJj-pqMTAyTTARGnAWRTrYEdA"
   },
   {
     "id": "r_songkhla_31",
@@ -1314,14 +1463,17 @@
       "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
     ],
     "description": "ตั้งอยู่จุดบรรจบระหว่างทะเลสาบสงขลากับอ่าวไทย ยำไข่แมงดาทะเล ปูม้าถอดเสื้อแกะเนื้อพร้อมทาน หอยแครงลวกตัวใหญ่",
-    "address": "แหลมสนอ่อน สวนสองทะเล ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.22,
-    "longitude": 100.575
+    "address": "6HGH+M2V ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.226748,
+    "longitude": 100.577543,
+    "userRatingCount": 3586,
+    "googleMapsUri": "https://maps.google.com/?cid=8863275389203626196&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJD8XNSn4zTTAR1LjxvwGuAHs"
   },
   {
     "id": "r_songkhla_32",
     "name": "ครัวปลาเล (หาดชลาทัศน์)",
-    "rating": 4.3,
+    "rating": 4.9,
     "priceRange": "$$",
     "avgPrice": 180,
     "distance": 2.3,
@@ -1339,14 +1491,17 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลบรรยากาศเป็นกันเอง ปลาสำลียำมะม่วง กุ้งทอดราดซอสมะขาม หมึกย่างเตาถ่านหอมกรุ่นรับลมทะเล",
-    "address": "ถนนเลียบหาดชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.178,
-    "longitude": 100.614
+    "address": "39, 7 M.7, ตำบล เขารูปช้าง Songkhla, สงขลา 90000",
+    "latitude": 7.149738,
+    "longitude": 100.641876,
+    "userRatingCount": 329,
+    "googleMapsUri": "https://maps.google.com/?cid=5319740936837997635&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJeYNGML4zTTARQyRVZTKE00k"
   },
   {
     "id": "r_songkhla_33",
     "name": "แม่เบญซีฟู้ด เกาะยอ",
-    "rating": 4.5,
+    "rating": 4.2,
     "priceRange": "$$",
     "avgPrice": 220,
     "distance": 8.3,
@@ -1364,14 +1519,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลสูตรครอบครัว กุ้งลายเสือเผาตัวโต หอยแมลงภู่อบสมุนไพร ปลากะพงนึ่งซีอิ๊วสูตรเด็ดรสกลมกล่อม",
-    "address": "หมู่ 3 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.165,
-    "longitude": 100.54
+    "address": "ถ.สงขลา-ระโนด ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.163432,
+    "longitude": 100.552918,
+    "userRatingCount": 323,
+    "googleMapsUri": "https://maps.google.com/?cid=2791252922927690309&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJmbuzeNczTTARRTJgpb6FvCY"
   },
   {
     "id": "r_songkhla_34",
     "name": "ครัวริมหาดชลาทัศน์ (ป้าพร)",
-    "rating": 4.3,
+    "rating": 5,
     "priceRange": "$",
     "avgPrice": 100,
     "distance": 2,
@@ -1389,14 +1547,17 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "ส้มตำปูม้าสดรสแซ่บ หอยนางรมทรงเครื่อง ยำวุ้นเส้นทะเลรวมมิตร นั่งทานรับลมริมชายหาดชลาทัศน์",
-    "address": "ชายหาดชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.185,
-    "longitude": 100.611
+    "address": "มุ่งมั่นcoffe หาด ชลาทัศน์ เทศบาลนครสงขลา อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.208111,
+    "longitude": 100.600845,
+    "userRatingCount": 2,
+    "googleMapsUri": "https://maps.google.com/?cid=5183804920219471437&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJgcwlgbkzTTARTY6aJhyT8Ec"
   },
   {
     "id": "r_songkhla_35",
     "name": "โพธิ์ทะเล เกาะยอ",
-    "rating": 4.4,
+    "rating": 4.1,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 8.5,
@@ -1413,14 +1574,17 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านใต้ต้นโพธิ์ทะเลริมน้ำ แกงส้มยอดมะพร้าวปลากะพงสองเล ยำสาหร่ายผมนาง กุ้งผัดกะปิสะตอสด",
-    "address": "หมู่ 6 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.168,
-    "longitude": 100.546
+    "address": "5G6P+5R8 ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.160405,
+    "longitude": 100.537089,
+    "userRatingCount": 137,
+    "googleMapsUri": "https://maps.google.com/?cid=16243012084718124539&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJieSsfBkyTTAR-z0AkG7FauE"
   },
   {
     "id": "r_songkhla_36",
     "name": "แหลมทรายซีฟู้ด (สิงหนคร)",
-    "rating": 4.5,
+    "rating": 4.4,
     "priceRange": "$$",
     "avgPrice": 180,
     "distance": 3.5,
@@ -1439,14 +1603,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ข้ามแพขนานยนต์มาฝั่งสิงหนคร ปูม้าเป็นๆ ต้มสดใหม่ ปลากะพงทอดน้ำปลา หมึกไข่ย่างน้ำจิ้มถั่วบดแซ่บๆ",
-    "address": "แหลมสน ตำบลหัวเขา อำเภอสิงหนคร สงขลา",
-    "latitude": 7.208,
-    "longitude": 100.576
+    "address": "48 7 ตำบล เทพกระษัตรี อำเภอถลาง ภูเก็ต 83110",
+    "latitude": 8.120242,
+    "longitude": 98.370443,
+    "userRatingCount": 1402,
+    "googleMapsUri": "https://maps.google.com/?cid=18264270705684528564&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJL5KVazlJUDARtD3mRXC5d_0"
   },
   {
     "id": "r_songkhla_37",
     "name": "น้องณี เกาะยอ",
-    "rating": 4.4,
+    "rating": 4.2,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 8.8,
@@ -1463,14 +1630,17 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "ซีฟู้ดสดจากกระชังเลี้ยง ปลากะพงผัดฉ่าร้อนแรง ต้มยำกุ้งแชบ๊วยน้ำใส ยำหอยแครงสดตัวโต",
-    "address": "หมู่ 2 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.161,
-    "longitude": 100.535
+    "address": "47M5+M3Q ถ. เพชรเกษม รัตภูมิ อำเภอรัตภูมิ สงขลา 90180",
+    "latitude": 7.134206,
+    "longitude": 100.257727,
+    "userRatingCount": 47,
+    "googleMapsUri": "https://maps.google.com/?cid=4959922722959191763&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJdTelKwoYTTAR0-5eD3Av1UQ"
   },
   {
     "id": "r_songkhla_38",
     "name": "ดาริส ซีฟู้ด (ฮาลาลริมเล)",
-    "rating": 4.6,
+    "rating": 4.7,
     "priceRange": "$$",
     "avgPrice": 220,
     "distance": 3.2,
@@ -1487,14 +1657,17 @@
       "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลสดปรุงตามหลักฮาลาล 100% ริมทะเลสาบสงขลา กุ้งเผาตัวโต ปูม้านึ่งสดหวาน ปลากะพงทอด 3 รส",
-    "address": "ถนนเลียบทะเลสาบ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.172,
-    "longitude": 100.56
+    "address": "8 2 เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.172295,
+    "longitude": 100.54619,
+    "userRatingCount": 9220,
+    "googleMapsUri": "https://maps.google.com/?cid=2116933769996833033&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJoYppRToyTTARCZGwPQzcYB0"
   },
   {
     "id": "r_songkhla_39",
     "name": "ครัววันดี เกาะยอ",
-    "rating": 4.4,
+    "rating": 4.6,
     "priceRange": "$$",
     "avgPrice": 180,
     "distance": 8.6,
@@ -1513,14 +1686,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารซีฟู้ดอบอุ่นสไตล์ครอบครัว ปลากะพงต้มเต้าเจี้ยว ทอดมันกุ้งสดกรอบนอกนุ่มใน แกงคั่วหอยขม",
-    "address": "หมู่ 3 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.164,
-    "longitude": 100.539
+    "address": "26/1 หมู่8 บ้านท้ายเสาะ เกาะยอ ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.1531,
+    "longitude": 100.52731,
+    "userRatingCount": 71,
+    "googleMapsUri": "https://maps.google.com/?cid=7426347386354780173&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJdx-WW8czTTARDchT9pmvD2c"
   },
   {
     "id": "r_songkhla_40",
     "name": "หาดแก้วซีฟู้ด (สิงหนคร)",
-    "rating": 4.5,
+    "rating": 4.4,
     "priceRange": "$$",
     "avgPrice": 190,
     "distance": 4.8,
@@ -1539,9 +1715,12 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลริมหาดแก้ว บรรยากาศทิวสนชายทะเลสงบ ปลากะพงนึ่งซีอิ๊ว กุ้งแชบ๊วยคั่วพริกเกลือ ยำไข่แมงดา",
-    "address": "หาดแก้ว ตำบลชิงโค อำเภอสิงหนคร สงขลา",
-    "latitude": 7.228,
-    "longitude": 100.564
+    "address": "19 ถ ชลาทัศน์ ตำบลบ่อยาง อำเภอเมือง, สงขลา 90000",
+    "latitude": 7.210494,
+    "longitude": 100.598827,
+    "userRatingCount": 310,
+    "googleMapsUri": "https://maps.google.com/?cid=18201309086942408265&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJaTWelkEzTTARSa5KDi4KmPw"
   },
   {
     "id": "r_songkhla_41",
@@ -1565,14 +1744,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ก๋วยเตี๋ยวเรือน้ำตกสูตรอยุธยาแท้ น้ำซุปข้นคลั่กหอมเครื่องเทศสมุนไพร เนื้อเปื่อยตุ๋นจนนุ่มละลาย หมูตุ๋นเอ็นเด้ง กากหมูเจียวสดใหม่กรอบฟิน",
-    "address": "ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.189,
-    "longitude": 100.596
+    "address": "74/6 ไทรบุรี ซอย 41 ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.17893,
+    "longitude": 100.607301,
+    "userRatingCount": 23,
+    "googleMapsUri": "https://maps.google.com/?cid=9027434200156859312&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJVR-QXR4zTTARsOuPXZPjR30"
   },
   {
     "id": "r_songkhla_42",
     "name": "ก๋วยเตี๋ยวเป็ดต้มฟัก โกเด้ง (ถนนพัทลุง)",
-    "rating": 4.7,
+    "rating": 4.2,
     "priceRange": "$",
     "avgPrice": 70,
     "distance": 1.1,
@@ -1590,14 +1772,17 @@
       "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านเป็ดพะโล้ระดับตำนานเมืองสงขลา เนื้อเป็ดตุ๋นนุ่มไร้กลิ่นสาบ น้ำซุปตุ๋นยาจีนใส่ฟักมะนาวดองรสกลมกล่อมซดคล่องคอ เลือดเป็ดนุ่มละมุน",
-    "address": "ถนนพัทลุง ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.191,
-    "longitude": 100.5925
+    "address": "5HRV+FWF ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.191132,
+    "longitude": 100.594849,
+    "userRatingCount": 5,
+    "googleMapsUri": "https://maps.google.com/?cid=13608594958277488126&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJpw8GZSkzTTAR_i1NXANx27w"
   },
   {
     "id": "r_songkhla_43",
     "name": "เจ๊เฮียง บะหมี่ลูกชิ้นปลาทำเอง (ถนนนางงาม)",
-    "rating": 4.6,
+    "rating": 4.5,
     "priceRange": "$",
     "avgPrice": 65,
     "distance": 0.7,
@@ -1616,14 +1801,17 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "ลูกชิ้นปลาอินทรีแท้ 100% ตีสดเด้งธรรมชาติไม่ผสมแป้ง ฮือก้วยทอดหอมกรุ่น บะหมี่ไข่เส้นเหนียวนุ่มทำเอง ซุปกระดูกปลากระพงหวานธรรมชาติ",
-    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.195,
-    "longitude": 100.5902
+    "address": "201 ถ. กรุงเกษม รองเมือง เขตปทุมวัน กรุงเทพมหานคร 10330",
+    "latitude": 13.752286,
+    "longitude": 100.518291,
+    "userRatingCount": 247,
+    "googleMapsUri": "https://maps.google.com/?cid=3314101957804924903&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJOxmoqjCZ4jAR559j-CsO_i0"
   },
   {
     "id": "r_songkhla_44",
     "name": "ก๋วยเตี๋ยวต้มยำหมูกรอบ เจ๊ดา (หน้า รพ.สงขลา)",
-    "rating": 4.5,
+    "rating": 4.2,
     "priceRange": "$",
     "avgPrice": 75,
     "distance": 4.2,
@@ -1642,14 +1830,17 @@
       "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
     ],
     "description": "หมูกรอบหนังพองฟูกรอบสะท้านต้มยำมะนาวคั้นสดรสจี๊ดจ๊าด ไข่ต้มยางมะตูมเยิ้ม หมูเด้งแผ่นใหญ่ ถั่วลิสงคั่วบดใหม่หอมมัน",
-    "address": "หน้าโรงพยาบาลสงขลา ถนนกาญจนวนิช ตำบลพะวง อำเภอเมืองสงขลา",
-    "latitude": 7.152,
-    "longitude": 100.601
+    "address": "547 น้ำกระจาย ซอย 26 เทศบาลตำบลพะวง อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.136967,
+    "longitude": 100.573952,
+    "userRatingCount": 79,
+    "googleMapsUri": "https://maps.google.com/?cid=9925783737951888421&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJR6cZDoItTTARJaT4ebh3v4k"
   },
   {
     "id": "r_songkhla_45",
     "name": "ก๋วยเตี๋ยวเนื้อนายดำ (ถนนสงขลา-นาทวี)",
-    "rating": 4.7,
+    "rating": 4.5,
     "priceRange": "$$",
     "avgPrice": 90,
     "distance": 3.8,
@@ -1667,14 +1858,17 @@
       "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
     ],
     "description": "ตำนานก๋วยเตี๋ยวเนื้อตุ๋นยาจีนแห่งสงขลา เนื้อเปื่อยนุ่มฉ่ำ เอ็นแก้วตุ๋นละลายในปาก ลิ้นวัวนุ่มหนึบ ซุปกระดูกวัวเคี่ยวนานข้ามคืนรสเข้มข้น",
-    "address": "ถนนสงขลา-นาทวี ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
-    "latitude": 7.165,
-    "longitude": 100.608
+    "address": "G52G+W86 ตำบล ท่าตะเภา อำเภอเมืองชุมพร ชุมพร 86000",
+    "latitude": 10.50229,
+    "longitude": 99.175761,
+    "userRatingCount": 388,
+    "googleMapsUri": "https://maps.google.com/?cid=16412268026030726242&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJZ6Rhybuq-DARYhwQUtAWxOM"
   },
   {
     "id": "r_songkhla_46",
     "name": "บะหมี่เกี๊ยวปูสะพานเหล็ก สงขลา",
-    "rating": 4.6,
+    "rating": 4.4,
     "priceRange": "$$",
     "avgPrice": 85,
     "distance": 1.3,
@@ -1693,14 +1887,17 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "เนื้อปูม้าสดแกะเป็นก้อนๆ โปะหน้าบะหมี่ เกี๊ยวหมูหมักน้ำมันงาแป้งบางไส้แน่น น้ำซุปกระดูกหมูหวานธรรมชาติ ปรุงแห้งเหยาะจิ๊กโฉ่วโบราณ",
-    "address": "เชิงสะพานเหล็ก ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.188,
-    "longitude": 100.597
+    "address": "6H3V+P28 ซอย ศรีสุดา ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.204286,
+    "longitude": 100.592564,
+    "userRatingCount": 131,
+    "googleMapsUri": "https://maps.google.com/?cid=3029736744630997991&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJ0a7GjhQzTTAR59OtWoTJCyo"
   },
   {
     "id": "r_songkhla_47",
     "name": "โกแค๊ก ข้าวขาหมูและก๋วยจั๊บน้ำข้น (ถนนรามวิถี)",
-    "rating": 4.6,
+    "rating": 4.5,
     "priceRange": "$",
     "avgPrice": 60,
     "distance": 1.5,
@@ -1719,14 +1916,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ข้าวขาหมูเนื้อหนังนุ่มละมุนลิ้น และก๋วยจั๊บเส้นเหนียวนุ่มน้ำพะโล้เข้มข้น หมูกรอบชิ้นโต ไส้อ่อนล้างสะอาดไร้กลิ่น ไข่พะโล้ยางมะตูม",
-    "address": "ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1905,
-    "longitude": 100.595
+    "address": "ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.18618,
+    "longitude": 100.597565,
+    "userRatingCount": 95,
+    "googleMapsUri": "https://maps.google.com/?cid=14082376406555338747&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJpWxxGSAzTTAR-6cS6rqmbsM"
   },
   {
     "id": "r_songkhla_48",
     "name": "ก๋วยเตี๋ยวต้มยำทะเล เจ๊หมวย (วชิรา)",
-    "rating": 4.5,
+    "rating": 4.8,
     "priceRange": "$$",
     "avgPrice": 80,
     "distance": 2.8,
@@ -1745,14 +1945,17 @@
       "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
     ],
     "description": "ต้มยำทะเลเครื่องสดแน่นชาม กุ้งแชบ๊วยตัวใหญ่ หมึกกล้วยไข่แน่น ปลากะพงสองเลสดลวก ปรุงรสต้มยำมะนาวพริกเผารสจัดจ้านถึงใจ",
-    "address": "ย่านวชิรา ถนนทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.176,
-    "longitude": 100.609
+    "address": "56 ถนน นิพัทธ์ภักดี ตำบล หาดใหญ่ อำเภอหาดใหญ่ สงขลา 90110",
+    "latitude": 6.995515,
+    "longitude": 100.472528,
+    "userRatingCount": 5,
+    "googleMapsUri": "https://maps.google.com/?cid=15632645056996060495&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJsVHRlskpTTARTy0EotpP8tg"
   },
   {
     "id": "r_songkhla_49",
     "name": "ก๋วยเตี๋ยวราดหน้ายอดผัก โกฮวด (ถนนนครนอก)",
-    "rating": 4.5,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 65,
     "distance": 0.6,
@@ -1771,14 +1974,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "เส้นใหญ่ผัดเตาถ่านหอมกลิ่นกระทะไหม้กำลังดี น้ำราดหน้าเหนียวใสรสกลมกล่อม หมูหมักนุ่มชิ้นใหญ่ ยอดคะน้าฮ่องกงสดกรอบหวาน",
-    "address": "ถนนนครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.196,
-    "longitude": 100.5885
+    "address": "ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.193274,
+    "longitude": 100.591335,
+    "userRatingCount": 190,
+    "googleMapsUri": "https://maps.google.com/?cid=12834026410972937465&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJw4rZgxkzTTAR-fwF8AWfG7I"
   },
   {
     "id": "r_songkhla_50",
     "name": "เจ๊เพ็ญ ก๋วยเตี๋ยวไก่มะระบุฟเฟต์ สงขลา",
-    "rating": 4.4,
+    "rating": 3.8,
     "priceRange": "$",
     "avgPrice": 55,
     "distance": 2.5,
@@ -1796,14 +2002,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ก๋วยเตี๋ยวไก่ตุ๋นซุปยาจีนหอมเข้มข้น น่องไก่ชิ้นโต ข้อไก่ตีนไก่ตุ๋นจนเปื่อยล่อน มะระตุ๋นไม่ขม ผักสดและมะระสดหยิบได้ไม่อั้น",
-    "address": "ถนนไทรบุรี ซอย 35 ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.182,
-    "longitude": 100.601
+    "address": "บ่อย่าง 252 ถ. ราษฎร์อุทิศ 1 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.177347,
+    "longitude": 100.603356,
+    "userRatingCount": 11,
+    "googleMapsUri": "https://maps.google.com/?cid=3503580669215566985&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJg0kfWwAzTTARieyETg44nzA"
   },
   {
     "id": "r_songkhla_51",
     "name": "ก๋วยเตี๋ยวสุโขทัย สูตรโบราณ (ถนนเพชรคีรี)",
-    "rating": 4.5,
+    "rating": 5,
     "priceRange": "$",
     "avgPrice": 60,
     "distance": 0.9,
@@ -1822,14 +2031,17 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "ก๋วยเตี๋ยวต้มยำหมูแดงสูตรสุโขทัยแท้ ปรุงน้ำมะนาวแท้ น้ำตาลปี๊บ ถั่วลิสงคั่วบดเองใหม่ๆ ใส่ถั่วฝักยาวซอย กุ้งแห้งทอด และกากหมูทอดกรอบ",
-    "address": "ถนนเพชรคีรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1928,
-    "longitude": 100.5918
+    "address": "44 ถนน ทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.194169,
+    "longitude": 100.600152,
+    "userRatingCount": 2,
+    "googleMapsUri": "https://maps.google.com/?cid=11793656621507064413&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJy0b3ViMzTTARXbLcNzZ8q6M"
   },
   {
     "id": "r_songkhla_52",
     "name": "บะหมี่ต้มยำโบราณ เจ๊หงษ์ (เก้าเส้ง)",
-    "rating": 4.5,
+    "rating": 4.1,
     "priceRange": "$",
     "avgPrice": 60,
     "distance": 3.5,
@@ -1848,14 +2060,17 @@
       "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านบะหมี่ริมหาดเก้าเส้ง เส้นบะหมี่ไข่เหนียวนุ่ม หมูสับแผ่นใหญ่ เกี๊ยวหมูทอดกรอบ ต้มยำพริกเผารสจัดจ้านรับลมทะเลอ่าวไทย",
-    "address": "ชุมชนเก้าเส้ง ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.17,
-    "longitude": 100.618
+    "address": "หลังธนาคารกสิกร 1 เตาหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.186583,
+    "longitude": 100.598852,
+    "userRatingCount": 15,
+    "googleMapsUri": "https://maps.google.com/?cid=14415184183840931949&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJn0XnX08zTTARbQCr6aMFDcg"
   },
   {
     "id": "r_songkhla_53",
     "name": "ก๋วยเตี๋ยวเรือโกเบิ้ม สงขลา (สูตรอยุธยาแท้)",
-    "rating": 4.6,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 60,
     "distance": 3.1,
@@ -1873,14 +2088,17 @@
       "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
     ],
     "description": "ก๋วยเตี๋ยวเรือรสเด็ดไม่ต้องปรุง ซุปเลือดเข้มข้นหอมกะทิและสมุนไพร เนื้อใบพายสไลด์ลวกกำลังดี แคบหมูและกากหมูเจียวสดใหม่ตักไม่อั้น",
-    "address": "ถนนกาญจนวนิช ตำบลเขารูปช้าง อำเภอเมืองสงขลา",
-    "latitude": 7.168,
-    "longitude": 100.605
+    "address": "5HWR+7JJ รามัญ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195702,
+    "longitude": 100.591519,
+    "userRatingCount": 256,
+    "googleMapsUri": "https://maps.google.com/?cid=8341266826081936318&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJHWZd_xkzTTARviNdAfwhwnM"
   },
   {
     "id": "r_songkhla_54",
     "name": "ข้าวมันไก่โกเข่ง (สี่แยกวัดมัชฌิมาวาส)",
-    "rating": 4.6,
+    "rating": 5,
     "priceRange": "$",
     "avgPrice": 65,
     "distance": 0.8,
@@ -1898,14 +2116,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ข้าวมันไก่ตอนเนื้อฉ่ำนุ่ม หนังกรึบ ข้าวหุงเตาถ่านหอมขิงกระเทียมเรียงเม็ดสวย น้ำจิ้มเต้าเจี้ยวพริกขิงสูตรลับโบราณ น้ำซุปฟักหวานชุ่มคอ",
-    "address": "สี่แยกวัดมัชฌิมาวาส ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1935,
-    "longitude": 100.591
+    "address": "ถ. ราษฎร์อุทิศ 1 ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.178262,
+    "longitude": 100.602572,
+    "userRatingCount": 1,
+    "googleMapsUri": "https://maps.google.com/?cid=6072420450590389609&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJreO6gVUzTTARafVBDDqSRVQ"
   },
   {
     "id": "r_songkhla_55",
     "name": "ก๋วยเตี๋ยวแคะ เจ๊เตียง (ถนนไทรบุรี)",
-    "rating": 4.5,
+    "rating": 4.8,
     "priceRange": "$",
     "avgPrice": 60,
     "distance": 1.4,
@@ -1925,14 +2146,17 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "ลูกชิ้นแคะทำเองสูตรชาวจีนแคะดั้งเดิม เต้าหู้ขาวและเต้าหู้ทอดยัดไส้หมูสับ ลูกชิ้นหมูนึ่ง ลูกชิ้นกุ้งทอด น้ำซุปใสหอมหวานกลมกล่อม",
-    "address": "ถนนไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1895,
-    "longitude": 100.5965
+    "address": "5HVV+86V ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.193456,
+    "longitude": 100.593066,
+    "userRatingCount": 80,
+    "googleMapsUri": "https://maps.google.com/?cid=8768159813087517368&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJAYjKmDozTTARuNrv8OTCrnk"
   },
   {
     "id": "r_songkhla_56",
     "name": "ก๋วยเตี๋ยวปลาอินทรีสด แหลมทราย",
-    "rating": 4.6,
+    "rating": 4.5,
     "priceRange": "$$",
     "avgPrice": 85,
     "distance": 1.6,
@@ -1950,9 +2174,12 @@
       "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&auto=format&fit=crop"
     ],
     "description": "ปลาอินทรีสดจากเรือประมงสงขลา แล่สดๆ ลวกเนื้อหวานเด้ง ไร้กลิ่นคาว น้ำซุปเคี่ยวจากกระดูกปลาและหัวไชเท้า เสิร์ฟคู่น้ำจิ้มเต้าเจี้ยวมะนาวสดรสเด็ด",
-    "address": "ถนนแหลมทราย ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.204,
-    "longitude": 100.587
+    "address": "เลขที่ 133 ถนน จุติอนุสรณ์ ตำบล หาดใหญ่ อำเภอหาดใหญ่ สงขลา 90110",
+    "latitude": 7.012961,
+    "longitude": 100.476399,
+    "userRatingCount": 438,
+    "googleMapsUri": "https://maps.google.com/?cid=7324296965230946643&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJ-Vp_1VYoTTARU-kPukghpWU"
   },
   {
     "id": "r_songkhla_57",
@@ -1977,14 +2204,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ผัดไทยกุ้งสดผัดเตาถ่านหอมกรุ่น เส้นจันท์เหนียวนุ่มคลุกเคล้าซอสมะขามเปียกเคี่ยวเองรสเปรี้ยวอมหวาน กุ้งแม่น้ำตัวสด กากหมูกรอบ เต้าหู้เหลือง",
-    "address": "หน้าวิทยาลัยอาชีวศึกษาสงขลา ถนนรามวิถี ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1915,
-    "longitude": 100.594
+    "address": "4HRW+63R, Unnamed Road, ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.140613,
+    "longitude": 100.595125,
+    "userRatingCount": 63,
+    "googleMapsUri": "https://maps.google.com/?cid=3095575164161430452&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJO9FfT94tTTARtBNd8zWx9So"
   },
   {
     "id": "r_songkhla_58",
     "name": "บะหมี่หมูแดงอบน้ำผึ้ง เจ๊หมวยเล็ก (ถนนทะเลหลวง)",
-    "rating": 4.5,
+    "rating": 5,
     "priceRange": "$",
     "avgPrice": 65,
     "distance": 2.7,
@@ -2004,9 +2234,12 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "หมูแดงอบน้ำผึ้งย่างเตาถ่านขอบไหม้นิดๆ เนื้อนุ่มฉ่ำ เกี๊ยวกุ้งผสมหมูสับแป้งบางไส้ทะลัก เส้นบะหมี่ไข่เส้นเล็กคลุกน้ำมันกระเทียมเจียวหอมๆ",
-    "address": "ถนนทะเลหลวง ย่านวชิรา ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.177,
-    "longitude": 100.6085
+    "address": "68 ราษฎร์อุทิศ 1 ซอย 2 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.180297,
+    "longitude": 100.60362,
+    "userRatingCount": 2,
+    "googleMapsUri": "https://maps.google.com/?cid=14576121199367322216&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJEyJx2lkzTTARaHpU0wDJSMo"
   },
   {
     "id": "r_songkhla_59",
@@ -2030,14 +2263,17 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "เย็นตาโฟหม้อไฟเสิร์ฟเดือดปุดๆ ซอสเต้าหู้ยี้แดงสูตรโบราณหอมเข้มข้น หมึกกรอบ เลือดหมูนุ่ม ลูกชิ้นปลาแท้ แมงกะพรุนกรุบกรอบ เกี๊ยวทอดตัวโต",
-    "address": "ซอย 18 ทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1755,
-    "longitude": 100.6095
+    "address": "33 กาญจนวนิช ซอย 1 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.174568,
+    "longitude": 100.607635,
+    "userRatingCount": 9,
+    "googleMapsUri": "https://maps.google.com/?cid=17506350296562530636&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJbw0nP-czTTARTPkplNcM8_I"
   },
   {
     "id": "r_songkhla_60",
     "name": "ก๋วยเตี๋ยวคั่วไก่กระทะเหล็ก ลุงเสริม (ถนนนางงาม)",
-    "rating": 4.7,
+    "rating": 4.3,
     "priceRange": "$",
     "avgPrice": 65,
     "distance": 0.7,
@@ -2057,9 +2293,12 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ก๋วยเตี๋ยวคั่วไก่เตาถ่านไฟแรง ผัดในกระทะเหล็กโบราณหอมกลิ่นควันกระทะ เส้นกรอบนอกนุ่มใน เนื้อไก่หมักนุ่ม ปลาหมึกกรอบ ปาท่องโก๋กรอบจิ้มซอสพริก",
-    "address": "ถนนนางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1942,
-    "longitude": 100.5908
+    "address": "180 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.194796,
+    "longitude": 100.59107,
+    "userRatingCount": 191,
+    "googleMapsUri": "https://maps.google.com/?cid=6314639098337506811&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJ3-dAGRozTTAR-zUztc0aolc"
   },
   {
     "id": "r_songkhla_61",
@@ -2083,14 +2322,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารริมทะเลสาบสงขลาบรรยากาศสุดชิลล์ กุ้งกุลาดำเผาเตาถ่าน ปลากะพงทอดราดน้ำปลา ยำไข่แมงดาทะเลสูตรเข้มข้น",
-    "address": "หมู่ 2 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.1625,
-    "longitude": 100.5365
+    "address": "52 4 ซอย 5 ร่มเย็น ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.183505,
+    "longitude": 100.542602,
+    "userRatingCount": 98,
+    "googleMapsUri": "https://maps.google.com/?cid=247798399398324323&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJvwEkNz8zTTARYygM1FRbcAM"
   },
   {
     "id": "r_songkhla_62",
     "name": "ครัวมัชฌิมา เกาะยอ",
-    "rating": 4.5,
+    "rating": 4.2,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 8.7,
@@ -2107,14 +2349,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ซีฟู้ดสดใหม่จากกระชังเลี้ยงเกาะยอ แกงส้มไข่ปลาริวกิวหน่อไม้ดอง ปูม้านึ่งเนื้อแน่นหวาน และกุ้งอบเกลือสมุนไพร",
-    "address": "หมู่ 4 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.1645,
-    "longitude": 100.5385
+    "address": "17 หมู่ 1 ต.เกาะยอ .เมือง ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.1766,
+    "longitude": 100.541046,
+    "userRatingCount": 1906,
+    "googleMapsUri": "https://maps.google.com/?cid=16590542364146204512&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJkQkgHTAyTTARYP8ANmFyPeY"
   },
   {
     "id": "r_songkhla_63",
     "name": "ร้านหาดสมิหลา ชายเล (ซีฟู้ดฮาลาล)",
-    "rating": 4.6,
+    "rating": 4,
     "priceRange": "$$$",
     "avgPrice": 260,
     "distance": 1.8,
@@ -2131,14 +2376,17 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลฮาลาล 100% ริมหาดสมิหลา กุ้งมังกร 7 สีซาชิมิ ปูม้าถอดเสื้อนึ่งสด ทะเลรวมมิตรเผาเสิร์ฟคู่น้ำจิ้มซีฟู้ดมะนาวสด",
-    "address": "แหลมสมิหลา ถนนราชดำเนิน ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.2135,
-    "longitude": 100.5915
+    "address": "ถนน ราชดำเนิน แหลม ส มิ หลา, 6H7R+JWP ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.214091,
+    "longitude": 100.59233,
+    "userRatingCount": 76,
+    "googleMapsUri": "https://maps.google.com/?cid=16017293461759411587&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJ35L7HmkzTTARg0VbS4rbSN4"
   },
   {
     "id": "r_songkhla_64",
     "name": "ครัวเสาวรส เกาะยอ",
-    "rating": 4.4,
+    "rating": 4.6,
     "priceRange": "$$",
     "avgPrice": 190,
     "distance": 8.5,
@@ -2155,14 +2403,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ซีฟู้ดสไตล์ชาวเกาะ ต้มยำกุ้งแชบ๊วยน้ำใสรสแซ่บ ปลากระบอกทอดขมิ้นกรอบ ยำสาหร่ายผมนาง และหอยชักตีนลวกจิ้ม",
-    "address": "ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.166,
-    "longitude": 100.542
+    "address": "26/1 หมู่8 บ้านท้ายเสาะ เกาะยอ ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.1531,
+    "longitude": 100.52731,
+    "userRatingCount": 71,
+    "googleMapsUri": "https://maps.google.com/?cid=7426347386354780173&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJdx-WW8czTTARDchT9pmvD2c"
   },
   {
     "id": "r_songkhla_65",
     "name": "ร้านอาหารทะเล ครัวลุงเจิม (หาดชลาทัศน์)",
-    "rating": 4.5,
+    "rating": 4.1,
     "priceRange": "$$",
     "avgPrice": 210,
     "distance": 2.2,
@@ -2180,9 +2431,12 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลติดหาดชลาทัศน์ ปูม้าถอดเสื้อแกะพร้อมทาน แกงส้มปูดำหน่อไม้ดอง ปลากะพง 3 รส และหอยแครงลวกตัวใหญ่",
-    "address": "ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.1825,
-    "longitude": 100.612
+    "address": "ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.177973,
+    "longitude": 100.541967,
+    "userRatingCount": 723,
+    "googleMapsUri": "https://maps.google.com/?cid=18345837325024712305&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJperaNjAyTTARcVYzwdiBmf4"
   },
   {
     "id": "r_songkhla_66",
@@ -2205,14 +2459,17 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "ซีฟู้ดสดๆ ราคาย่อมเยา ปลากะพงนึ่งซีอิ๊ว กุ้งทอดราดซอสมะขาม ยำสาหร่ายข้อสด และปูม้านึ่งหวานเจี๊ยบ",
-    "address": "หมู่ 1 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.158,
-    "longitude": 100.533
+    "address": "ถ.สงขลา-ระโนด ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.164805,
+    "longitude": 100.552018,
+    "userRatingCount": 794,
+    "googleMapsUri": "https://maps.google.com/?cid=12413907504520302491&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJAV9tVRUyTTARmw99iRoPR6w"
   },
   {
     "id": "r_songkhla_67",
     "name": "ซีฟู้ดฮาลาล ริมหาดชลาทัศน์ (บังดล)",
-    "rating": 4.6,
+    "rating": 4.4,
     "priceRange": "$$",
     "avgPrice": 220,
     "distance": 2.4,
@@ -2231,14 +2488,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลปรุงตามหลักฮาลาลริมหาดชลาทัศน์ ข้าวผัดปูก้อน ทะเลเผารวมมิตร ปลากะพงทอดน้ำปลา กุ้งอบวุ้นเส้น",
-    "address": "ถนนเลียบหาดชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.18,
-    "longitude": 100.6135
+    "address": "ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.178244,
+    "longitude": 100.59424,
+    "userRatingCount": 341,
+    "googleMapsUri": "https://maps.google.com/?cid=10740628082237391816&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJyUX9PukzTTARyENYolVgDpU"
   },
   {
     "id": "r_songkhla_68",
     "name": "ร้านปลาเผาชายเล เก้าเส้ง",
-    "rating": 4.5,
+    "rating": 4.1,
     "priceRange": "$$",
     "avgPrice": 180,
     "distance": 3.4,
@@ -2256,14 +2516,17 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "ปลากะพงเผาเกลือเตาถ่านตัวใหญ่เนื้อชุ่มฉ่ำ เสิร์ฟพร้อมผักเคียงและหมี่ขาว หอยหวานเผา ยำไข่ปลาหมึกสด",
-    "address": "หาดเก้าเส้ง ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.171,
-    "longitude": 100.6175
+    "address": "เลขที่ 60/140 * ถ. กาญจนวนิช ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.170731,
+    "longitude": 100.61107,
+    "userRatingCount": 18,
+    "googleMapsUri": "https://maps.google.com/?cid=13517337815848077736&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJ8-C8UlYzTTARqEmUJiA7l7s"
   },
   {
     "id": "r_songkhla_69",
     "name": "ร้านอาหารชายน้ำ เกาะยอ",
-    "rating": 4.5,
+    "rating": 4.6,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 8.6,
@@ -2282,14 +2545,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารติดชายน้ำทะเลสาบ ปลากะพงสองเล แกงคั่วปูม้าใบชะพลู ทอดมันกุ้งสด และหมึกไข่นึ่งมะนาว",
-    "address": "หมู่ 5 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.1675,
-    "longitude": 100.547
+    "address": "59 2 ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.177549,
+    "longitude": 100.544335,
+    "userRatingCount": 2854,
+    "googleMapsUri": "https://maps.google.com/?cid=16951159021734222198&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJd7XB8TAyTTARdlmgtVGdPus"
   },
   {
     "id": "r_songkhla_70",
     "name": "ครัวป้าทิพย์ ทะเลสาบสงขลา (ปากรอ)",
-    "rating": 4.4,
+    "rating": 4.8,
     "priceRange": "$$",
     "avgPrice": 180,
     "distance": 12,
@@ -2306,14 +2572,17 @@
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านซีฟู้ดวิถีประมงพื้นบ้าน ปลากระบอกรวนเค็ม กุ้งก้ามกรามเผามันเยิ้ม แกงส้มออดิบปลากะพงสองเล",
-    "address": "ตำบลปากรอ อำเภอสิงหนคร สงขลา",
-    "latitude": 7.24,
-    "longitude": 100.485
+    "address": "472 เทศบาลตำบลพะวง เมือง สงขลา 90100",
+    "latitude": 7.13727,
+    "longitude": 100.562864,
+    "userRatingCount": 125,
+    "googleMapsUri": "https://maps.google.com/?cid=16670940432715053470&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJt1Dae-wtTTARnnmtQ_8TW-c"
   },
   {
     "id": "r_songkhla_71",
     "name": "ร้านอาหารทะเล ยายขำ (สิงหนคร)",
-    "rating": 4.5,
+    "rating": 4.2,
     "priceRange": "$$",
     "avgPrice": 190,
     "distance": 4.1,
@@ -2331,14 +2600,17 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "ปูม้าเป็นต้มน้ำตาลสด ปลากระเบนแดดเดียวทอด กุ้งอบวุ้นเส้นหม้อดิน และแกงส้มยอดมะพร้าวปลากะพง",
-    "address": "ตำบลหัวเขา อำเภอสิงหนคร สงขลา",
-    "latitude": 7.215,
-    "longitude": 100.573
+    "address": "21 16 แหลมสนอ่อน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.221954,
+    "longitude": 100.580346,
+    "userRatingCount": 170,
+    "googleMapsUri": "https://maps.google.com/?cid=11575198587124134422&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJt33I4nszTTARFjIjdsldo6A"
   },
   {
     "id": "r_songkhla_72",
     "name": "หาดจันทร์ซีฟู้ด (ชลาทัศน์)",
-    "rating": 4.4,
+    "rating": 4,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 2.1,
@@ -2357,14 +2629,17 @@
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
     ],
     "description": "กุ้งลายเสือเผาตัวโต หอยตลับผัดพริกเผา ต้มยำทะเลรวมน้ำข้น ปลากะพงผัดฉ่าสมุนไพรสด",
-    "address": "ถนนชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.184,
-    "longitude": 100.6115
+    "address": "5H32+H3R ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.153982,
+    "longitude": 100.550137,
+    "userRatingCount": 621,
+    "googleMapsUri": "https://maps.google.com/?cid=8999955587019253259&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJhTV4YQ0yTTARCyaTLuxD5nw"
   },
   {
     "id": "r_songkhla_73",
     "name": "แพโฟลทติ้ง ซีฟู้ด เกาะยอ",
-    "rating": 4.6,
+    "rating": 4.2,
     "priceRange": "$$$",
     "avgPrice": 250,
     "distance": 8.9,
@@ -2382,14 +2657,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ทานอาหารบนแพลอยน้ำกลางทะเลสาบสงขลา กุ้งแม่น้ำซอสมะขาม หมึกแดดเดียวทอด ปลากะพงนึ่งมะนาว",
-    "address": "ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.1615,
-    "longitude": 100.5345
+    "address": "62 ม.1 ต.เกาะยอ อ, เทศบาลนครสงขลา อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.177564,
+    "longitude": 100.541532,
+    "userRatingCount": 106,
+    "googleMapsUri": "https://maps.google.com/?cid=5535760291197618257&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJLV2rmlwzTTARUQiMtqf40kw"
   },
   {
     "id": "r_songkhla_74",
     "name": "ครัวคุณป้า ซีฟู้ดฮาลาล (แหลมสนอ่อน)",
-    "rating": 4.5,
+    "rating": 4.6,
     "priceRange": "$$",
     "avgPrice": 200,
     "distance": 2.6,
@@ -2409,9 +2687,12 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "อาหารทะเลฮาลาล 100% บรรยากาศร่มรื่นใต้ทิวสน ปลากะพง 3 รส ต้มยำโป๊ะแตกทะเล กุ้งผัดผงกะหรี่เข้มข้น",
-    "address": "แหลมสนอ่อน ตำบลบ่อยาง อำเภอเมืองสงขลา",
-    "latitude": 7.218,
-    "longitude": 100.578
+    "address": "260 5 ราษฎร์อุทิศ 2 ซอย 5 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.182496,
+    "longitude": 100.596126,
+    "userRatingCount": 149,
+    "googleMapsUri": "https://maps.google.com/?cid=703347944198156307&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJIUcYiOAyTTARE7BujzrLwgk"
   },
   {
     "id": "r_songkhla_75",
@@ -2441,7 +2722,7 @@
   {
     "id": "r_songkhla_76",
     "name": "ครัวระเบียงน้ำ เกาะยอ (ป้าแตน)",
-    "rating": 4.5,
+    "rating": 4.6,
     "priceRange": "$$",
     "avgPrice": 210,
     "distance": 8.5,
@@ -2460,14 +2741,17 @@
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
     ],
     "description": "ปลากะพงนึ่งมะนาว แกงส้มชะอมกุ้งสด หอยนางรมสุราษฎร์ทรงเครื่อง กุ้งแชบ๊วยอบวุ้นเส้น",
-    "address": "หมู่ 3 ตำบลเกาะยอ อำเภอเมืองสงขลา",
-    "latitude": 7.1635,
-    "longitude": 100.541
+    "address": "59 2 ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.177549,
+    "longitude": 100.544335,
+    "userRatingCount": 2854,
+    "googleMapsUri": "https://maps.google.com/?cid=16951159021734222198&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJd7XB8TAyTTARdlmgtVGdPus"
   },
   {
     "id": "r_songkhla_77",
     "name": "ร้านอาหารทะเล ท้ายเล สิงหนคร",
-    "rating": 4.5,
+    "rating": 5,
     "priceRange": "$$",
     "avgPrice": 190,
     "distance": 4.5,
@@ -2484,14 +2768,17 @@
       "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
     ],
     "description": "ปูม้านึ่งหวานเจี๊ยบจากแพปลา แกงส้มปลาอินทรียอดมะพร้าว หมึกกล้วยไข่ย่างเตาถ่าน",
-    "address": "ตำบลชิงโค อำเภอสิงหนคร สงขลา",
-    "latitude": 7.225,
-    "longitude": 100.567
+    "address": "9F5P+3RV Unnamed Road ตำบล ม่วงงาม อำเภอ สิงหนคร สงขลา 90330",
+    "latitude": 7.357747,
+    "longitude": 100.487048,
+    "userRatingCount": 3,
+    "googleMapsUri": "https://maps.google.com/?cid=15078067556104730370&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJb75KR61JTTARAvf2JI4OQNE"
   },
   {
     "id": "r_songkhla_78",
     "name": "ซีฟู้ดฮาลาล หาดทรายแก้ว สงขลา",
-    "rating": 4.6,
+    "rating": 3.8,
     "priceRange": "$$",
     "avgPrice": 210,
     "distance": 5.2,
@@ -2510,9 +2797,12 @@
       "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop"
     ],
     "description": "ร้านอาหารทะเลสดฮาลาล 100% ริมหาดทรายแก้ว ข้าวผัดต้มยำกุ้ง ปลากะพงนึ่งซีอิ๊ว ทะเลลวกจิ้มน้ำจิ้มถั่วบดแซ่บๆ",
-    "address": "หาดทรายแก้ว ตำบลชิงโค อำเภอสิงหนคร สงขลา",
-    "latitude": 7.231,
-    "longitude": 100.562
+    "address": "6H7V+J2G ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.214065,
+    "longitude": 100.592564,
+    "userRatingCount": 106,
+    "googleMapsUri": "https://maps.google.com/?cid=8299172122544639689&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googlePlaceId": "ChIJN79BrXMzTTARyQ4ZFhOVLHM"
   },
   {
     "id": "r_songkhla_79",
@@ -3056,5 +3346,28 @@
     "address": "ชุมชนเก้าเส้ง ตำบลบ่อยาง อำเภอเมืองสงขลา",
     "latitude": 7.1695,
     "longitude": 100.619
+  },
+  {
+    "id": "r_songkhla_121",
+    "name": "Sea-นัว ถนนนางงามสงขลา",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านSea-นัว ถนนนางงามสงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "123 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.194833,
+    "longitude": 100.590974,
+    "googlePlaceId": "ChIJBbLTFgMzTTAR2Z-x_zYOmME",
+    "googleMapsUri": "https://maps.google.com/?cid=13949915475160965081&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 10
   }
 ]

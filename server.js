@@ -786,7 +786,8 @@ function formatRestaurant(r) {
         description: r.description || '',
         address: r.address || '',
         latitude: parseFloat(r.latitude) || null,
-        longitude: parseFloat(r.longitude) || null
+        longitude: parseFloat(r.longitude) || null,
+        mapsUrl: r.maps_url || r.googleMapsUri || (r.latitude && r.longitude ? `https://www.google.com/maps/search/?api=1&query=${r.latitude},${r.longitude}` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' ' + (r.address || ''))}`)
     };
 }
 

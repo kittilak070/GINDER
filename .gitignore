@@ -23,6 +23,7 @@ data/feedback.json
 data/history.json
 data/pdpa_consent_logs.json
 data/pdpa_dsr_requests.json
+data/*.backup.json
 
 # OS files
 .DS_Store
