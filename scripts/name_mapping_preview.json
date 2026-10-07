@@ -1,0 +1,688 @@
+[
+  {
+    "id": "r_songkhla_01",
+    "oldName": "แต้เฮี้ยงอิ้ว (Tae Hiang Aew)",
+    "finalName": "แต้เฮี้ยงอิ้ว (Tae Hieng Lew)",
+    "googleName": "Tae Hieng Lew",
+    "address": "85 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_02",
+    "oldName": "เกียดฟั่ง (ข้าวสตูสงขลา)",
+    "finalName": "เกียดฟั่ง (Kiat Fang Restaurant)",
+    "googleName": "Kiat Fang Restaurant",
+    "address": "94 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_03",
+    "oldName": "เต้าคั่วเจ๊เอ่น (สูตรโบราณถนนนางงาม)",
+    "finalName": "เต้าคั่ว ร้าน ป้าเอียด",
+    "googleName": "เต้าคั่ว ร้าน ป้าเอียด",
+    "address": "58 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_04",
+    "oldName": "ข้าวมันไก่เบตง ตลาดทรัพย์สิน",
+    "finalName": "ถัง ถัง ไก่สับเบตง",
+    "googleName": "ถัง ถัง ไก่สับเบตง",
+    "address": "20 ถ Platha, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_05",
+    "oldName": "ก๋วยเตี๋ยวหางหมู ป้าเนี้ยว (ถนนนางงาม)",
+    "finalName": "ก๋วยเตี๋ยวหางหมู ป้าเนี้ยว (Pork Tail Noodle)",
+    "googleName": "Pork Tail Noodle",
+    "address": "180 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_06",
+    "oldName": "ร้านน้ำชาโกเซี้ยม (กาแฟโบราณ & โกปี๊นางงาม)",
+    "finalName": "โกจอยติ่มซำ&น้ำชา",
+    "googleName": "โกจอยติ่มซำ&น้ำชา",
+    "address": "0 เมือง Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_07",
+    "oldName": "ไอติมโอ่ง (ไอศกรีมโบราณสงขลา)",
+    "finalName": "ไอติมโอ่ง (Ice cream jar)",
+    "googleName": "Ice cream jar",
+    "address": "69 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_08",
+    "oldName": "ข้าวยำป้าหนู สงขลา",
+    "finalName": "ข้าวยำป้าหนู เกาะยอ",
+    "googleName": "ข้าวยำป้าหนู เกาะยอ",
+    "address": "44 6 Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_09",
+    "oldName": "นายหวาน ข้าวหมูแดง-หมูกรอบ (ถนนนครใน)",
+    "finalName": "นายหวาน ข้าวหมูแดง-หมูกรอบ (Nai Wan Restaurant)",
+    "googleName": "Nai Wan Restaurant",
+    "address": "1 Soi Suan Mak, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_10",
+    "oldName": "เจ๊นิ ก๋วยเตี๋ยวต้มยำปลากะพง (เก้าเส้ง)",
+    "finalName": "เจ๊นิ ก๋วยเตี๋ยวต้มยำปลากะพง (Jeni)",
+    "googleName": "Jeni",
+    "address": "5HWR+36X, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_100",
+    "oldName": "หมูกระทะ 99 สงขลา (สี่แยกวชิรา)",
+    "finalName": "เจริญพุงหมูกระทะ @สงขลา",
+    "googleName": "เจริญพุงหมูกระทะ @สงขลา",
+    "address": "ตำบลบ่อยาง เมือง สงขลา 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_101",
+    "oldName": "Songkhla Station (สถานีสงขลา คาเฟ่)",
+    "finalName": "Songkhla Station (Songkhla Railway Station)",
+    "googleName": "Songkhla Railway Station",
+    "address": "6H2V+GF5, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_102",
+    "oldName": "Heart Made Roastery (ถนนนครนอก)",
+    "finalName": "Heart Made Roastery (Heartmade Craft Coffee Roaster)",
+    "googleName": "Heartmade Craft Coffee Roaster",
+    "address": "139 Nakhonnok St, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_103",
+    "oldName": "โรตี ชาชัก ฟารีดา ฮาลาล (ถนนรามวิถี)",
+    "finalName": "โรตีฟารีดา",
+    "googleName": "โรตีฟารีดา",
+    "address": "76 9 ถ. สงขลา-นาทวี Tambon Khao Rup Chang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_104",
+    "oldName": "Cafe Der See Nakornnok (คาเฟ่ เดอ ซี)",
+    "finalName": "Cafe Der See Nakornnok (Cafe' Der See Nakornnok)",
+    "googleName": "Cafe' Der See Nakornnok",
+    "address": "Nakornnok Street, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_105",
+    "oldName": "Lyn's The Shanghai Cafe (ลินส์ คาเฟ่ ถนนนครใน)",
+    "finalName": "Lyn's The Shanghai Cafe (Lyn's The Shanghai Cafe')",
+    "googleName": "Lyn's The Shanghai Cafe'",
+    "address": "144, 146 Nakhonnai, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_106",
+    "oldName": "น้ำชา-โรตี บังหนูด ฮาลาล (หาดสมิหลา)",
+    "finalName": "ร้านโรตีใบเตยน้ำชาบังดาริส",
+    "googleName": "ร้านโรตีใบเตยน้ำชาบังดาริส",
+    "address": "105 1 Phatthalung Rd, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_107",
+    "oldName": "Ep's Cafe & Bakery สงขลา (ถนนปละท่า)",
+    "finalName": "Ep's Cafe & Bakery สงขลา (E.P's Cafe Patisserie)",
+    "googleName": "E.P's Cafe Patisserie",
+    "address": "120 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_108",
+    "oldName": "Studio 55 Songkhla (ถนนนครนอก)",
+    "finalName": "Studio 55 Songkhla (Studio 55 Songkhla)",
+    "googleName": "Studio 55 Songkhla",
+    "address": "55 Nakhonnok St, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_109",
+    "oldName": "ไอศกรีมยิว (ไอติมถั่วเขียวสูตรโบราณถนนนางงาม)",
+    "finalName": "ไอศกรีมยิว (Jin Gua Yuen Ice Cream)",
+    "googleName": "Jin Gua Yuen Ice Cream",
+    "address": "162 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_11",
+    "oldName": "ร้านพะโล้สะเดา (เจ๊หยู)",
+    "finalName": "ร้านยายพิม หัวหมูพะโล้ เป็ดพะโล้",
+    "googleName": "ร้านยายพิม หัวหมูพะโล้ เป็ดพะโล้",
+    "address": "8 ม 1 ถ.สายสนามบิน Tambon Khuan Lang, Amphoe Hat Yai, Chang Wat Songkhla 90110, Thailand"
+  },
+  {
+    "id": "r_songkhla_110",
+    "oldName": "The Secret Garden Songkhla (คาเฟ่ในสวน)",
+    "finalName": "The Secret Garden Pasta Bar เดอะซีเคร็ท การ์เด้น พาสตา บาร์",
+    "googleName": "The Secret Garden Pasta Bar เดอะซีเคร็ท การ์เด้น พาสตา บาร์",
+    "address": "87 Thanon Raman, ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_111",
+    "oldName": "โรตี ชาชัก อาบู ฮาลาล (หน้า มรภ.สงขลา)",
+    "finalName": "กูโรตีชาชักสมิหลา ฮาลาล (GUROTI CHACHAK HALAL)",
+    "googleName": "กูโรตีชาชักสมิหลา ฮาลาล (GUROTI CHACHAK HALAL)",
+    "address": "39 Chalathat, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_112",
+    "oldName": "Nakorn Cafe (นคร คาเฟ่ ถนนนครนอก)",
+    "finalName": "Nakorn Cafe (ณ ครในNaKarnnai)",
+    "googleName": "ณ ครในNaKarnnai",
+    "address": "246 Nakhonnai, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_113",
+    "oldName": "บ้านชา ชาชัก สงขลา (ย่านวชิรา)",
+    "finalName": "กูโรตีชาชักสมิหลา ฮาลาล (GUROTI CHACHAK HALAL)",
+    "googleName": "กูโรตีชาชักสมิหลา ฮาลาล (GUROTI CHACHAK HALAL)",
+    "address": "39 Chalathat, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_114",
+    "oldName": "Coffee Beach หาดชลาทัศน์",
+    "finalName": "Vacation Coffee & Eatery ร้านอาหารเวเคชั่น คอฟฟี่ หน้าหาดชลาทัศน์",
+    "googleName": "Vacation Coffee & Eatery ร้านอาหารเวเคชั่น คอฟฟี่ หน้าหาดชลาทัศน์",
+    "address": "3 Chalathat, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_115",
+    "oldName": "โกปี๊ฮับ สงขลา (Kope Hub)",
+    "finalName": "ลานโกปี้",
+    "googleName": "ลานโกปี้",
+    "address": "46 Soi Poonsookuthi, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_116",
+    "oldName": "โรตีป้าหนู ฮาลาล (หน้าโรงเรียนสงขลาพัฒนาปัญญา)",
+    "finalName": "โรตีป้าหนู ฮาลาล (Malisa Roti Songkhla)",
+    "googleName": "Malisa Roti Songkhla",
+    "address": "5HRV+MJG, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_118",
+    "oldName": "Chao Cafe (ชาว คาเฟ่ เกาะยอ)",
+    "finalName": "CHAO DOI ถนนนางงาม \"ชิโนโปรตุกีส\"",
+    "googleName": "CHAO DOI ถนนนางงาม \"ชิโนโปรตุกีส\"",
+    "address": "5HVR+VCQ, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_119",
+    "oldName": "Sweet Time บิงซู & ของหวาน สงขลา",
+    "finalName": "Sweet Time บิงซู & ของหวาน สงขลา (Street Bingsu ม.ทักษิณ ซอย27)",
+    "googleName": "Street Bingsu ม.ทักษิณ ซอย27",
+    "address": "ซอย27 Tambon Khao Rup Chang, เมือง Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_12",
+    "oldName": "ครัวเจ๊ม่วย ข้าวแกงเมืองสงขลา",
+    "finalName": "ข้าวแกงเจ๊ม่วย",
+    "googleName": "ข้าวแกงเจ๊ม่วย",
+    "address": "Tha Yang, Tha Yang District, Phetchaburi 76130, Thailand"
+  },
+  {
+    "id": "r_songkhla_120",
+    "oldName": "ชาชัก เจ๊แอ๋ว สงขลา (ถนนทะเลหลวง)",
+    "finalName": "กูโรตีชาชักสมิหลา ฮาลาล (GUROTI CHACHAK HALAL)",
+    "googleName": "กูโรตีชาชักสมิหลา ฮาลาล (GUROTI CHACHAK HALAL)",
+    "address": "39 Chalathat, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_13",
+    "oldName": "โรตีอาม่า (ถนนนครนอก)",
+    "finalName": "โรตีอาม่า (Roti Ama)",
+    "googleName": "Roti Ama",
+    "address": "5HVR+65F, Phatthalung Rd, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_14",
+    "oldName": "ร้านอาหารมุสลิม ดารุสลาม (ข้าวหมกไก่สงขลา)",
+    "finalName": "ร้านอิสลาม ร้านแบมะ&กะดะห์",
+    "googleName": "ร้านอิสลาม ร้านแบมะ&กะดะห์",
+    "address": "5J64+RH7, Khao Rup Chang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_15",
+    "oldName": "ลุงจิ๋ว ซีฟู้ด สวนสองทะเล",
+    "finalName": "ลุงจิ๋ว ซีฟู้ด สวนสองทะเล (Loong Jew Sea Food)",
+    "googleName": "Loong Jew Sea Food",
+    "address": "Ko Yo, Mueang Songkhla District, Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_16",
+    "oldName": "ศิรดา เกาะยอ (Sirada Koh Yor)",
+    "finalName": "ศิรดา เกาะยอ (Sirada Restaurant Koh Yo)",
+    "googleName": "Sirada Restaurant Koh Yo",
+    "address": "8 2 เกาะยอ Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_17",
+    "oldName": "ขนมไทยป้าแอ๊ะ (ถนนนางงาม)",
+    "finalName": "ป้าแอ๊ะน้ำแข็งใส",
+    "googleName": "ป้าแอ๊ะน้ำแข็งใส",
+    "address": "60, 1 Thanon Saiburi, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_18",
+    "oldName": "บะหมี่เป็ดย่างเจ๊เค็ง",
+    "finalName": "Sultan roast duck (Halal) เป็ดย่างสุลต่าน สาขาสงขลา",
+    "googleName": "Sultan roast duck (Halal) เป็ดย่างสุลต่าน สาขาสงขลา",
+    "address": "5JJ8+8MQ, Khaosan Rd, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_19",
+    "oldName": "ข้าวแกงแม่สมจิตต์ (สี่แยกพระพุทธ)",
+    "finalName": "เครื่องแกงแม่สมจิตรนครศรีฯ",
+    "googleName": "เครื่องแกงแม่สมจิตรนครศรีฯ",
+    "address": "เลขที่ 95 ถนน รถไฟ, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_20",
+    "oldName": "เรือนไทยปักษ์ใต้ สงขลา",
+    "finalName": "ชุมชนย่านเมืองเก่าสงขลา",
+    "googleName": "ชุมชนย่านเมืองเก่าสงขลา",
+    "address": "55 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_21",
+    "oldName": "คุณจิตซีวิว เกาะยอ (Khun Jitt Sea View)",
+    "finalName": "คุณจิตซีวิว เกาะยอ (Khunjit Sea View Koh Yo Restaurant)",
+    "googleName": "Khunjit Sea View Koh Yo Restaurant",
+    "address": "ถ.สงขลา-ระโนด Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_22",
+    "oldName": "ร้านระเบียงทราย (หาดชลาทัศน์)",
+    "finalName": "ร้านระเบียงไม้",
+    "googleName": "ร้านระเบียงไม้",
+    "address": "491 Nakhonnok St, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_23",
+    "oldName": "สมิหลาซีฟู้ด",
+    "finalName": "ร้านสมิหลาวิว-สุจินดา3",
+    "googleName": "ร้านสมิหลาวิว-สุจินดา3",
+    "address": "ถนน ราชดำเนิน แหลม ส มิ หลา, 6H7R+JWP ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_24",
+    "oldName": "ทิวทัศน์ เกาะยอ",
+    "finalName": "ทิวทัศน์ เกาะยอ (Ko Yo Viewpoint)",
+    "googleName": "Ko Yo Viewpoint",
+    "address": "5G2F+5V9, Ko Yo, Mueang Songkhla District, Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_25",
+    "oldName": "ชมจันทร์ เกาะยอ",
+    "finalName": "ชมจันทร์ เกาะยอ (Chomchan Seafood Restaurant Koh Yao)",
+    "googleName": "Chomchan Seafood Restaurant Koh Yao",
+    "address": "5H32+H3R, Ko Yo, Mueang Songkhla District, Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_26",
+    "oldName": "เรอดัง เกาะยอ",
+    "finalName": "เรอดัง เกาะยอ (Koh Yor De Lagoon Restaurant)",
+    "googleName": "Koh Yor De Lagoon Restaurant",
+    "address": "ถนนบ้านสวนใหม่ Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_27",
+    "oldName": "สุจินดาซีฟู้ด (หาดสมิหลา)",
+    "finalName": "สุจินดาซีฟู้ด (Sujinda Seafood 1)",
+    "googleName": "Sujinda Seafood 1",
+    "address": "6H7R+HQC, Soi Ratchadamnoen, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_28",
+    "oldName": "ภูผาเพชร เกาะยอ",
+    "finalName": "ภูผาเพชร เกาะยอ (Phu Pha Phet Cave)",
+    "googleName": "Phu Pha Phet Cave",
+    "address": "4XFX+V77, Palm Phatthana, Manang District, Satun 91130, Thailand"
+  },
+  {
+    "id": "r_songkhla_29",
+    "oldName": "น้าชม ทะเลสาบสงขลา",
+    "finalName": "น้าชม ทะเลสาบสงขลา (Laem Son On)",
+    "googleName": "Laem Son On",
+    "address": "6HGH+R25, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_30",
+    "oldName": "เกาะน้ำซีฟู้ด เกาะยอ",
+    "finalName": "เกาะน้ำซีฟู้ด เกาะยอ (Koyo Seafood)",
+    "googleName": "Koyo Seafood",
+    "address": "5GHR+6P8, 408, Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_31",
+    "oldName": "ครัวสวนสองทะเล",
+    "finalName": "ครัวสวนสองทะเล (Song Tha Le Park)",
+    "googleName": "Song Tha Le Park",
+    "address": "6HGH+M2V, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_32",
+    "oldName": "ครัวปลาเล (หาดชลาทัศน์)",
+    "finalName": "ครัวปลาเล (ครัวมองเล Mong Lay Ma Cafe)",
+    "googleName": "ครัวมองเล Mong Lay Ma Cafe",
+    "address": "39, 7 M.7, Tambon Khao Rup Chang, Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_33",
+    "oldName": "แม่เบญซีฟู้ด เกาะยอ",
+    "finalName": "ร้านแม่เบญปลาเผา3",
+    "googleName": "ร้านแม่เบญปลาเผา3",
+    "address": "ถ.สงขลา-ระโนด Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_34",
+    "oldName": "ครัวริมหาดชลาทัศน์ (ป้าพร)",
+    "finalName": "กินข้าว ริมเล",
+    "googleName": "กินข้าว ริมเล",
+    "address": "มุ่งมั่นcoffe หาด Chalathat, Thesaban Nakhon Songkhla, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_35",
+    "oldName": "โพธิ์ทะเล เกาะยอ",
+    "finalName": "โพธิ์ทะเล เกาะยอ (Pho Talay Restaurant)",
+    "googleName": "Pho Talay Restaurant",
+    "address": "5G6P+5R8, Ko Yo, Mueang Songkhla District, Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_36",
+    "oldName": "แหลมทรายซีฟู้ด (สิงหนคร)",
+    "finalName": "แหลมทรายซีฟู้ด (Laem Sai Seafood)",
+    "googleName": "Laem Sai Seafood",
+    "address": "48, 7, Tambon Thep Krasatti, Amphoe Thalang, Chang Wat Phuket 83110, Thailand"
+  },
+  {
+    "id": "r_songkhla_37",
+    "oldName": "น้องณี เกาะยอ",
+    "finalName": "น้องณี เกาะยอ (Nong Ni Restaurant)",
+    "googleName": "Nong Ni Restaurant",
+    "address": "47M5+M3Q, Phet Kasem Rd, Rattaphum, Amphoe Rattaphum, Chang Wat Songkhla 90180, Thailand"
+  },
+  {
+    "id": "r_songkhla_38",
+    "oldName": "ดาริส ซีฟู้ด (ฮาลาลริมเล)",
+    "finalName": "ดาริส ซีฟู้ด (Sirada Restaurant Koh Yo)",
+    "googleName": "Sirada Restaurant Koh Yo",
+    "address": "8 2 เกาะยอ Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_39",
+    "oldName": "ครัววันดี เกาะยอ",
+    "finalName": "ร้านครัวครูวาส @เกาะยอ",
+    "googleName": "ร้านครัวครูวาส @เกาะยอ",
+    "address": "26/1 หมู่8 บ้านท้ายเสาะ เกาะยอ Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_40",
+    "oldName": "หาดแก้วซีฟู้ด (สิงหนคร)",
+    "finalName": "ร้านสนแก้วซีฟู๊ด",
+    "googleName": "ร้านสนแก้วซีฟู๊ด",
+    "address": "19 ถ Chalathat, Tambon Bo Yang, อำเภอเมือง, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_41",
+    "oldName": "ก๋วยเตี๋ยวเรืออยุธยา ป้าปุ๊ สงขลา",
+    "finalName": "ฮิปโปก๋วยเตี๋ยวเรืออยุธยา สาขา2 สงขลา",
+    "googleName": "ฮิปโปก๋วยเตี๋ยวเรืออยุธยา สาขา2 สงขลา",
+    "address": "74/6 Saiburi Soi 41, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_42",
+    "oldName": "ก๋วยเตี๋ยวเป็ดต้มฟัก โกเด้ง (ถนนพัทลุง)",
+    "finalName": "โกเด้ง ก๋วยเตี๋ยว ลูกชิ้นหมู ลูกชิ้นเนื้อ เด้งๆ",
+    "googleName": "โกเด้ง ก๋วยเตี๋ยว ลูกชิ้นหมู ลูกชิ้นเนื้อ เด้งๆ",
+    "address": "5HRV+FWF, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_43",
+    "oldName": "เจ๊เฮียง บะหมี่ลูกชิ้นปลาทำเอง (ถนนนางงาม)",
+    "finalName": "เจ๊เฮียง บะหมี่ลูกชิ้นปลาทำเอง (Je Hiang Fish Ball Noodle)",
+    "googleName": "Je Hiang Fish Ball Noodle",
+    "address": "201 Krung Kasem Rd, Khwaeng Rong Muang, Pathum Wan, Krung Thep Maha Nakhon 10330, Thailand"
+  },
+  {
+    "id": "r_songkhla_44",
+    "oldName": "ก๋วยเตี๋ยวต้มยำหมูกรอบ เจ๊ดา (หน้า รพ.สงขลา)",
+    "finalName": "ก๋วยเตี๋ยวหมูต้มยำเจ๊นิด สาขา2 (หมู่บ้านธนดี)",
+    "googleName": "ก๋วยเตี๋ยวหมูต้มยำเจ๊นิด สาขา2 (หมู่บ้านธนดี)",
+    "address": "547 Namkrachai Soi 26, Tambon Phawong, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_45",
+    "oldName": "ก๋วยเตี๋ยวเนื้อนายดำ (ถนนสงขลา-นาทวี)",
+    "finalName": "ก๋วยเตี๋ยวเนื้อนายดำ",
+    "googleName": "ก๋วยเตี๋ยวเนื้อนายดำ",
+    "address": "G52G+W86, Tha Taphao, Mueang Chumphon District, Chumphon 86000, Thailand"
+  },
+  {
+    "id": "r_songkhla_46",
+    "oldName": "บะหมี่เกี๊ยวปูสะพานเหล็ก สงขลา",
+    "finalName": "บะหมี่เกี๊ยวปูสะพานเหล็ก สงขลา (Burangnong)",
+    "googleName": "Burangnong",
+    "address": "6H3V+P28, Soi Si Suda, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_47",
+    "oldName": "โกแค๊ก ข้าวขาหมูและก๋วยจั๊บน้ำข้น (ถนนรามวิถี)",
+    "finalName": "ร้านโกเล็ก (ข้าวขาหมู)",
+    "googleName": "ร้านโกเล็ก (ข้าวขาหมู)",
+    "address": "Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_48",
+    "oldName": "ก๋วยเตี๋ยวต้มยำทะเล เจ๊หมวย (วชิรา)",
+    "finalName": "ร้านเจ๊หมวย",
+    "googleName": "ร้านเจ๊หมวย",
+    "address": "56 Soi Niphat Phakdi, Tambon Hat Yai, Amphoe Hat Yai, Chang Wat Songkhla 90110, Thailand"
+  },
+  {
+    "id": "r_songkhla_49",
+    "oldName": "ก๋วยเตี๋ยวราดหน้ายอดผัก โกฮวด (ถนนนครนอก)",
+    "finalName": "ราดหน้าหม้อดิน",
+    "googleName": "ราดหน้าหม้อดิน",
+    "address": "Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_50",
+    "oldName": "เจ๊เพ็ญ ก๋วยเตี๋ยวไก่มะระบุฟเฟต์ สงขลา",
+    "finalName": "ต้มตุ๋นก๋วยเตี๋ยวไก่บุฟเฟต์",
+    "googleName": "ต้มตุ๋นก๋วยเตี๋ยวไก่บุฟเฟต์",
+    "address": "บ่อย่าง 252 Rat-Uthis 1, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_51",
+    "oldName": "ก๋วยเตี๋ยวสุโขทัย สูตรโบราณ (ถนนเพชรคีรี)",
+    "finalName": "ร้านก๋วยเตี๋ยวเรือหมูสูตรโบราณ",
+    "googleName": "ร้านก๋วยเตี๋ยวเรือหมูสูตรโบราณ",
+    "address": "44 Thaleluang Rd, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_52",
+    "oldName": "บะหมี่ต้มยำโบราณ เจ๊หงษ์ (เก้าเส้ง)",
+    "finalName": "บะหมี่ต้มยำโบราณ เจ๊หงษ์ (Tom Yam Noodle soup ( Pork))",
+    "googleName": "Tom Yam Noodle soup ( Pork)",
+    "address": "หลังธนาคารกสิกร 1 Taoluang, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_53",
+    "oldName": "ก๋วยเตี๋ยวเรือโกเบิ้ม สงขลา (สูตรอยุธยาแท้)",
+    "finalName": "ก๋วยเตี๋ยวเรือโกเบิ้ม สงขลา (Ko Ban Noodle Shop)",
+    "googleName": "Ko Ban Noodle Shop",
+    "address": "5HWR+7JJ, Raman, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_54",
+    "oldName": "ข้าวมันไก่โกเข่ง (สี่แยกวัดมัชฌิมาวาส)",
+    "finalName": "ข้าวมันไก่โกทรง ราษฎร์อุทิศ 1",
+    "googleName": "ข้าวมันไก่โกทรง ราษฎร์อุทิศ 1",
+    "address": "Rat-Uthis 1, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_55",
+    "oldName": "ก๋วยเตี๋ยวแคะ เจ๊เตียง (ถนนไทรบุรี)",
+    "finalName": "กินเตี๋ยวกัน สงขลา",
+    "googleName": "กินเตี๋ยวกัน สงขลา",
+    "address": "5HVV+86V, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_56",
+    "oldName": "ก๋วยเตี๋ยวปลาอินทรีสด แหลมทราย",
+    "finalName": "ก๋วยเตี๋ยวปลาแปะตี๋Uncle Tee Fish Noodles",
+    "googleName": "ก๋วยเตี๋ยวปลาแปะตี๋Uncle Tee Fish Noodles",
+    "address": "เลขที่ 133 Jootee Anusorn Rd, Tambon Hat Yai, Amphoe Hat Yai, Chang Wat Songkhla 90110, Thailand"
+  },
+  {
+    "id": "r_songkhla_57",
+    "oldName": "ผัดไทยโบราณ ป้าแมว (หน้าวิทยาลัยอาชีวะสงขลา)",
+    "finalName": "ร้านก๋วยเตี๋ยวป้าแมว",
+    "googleName": "ร้านก๋วยเตี๋ยวป้าแมว",
+    "address": "4HRW+63R, Unnamed Road, Tambon Khao Rup Chang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_58",
+    "oldName": "บะหมี่หมูแดงอบน้ำผึ้ง เจ๊หมวยเล็ก (ถนนทะเลหลวง)",
+    "finalName": "ร้าเจ๊เฮียง (ข้าวหมูแดง-หมูกรอบ ข้าวขาหมู ก๋วยเตี๋ยว)",
+    "googleName": "ร้าเจ๊เฮียง (ข้าวหมูแดง-หมูกรอบ ข้าวขาหมู ก๋วยเตี๋ยว)",
+    "address": "68 Ratuthis 1 Soi 2, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_59",
+    "oldName": "ก๋วยเตี๋ยวเย็นตาโฟหม้อไฟ โกมล (วชิรา)",
+    "finalName": "ก๋วยเตี๋ยวป้าพริ้มเย็นตาโฟ",
+    "googleName": "ก๋วยเตี๋ยวป้าพริ้มเย็นตาโฟ",
+    "address": "33 Karnjanavanit Soi 1, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_60",
+    "oldName": "ก๋วยเตี๋ยวคั่วไก่กระทะเหล็ก ลุงเสริม (ถนนนางงาม)",
+    "finalName": "ก๋วยเตี๋ยวคั่วไก่กระทะเหล็ก ลุงเสริม (Pork Tail Noodle)",
+    "googleName": "Pork Tail Noodle",
+    "address": "180 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_61",
+    "oldName": "เสวนาซีฟู้ด เกาะยอ (Sewana Koh Yor)",
+    "finalName": "โกชัยซีฟู้ด",
+    "googleName": "โกชัยซีฟู้ด",
+    "address": "52 4 Soi 5 Rom Yen, Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_62",
+    "oldName": "ครัวมัชฌิมา เกาะยอ",
+    "finalName": "ครัวมัชฌิมา เกาะยอ (Mahadsajan Ko Yo Seafood Songkhla)",
+    "googleName": "Mahadsajan Ko Yo Seafood Songkhla",
+    "address": "17 หมู่ 1 ต.เกาะยอ .เมือง Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_63",
+    "oldName": "ร้านหาดสมิหลา ชายเล (ซีฟู้ดฮาลาล)",
+    "finalName": "ร้านสมิหลาวิว-สุจินดา3",
+    "googleName": "ร้านสมิหลาวิว-สุจินดา3",
+    "address": "ถนน ราชดำเนิน แหลม ส มิ หลา, 6H7R+JWP ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_64",
+    "oldName": "ครัวเสาวรส เกาะยอ",
+    "finalName": "ร้านครัวครูวาส @เกาะยอ",
+    "googleName": "ร้านครัวครูวาส @เกาะยอ",
+    "address": "26/1 หมู่8 บ้านท้ายเสาะ เกาะยอ Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_65",
+    "oldName": "ร้านอาหารทะเล ครัวลุงเจิม (หาดชลาทัศน์)",
+    "finalName": "ร้านอาหารทะเล ครัวลุงเจิม (Loong Jew Sea Food)",
+    "googleName": "Loong Jew Sea Food",
+    "address": "Ko Yo, Mueang Songkhla District, Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_66",
+    "oldName": "เกาะยอซีวิว (ร้านป้าเอียด)",
+    "finalName": "เกาะยอซีวิว (Khunjit Sea View Koh Yo Restaurant)",
+    "googleName": "Khunjit Sea View Koh Yo Restaurant",
+    "address": "ถ.สงขลา-ระโนด Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_67",
+    "oldName": "ซีฟู้ดฮาลาล ริมหาดชลาทัศน์ (บังดล)",
+    "finalName": "ซีฟู้ดฮาลาล ริมหาดชลาทัศน์ (BUNDAYA SEAFOOD)",
+    "googleName": "BUNDAYA SEAFOOD",
+    "address": "Khao Rup Chang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_68",
+    "oldName": "ร้านปลาเผาชายเล เก้าเส้ง",
+    "finalName": "ร้านปลาเผา ซอย9",
+    "googleName": "ร้านปลาเผา ซอย9",
+    "address": "เลขที่ 60/140 * Kanjanavanich Rd, Tambon Khao Rup Chang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_69",
+    "oldName": "ร้านอาหารชายน้ำ เกาะยอ",
+    "finalName": "ร้านอาหารชายน้ำ เกาะยอ (Nam Kieng Din Restaurant)",
+    "googleName": "Nam Kieng Din Restaurant",
+    "address": "59 2, Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_70",
+    "oldName": "ครัวป้าทิพย์ ทะเลสาบสงขลา (ปากรอ)",
+    "finalName": "ครัวป้าพร สูตรตาหลวง สาขา12 Auntie Porn's Kitchen",
+    "googleName": "ครัวป้าพร สูตรตาหลวง สาขา12 Auntie Porn's Kitchen",
+    "address": "472 Tambon Phawong, เมือง Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_71",
+    "oldName": "ร้านอาหารทะเล ยายขำ (สิงหนคร)",
+    "finalName": "ร้านอาหารทะเล ยายขำ (Raan Na Kham Restaurant)",
+    "googleName": "Raan Na Kham Restaurant",
+    "address": "21 16 Laem Son On, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_72",
+    "oldName": "หาดจันทร์ซีฟู้ด (ชลาทัศน์)",
+    "finalName": "หาดจันทร์ซีฟู้ด (Chomchan Seafood Restaurant Koh Yao)",
+    "googleName": "Chomchan Seafood Restaurant Koh Yao",
+    "address": "5H32+H3R, Ko Yo, Mueang Songkhla District, Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_73",
+    "oldName": "แพโฟลทติ้ง ซีฟู้ด เกาะยอ",
+    "finalName": "แพโฟลทติ้ง ซีฟู้ด เกาะยอ (Talaythong Seafood Koh yor)",
+    "googleName": "Talaythong Seafood Koh yor",
+    "address": "62 ม.1 ต.เกาะยอ อ, Thesaban Nakhon Songkhla, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_74",
+    "oldName": "ครัวคุณป้า ซีฟู้ดฮาลาล (แหลมสนอ่อน)",
+    "finalName": "ครัวคุณป้า ซีฟู้ดฮาลาล (Krua jao reua)",
+    "googleName": "Krua jao reua",
+    "address": "260 5 Ratuthis 2 Soi 5, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_76",
+    "oldName": "ครัวระเบียงน้ำ เกาะยอ (ป้าแตน)",
+    "finalName": "ครัวระเบียงน้ำ เกาะยอ (Nam Kieng Din Restaurant)",
+    "googleName": "Nam Kieng Din Restaurant",
+    "address": "59 2, Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+  },
+  {
+    "id": "r_songkhla_77",
+    "oldName": "ร้านอาหารทะเล ท้ายเล สิงหนคร",
+    "finalName": "ร้านอาหาร หน้าเริ่น - ข้างเล",
+    "googleName": "ร้านอาหาร หน้าเริ่น - ข้างเล",
+    "address": "9F5P+3RV Unnamed Road Tambon Muang Ngam, Amphoe Singhanakhon, Chang Wat Songkhla 90330, Thailand"
+  },
+  {
+    "id": "r_songkhla_78",
+    "oldName": "ซีฟู้ดฮาลาล หาดทรายแก้ว สงขลา",
+    "finalName": "ซีฟู้ดฮาลาล หาดทรายแก้ว สงขลา (Bang Sem Seafood)",
+    "googleName": "Bang Sem Seafood",
+    "address": "6H7V+J2G, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+  },
+  {
+    "id": "r_songkhla_121",
+    "oldName": "Sea-นัว ถนนนางงามสงขลา",
+    "finalName": "Sea-นัว ถนนนางงามสงขลา",
+    "googleName": "Sea-นัว ถนนนางงามสงขลา",
+    "address": "123 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+  }
+]
