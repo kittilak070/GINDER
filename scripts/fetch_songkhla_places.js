@@ -270,6 +270,8 @@ async function enrichExistingRestaurants(restaurants) {
     let enrichedCount = 0;
     let photosDownloadedCount = 0;
 
+    const usedPlaceIds = new Set(restaurants.filter(x => x.googlePlaceId).map(x => x.googlePlaceId));
+
     for (let i = 0; i < countToProcess; i++) {
         const r = restaurants[i];
 
@@ -297,9 +299,41 @@ async function enrichExistingRestaurants(restaurants) {
                 continue;
             }
 
-            const bestMatch = places[0];
+            // Filter candidates: strict Mueang Songkhla location and avoid duplicate place IDs
+            const validCandidates = places.filter(p => {
+                if (!p.id || usedPlaceIds.has(p.id)) return false;
+                const addr = (p.formattedAddress || '').toLowerCase();
+                if (addr.includes('hat yai') || addr.includes('หาดใหญ่') || addr.includes('singhanakhon') || addr.includes('สิงหนคร') || addr.includes('satun') || addr.includes('สตูล') || addr.includes('phetchaburi') || addr.includes('เพชรบุรี') || addr.includes('chumphon') || addr.includes('ชุมพร') || addr.includes('phuket') || addr.includes('ภูเก็ต') || addr.includes('bangkok') || addr.includes('กรุงเทพ') || addr.includes('rattaphum') || addr.includes('รัตภูมิ')) {
+                    return false;
+                }
+                if (p.location) {
+                    const lat = p.location.latitude;
+                    const lng = p.location.longitude;
+                    if (lat < 7.10 || lat > 7.25 || lng < 100.50 || lng > 100.65) return false;
+                }
+                return true;
+            });
+
+            if (validCandidates.length === 0) {
+                console.log(`❌ ไม่พบร้านในเขตอำเภอเมืองสงขลา หรือเป็นหมุดซ้ำ`);
+                continue;
+            }
+
+            const bestMatch = validCandidates[0];
+            usedPlaceIds.add(bestMatch.id);
             const placeName = bestMatch.displayName?.text || cleanName;
-            console.log(`✅ พบ: "${placeName}" (Rating: ${bestMatch.rating || 'N/A'})`);
+
+            // Apply Plan A name formatting (Thai title + English Google Map title if English)
+            const cleanG = placeName.replace(/[^a-zA-Zก-๙]/g, '');
+            const engLetters = (cleanG.match(/[a-zA-Z]/g) || []).length;
+            const thaiLetters = (cleanG.match(/[ก-๙]/g) || []).length;
+            if (engLetters > thaiLetters) {
+                r.name = `${cleanName} (${placeName})`;
+            } else {
+                r.name = placeName.replace(/\s+/g, ' ').trim();
+            }
+
+            console.log(`✅ พบ: "${r.name}" (Rating: ${bestMatch.rating || 'N/A'})`);
 
             if (bestMatch.location) {
                 r.latitude = Number(bestMatch.location.latitude.toFixed(6));
