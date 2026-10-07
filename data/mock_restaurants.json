@@ -314,35 +314,6 @@
     "googlePlaceId": "ChIJlVl2SnYzTTARHCnpFPHJRPM"
   },
   {
-    "id": "r_songkhla_101",
-    "name": "Songkhla Station (Songkhla Railway Station)",
-    "rating": 4.2,
-    "priceRange": "$$",
-    "avgPrice": 90,
-    "distance": 0.9,
-    "type": [
-      "คาเฟ่ / ของหวาน",
-      "อาหารเช้า"
-    ],
-    "allergens": [
-      "นม/ชีส",
-      "ไข่",
-      "แป้งสาลี/กลูเตน"
-    ],
-    "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
-    "images": [
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop"
-    ],
-    "description": "คาเฟ่บ้านไม้โบราณย้อนยุคริมทางรถไฟเก่า กาแฟดริปเมล็ดคั่วพิเศษ ขนมปังปิ้งเนยสังขยาใบเตยโบราณ ชาไทยเย็นเข้มข้น",
-    "address": "6H2V+GF5 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
-    "latitude": 7.201254,
-    "longitude": 100.59374,
-    "userRatingCount": 51,
-    "googleMapsUri": "https://maps.google.com/?cid=6609267024166168934&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "googlePlaceId": "ChIJUyhPKBQzTTARZqkgUVfVuFs"
-  },
-  {
     "id": "r_songkhla_102",
     "name": "Heart Made Roastery (Heartmade Craft Coffee Roaster)",
     "rating": 4.6,
@@ -969,61 +940,6 @@
     "googlePlaceId": "ChIJ-5fE-4szTTARPOXY2wf4HmI"
   },
   {
-    "id": "r_songkhla_19",
-    "name": "เครื่องแกงแม่สมจิตรนครศรีฯ",
-    "rating": 3.8,
-    "priceRange": "$",
-    "avgPrice": 50,
-    "distance": 1.1,
-    "type": [
-      "อาหารไทย / อาหารใต้"
-    ],
-    "allergens": [
-      "อาหารทะเล",
-      "ไข่"
-    ],
-    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
-    "images": [
-      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop"
-    ],
-    "description": "ข้าวแกงขวัญใจคนตื่นเช้าแห่งสี่แยกพระพุทธ ไข่พะโล้โบราณสีเข้มเคี่ยวเข้าเนื้อ แกงเนื้อพริกสด หมูหวานทรงเครื่องรสกลมกล่อม",
-    "address": "เลขที่ 95 ถนน รถไฟ, ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
-    "latitude": 7.199479,
-    "longitude": 100.593333,
-    "userRatingCount": 4,
-    "googleMapsUri": "https://maps.google.com/?cid=6638669278445493510&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "googlePlaceId": "ChIJs_m1ACozTTARBt0KG4lKIVw"
-  },
-  {
-    "id": "r_songkhla_20",
-    "name": "ชุมชนย่านเมืองเก่าสงขลา",
-    "rating": 4.7,
-    "priceRange": "$$",
-    "avgPrice": 180,
-    "distance": 2.2,
-    "type": [
-      "อาหารไทย / อาหารใต้",
-      "ซีฟู้ด"
-    ],
-    "allergens": [
-      "อาหารทะเล"
-    ],
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop",
-    "images": [
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
-    ],
-    "description": "อาหารไทยปักษ์ใต้แท้บรรยากาศเรือนไทยริมสระบัว เมนูแนะนำ แกงคั่วปูใบชะพลูพร้อมเส้นหมี่ ปลากระบอกทอดขมิ้นกรอบนอกนุ่มใน น้ำพริกแมงดาผักเคียง",
-    "address": "55 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
-    "latitude": 7.196553,
-    "longitude": 100.590526,
-    "userRatingCount": 57,
-    "googleMapsUri": "https://maps.google.com/?cid=8144604078841593270&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "googlePlaceId": "ChIJFxDln_ozTTARtv2M-0FyB3E"
-  },
-  {
     "id": "r_songkhla_21",
     "name": "คุณจิตซีวิว เกาะยอ (Khunjit Sea View Koh Yo Restaurant)",
     "rating": 4.4,
@@ -1110,35 +1026,6 @@
     "googlePlaceId": "ChIJ35L7HmkzTTARg0VbS4rbSN4"
   },
   {
-    "id": "r_songkhla_24",
-    "name": "ทิวทัศน์ เกาะยอ (Ko Yo Viewpoint)",
-    "rating": 4.1,
-    "priceRange": "$$",
-    "avgPrice": 200,
-    "distance": 9,
-    "type": [
-      "ซีฟู้ด",
-      "อาหารไทย / อาหารใต้"
-    ],
-    "allergens": [
-      "อาหารทะเล",
-      "แป้งสาลี/กลูเตน",
-      "ไข่"
-    ],
-    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
-    "images": [
-      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
-    ],
-    "description": "นั่งทานอาหารบนแพยื่นลงไปในทะเลสาบสงขลา ปลากะพงนึ่งมะนาว แกงส้มปูดำหน่อไม้ดอง ทอดมันกุ้งสดเนื้อแน่น",
-    "address": "5G2F+5V9 ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
-    "latitude": 7.150406,
-    "longitude": 100.524726,
-    "userRatingCount": 118,
-    "googleMapsUri": "https://maps.google.com/?cid=15413659375609355005&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "googlePlaceId": "ChIJwb-eoB8xTTAR_ZoQfIlR6NU"
-  },
-  {
     "id": "r_songkhla_25",
     "name": "ชมจันทร์ เกาะยอ (Chomchan Seafood Restaurant Koh Yao)",
     "rating": 4,
@@ -1223,33 +1110,6 @@
     "googlePlaceId": "ChIJVaJ2LGkzTTAR28rl-u7g4P0"
   },
   {
-    "id": "r_songkhla_29",
-    "name": "น้าชม ทะเลสาบสงขลา (Laem Son On)",
-    "rating": 4.3,
-    "priceRange": "$$",
-    "avgPrice": 150,
-    "distance": 8.5,
-    "type": [
-      "ซีฟู้ด",
-      "อาหารไทย / อาหารใต้"
-    ],
-    "allergens": [
-      "อาหารทะเล"
-    ],
-    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
-    "images": [
-      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
-    ],
-    "description": "ร้านซีฟู้ดชาวบ้านแท้ๆ ราคาเป็นมิตร กุ้งกุลาดำอบเกลือ ปลากระบอกต้มส้มยอดจาก กั้งทอดกระเทียมพริกไทยสด",
-    "address": "6HGH+R25 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
-    "latitude": 7.227012,
-    "longitude": 100.577605,
-    "userRatingCount": 715,
-    "googleMapsUri": "https://maps.google.com/?cid=4375819619741378369&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "googlePlaceId": "ChIJx3gAzH8zTTARQafek8IIujw"
-  },
-  {
     "id": "r_songkhla_30",
     "name": "เกาะน้ำซีฟู้ด เกาะยอ (Koyo Seafood)",
     "rating": 4.2,
@@ -1276,34 +1136,6 @@
     "userRatingCount": 13,
     "googleMapsUri": "https://maps.google.com/?cid=14993002379271893018&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "googlePlaceId": "ChIJj-pqMTAyTTARGnAWRTrYEdA"
-  },
-  {
-    "id": "r_songkhla_31",
-    "name": "ครัวสวนสองทะเล (Song Tha Le Park)",
-    "rating": 4.4,
-    "priceRange": "$$",
-    "avgPrice": 180,
-    "distance": 2.7,
-    "type": [
-      "ซีฟู้ด",
-      "อาหารไทย / อาหารใต้"
-    ],
-    "allergens": [
-      "อาหารทะเล",
-      "ไข่"
-    ],
-    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
-    "images": [
-      "https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop"
-    ],
-    "description": "ตั้งอยู่จุดบรรจบระหว่างทะเลสาบสงขลากับอ่าวไทย ยำไข่แมงดาทะเล ปูม้าถอดเสื้อแกะเนื้อพร้อมทาน หอยแครงลวกตัวใหญ่",
-    "address": "6HGH+M2V ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
-    "latitude": 7.226748,
-    "longitude": 100.577543,
-    "userRatingCount": 3586,
-    "googleMapsUri": "https://maps.google.com/?cid=8863275389203626196&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "googlePlaceId": "ChIJD8XNSn4zTTAR1LjxvwGuAHs"
   },
   {
     "id": "r_songkhla_32",
