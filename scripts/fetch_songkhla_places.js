@@ -635,7 +635,8 @@ async function main() {
                 description: r.description || '',
                 address: r.address || '',
                 latitude: r.latitude || null,
-                longitude: r.longitude || null
+                longitude: r.longitude || null,
+                maps_url: r.googleMapsUri || (r.googlePlaceId ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name)}&query_place_id=${r.googlePlaceId}` : null)
             }));
 
             const { error } = await supabase.from('restaurants').upsert(batch, { onConflict: 'id' });
