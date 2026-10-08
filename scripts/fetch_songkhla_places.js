@@ -424,13 +424,24 @@ async function crawlNewSongkhlaPlaces(existingRestaurants) {
         { q: 'ร้านอาหาร หาดสมิหลา ชลาทัศน์ สงขลา', zone: 'สมิหลา' },
         { q: 'ร้านอาหาร ถนนวชิรา สงขลา', zone: 'วชิรา' },
         { q: 'ร้านอาหาร มหาวิทยาลัยราชภัฏสงขลา เขารูปช้าง', zone: 'เขารูปช้าง' },
+        { q: 'ร้านอาหาร มหาวิทยาลัยทักษิณ สงขลา', zone: 'ม.ทักษิณ' },
         { q: 'ร้านอาหารซีฟู้ด เก้าเส้ง สงขลา', zone: 'ซีฟู้ด' },
-        { q: 'คาเฟ่ เมืองสงขลา', zone: 'คาเฟ่' },
-        { q: 'ร้านอาหารฮาลาล เมืองสงขลา', zone: 'ฮาลาล' }
+        { q: 'คาเฟ่ กาแฟ เมืองสงขลา', zone: 'คาเฟ่' },
+        { q: 'ร้านอาหารฮาลาล เมืองสงขลา', zone: 'ฮาลาล' },
+        { q: 'ร้านส้มตำ ไก่ย่าง เมืองสงขลา', zone: 'ส้มตำ/อีสาน' },
+        { q: 'ร้านก๋วยเตี๋ยว เมืองสงขลา', zone: 'ก๋วยเตี๋ยว' },
+        { q: 'ร้านติ่มซำ อาหารเช้า บ่อยาง สงขลา', zone: 'ติ่มซำ/อาหารเช้า' },
+        { q: 'ร้านชาบู หมูกระทะ ปิ้งย่าง เมืองสงขลา', zone: 'ชาบู/หมูกระทะ' },
+        { q: 'ร้านอาหาร ถนนไทรบุรี สงขลา', zone: 'ไทรบุรี' }
     ];
 
     const newlyAdded = [];
-    let nextSeq = existingRestaurants.length + 1;
+    const maxExistingSeq = existingRestaurants.reduce((max, r) => {
+        const m = String(r.id || '').match(/\d+/);
+        return m ? Math.max(max, parseInt(m[0], 10)) : max;
+    }, 0);
+    let nextSeq = maxExistingSeq + 1;
+    const maxPhotosPerPlace = parseInt(getArg('photos', '1'), 10) || 1;
 
     for (const target of targetQueries) {
         console.log(`\n📍 กำลังสแกนโซน: [${target.zone}] คำค้น: "${target.q}"`);
@@ -459,7 +470,7 @@ async function crawlNewSongkhlaPlaces(existingRestaurants) {
                     continue;
                 }
 
-                const rId = `r_songkhla_${String(nextSeq++).padStart(2, '0')}`;
+                const rId = `r_songkhla_${String(nextSeq++).padStart(3, '0')}`;
                 knownPlaceIds.add(placeId);
                 knownNames.add(normName);
 
@@ -471,7 +482,7 @@ async function crawlNewSongkhlaPlaces(existingRestaurants) {
                 const realImages = [];
 
                 if (photos.length > 0) {
-                    const photosToFetch = photos.slice(0, 3);
+                    const photosToFetch = photos.slice(0, maxPhotosPerPlace);
                     for (let pIdx = 0; pIdx < photosToFetch.length; pIdx++) {
                         const photoObj = photosToFetch[pIdx];
                         if (NO_DOWNLOAD) {
@@ -520,8 +531,8 @@ async function crawlNewSongkhlaPlaces(existingRestaurants) {
                 newlyAdded.push(newRestaurant);
                 console.log(`  ➕ [${rId}] เพิ่มร้านใหม่: "${displayName}" (รูปจริง: ${realImages.length} รูป, ดาว: ${newRestaurant.rating})`);
 
-                if (LIMIT > 0 && (existingRestaurants.length + newlyAdded.length) >= LIMIT) {
-                    console.log(`🛑 ถึงขีดจำกัด --limit=${LIMIT} แล้ว`);
+                if (LIMIT > 0 && newlyAdded.length >= LIMIT) {
+                    console.log(`🛑 ถึงขีดจำกัดเพิ่มร้านใหม่ --limit=${LIMIT} แล้ว (${newlyAdded.length} ร้าน)`);
                     return newlyAdded;
                 }
 

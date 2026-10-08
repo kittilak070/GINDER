@@ -1,0 +1,1081 @@
+{
+  "totalRestaurants": 166,
+  "checkedCount": 107,
+  "exactMatches": 61,
+  "bilingualMatches": 37,
+  "partialMatches": 3,
+  "mismatches": 6,
+  "quotaHit": true,
+  "results": [
+    {
+      "index": 1,
+      "id": "r_songkhla_001",
+      "ginderName": "แต้เฮี้ยงอิ้ว (Tae Hieng Lew)",
+      "googleName": "Tae Hieng Lew",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=1881226228199161327&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "85 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 2,
+      "id": "r_songkhla_002",
+      "ginderName": "เกียดฟั่ง ข้าวสตูสงขลา (Kiat Fang Restaurant)",
+      "googleName": "Kiat Fang Restaurant",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=5986554343316655342&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "94 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 3,
+      "id": "r_songkhla_003",
+      "ginderName": "เต้าคั่ว ร้าน ป้าเอียด",
+      "googleName": "เต้าคั่ว ร้าน ป้าเอียด",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=7237309261733662634&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "58 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 4,
+      "id": "r_songkhla_004",
+      "ginderName": "ถัง ถัง ไก่สับเบตง",
+      "googleName": "ถัง ถัง ไก่สับเบตง",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=15964480744570586406&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "20 ถ Platha, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 5,
+      "id": "r_songkhla_005",
+      "ginderName": "ก๋วยเตี๋ยวหางหมู ป้าเนี้ยว (Pork Tail Noodle)",
+      "googleName": "Pork Tail Noodle",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=6314639098337506811&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "180 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 6,
+      "id": "r_songkhla_006",
+      "ginderName": "โกจอยติ่มซำ&น้ำชา",
+      "googleName": "โกจอยติ่มซำ&น้ำชา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=11313764339699080542&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "0 เมือง Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 7,
+      "id": "r_songkhla_007",
+      "ginderName": "ไอติมโอ่ง (Ice cream jar)",
+      "googleName": "Ice cream jar",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=16881312313039131029&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "69 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 8,
+      "id": "r_songkhla_008",
+      "ginderName": "ข้าวยำป้าหนู เกาะยอ",
+      "googleName": "ข้าวยำป้าหนู เกาะยอ",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=9429840700970219444&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "44 6 Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 9,
+      "id": "r_songkhla_009",
+      "ginderName": "นายหวาน ข้าวหมูแดง-หมูกรอบ (Nai Wan Restaurant)",
+      "googleName": "Nai Wan Restaurant",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=8362737461535527291&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "1 Soi Suan Mak, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 10,
+      "id": "r_songkhla_010",
+      "ginderName": "เจ๊นิ ก๋วยเตี๋ยวต้มยำปลากะพง (Jeni)",
+      "googleName": "Jeni",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=508080244743756283&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5HWR+36X, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 11,
+      "id": "r_songkhla_011",
+      "ginderName": "เจริญพุงหมูกระทะ @สงขลา",
+      "googleName": "เจริญพุงหมูกระทะ @สงขลา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=17529357686907939100&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "ตำบลบ่อยาง เมือง สงขลา 90000, Thailand"
+    },
+    {
+      "index": 12,
+      "id": "r_songkhla_012",
+      "ginderName": "Heart Made Roastery (Heartmade Craft Coffee Roaster)",
+      "googleName": "Heartmade Craft Coffee Roaster",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=5014268826869671502&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "139 Nakhonnok St, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 13,
+      "id": "r_songkhla_013",
+      "ginderName": "โรตีฟารีดา",
+      "googleName": "โรตีฟารีดา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=2642785782017147027&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "76 9 ถ. สงขลา-นาทวี Tambon Khao Rup Chang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 14,
+      "id": "r_songkhla_014",
+      "ginderName": "Cafe Der See Nakornnok (Cafe' Der See Nakornnok)",
+      "googleName": "Cafe' Der See Nakornnok",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=12919822789188691697&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Nakornnok Street, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 15,
+      "id": "r_songkhla_015",
+      "ginderName": "Lyn's The Shanghai Cafe (Lyn's The Shanghai Cafe')",
+      "googleName": "Lyn's The Shanghai Cafe'",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=8815854144015008722&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "144, 146 Nakhonnai, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 16,
+      "id": "r_songkhla_016",
+      "ginderName": "ร้านโรตีใบเตยน้ำชาบังดาริส",
+      "googleName": "ร้านโรตีใบเตยน้ำชาบังดาริส",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=302410112692788046&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "105 1 Phatthalung Rd, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 17,
+      "id": "r_songkhla_017",
+      "ginderName": "Ep's Cafe & Bakery สงขลา (E.P's Cafe Patisserie)",
+      "googleName": "E.P's Cafe Patisserie",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=11740080655200028305&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "120 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 18,
+      "id": "r_songkhla_018",
+      "ginderName": "Studio 55 Songkhla (Studio 55 Songkhla)",
+      "googleName": "Studio 55 Songkhla",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=1475236453848851637&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "55 Nakhonnok St, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 19,
+      "id": "r_songkhla_019",
+      "ginderName": "ไอศกรีมยิว (Jin Gua Yuen Ice Cream)",
+      "googleName": "Jin Gua Yuen Ice Cream",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=17177901987734217918&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "162 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 20,
+      "id": "r_songkhla_020",
+      "ginderName": "The Secret Garden Pasta Bar เดอะซีเคร็ท การ์เด้น พาสตา บาร์",
+      "googleName": "The Secret Garden Pasta Bar เดอะซีเคร็ท การ์เด้น พาสตา บาร์",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=1953336910758989358&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "87 Thanon Raman, ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000, Thailand"
+    },
+    {
+      "index": 21,
+      "id": "r_songkhla_021",
+      "ginderName": "กูโรตีชาชักสมิหลา ฮาลาล (GUROTI CHACHAK HALAL)",
+      "googleName": "กูโรตีชาชักสมิหลา ฮาลาล (GUROTI CHACHAK HALAL)",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=10828304207940492492&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "39 Chalathat, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 22,
+      "id": "r_songkhla_022",
+      "ginderName": "Nakorn Cafe (ณ ครในNaKarnnai)",
+      "googleName": "ณ ครในNaKarnnai",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=11465500232900102916&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "246 Nakhonnai, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 23,
+      "id": "r_songkhla_023",
+      "ginderName": "Vacation Coffee & Eatery ร้านอาหารเวเคชั่น คอฟฟี่ หน้าหาดชลาทัศน์",
+      "googleName": "Vacation Coffee & Eatery ร้านอาหารเวเคชั่น คอฟฟี่ หน้าหาดชลาทัศน์",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=843626425893238793&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "3 Chalathat, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 24,
+      "id": "r_songkhla_024",
+      "ginderName": "ลานโกปี้",
+      "googleName": "ลานโกปี้",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=10730961931437989751&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "46 Soi Poonsookuthi, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 25,
+      "id": "r_songkhla_025",
+      "ginderName": "โรตีป้าหนู ฮาลาล (Malisa Roti Songkhla)",
+      "googleName": "Malisa Roti Songkhla",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=16061761871247161916&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5HRV+MJG, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 26,
+      "id": "r_songkhla_026",
+      "ginderName": "CHAO DOI ถนนนางงาม \"ชิโนโปรตุกีส\"",
+      "googleName": "CHAO DOI ถนนนางงาม \"ชิโนโปรตุกีส\"",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=3531995480382271765&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5HVR+VCQ, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 27,
+      "id": "r_songkhla_027",
+      "ginderName": "Sweet Time บิงซู & ของหวาน สงขลา (Street Bingsu ม.ทักษิณ ซอย27)",
+      "googleName": "Street Bingsu ม.ทักษิณ ซอย27",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=12930404540413378285&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "ซอย27 Tambon Khao Rup Chang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 28,
+      "id": "r_songkhla_028",
+      "ginderName": "โรตีอาม่า (Roti Ama)",
+      "googleName": "Roti Ama",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=2621119483774208091&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5HVR+65F, Phatthalung Rd, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 29,
+      "id": "r_songkhla_029",
+      "ginderName": "ร้านอิสลาม ร้านแบมะ&กะดะห์",
+      "googleName": "ร้านอิสลาม ร้านแบมะ&กะดะห์",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=179104420757458119&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5J64+RH7, Khao Rup Chang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 30,
+      "id": "r_songkhla_030",
+      "ginderName": "ลุงจิ๋ว ซีฟู้ด สวนสองทะเล (Loong Jew Sea Food)",
+      "googleName": "Loong Jew Sea Food",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=18345837325024712305&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Ko Yo, Mueang Songkhla District, Songkhla 90100, Thailand"
+    },
+    {
+      "index": 31,
+      "id": "r_songkhla_031",
+      "ginderName": "ศิรดา เกาะยอ (Sirada Restaurant Koh Yo)",
+      "googleName": "Sirada Restaurant Koh Yo",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=2116933769996833033&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "8 2 เกาะยอ Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 32,
+      "id": "r_songkhla_032",
+      "ginderName": "ป้าแอ๊ะน้ำแข็งใส",
+      "googleName": "ป้าแอ๊ะน้ำแข็งใส",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=6086476844134917947&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "60, 1 Thanon Saiburi, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 33,
+      "id": "r_songkhla_033",
+      "ginderName": "Sultan roast duck (Halal) เป็ดย่างสุลต่าน สาขาสงขลา",
+      "googleName": "Sultan roast duck (Halal) เป็ดย่างสุลต่าน สาขาสงขลา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=7070361177655141692&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5JJ8+8MQ, Khaosan Rd, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 34,
+      "id": "r_songkhla_034",
+      "ginderName": "คุณจิตซีวิว เกาะยอ (Khunjit Sea View Koh Yo Restaurant)",
+      "googleName": "Khunjit Sea View Koh Yo Restaurant",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=12413907504520302491&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "ถ.สงขลา-ระโนด Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 35,
+      "id": "r_songkhla_035",
+      "ginderName": "ร้านระเบียงไม้",
+      "googleName": "ร้านระเบียงไม้",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=5399655087432216067&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "491 Nakhonnok St, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 36,
+      "id": "r_songkhla_036",
+      "ginderName": "ร้านสมิหลาวิว-สุจินดา3",
+      "googleName": "ร้านสมิหลาวิว-สุจินดา3",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=16017293461759411587&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "ถนน ราชดำเนิน แหลม ส มิ หลา, 6H7R+JWP ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000, Thailand"
+    },
+    {
+      "index": 37,
+      "id": "r_songkhla_037",
+      "ginderName": "ชมจันทร์ เกาะยอ (Chomchan Seafood Restaurant Koh Yao)",
+      "googleName": "Chomchan Seafood Restaurant Koh Yao",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=8999955587019253259&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5H32+H3R, Ko Yo, Mueang Songkhla District, Songkhla 90100, Thailand"
+    },
+    {
+      "index": 38,
+      "id": "r_songkhla_038",
+      "ginderName": "เรอดัง เกาะยอ (Koh Yor De Lagoon Restaurant)",
+      "googleName": "Koh Yor De Lagoon Restaurant",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=1871253724254101583&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "ถนนบ้านสวนใหม่ Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 39,
+      "id": "r_songkhla_039",
+      "ginderName": "สุจินดาซีฟู้ด (Sujinda Seafood 1)",
+      "googleName": "Sujinda Seafood 1",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=18293869003395156699&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "6H7R+HQC, Soi Ratchadamnoen, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 40,
+      "id": "r_songkhla_040",
+      "ginderName": "เกาะน้ำซีฟู้ด เกาะยอ (Koyo Seafood)",
+      "googleName": "Koyo Seafood",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=14993002379271893018&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5GHR+6P8, 408, Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 41,
+      "id": "r_songkhla_041",
+      "ginderName": "ครัวปลาเล (ครัวมองเล Mong Lay Ma Cafe)",
+      "googleName": "ครัวมองเล Mong Lay Ma Cafe",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=5319740936837997635&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "39, 7 M.7, Tambon Khao Rup Chang, Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 42,
+      "id": "r_songkhla_042",
+      "ginderName": "ร้านแม่เบญปลาเผา3",
+      "googleName": "ร้านแม่เบญปลาเผา3",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=2791252922927690309&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "ถ.สงขลา-ระโนด Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 43,
+      "id": "r_songkhla_043",
+      "ginderName": "กินข้าว ริมเล",
+      "googleName": "กินข้าว ริมเล",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=5183804920219471437&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "มุ่งมั่นcoffe หาด Chalathat, Thesaban Nakhon Songkhla, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 44,
+      "id": "r_songkhla_044",
+      "ginderName": "โพธิ์ทะเล เกาะยอ (Pho Talay Restaurant)",
+      "googleName": "Pho Talay Restaurant",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=16243012084718124539&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5G6P+5R8, Ko Yo, Mueang Songkhla District, Songkhla 90100, Thailand"
+    },
+    {
+      "index": 45,
+      "id": "r_songkhla_045",
+      "ginderName": "ร้านครัวครูวาส @เกาะยอ",
+      "googleName": "ร้านครัวครูวาส @เกาะยอ",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=7426347386354780173&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "26/1 หมู่8 บ้านท้ายเสาะ เกาะยอ Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 46,
+      "id": "r_songkhla_046",
+      "ginderName": "ฮิปโปก๋วยเตี๋ยวเรืออยุธยา สาขา2 สงขลา",
+      "googleName": "ฮิปโปก๋วยเตี๋ยวเรืออยุธยา สาขา2 สงขลา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=9027434200156859312&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "74/6 Saiburi Soi 41, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 47,
+      "id": "r_songkhla_047",
+      "ginderName": "โกเด้ง ก๋วยเตี๋ยว ลูกชิ้นหมู ลูกชิ้นเนื้อ เด้งๆ",
+      "googleName": "โกเด้ง ก๋วยเตี๋ยว ลูกชิ้นหมู ลูกชิ้นเนื้อ เด้งๆ",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=13608594958277488126&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5HRV+FWF, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 48,
+      "id": "r_songkhla_048",
+      "ginderName": "ก๋วยเตี๋ยวหมูต้มยำเจ๊นิด สาขา2 (หมู่บ้านธนดี)",
+      "googleName": "ก๋วยเตี๋ยวหมูต้มยำเจ๊นิด สาขา2 (หมู่บ้านธนดี)",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=9925783737951888421&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "547 Namkrachai Soi 26, Tambon Phawong, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 49,
+      "id": "r_songkhla_049",
+      "ginderName": "บะหมี่เกี๊ยวปูสะพานเหล็ก สงขลา (Burangnong)",
+      "googleName": "Burangnong",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=3029736744630997991&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "6H3V+P28, Soi Si Suda, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 50,
+      "id": "r_songkhla_050",
+      "ginderName": "ร้านโกเล็ก (ข้าวขาหมู)",
+      "googleName": "ร้านโกเล็ก (ข้าวขาหมู)",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=14082376406555338747&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 51,
+      "id": "r_songkhla_051",
+      "ginderName": "ราดหน้าหม้อดิน",
+      "googleName": "ราดหน้าหม้อดิน",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=12834026410972937465&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 52,
+      "id": "r_songkhla_052",
+      "ginderName": "ต้มตุ๋นก๋วยเตี๋ยวไก่บุฟเฟต์",
+      "googleName": "ต้มตุ๋นก๋วยเตี๋ยวไก่บุฟเฟต์",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=3503580669215566985&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "บ่อย่าง 252 Rat-Uthis 1, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 53,
+      "id": "r_songkhla_053",
+      "ginderName": "ร้านก๋วยเตี๋ยวเรือหมูสูตรโบราณ",
+      "googleName": "ร้านก๋วยเตี๋ยวเรือหมูสูตรโบราณ",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=11793656621507064413&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "44 Thaleluang Rd, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 54,
+      "id": "r_songkhla_054",
+      "ginderName": "บะหมี่ต้มยำโบราณ เจ๊หงษ์ (Tom Yam Noodle soup ( Pork))",
+      "googleName": "Tom Yam Noodle soup ( Pork)",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=14415184183840931949&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "หลังธนาคารกสิกร 1 Taoluang, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 55,
+      "id": "r_songkhla_055",
+      "ginderName": "ก๋วยเตี๋ยวเรือโกเบิ้ม สงขลา (Ko Ban Noodle Shop)",
+      "googleName": "Ko Ban Noodle Shop",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=8341266826081936318&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5HWR+7JJ, Raman, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 56,
+      "id": "r_songkhla_056",
+      "ginderName": "ข้าวมันไก่โกทรง ราษฎร์อุทิศ 1",
+      "googleName": "ข้าวมันไก่โกทรง ราษฎร์อุทิศ 1",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=6072420450590389609&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Rat-Uthis 1, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 57,
+      "id": "r_songkhla_057",
+      "ginderName": "กินเตี๋ยวกัน สงขลา",
+      "googleName": "กินเตี๋ยวกัน สงขลา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=8768159813087517368&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5HVV+86V, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 58,
+      "id": "r_songkhla_058",
+      "ginderName": "ร้านก๋วยเตี๋ยวป้าแมว",
+      "googleName": "ร้านก๋วยเตี๋ยวป้าแมว",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=3095575164161430452&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "4HRW+63R, Unnamed Road, Tambon Khao Rup Chang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 59,
+      "id": "r_songkhla_059",
+      "ginderName": "ร้าเจ๊เฮียง (ข้าวหมูแดง-หมูกรอบ ข้าวขาหมู ก๋วยเตี๋ยว)",
+      "googleName": "ร้าเจ๊เฮียง (ข้าวหมูแดง-หมูกรอบ ข้าวขาหมู ก๋วยเตี๋ยว)",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=14576121199367322216&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "68 Ratuthis 1 Soi 2, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 60,
+      "id": "r_songkhla_060",
+      "ginderName": "ก๋วยเตี๋ยวป้าพริ้มเย็นตาโฟ",
+      "googleName": "ก๋วยเตี๋ยวป้าพริ้มเย็นตาโฟ",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=17506350296562530636&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "33 Karnjanavanit Soi 1, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 61,
+      "id": "r_songkhla_061",
+      "ginderName": "โกชัยซีฟู้ด",
+      "googleName": "โกชัยซีฟู้ด",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=247798399398324323&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "52 4 Soi 5 Rom Yen, Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 62,
+      "id": "r_songkhla_062",
+      "ginderName": "ครัวมัชฌิมา เกาะยอ (Mahadsajan Ko Yo Seafood Songkhla)",
+      "googleName": "Mahadsajan Ko Yo Seafood Songkhla",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=16590542364146204512&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "17 หมู่ 1 ต.เกาะยอ .เมือง Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 63,
+      "id": "r_songkhla_063",
+      "ginderName": "ซีฟู้ดฮาลาล ริมหาดชลาทัศน์ (BUNDAYA SEAFOOD)",
+      "googleName": "BUNDAYA SEAFOOD",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=10740628082237391816&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Khao Rup Chang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 64,
+      "id": "r_songkhla_064",
+      "ginderName": "ร้านปลาเผา ซอย9",
+      "googleName": "ร้านปลาเผา ซอย9",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=13517337815848077736&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "เลขที่ 60/140 * Kanjanavanich Rd, Tambon Khao Rup Chang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 65,
+      "id": "r_songkhla_065",
+      "ginderName": "ร้านอาหารชายน้ำ เกาะยอ (Nam Kieng Din Restaurant)",
+      "googleName": "Nam Kieng Din Restaurant",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=16951159021734222198&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "59 2, Tambon Ko Yo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 66,
+      "id": "r_songkhla_066",
+      "ginderName": "ครัวป้าพร สูตรตาหลวง สาขา12 Auntie Porn's Kitchen",
+      "googleName": "ครัวป้าพร สูตรตาหลวง สาขา12 Auntie Porn's Kitchen",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=16670940432715053470&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "472 Tambon Phawong, เมือง Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 67,
+      "id": "r_songkhla_067",
+      "ginderName": "ร้านอาหารทะเล ยายขำ (Raan Na Kham Restaurant)",
+      "googleName": "Raan Na Kham Restaurant",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=11575198587124134422&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "21 16 Laem Son On, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 68,
+      "id": "r_songkhla_068",
+      "ginderName": "แพโฟลทติ้ง ซีฟู้ด เกาะยอ (Talaythong Seafood Koh yor)",
+      "googleName": "Talaythong Seafood Koh yor",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=5535760291197618257&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "62 ม.1 ต.เกาะยอ อ, Thesaban Nakhon Songkhla, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 69,
+      "id": "r_songkhla_069",
+      "ginderName": "ครัวคุณป้า ซีฟู้ดฮาลาล (Krua jao reua)",
+      "googleName": "Krua jao reua",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=703347944198156307&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "260 5 Ratuthis 2 Soi 5, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 70,
+      "id": "r_songkhla_070",
+      "ginderName": "ซีฟู้ดฮาลาล หาดทรายแก้ว สงขลา (Bang Sem Seafood)",
+      "googleName": "Bang Sem Seafood",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=8299172122544639689&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "6H7V+J2G, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 71,
+      "id": "r_songkhla_071",
+      "ginderName": "Sea-นัว ถนนนางงามสงขลา",
+      "googleName": "Sea-นัว ถนนนางงามสงขลา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=13949915475160965081&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "123 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 72,
+      "id": "r_songkhla_072",
+      "ginderName": "Kansai Suki คันไซสุกี้ ถนนนางงาม",
+      "googleName": "Kansai Suki คันไซสุกี้ ถนนนางงาม",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=9848970806220650316&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "107 1 Nang Ngam, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 73,
+      "id": "r_songkhla_073",
+      "ginderName": "ตำนางงาม&​Brother​ ​burger",
+      "googleName": "Tam Nang Ngam",
+      "matchStatus": "MISMATCH",
+      "note": "ชื่อไม่ตรงกัน",
+      "googleMapsUri": "https://maps.google.com/?cid=1992017119895611719&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "48 Nang Ngam, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 74,
+      "id": "r_songkhla_074",
+      "ginderName": "Joe Delicious @นางงาม",
+      "googleName": "Joe Delicious",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=18286189958087377227&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "155 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 75,
+      "id": "r_songkhla_075",
+      "ginderName": "ถนัดศรี (since 1969) สาขาถนนนางงาม สงขลา",
+      "googleName": "ถนัดศรี (since 1969) สาขาถนนนางงาม สงขลา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=14229519947696437381&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "108 Nang Ngam, Tambon Bo Yang, เมือง, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 76,
+      "id": "r_songkhla_076",
+      "ginderName": "Virung Coffee & Bar",
+      "googleName": "Virung Coffee & Bar",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=8127480258301492248&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "137 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 77,
+      "id": "r_songkhla_077",
+      "ginderName": "กินเช้า สงขลา - KIN CHAO OLD TOWN",
+      "googleName": "กินเช้า สงขลา - KIN CHAO OLD TOWN",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=1013545949971721170&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "28 Nang Ngam, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 78,
+      "id": "r_songkhla_078",
+      "ginderName": "ชุมชนย่านเมืองเก่าสงขลา",
+      "googleName": "ชุมชนย่านเมืองเก่าสงขลา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=8144604078841593270&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "55 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 79,
+      "id": "r_songkhla_079",
+      "ginderName": "บาจีปังนมสด : bhajipang fresh milk สาขาถนนนางงาม",
+      "googleName": "บาจีปังนมสด : bhajipang fresh milk สาขาถนนนางงาม",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=2675750520503027415&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "91 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 80,
+      "id": "r_songkhla_080",
+      "ginderName": "Smoked Craft",
+      "googleName": "Smoked Craft",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=8330107076710700162&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "211 Nakhonnai, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 81,
+      "id": "r_songkhla_081",
+      "ginderName": "Mertian Songkhla",
+      "googleName": "Mertian Songkhla",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=14106672278327841414&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "35 Nang Ngam, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 82,
+      "id": "r_songkhla_082",
+      "ginderName": "The Stand Brew•Bake",
+      "googleName": "The Stand Brew•Bake",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=13144321956438086997&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "110 Nakhonnai, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 83,
+      "id": "r_songkhla_083",
+      "ginderName": "Paradise Pizzeria",
+      "googleName": "Paradise Pizzeria",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=5270568221863494946&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "2 Soi Pattani, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 84,
+      "id": "r_songkhla_084",
+      "ginderName": "Oyako japanese (โอยาโกะ)",
+      "googleName": "Oyako japanese and korean cuisine โอยาโกะ",
+      "matchStatus": "PARTIAL_OVERLAP",
+      "note": "มีคำตรงกันบางส่วน: Oyako, japanese, โอยาโกะ",
+      "googleMapsUri": "https://maps.google.com/?cid=2164530607361014417&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5HPW+CXP, Thanon Saiburi, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 85,
+      "id": "r_songkhla_085",
+      "ginderName": "ร้านอาหารน้องเมย์ ถ.แหลมสนอ่อน ต.บ่อยาง อ.เมือง จ.สงขลา 90000",
+      "googleName": "ร้านอาหารน้องเมย์ ถ.แหลมสนอ่อน ต.บ่อยาง อ.เมือง จ.สงขลา 90000",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=2729281187796985663&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "21 3 Laem Son On, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 86,
+      "id": "r_songkhla_086",
+      "ginderName": "มุมมันส์",
+      "googleName": "มุมมันส์",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=17474649569914622123&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "238 Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 87,
+      "id": "r_songkhla_087",
+      "ginderName": "ครัวร่มยาง อาหารพื้นบ้าน",
+      "googleName": "ครัวร่มยาง อาหารพื้นบ้าน",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=9204173749332091503&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "175/1 Tambon Thung Wang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 88,
+      "id": "r_songkhla_088",
+      "ginderName": "ร้านอาหารสนแก้ว ซีฟู๊ด",
+      "googleName": "ร้านสนแก้วซีฟู๊ด",
+      "matchStatus": "PARTIAL_OVERLAP",
+      "note": "มีคำตรงกันบางส่วน: ซีฟู๊ด",
+      "googleMapsUri": "https://maps.google.com/?cid=18201309086942408265&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "19 ถ Chalathat, Tambon Bo Yang, อำเภอเมือง, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 89,
+      "id": "r_songkhla_089",
+      "ginderName": "ร้านสุขเกษมคาเฟ่ สงขลา",
+      "googleName": "Suk Kasem Restaurant and Cafe",
+      "matchStatus": "MISMATCH",
+      "note": "ชื่อไม่ตรงกัน",
+      "googleMapsUri": "https://maps.google.com/?cid=8280919583048015023&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "ร้านสุขเกษม สงขลา เลขที่ 22 Soi Sadao, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 90,
+      "id": "r_songkhla_090",
+      "ginderName": "ร้านชาวงเวียน ก๋วยเตี๋ยวต้มยำ at หาดบ่ออิฐ Halal",
+      "googleName": "Chaa Weng Wien Halal Bor It Beach",
+      "matchStatus": "PARTIAL_OVERLAP",
+      "note": "มีคำตรงกันบางส่วน: Halal",
+      "googleMapsUri": "https://maps.google.com/?cid=4619626548033454305&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "4M87+6M5 Bor It Beach, Tambon Ko Taeo, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 91,
+      "id": "r_songkhla_091",
+      "ginderName": "ร้านอาหารทะเลสงขลา",
+      "googleName": "Songkhla Seafood Restaurant",
+      "matchStatus": "MISMATCH",
+      "note": "ชื่อไม่ตรงกัน",
+      "googleMapsUri": "https://maps.google.com/?cid=13985171612431823292&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Thailand, 6H7R+MXC ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000, Thailand"
+    },
+    {
+      "index": 92,
+      "id": "r_songkhla_092",
+      "ginderName": "ร้านเรือใบ สงขลา",
+      "googleName": "Rua Bai Restaurant",
+      "matchStatus": "MISMATCH",
+      "note": "ชื่อไม่ตรงกัน",
+      "googleMapsUri": "https://maps.google.com/?cid=17348012042099311378&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "อาคารสโมสรเรือใบ ถนน Chalathat, Tambon Bo Yang, เมือง Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 93,
+      "id": "r_songkhla_093",
+      "ginderName": "Lagune ลากูน",
+      "googleName": "Lagune ลากูน",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=1643192203559708335&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5HFV+R4V, Khao Rup Chang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 94,
+      "id": "r_songkhla_094",
+      "ginderName": "สวนอาหารนายหัวบ่าว ซีฟู้ด",
+      "googleName": "สวนอาหารนายหัวบ่าว ซีฟู้ด",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=9397660405013156756&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "445 1, Tambon Phawong, Amphoe Mueang Songkhla, Chang Wat Songkhla 90100, Thailand"
+    },
+    {
+      "index": 95,
+      "id": "r_songkhla_095",
+      "ginderName": "ร้านอาหารมณฑาทิพย์",
+      "googleName": "ร้านอาหารมณฑาทิพย์ (Monthathip Restaurant)",
+      "matchStatus": "PARTIAL_CONTAINED",
+      "note": "ชื่อครอบคลุมกัน (เช่น มีชื่อไทยกำกับหรือชื่ออังกฤษในวงเล็บ)",
+      "googleMapsUri": "https://maps.google.com/?cid=5640234290457928495&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Soi Ratchadamnoen, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 96,
+      "id": "r_songkhla_096",
+      "ginderName": "ร้านครัวใบตอง",
+      "googleName": "Krua Bai Tong Restaurant",
+      "matchStatus": "MISMATCH",
+      "note": "ชื่อไม่ตรงกัน",
+      "googleMapsUri": "https://maps.google.com/?cid=14938095290080043215&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "32 Saiburi Soi 7, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 97,
+      "id": "r_songkhla_097",
+      "ginderName": "คลื่นงาม KLEUN NGAM - Cafe & Stay",
+      "googleName": "คลื่นงาม KLEUN NGAM - Cafe & Stay",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=1069539388969400082&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "116 Thanon Nakorn Nai, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 98,
+      "id": "r_songkhla_098",
+      "ginderName": "มาเด้อ",
+      "googleName": "มาเด้อ",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=16347707301961357219&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "57 Chaiya, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 99,
+      "id": "r_songkhla_099",
+      "ginderName": "ย่างให้ สงขลา",
+      "googleName": "ย่างให้ สงขลา",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=5319967641365835936&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 100,
+      "id": "r_songkhla_100",
+      "ginderName": "สโตยคาเฟ่ สาขาสงขลา Satoy cafe'",
+      "googleName": "สโตยคาเฟ่ สาขาสงขลา Satoy cafe'",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=358923492161714753&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "165 Ramvithi Soi 8, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 101,
+      "id": "r_songkhla_101",
+      "ginderName": "Good morning cafe หาดชลาทัศ",
+      "googleName": "Good morning cafe หาดชลาทัศ",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=17375868733909826772&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "ตำบลบ่อยาง เมือง สงขลา 90000, Thailand"
+    },
+    {
+      "index": 102,
+      "id": "r_songkhla_102",
+      "ginderName": "Chalatent Cafe'",
+      "googleName": "Chalatent Cafe'",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=17584413279775970292&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "6H5X+FRF Tinsulanonda Stadium, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 103,
+      "id": "r_songkhla_103",
+      "ginderName": "Vella Beach Bar & Bistro",
+      "googleName": "Vella Beach Bar & Bistro",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=3784177031315014048&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "17 Chalathat, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 104,
+      "id": "r_songkhla_104",
+      "ginderName": "Aor-aimm",
+      "googleName": "SEA' MILA",
+      "matchStatus": "MISMATCH",
+      "note": "ชื่อไม่ตรงกัน",
+      "googleMapsUri": "https://maps.google.com/?cid=11060821590498639531&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "Soi Ratchadamnoen, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 105,
+      "id": "r_songkhla_105",
+      "ginderName": "วันวาน (หาดชลาทัศน์)",
+      "googleName": "วันวาน (หาดชลาทัศน์)",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=6193235308004155009&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "5JR6+M3J, Bo Yang, Mueang Songkhla District, Songkhla 90000, Thailand"
+    },
+    {
+      "index": 106,
+      "id": "r_songkhla_106",
+      "ginderName": "Mar - Beach Restaurant",
+      "googleName": "Mar - Beach Restaurant",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=8148377613645305093&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "29 Chalathat, Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    },
+    {
+      "index": 107,
+      "id": "r_songkhla_107",
+      "ginderName": "Sea and Sand Eatery",
+      "googleName": "Sea and Sand Eatery",
+      "matchStatus": "EXACT",
+      "note": "",
+      "googleMapsUri": "https://maps.google.com/?cid=9167119004879790878&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+      "address": "8/1 407 Tambon Bo Yang, Amphoe Mueang Songkhla, Chang Wat Songkhla 90000, Thailand"
+    }
+  ]
+}

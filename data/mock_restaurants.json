@@ -1,6 +1,6 @@
 [
   {
-    "id": "r_songkhla_01",
+    "id": "r_songkhla_001",
     "name": "แต้เฮี้ยงอิ้ว (Tae Hieng Lew)",
     "rating": 4.3,
     "priceRange": "$$",
@@ -29,7 +29,7 @@
     "googlePlaceId": "ChIJQ8N4CBozTTAR7331kUl1Gxo"
   },
   {
-    "id": "r_songkhla_02",
+    "id": "r_songkhla_002",
     "name": "เกียดฟั่ง ข้าวสตูสงขลา (Kiat Fang Restaurant)",
     "rating": 4.4,
     "priceRange": "$",
@@ -58,7 +58,7 @@
     "googlePlaceId": "ChIJiT9fDxozTTAR7gz2BXWDFFM"
   },
   {
-    "id": "r_songkhla_03",
+    "id": "r_songkhla_003",
     "name": "เต้าคั่ว ร้าน ป้าเอียด",
     "rating": 4.6,
     "priceRange": "$",
@@ -88,7 +88,7 @@
     "googlePlaceId": "ChIJm3A-cogzTTARqo9Hu20WcGQ"
   },
   {
-    "id": "r_songkhla_04",
+    "id": "r_songkhla_004",
     "name": "ถัง ถัง ไก่สับเบตง",
     "rating": 4.6,
     "priceRange": "$",
@@ -116,7 +116,7 @@
     "googlePlaceId": "ChIJT2qi8wczTTARJoWxW6c6jd0"
   },
   {
-    "id": "r_songkhla_05",
+    "id": "r_songkhla_005",
     "name": "ก๋วยเตี๋ยวหางหมู ป้าเนี้ยว (Pork Tail Noodle)",
     "rating": 4.3,
     "priceRange": "$",
@@ -144,7 +144,7 @@
     "googlePlaceId": "ChIJ3-dAGRozTTAR-zUztc0aolc"
   },
   {
-    "id": "r_songkhla_06",
+    "id": "r_songkhla_006",
     "name": "โกจอยติ่มซำ&น้ำชา",
     "rating": 4.6,
     "priceRange": "$",
@@ -172,7 +172,7 @@
     "googlePlaceId": "ChIJB5Qn-OIzTTARXt0-XLmQAp0"
   },
   {
-    "id": "r_songkhla_07",
+    "id": "r_songkhla_007",
     "name": "ไอติมโอ่ง (Ice cream jar)",
     "rating": 4.2,
     "priceRange": "$",
@@ -201,7 +201,7 @@
     "googlePlaceId": "ChIJt-AHpBAzTTARlREgkRt4Ruo"
   },
   {
-    "id": "r_songkhla_08",
+    "id": "r_songkhla_008",
     "name": "ข้าวยำป้าหนู เกาะยอ",
     "rating": 4.4,
     "priceRange": "$",
@@ -229,7 +229,7 @@
     "googlePlaceId": "ChIJzY-L1j8yTTARtLfZ9SeG3YI"
   },
   {
-    "id": "r_songkhla_09",
+    "id": "r_songkhla_009",
     "name": "นายหวาน ข้าวหมูแดง-หมูกรอบ (Nai Wan Restaurant)",
     "rating": 4.2,
     "priceRange": "$",
@@ -258,7 +258,7 @@
     "googlePlaceId": "ChIJR9DDs2kzTTARe1Gt4GlpDnQ"
   },
   {
-    "id": "r_songkhla_10",
+    "id": "r_songkhla_010",
     "name": "เจ๊นิ ก๋วยเตี๋ยวต้มยำปลากะพง (Jeni)",
     "rating": 4.3,
     "priceRange": "$$",
@@ -286,7 +286,7 @@
     "googlePlaceId": "ChIJd-EvDhozTTAR-1lYaUoQDQc"
   },
   {
-    "id": "r_songkhla_100",
+    "id": "r_songkhla_011",
     "name": "เจริญพุงหมูกระทะ @สงขลา",
     "rating": 3.8,
     "priceRange": "$",
@@ -314,7 +314,7 @@
     "googlePlaceId": "ChIJlVl2SnYzTTARHCnpFPHJRPM"
   },
   {
-    "id": "r_songkhla_102",
+    "id": "r_songkhla_012",
     "name": "Heart Made Roastery (Heartmade Craft Coffee Roaster)",
     "rating": 4.6,
     "priceRange": "$$",
@@ -340,7 +340,7 @@
     "googlePlaceId": "ChIJqfsm6hAzTTARTqbhae5ClkU"
   },
   {
-    "id": "r_songkhla_103",
+    "id": "r_songkhla_013",
     "name": "โรตีฟารีดา",
     "rating": 5,
     "priceRange": "$",
@@ -369,7 +369,7 @@
     "googlePlaceId": "ChIJNQa7yOrNsjERk8CVqqoPrSQ"
   },
   {
-    "id": "r_songkhla_104",
+    "id": "r_songkhla_014",
     "name": "Cafe Der See Nakornnok (Cafe' Der See Nakornnok)",
     "rating": 4.4,
     "priceRange": "$$",
@@ -397,7 +397,7 @@
     "googlePlaceId": "ChIJH4M_iRAzTTAR8aaW5l9uTLM"
   },
   {
-    "id": "r_songkhla_105",
+    "id": "r_songkhla_015",
     "name": "Lyn's The Shanghai Cafe (Lyn's The Shanghai Cafe')",
     "rating": 4.5,
     "priceRange": "$$",
@@ -425,7 +425,7 @@
     "googlePlaceId": "ChIJUejfmhAzTTAR0oOrtaI0WHo"
   },
   {
-    "id": "r_songkhla_106",
+    "id": "r_songkhla_016",
     "name": "ร้านโรตีใบเตยน้ำชาบังดาริส",
     "rating": 4.5,
     "priceRange": "$",
@@ -454,7 +454,7 @@
     "googlePlaceId": "ChIJna6vWz8zTTARThuKL2VgMgQ"
   },
   {
-    "id": "r_songkhla_107",
+    "id": "r_songkhla_017",
     "name": "Ep's Cafe & Bakery สงขลา (E.P's Cafe Patisserie)",
     "rating": 4.5,
     "priceRange": "$$",
@@ -483,7 +483,7 @@
     "googlePlaceId": "ChIJR7KHBRozTTARkQaifycl7aI"
   },
   {
-    "id": "r_songkhla_108",
+    "id": "r_songkhla_018",
     "name": "Studio 55 Songkhla (Studio 55 Songkhla)",
     "rating": 4.5,
     "priceRange": "$$",
@@ -511,7 +511,7 @@
     "googlePlaceId": "ChIJA_pMg48zTTARtSReF70XeRQ"
   },
   {
-    "id": "r_songkhla_109",
+    "id": "r_songkhla_019",
     "name": "ไอศกรีมยิว (Jin Gua Yuen Ice Cream)",
     "rating": 4.3,
     "priceRange": "$",
@@ -538,7 +538,7 @@
     "googlePlaceId": "ChIJadYfGxozTTARvuRfbdgqZO4"
   },
   {
-    "id": "r_songkhla_110",
+    "id": "r_songkhla_020",
     "name": "The Secret Garden Pasta Bar เดอะซีเคร็ท การ์เด้น พาสตา บาร์",
     "rating": 4.4,
     "priceRange": "$$",
@@ -567,7 +567,7 @@
     "googlePlaceId": "ChIJsWL7DBozTTARLs5yNJKlGxs"
   },
   {
-    "id": "r_songkhla_111",
+    "id": "r_songkhla_021",
     "name": "กูโรตีชาชักสมิหลา ฮาลาล (GUROTI CHACHAK HALAL)",
     "rating": 4.3,
     "priceRange": "$",
@@ -596,7 +596,7 @@
     "googlePlaceId": "ChIJN_a-HAAzTTARzBwpak7dRZY"
   },
   {
-    "id": "r_songkhla_112",
+    "id": "r_songkhla_022",
     "name": "Nakorn Cafe (ณ ครในNaKarnnai)",
     "rating": 4.8,
     "priceRange": "$$",
@@ -624,7 +624,7 @@
     "googlePlaceId": "ChIJPy4QPaszTTARBEsrCrejHZ8"
   },
   {
-    "id": "r_songkhla_114",
+    "id": "r_songkhla_023",
     "name": "Vacation Coffee & Eatery ร้านอาหารเวเคชั่น คอฟฟี่ หน้าหาดชลาทัศน์",
     "rating": 4.8,
     "priceRange": "$$",
@@ -652,7 +652,7 @@
     "googlePlaceId": "ChIJydI8LCUzTTARCbh_vsMptQs"
   },
   {
-    "id": "r_songkhla_115",
+    "id": "r_songkhla_024",
     "name": "ลานโกปี้",
     "rating": 4.6,
     "priceRange": "$$",
@@ -683,7 +683,7 @@
     "googlePlaceId": "ChIJgdW3EkYzTTARd9-ZhQUJ7JQ"
   },
   {
-    "id": "r_songkhla_116",
+    "id": "r_songkhla_025",
     "name": "โรตีป้าหนู ฮาลาล (Malisa Roti Songkhla)",
     "rating": 4.4,
     "priceRange": "$",
@@ -712,7 +712,7 @@
     "googlePlaceId": "ChIJMw0q3hgzTTARPLqZslLX5t4"
   },
   {
-    "id": "r_songkhla_118",
+    "id": "r_songkhla_026",
     "name": "CHAO DOI ถนนนางงาม \"ชิโนโปรตุกีส\"",
     "rating": 4.8,
     "priceRange": "$$",
@@ -740,7 +740,7 @@
     "googlePlaceId": "ChIJc1dhGqIzTTARFXF4FC0rBDE"
   },
   {
-    "id": "r_songkhla_119",
+    "id": "r_songkhla_027",
     "name": "Sweet Time บิงซู & ของหวาน สงขลา (Street Bingsu ม.ทักษิณ ซอย27)",
     "rating": 5,
     "priceRange": "$$",
@@ -768,7 +768,7 @@
     "googlePlaceId": "ChIJAZiqsTAzTTAR7f5v2WsGcrM"
   },
   {
-    "id": "r_songkhla_13",
+    "id": "r_songkhla_028",
     "name": "โรตีอาม่า (Roti Ama)",
     "rating": 4.5,
     "priceRange": "$",
@@ -797,7 +797,7 @@
     "googlePlaceId": "ChIJh7V5yxszTTARW4g3gEgWYCQ"
   },
   {
-    "id": "r_songkhla_14",
+    "id": "r_songkhla_029",
     "name": "ร้านอิสลาม ร้านแบมะ&กะดะห์",
     "rating": 4.3,
     "priceRange": "$",
@@ -825,7 +825,7 @@
     "googlePlaceId": "ChIJg398Q7gyTTARx0zzkIVOfAI"
   },
   {
-    "id": "r_songkhla_15",
+    "id": "r_songkhla_030",
     "name": "ลุงจิ๋ว ซีฟู้ด สวนสองทะเล (Loong Jew Sea Food)",
     "rating": 4.1,
     "priceRange": "$$",
@@ -853,7 +853,7 @@
     "googlePlaceId": "ChIJperaNjAyTTARcVYzwdiBmf4"
   },
   {
-    "id": "r_songkhla_16",
+    "id": "r_songkhla_031",
     "name": "ศิรดา เกาะยอ (Sirada Restaurant Koh Yo)",
     "rating": 4.7,
     "priceRange": "$$$",
@@ -883,7 +883,7 @@
     "googlePlaceId": "ChIJoYppRToyTTARCZGwPQzcYB0"
   },
   {
-    "id": "r_songkhla_17",
+    "id": "r_songkhla_032",
     "name": "ป้าแอ๊ะน้ำแข็งใส",
     "rating": 4.3,
     "priceRange": "$",
@@ -911,7 +911,7 @@
     "googlePlaceId": "ChIJM7foPgAzTTARO2dNNHGCd1Q"
   },
   {
-    "id": "r_songkhla_18",
+    "id": "r_songkhla_033",
     "name": "Sultan roast duck (Halal) เป็ดย่างสุลต่าน สาขาสงขลา",
     "rating": 4.8,
     "priceRange": "$",
@@ -940,7 +940,7 @@
     "googlePlaceId": "ChIJ-5fE-4szTTARPOXY2wf4HmI"
   },
   {
-    "id": "r_songkhla_21",
+    "id": "r_songkhla_034",
     "name": "คุณจิตซีวิว เกาะยอ (Khunjit Sea View Koh Yo Restaurant)",
     "rating": 4.4,
     "priceRange": "$$$",
@@ -968,7 +968,7 @@
     "googlePlaceId": "ChIJAV9tVRUyTTARmw99iRoPR6w"
   },
   {
-    "id": "r_songkhla_22",
+    "id": "r_songkhla_035",
     "name": "ร้านระเบียงไม้",
     "rating": 4.2,
     "priceRange": "$$",
@@ -997,7 +997,7 @@
     "googlePlaceId": "ChIJxdX24B4zTTARAy4HhLFt70o"
   },
   {
-    "id": "r_songkhla_23",
+    "id": "r_songkhla_036",
     "name": "ร้านสมิหลาวิว-สุจินดา3",
     "rating": 4,
     "priceRange": "$$",
@@ -1026,7 +1026,7 @@
     "googlePlaceId": "ChIJ35L7HmkzTTARg0VbS4rbSN4"
   },
   {
-    "id": "r_songkhla_25",
+    "id": "r_songkhla_037",
     "name": "ชมจันทร์ เกาะยอ (Chomchan Seafood Restaurant Koh Yao)",
     "rating": 4,
     "priceRange": "$$$",
@@ -1055,7 +1055,7 @@
     "googlePlaceId": "ChIJhTV4YQ0yTTARCyaTLuxD5nw"
   },
   {
-    "id": "r_songkhla_26",
+    "id": "r_songkhla_038",
     "name": "เรอดัง เกาะยอ (Koh Yor De Lagoon Restaurant)",
     "rating": 4,
     "priceRange": "$$",
@@ -1082,7 +1082,7 @@
     "googlePlaceId": "ChIJ4waZ6xsyTTART-DKDlkH-Bk"
   },
   {
-    "id": "r_songkhla_27",
+    "id": "r_songkhla_039",
     "name": "สุจินดาซีฟู้ด (Sujinda Seafood 1)",
     "rating": 4.1,
     "priceRange": "$$",
@@ -1110,7 +1110,7 @@
     "googlePlaceId": "ChIJVaJ2LGkzTTAR28rl-u7g4P0"
   },
   {
-    "id": "r_songkhla_30",
+    "id": "r_songkhla_040",
     "name": "เกาะน้ำซีฟู้ด เกาะยอ (Koyo Seafood)",
     "rating": 4.2,
     "priceRange": "$$",
@@ -1138,7 +1138,7 @@
     "googlePlaceId": "ChIJj-pqMTAyTTARGnAWRTrYEdA"
   },
   {
-    "id": "r_songkhla_32",
+    "id": "r_songkhla_041",
     "name": "ครัวปลาเล (ครัวมองเล Mong Lay Ma Cafe)",
     "rating": 4.9,
     "priceRange": "$$",
@@ -1166,7 +1166,7 @@
     "googlePlaceId": "ChIJeYNGML4zTTARQyRVZTKE00k"
   },
   {
-    "id": "r_songkhla_33",
+    "id": "r_songkhla_042",
     "name": "ร้านแม่เบญปลาเผา3",
     "rating": 4.2,
     "priceRange": "$$",
@@ -1194,7 +1194,7 @@
     "googlePlaceId": "ChIJmbuzeNczTTARRTJgpb6FvCY"
   },
   {
-    "id": "r_songkhla_34",
+    "id": "r_songkhla_043",
     "name": "กินข้าว ริมเล",
     "rating": 5,
     "priceRange": "$",
@@ -1222,7 +1222,7 @@
     "googlePlaceId": "ChIJgcwlgbkzTTARTY6aJhyT8Ec"
   },
   {
-    "id": "r_songkhla_35",
+    "id": "r_songkhla_044",
     "name": "โพธิ์ทะเล เกาะยอ (Pho Talay Restaurant)",
     "rating": 4.1,
     "priceRange": "$$",
@@ -1249,7 +1249,7 @@
     "googlePlaceId": "ChIJieSsfBkyTTAR-z0AkG7FauE"
   },
   {
-    "id": "r_songkhla_39",
+    "id": "r_songkhla_045",
     "name": "ร้านครัวครูวาส @เกาะยอ",
     "rating": 4.6,
     "priceRange": "$$",
@@ -1278,7 +1278,7 @@
     "googlePlaceId": "ChIJdx-WW8czTTARDchT9pmvD2c"
   },
   {
-    "id": "r_songkhla_41",
+    "id": "r_songkhla_046",
     "name": "ฮิปโปก๋วยเตี๋ยวเรืออยุธยา สาขา2 สงขลา",
     "rating": 4.6,
     "priceRange": "$",
@@ -1307,7 +1307,7 @@
     "googlePlaceId": "ChIJVR-QXR4zTTARsOuPXZPjR30"
   },
   {
-    "id": "r_songkhla_42",
+    "id": "r_songkhla_047",
     "name": "โกเด้ง ก๋วยเตี๋ยว ลูกชิ้นหมู ลูกชิ้นเนื้อ เด้งๆ",
     "rating": 4.2,
     "priceRange": "$",
@@ -1335,7 +1335,7 @@
     "googlePlaceId": "ChIJpw8GZSkzTTAR_i1NXANx27w"
   },
   {
-    "id": "r_songkhla_44",
+    "id": "r_songkhla_048",
     "name": "ก๋วยเตี๋ยวหมูต้มยำเจ๊นิด สาขา2 (หมู่บ้านธนดี)",
     "rating": 4.2,
     "priceRange": "$",
@@ -1364,7 +1364,7 @@
     "googlePlaceId": "ChIJR6cZDoItTTARJaT4ebh3v4k"
   },
   {
-    "id": "r_songkhla_46",
+    "id": "r_songkhla_049",
     "name": "บะหมี่เกี๊ยวปูสะพานเหล็ก สงขลา (Burangnong)",
     "rating": 4.4,
     "priceRange": "$$",
@@ -1393,7 +1393,7 @@
     "googlePlaceId": "ChIJ0a7GjhQzTTAR59OtWoTJCyo"
   },
   {
-    "id": "r_songkhla_47",
+    "id": "r_songkhla_050",
     "name": "ร้านโกเล็ก (ข้าวขาหมู)",
     "rating": 4.5,
     "priceRange": "$",
@@ -1422,7 +1422,7 @@
     "googlePlaceId": "ChIJpWxxGSAzTTAR-6cS6rqmbsM"
   },
   {
-    "id": "r_songkhla_49",
+    "id": "r_songkhla_051",
     "name": "ราดหน้าหม้อดิน",
     "rating": 4.3,
     "priceRange": "$",
@@ -1451,7 +1451,7 @@
     "googlePlaceId": "ChIJw4rZgxkzTTAR-fwF8AWfG7I"
   },
   {
-    "id": "r_songkhla_50",
+    "id": "r_songkhla_052",
     "name": "ต้มตุ๋นก๋วยเตี๋ยวไก่บุฟเฟต์",
     "rating": 3.8,
     "priceRange": "$",
@@ -1479,7 +1479,7 @@
     "googlePlaceId": "ChIJg0kfWwAzTTARieyETg44nzA"
   },
   {
-    "id": "r_songkhla_51",
+    "id": "r_songkhla_053",
     "name": "ร้านก๋วยเตี๋ยวเรือหมูสูตรโบราณ",
     "rating": 5,
     "priceRange": "$",
@@ -1508,7 +1508,7 @@
     "googlePlaceId": "ChIJy0b3ViMzTTARXbLcNzZ8q6M"
   },
   {
-    "id": "r_songkhla_52",
+    "id": "r_songkhla_054",
     "name": "บะหมี่ต้มยำโบราณ เจ๊หงษ์ (Tom Yam Noodle soup ( Pork))",
     "rating": 4.1,
     "priceRange": "$",
@@ -1537,7 +1537,7 @@
     "googlePlaceId": "ChIJn0XnX08zTTARbQCr6aMFDcg"
   },
   {
-    "id": "r_songkhla_53",
+    "id": "r_songkhla_055",
     "name": "ก๋วยเตี๋ยวเรือโกเบิ้ม สงขลา (Ko Ban Noodle Shop)",
     "rating": 4.3,
     "priceRange": "$",
@@ -1565,7 +1565,7 @@
     "googlePlaceId": "ChIJHWZd_xkzTTARviNdAfwhwnM"
   },
   {
-    "id": "r_songkhla_54",
+    "id": "r_songkhla_056",
     "name": "ข้าวมันไก่โกทรง ราษฎร์อุทิศ 1",
     "rating": 5,
     "priceRange": "$",
@@ -1593,7 +1593,7 @@
     "googlePlaceId": "ChIJreO6gVUzTTARafVBDDqSRVQ"
   },
   {
-    "id": "r_songkhla_55",
+    "id": "r_songkhla_057",
     "name": "กินเตี๋ยวกัน สงขลา",
     "rating": 4.8,
     "priceRange": "$",
@@ -1623,7 +1623,7 @@
     "googlePlaceId": "ChIJAYjKmDozTTARuNrv8OTCrnk"
   },
   {
-    "id": "r_songkhla_57",
+    "id": "r_songkhla_058",
     "name": "ร้านก๋วยเตี๋ยวป้าแมว",
     "rating": 4.6,
     "priceRange": "$",
@@ -1653,7 +1653,7 @@
     "googlePlaceId": "ChIJO9FfT94tTTARtBNd8zWx9So"
   },
   {
-    "id": "r_songkhla_58",
+    "id": "r_songkhla_059",
     "name": "ร้าเจ๊เฮียง (ข้าวหมูแดง-หมูกรอบ ข้าวขาหมู ก๋วยเตี๋ยว)",
     "rating": 5,
     "priceRange": "$",
@@ -1683,7 +1683,7 @@
     "googlePlaceId": "ChIJEyJx2lkzTTARaHpU0wDJSMo"
   },
   {
-    "id": "r_songkhla_59",
+    "id": "r_songkhla_060",
     "name": "ก๋วยเตี๋ยวป้าพริ้มเย็นตาโฟ",
     "rating": 4.6,
     "priceRange": "$$",
@@ -1712,7 +1712,7 @@
     "googlePlaceId": "ChIJbw0nP-czTTARTPkplNcM8_I"
   },
   {
-    "id": "r_songkhla_61",
+    "id": "r_songkhla_061",
     "name": "โกชัยซีฟู้ด",
     "rating": 4.6,
     "priceRange": "$$",
@@ -1741,7 +1741,7 @@
     "googlePlaceId": "ChIJvwEkNz8zTTARYygM1FRbcAM"
   },
   {
-    "id": "r_songkhla_62",
+    "id": "r_songkhla_062",
     "name": "ครัวมัชฌิมา เกาะยอ (Mahadsajan Ko Yo Seafood Songkhla)",
     "rating": 4.2,
     "priceRange": "$$",
@@ -1768,7 +1768,7 @@
     "googlePlaceId": "ChIJkQkgHTAyTTARYP8ANmFyPeY"
   },
   {
-    "id": "r_songkhla_67",
+    "id": "r_songkhla_063",
     "name": "ซีฟู้ดฮาลาล ริมหาดชลาทัศน์ (BUNDAYA SEAFOOD)",
     "rating": 4.4,
     "priceRange": "$$",
@@ -1797,7 +1797,7 @@
     "googlePlaceId": "ChIJyUX9PukzTTARyENYolVgDpU"
   },
   {
-    "id": "r_songkhla_68",
+    "id": "r_songkhla_064",
     "name": "ร้านปลาเผา ซอย9",
     "rating": 4.1,
     "priceRange": "$$",
@@ -1825,7 +1825,7 @@
     "googlePlaceId": "ChIJ8-C8UlYzTTARqEmUJiA7l7s"
   },
   {
-    "id": "r_songkhla_69",
+    "id": "r_songkhla_065",
     "name": "ร้านอาหารชายน้ำ เกาะยอ (Nam Kieng Din Restaurant)",
     "rating": 4.6,
     "priceRange": "$$",
@@ -1854,7 +1854,7 @@
     "googlePlaceId": "ChIJd7XB8TAyTTARdlmgtVGdPus"
   },
   {
-    "id": "r_songkhla_70",
+    "id": "r_songkhla_066",
     "name": "ครัวป้าพร สูตรตาหลวง สาขา12 Auntie Porn's Kitchen",
     "rating": 4.8,
     "priceRange": "$$",
@@ -1881,7 +1881,7 @@
     "googlePlaceId": "ChIJt1Dae-wtTTARnnmtQ_8TW-c"
   },
   {
-    "id": "r_songkhla_71",
+    "id": "r_songkhla_067",
     "name": "ร้านอาหารทะเล ยายขำ (Raan Na Kham Restaurant)",
     "rating": 4.2,
     "priceRange": "$$",
@@ -1909,7 +1909,7 @@
     "googlePlaceId": "ChIJt33I4nszTTARFjIjdsldo6A"
   },
   {
-    "id": "r_songkhla_73",
+    "id": "r_songkhla_068",
     "name": "แพโฟลทติ้ง ซีฟู้ด เกาะยอ (Talaythong Seafood Koh yor)",
     "rating": 4.2,
     "priceRange": "$$$",
@@ -1937,7 +1937,7 @@
     "googlePlaceId": "ChIJLV2rmlwzTTARUQiMtqf40kw"
   },
   {
-    "id": "r_songkhla_74",
+    "id": "r_songkhla_069",
     "name": "ครัวคุณป้า ซีฟู้ดฮาลาล (Krua jao reua)",
     "rating": 4.6,
     "priceRange": "$$",
@@ -1967,7 +1967,7 @@
     "googlePlaceId": "ChIJIUcYiOAyTTARE7BujzrLwgk"
   },
   {
-    "id": "r_songkhla_78",
+    "id": "r_songkhla_070",
     "name": "ซีฟู้ดฮาลาล หาดทรายแก้ว สงขลา (Bang Sem Seafood)",
     "rating": 3.8,
     "priceRange": "$$",
@@ -1996,7 +1996,7 @@
     "googlePlaceId": "ChIJN79BrXMzTTARyQ4ZFhOVLHM"
   },
   {
-    "id": "r_songkhla_121",
+    "id": "r_songkhla_071",
     "name": "Sea-นัว ถนนนางงามสงขลา",
     "rating": 5,
     "priceRange": "$$",
@@ -2017,5 +2017,2295 @@
     "googlePlaceId": "ChIJBbLTFgMzTTAR2Z-x_zYOmME",
     "googleMapsUri": "https://maps.google.com/?cid=13949915475160965081&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "userRatingCount": 10
+  },
+  {
+    "id": "r_songkhla_072",
+    "name": "Kansai Suki คันไซสุกี้ ถนนนางงาม",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านKansai Suki คันไซสุกี้ ถนนนางงาม อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "107 1 นางงาม ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.195325,
+    "longitude": 100.590767,
+    "googlePlaceId": "ChIJ2-shzfozTTARTHf5I8SSrog",
+    "googleMapsUri": "https://maps.google.com/?cid=9848970806220650316&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 145
+  },
+  {
+    "id": "r_songkhla_073",
+    "name": "ตำนางงาม&​Brother​ ​burger",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านตำนางงาม&​Brother​ ​burger อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "48 นางงาม ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.197484,
+    "longitude": 100.59051,
+    "googlePlaceId": "ChIJVac5YoMzTTARR-nfMQQRpRs",
+    "googleMapsUri": "https://maps.google.com/?cid=1992017119895611719&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 95
+  },
+  {
+    "id": "r_songkhla_074",
+    "name": "Joe Delicious @นางงาม",
+    "rating": 4.3,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านJoe Delicious @นางงาม อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "155 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.193743,
+    "longitude": 100.591212,
+    "googlePlaceId": "ChIJ3xLWKBozTTARSwEd6-GYxf0",
+    "googleMapsUri": "https://maps.google.com/?cid=18286189958087377227&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 448
+  },
+  {
+    "id": "r_songkhla_075",
+    "name": "ถนัดศรี (since 1969) สาขาถนนนางงาม สงขลา",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านถนัดศรี (since 1969) สาขาถนนนางงาม สงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "108 นางงาม ตำบลบ่อยาง เมือง, สงขลา 90000",
+    "latitude": 7.196125,
+    "longitude": 100.590757,
+    "googlePlaceId": "ChIJf0W7S4UzTTARhfjHTgBpecU",
+    "googleMapsUri": "https://maps.google.com/?cid=14229519947696437381&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 10
+  },
+  {
+    "id": "r_songkhla_076",
+    "name": "Virung Coffee & Bar",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านVirung Coffee & Bar อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "137 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.194452,
+    "longitude": 100.591001,
+    "googlePlaceId": "ChIJf79nGSMzTTARGHwP0zucynA",
+    "googleMapsUri": "https://maps.google.com/?cid=8127480258301492248&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 222
+  },
+  {
+    "id": "r_songkhla_077",
+    "name": "กินเช้า สงขลา - KIN CHAO OLD TOWN",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านกินเช้า สงขลา - KIN CHAO OLD TOWN อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "28 นางงาม ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.198071,
+    "longitude": 100.590403,
+    "googlePlaceId": "ChIJC5JTIzszTTAR0quZ56vWEA4",
+    "googleMapsUri": "https://maps.google.com/?cid=1013545949971721170&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 24
+  },
+  {
+    "id": "r_songkhla_078",
+    "name": "ชุมชนย่านเมืองเก่าสงขลา",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านชุมชนย่านเมืองเก่าสงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "55 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.196553,
+    "longitude": 100.590526,
+    "googlePlaceId": "ChIJFxDln_ozTTARtv2M-0FyB3E",
+    "googleMapsUri": "https://maps.google.com/?cid=8144604078841593270&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 57
+  },
+  {
+    "id": "r_songkhla_079",
+    "name": "บาจีปังนมสด : bhajipang fresh milk สาขาถนนนางงาม",
+    "rating": 4.4,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านบาจีปังนมสด : bhajipang fresh milk สาขาถนนนางงาม อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "91 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195713,
+    "longitude": 100.590717,
+    "googlePlaceId": "ChIJHa2vDQAzTTAR10Ym8ussIiU",
+    "googleMapsUri": "https://maps.google.com/?cid=2675750520503027415&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 29
+  },
+  {
+    "id": "r_songkhla_080",
+    "name": "Smoked Craft",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านSmoked Craft อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "211 นครใน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195031,
+    "longitude": 100.589541,
+    "googlePlaceId": "ChIJT5BSiuvIIUARghRPYEB8mnM",
+    "googleMapsUri": "https://maps.google.com/?cid=8330107076710700162&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 94
+  },
+  {
+    "id": "r_songkhla_081",
+    "name": "Mertian Songkhla",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านMertian Songkhla อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "35 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.196671,
+    "longitude": 100.590499,
+    "googlePlaceId": "ChIJS0RNlcczTTARhtKUYLL3xMM",
+    "googleMapsUri": "https://maps.google.com/?cid=14106672278327841414&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 72
+  },
+  {
+    "id": "r_songkhla_082",
+    "name": "The Stand Brew•Bake",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านThe Stand Brew•Bake อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "110 นครใน ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.19724,
+    "longitude": 100.589285,
+    "googlePlaceId": "ChIJV4LQm3ozTTARVRXcgi0DarY",
+    "googleMapsUri": "https://maps.google.com/?cid=13144321956438086997&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 347
+  },
+  {
+    "id": "r_songkhla_083",
+    "name": "Paradise Pizzeria",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านParadise Pizzeria อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "2 ซอย ปัตตานี ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195142,
+    "longitude": 100.591153,
+    "googlePlaceId": "ChIJQXyVDRozTTARIsWihN_RJEk",
+    "googleMapsUri": "https://maps.google.com/?cid=5270568221863494946&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 240
+  },
+  {
+    "id": "r_songkhla_084",
+    "name": "Oyako japanese (โอยาโกะ)",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านOyako japanese (โอยาโกะ) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "5HPW+CXP ถ. ไทรบุรี ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.185964,
+    "longitude": 100.597231,
+    "googlePlaceId": "ChIJUen2808zTTARkbo2hR71CR4",
+    "googleMapsUri": "https://maps.google.com/?cid=2164530607361014417&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 64
+  },
+  {
+    "id": "r_songkhla_085",
+    "name": "ร้านอาหารน้องเมย์ ถ.แหลมสนอ่อน ต.บ่อยาง อ.เมือง จ.สงขลา 90000",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านอาหารน้องเมย์ ถ.แหลมสนอ่อน ต.บ่อยาง อ.เมือง จ.สงขลา 90000 อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "21 3 แหลมสนอ่อน ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.22515,
+    "longitude": 100.57844,
+    "googlePlaceId": "ChIJfetBz20zTTARP6fLqsda4CU",
+    "googleMapsUri": "https://maps.google.com/?cid=2729281187796985663&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 2
+  },
+  {
+    "id": "r_songkhla_086",
+    "name": "มุมมันส์",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านมุมมันส์ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "238 ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.17775,
+    "longitude": 100.603155,
+    "googlePlaceId": "ChIJ2TGN5Q8zTTARq5Ax_TJtgvI",
+    "googleMapsUri": "https://maps.google.com/?cid=17474649569914622123&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 1
+  },
+  {
+    "id": "r_songkhla_087",
+    "name": "ครัวร่มยาง อาหารพื้นบ้าน",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านครัวร่มยาง อาหารพื้นบ้าน อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "175/1 ตำบล ทุ่งหวัง เมือง สงขลา 90000",
+    "latitude": 7.058189,
+    "longitude": 100.670013,
+    "googlePlaceId": "ChIJ2xE6f-ItTTARbyLqW0LLu38",
+    "googleMapsUri": "https://maps.google.com/?cid=9204173749332091503&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 6
+  },
+  {
+    "id": "r_songkhla_088",
+    "name": "ร้านอาหารสนแก้ว ซีฟู๊ด",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านอาหารสนแก้ว ซีฟู๊ด อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "19 ถ ชลาทัศน์ ตำบลบ่อยาง อำเภอเมือง, สงขลา 90000",
+    "latitude": 7.210494,
+    "longitude": 100.598827,
+    "googlePlaceId": "ChIJaTWelkEzTTARSa5KDi4KmPw",
+    "googleMapsUri": "https://maps.google.com/?cid=18201309086942408265&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 310
+  },
+  {
+    "id": "r_songkhla_089",
+    "name": "ร้านสุขเกษมคาเฟ่ สงขลา",
+    "rating": 4.3,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านสุขเกษมคาเฟ่ สงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ร้านสุขเกษม สงขลา เลขที่ 22 ซอย สะเดา ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.207358,
+    "longitude": 100.593107,
+    "googlePlaceId": "ChIJDQUyLj8zTTARrxwnkXy863I",
+    "googleMapsUri": "https://maps.google.com/?cid=8280919583048015023&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 188
+  },
+  {
+    "id": "r_songkhla_090",
+    "name": "ร้านชาวงเวียน ก๋วยเตี๋ยวต้มยำ at หาดบ่ออิฐ Halal",
+    "rating": 5,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว",
+      "ฮาลาล / มุสลิม"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านชาวงเวียน ก๋วยเตี๋ยวต้มยำ at หาดบ่ออิฐ Halal อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "4M87+6M5 หาดบ่ออิฐ ตำบล เกาะแต้ว อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.115502,
+    "longitude": 100.664221,
+    "googlePlaceId": "ChIJvz8EjHbTsjER4YB_nt41HEA",
+    "googleMapsUri": "https://maps.google.com/?cid=4619626548033454305&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 24
+  },
+  {
+    "id": "r_songkhla_091",
+    "name": "ร้านอาหารทะเลสงขลา",
+    "rating": 4.1,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านอาหารทะเลสงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "Thailand, 6H7R+MXC ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.214185,
+    "longitude": 100.592399,
+    "googlePlaceId": "ChIJP8NT32gzTTARvDHgIXxPFcI",
+    "googleMapsUri": "https://maps.google.com/?cid=13985171612431823292&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 98
+  },
+  {
+    "id": "r_songkhla_092",
+    "name": "ร้านเรือใบ สงขลา",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านเรือใบ สงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "อาคารสโมสรเรือใบ ถนน ชลาทัศน์ ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.196337,
+    "longitude": 100.606613,
+    "googlePlaceId": "ChIJobahuDozTTAREkOH4AmFwPA",
+    "googleMapsUri": "https://maps.google.com/?cid=17348012042099311378&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 345
+  },
+  {
+    "id": "r_songkhla_093",
+    "name": "Lagune ลากูน",
+    "rating": 4.2,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านLagune ลากูน อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "5HFV+R4V ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.1746,
+    "longitude": 100.592788,
+    "googlePlaceId": "ChIJ7XVC__gzTTARrybeZprKzRY",
+    "googleMapsUri": "https://maps.google.com/?cid=1643192203559708335&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 155
+  },
+  {
+    "id": "r_songkhla_094",
+    "name": "สวนอาหารนายหัวบ่าว ซีฟู้ด",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านสวนอาหารนายหัวบ่าว ซีฟู้ด อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "445 1 เทศบาลตำบลพะวง อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.136536,
+    "longitude": 100.567125,
+    "googlePlaceId": "ChIJN5W0SgAtTTARlBOQ8Fgya4I",
+    "googleMapsUri": "https://maps.google.com/?cid=9397660405013156756&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 10
+  },
+  {
+    "id": "r_songkhla_095",
+    "name": "ร้านอาหารมณฑาทิพย์",
+    "rating": 4.3,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านอาหารมณฑาทิพย์ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ซอย ราชดำเนิน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.213638,
+    "longitude": 100.591571,
+    "googlePlaceId": "ChIJh8wiLmkzTTARL-O4NDQjRk4",
+    "googleMapsUri": "https://maps.google.com/?cid=5640234290457928495&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 91
+  },
+  {
+    "id": "r_songkhla_096",
+    "name": "ร้านครัวใบตอง",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านครัวใบตอง อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "32 ไทรบุรี ซอย 7 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.184412,
+    "longitude": 100.600347,
+    "googlePlaceId": "ChIJnZ7bmGUzTTARzyAoWoXGTs8",
+    "googleMapsUri": "https://maps.google.com/?cid=14938095290080043215&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 99
+  },
+  {
+    "id": "r_songkhla_097",
+    "name": "คลื่นงาม KLEUN NGAM - Cafe & Stay",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านคลื่นงาม KLEUN NGAM - Cafe & Stay อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "116 Thanon Nakorn Nai, ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.197143,
+    "longitude": 100.589299,
+    "googlePlaceId": "ChIJFafSRNYzTTAREjfPWGjE1w4",
+    "googleMapsUri": "https://maps.google.com/?cid=1069539388969400082&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 77
+  },
+  {
+    "id": "r_songkhla_098",
+    "name": "มาเด้อ",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านมาเด้อ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "57 ไชยา ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.205676,
+    "longitude": 100.591686,
+    "googlePlaceId": "ChIJ55O8FbkzTTARo1d3YS253uI",
+    "googleMapsUri": "https://maps.google.com/?cid=16347707301961357219&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 28
+  },
+  {
+    "id": "r_songkhla_099",
+    "name": "ย่างให้ สงขลา",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านย่างให้ สงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.193689,
+    "longitude": 100.598376,
+    "googlePlaceId": "ChIJ6W6ndAEzTTARoPAuKGJS1Ek",
+    "googleMapsUri": "https://maps.google.com/?cid=5319967641365835936&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 2
+  },
+  {
+    "id": "r_songkhla_100",
+    "name": "สโตยคาเฟ่ สาขาสงขลา Satoy cafe'",
+    "rating": 4.4,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านสโตยคาเฟ่ สาขาสงขลา Satoy cafe' อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "165 รามวิถี ซอย 8 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.193239,
+    "longitude": 100.59205,
+    "googlePlaceId": "ChIJGXTmEz8zTTARQXrXswMn-wQ",
+    "googleMapsUri": "https://maps.google.com/?cid=358923492161714753&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 107
+  },
+  {
+    "id": "r_songkhla_101",
+    "name": "Good morning cafe หาดชลาทัศ",
+    "rating": 4,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านGood morning cafe หาดชลาทัศ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.208839,
+    "longitude": 100.599907,
+    "googlePlaceId": "ChIJD7JiaS0zTTAR1PyCXI18I_E",
+    "googleMapsUri": "https://maps.google.com/?cid=17375868733909826772&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 2
+  },
+  {
+    "id": "r_songkhla_102",
+    "name": "Chalatent Cafe'",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านChalatent Cafe' อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "6H5X+FRF สนามกีฬาติณสูลานนท์ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.208699,
+    "longitude": 100.599524,
+    "googlePlaceId": "ChIJbQDBegAzTTAR9FO1NLZiCPQ",
+    "googleMapsUri": "https://maps.google.com/?cid=17584413279775970292&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 3
+  },
+  {
+    "id": "r_songkhla_103",
+    "name": "Vella Beach Bar & Bistro",
+    "rating": 4.2,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านVella Beach Bar & Bistro อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "17 ชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.210366,
+    "longitude": 100.598925,
+    "googlePlaceId": "ChIJRYGoK9EzTTARoEG55vUYhDQ",
+    "googleMapsUri": "https://maps.google.com/?cid=3784177031315014048&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 54
+  },
+  {
+    "id": "r_songkhla_104",
+    "name": "Aor-aimm",
+    "rating": 4.9,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านAor-aimm อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ซอย ราชดำเนิน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.213791,
+    "longitude": 100.593882,
+    "googlePlaceId": "ChIJ97IfKwAzTTARq36kQaLuf5k",
+    "googleMapsUri": "https://maps.google.com/?cid=11060821590498639531&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 17
+  },
+  {
+    "id": "r_songkhla_105",
+    "name": "วันวาน (หาดชลาทัศน์)",
+    "rating": 3,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านวันวาน (หาดชลาทัศน์) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "5JR6+M3J ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.191723,
+    "longitude": 100.610133,
+    "googlePlaceId": "ChIJbXLaAwAzTTARgZ7-D7PK8lU",
+    "googleMapsUri": "https://maps.google.com/?cid=6193235308004155009&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 1
+  },
+  {
+    "id": "r_songkhla_106",
+    "name": "Mar - Beach Restaurant",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านMar - Beach Restaurant อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "29 ชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.211296,
+    "longitude": 100.598482,
+    "googlePlaceId": "ChIJ9RWnQO4zTTARBdUShUTaFHE",
+    "googleMapsUri": "https://maps.google.com/?cid=8148377613645305093&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 49
+  },
+  {
+    "id": "r_songkhla_107",
+    "name": "Sea and Sand Eatery",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านSea and Sand Eatery อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "8/1 407 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.214184,
+    "longitude": 100.585963,
+    "googlePlaceId": "ChIJN3jECAAzTTARHqOXWyomOH8",
+    "googleMapsUri": "https://maps.google.com/?cid=9167119004879790878&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 85
+  },
+  {
+    "id": "r_songkhla_108",
+    "name": "ร้านน้องเก่ง",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านน้องเก่ง อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "6H6X+J79 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.211529,
+    "longitude": 100.598247,
+    "googlePlaceId": "ChIJAaJx9EEzTTARrOocZk2W17c",
+    "googleMapsUri": "https://maps.google.com/?cid=13247222088103422636&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 106
+  },
+  {
+    "id": "r_songkhla_109",
+    "name": "เวทนา คาเฟ่",
+    "rating": 4.9,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านเวทนา คาเฟ่ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "หาด 5JR6+M28 ชลาทัศน์ ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.191576,
+    "longitude": 100.610233,
+    "googlePlaceId": "ChIJ23nlCAAzTTARhqiWFA3_7ps",
+    "googleMapsUri": "https://maps.google.com/?cid=11236198551981041798&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 9
+  },
+  {
+    "id": "r_songkhla_110",
+    "name": "LeLeLe Cafe & Bar",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านLeLeLe Cafe & Bar อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ติณสูลานนท์ ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.177228,
+    "longitude": 100.594067,
+    "googlePlaceId": "ChIJlbTAgZszTTARrdKnXGTpIjY",
+    "googleMapsUri": "https://maps.google.com/?cid=3900936844516774573&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 209
+  },
+  {
+    "id": "r_songkhla_111",
+    "name": "ร้านอาหารติดทะเล มิสเตอร์ลี เมืองเก่าสงขลา",
+    "rating": 4,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านอาหารติดทะเล มิสเตอร์ลี เมืองเก่าสงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "61 ถนน นครนอก ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.197252,
+    "longitude": 100.588769,
+    "googlePlaceId": "ChIJE7rtwhszTTARHV77K9rMIHY",
+    "googleMapsUri": "https://maps.google.com/?cid=8512028533143068189&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 204
+  },
+  {
+    "id": "r_songkhla_112",
+    "name": "วชิรา สตรีทฟู๊ด",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านวชิรา สตรีทฟู๊ด อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "37 ถนน ทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.194931,
+    "longitude": 100.601843,
+    "googlePlaceId": "ChIJl-cYhAozTTARmAK02YbgZhw",
+    "googleMapsUri": "https://maps.google.com/?cid=2046569950469161624&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 460
+  },
+  {
+    "id": "r_songkhla_113",
+    "name": "วิวเวอร์",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านวิวเวอร์ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "120 ต 14 ตำบล เขารูปช้าง อ.เมือง สงขลา 90000",
+    "latitude": 7.174104,
+    "longitude": 100.592712,
+    "googlePlaceId": "ChIJ5eCNS8MzTTARUfY-I0yI_qo",
+    "googleMapsUri": "https://maps.google.com/?cid=12321435491122476625&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 74
+  },
+  {
+    "id": "r_songkhla_114",
+    "name": "ลาน ชำ",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านลาน ชำ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "131/85 ม.8 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.163118,
+    "longitude": 100.594326,
+    "googlePlaceId": "ChIJR318RFEzTTAR5UPWTPv4uwU",
+    "googleMapsUri": "https://maps.google.com/?cid=413197549044122597&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 48
+  },
+  {
+    "id": "r_songkhla_115",
+    "name": "ทังทังซุป สงขลา - TangTang Soup 汤汤",
+    "rating": 4.9,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านทังทังซุป สงขลา - TangTang Soup 汤汤 อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "15/4 ซอย สะเดา ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.207656,
+    "longitude": 100.592352,
+    "googlePlaceId": "ChIJr6S_7qQzTTARohROF8ojyMs",
+    "googleMapsUri": "https://maps.google.com/?cid=14684025935922861218&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 746
+  },
+  {
+    "id": "r_songkhla_116",
+    "name": "เฝออินเตอร์ เฝอหม้อไฟ style ชาบู สงขลา(วชิรา)",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "ปิ้งย่าง / ชาบู"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านเฝออินเตอร์ เฝอหม้อไฟ style ชาบู สงขลา(วชิรา) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "173 ถนน ทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.193757,
+    "longitude": 100.597925,
+    "googlePlaceId": "ChIJ6QMBkCIzTTARvxf46_LciH0",
+    "googleMapsUri": "https://maps.google.com/?cid=9045722787472742335&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 96
+  },
+  {
+    "id": "r_songkhla_117",
+    "name": "ร้านอาหารชามทอง by Thongmanee",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านอาหารชามทอง by Thongmanee อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "71 ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.203997,
+    "longitude": 100.592411,
+    "googlePlaceId": "ChIJN0ygGagzTTAR6Kc7yEQ3vBo",
+    "googleMapsUri": "https://maps.google.com/?cid=1926475509164386280&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 105
+  },
+  {
+    "id": "r_songkhla_118",
+    "name": "โจ๊กซี่โครงหมู (เจ้าเก่าวชิรา)",
+    "rating": 4.9,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านโจ๊กซี่โครงหมู (เจ้าเก่าวชิรา) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "28 ถนนสระเกษ, ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.200977,
+    "longitude": 100.596139,
+    "googlePlaceId": "ChIJ4Uc1GQAzTTARxrH957rQJFY",
+    "googleMapsUri": "https://maps.google.com/?cid=6207315687598043590&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 25
+  },
+  {
+    "id": "r_songkhla_119",
+    "name": "ไธไธ ซุป",
+    "rating": 4.8,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านไธไธ ซุป อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "173 ถนน ทะเลหลวง ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.193757,
+    "longitude": 100.597925,
+    "googlePlaceId": "ChIJPXEecAAzTTAREHIaCHpe5UE",
+    "googleMapsUri": "https://maps.google.com/?cid=4748305260347027984&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 22
+  },
+  {
+    "id": "r_songkhla_120",
+    "name": "วชิราสุกี้-ราดหน้า",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านวชิราสุกี้-ราดหน้า อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "262 8 ถนน ทะเลหลวง ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.193031,
+    "longitude": 100.595582,
+    "googlePlaceId": "ChIJe-PV9wgzTTARrWsPezHOrmE",
+    "googleMapsUri": "https://maps.google.com/?cid=7038789979539991469&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 2
+  },
+  {
+    "id": "r_songkhla_121",
+    "name": "ก๋วยเตี๋ยวฮาบีฟวชิรา",
+    "rating": 4.4,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านก๋วยเตี๋ยวฮาบีฟวชิรา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "39 ถนน ทะเลหลวง ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.194791,
+    "longitude": 100.601091,
+    "googlePlaceId": "ChIJHchnKGIzTTARGOdc-_KHYeg",
+    "googleMapsUri": "https://maps.google.com/?cid=16744814367209219864&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 10
+  },
+  {
+    "id": "r_songkhla_122",
+    "name": "ร้านสบายดี SabaiD Songkhla",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านสบายดี SabaiD Songkhla อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "29, 3 Pattani Road, ตำบลบ่อยาง Boryang, สงขลา 90000",
+    "latitude": 7.194887,
+    "longitude": 100.590149,
+    "googlePlaceId": "ChIJQZYlOBIzTTARYXaiNDj5iPc",
+    "googleMapsUri": "https://maps.google.com/?cid=17836780343997396577&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 150
+  },
+  {
+    "id": "r_songkhla_123",
+    "name": "Marabar มาราบาร์ สงขลา",
+    "rating": 4.2,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านMarabar มาราบาร์ สงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "120 19 หมู่8 ถนน ติณสูลานนท์ ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.174438,
+    "longitude": 100.592683,
+    "googlePlaceId": "ChIJP8EaghszTTARBTtE1fP4bFk",
+    "googleMapsUri": "https://maps.google.com/?cid=6443798892999097093&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 142
+  },
+  {
+    "id": "r_songkhla_124",
+    "name": "สถานีต่อไปหม่าล่าทอด (วชิราสงขลา)",
+    "rating": 4.2,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านสถานีต่อไปหม่าล่าทอด (วชิราสงขลา) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "75 ถนน ทะเลหลวง ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.194488,
+    "longitude": 100.600214,
+    "googlePlaceId": "ChIJk7ew1Y8zTTARUy0V8kn6B1s",
+    "googleMapsUri": "https://maps.google.com/?cid=6559486577789447507&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": null
+  },
+  {
+    "id": "r_songkhla_125",
+    "name": "ครัวใต้พร้าว",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านครัวใต้พร้าว อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "4HPH+FCV น้ำกระจาย, ซอย 30, เทศบาลตำบลพะวง อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.136234,
+    "longitude": 100.578547,
+    "googlePlaceId": "ChIJxQhdGHktTTARIy6vFx0uwG4",
+    "googleMapsUri": "https://maps.google.com/?cid=7980429242186804771&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 85
+  },
+  {
+    "id": "r_songkhla_126",
+    "name": "ร้านก้างปลา [Kaang Pla Restaurant]",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านก้างปลา [Kaang Pla Restaurant] อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "โรงแรมสงขลาพาเลซ (ม.ราชภัฏสงขลา, ประตู 3, ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.166389,
+    "longitude": 100.610793,
+    "googlePlaceId": "ChIJebI6UG0zTTARrx1-QSkUI1Q",
+    "googleMapsUri": "https://maps.google.com/?cid=6062711690795818415&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 11
+  },
+  {
+    "id": "r_songkhla_127",
+    "name": "ร้านตำสะดิ้ง&แซ่บสะดุ้ง",
+    "rating": 4.8,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านตำสะดิ้ง&แซ่บสะดุ้ง อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ซอย อนุสรณ์พัฒนาการ ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.170863,
+    "longitude": 100.610203,
+    "googlePlaceId": "ChIJ798Nxh8zTTARHMHYGUoZtxI",
+    "googleMapsUri": "https://maps.google.com/?cid=1348574419472662812&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 41
+  },
+  {
+    "id": "r_songkhla_128",
+    "name": "ร้านโขลก",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านโขลก อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "60 137 ถนน กาญจนวนิช ซอย 7 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.171608,
+    "longitude": 100.612399,
+    "googlePlaceId": "ChIJs-zZpjgzTTARVpV0ICsE4J0",
+    "googleMapsUri": "https://maps.google.com/?cid=11376097242012489046&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 28
+  },
+  {
+    "id": "r_songkhla_129",
+    "name": "บางอารมณ์สงขลา-ซ.13",
+    "rating": 4.3,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านบางอารมณ์สงขลา-ซ.13 อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ถนน กาญจนวนิช ซอย 13 ตำบล เขารูปช้าง เมือง สงขลา 90000",
+    "latitude": 7.169615,
+    "longitude": 100.609857,
+    "googlePlaceId": "ChIJiU3ulZszTTARRQYroFbxf30",
+    "googleMapsUri": "https://maps.google.com/?cid=9043211931139900997&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 28
+  },
+  {
+    "id": "r_songkhla_130",
+    "name": "142’S COFFEE SPACE — Halal cafe & Workshop",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน",
+      "ฮาลาล / มุสลิม"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้าน142’S COFFEE SPACE — Halal cafe & Workshop อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "6H5X+JQ9 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.169036,
+    "longitude": 100.604091,
+    "googlePlaceId": "ChIJuxh2AAAzTTARquaDauLWleY",
+    "googleMapsUri": "https://maps.google.com/?cid=16615422668191295146&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 37
+  },
+  {
+    "id": "r_songkhla_131",
+    "name": "ร้านชื่นชีวา",
+    "rating": 4.1,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "ฮาลาล / มุสลิม"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านชื่นชีวา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "9 1 ม.10 ถ. กาญจนวนิช เขารูปช้าง เมือง สงขลา 90000",
+    "latitude": 7.170558,
+    "longitude": 100.611121,
+    "googlePlaceId": "ChIJjeZvHs8yTTARfZ1GbatWKdo",
+    "googleMapsUri": "https://maps.google.com/?cid=15720191268586167677&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 161
+  },
+  {
+    "id": "r_songkhla_132",
+    "name": "ศูนย์อาหารมหาวิทยาลัยทักษิณ",
+    "rating": 4.1,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านศูนย์อาหารมหาวิทยาลัยทักษิณ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "5J66+RM2 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.162011,
+    "longitude": 100.611629,
+    "googlePlaceId": "ChIJGddtSbYyTTARFqyBPnnot3k",
+    "googleMapsUri": "https://maps.google.com/?cid=8770734406764702742&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 176
+  },
+  {
+    "id": "r_songkhla_133",
+    "name": "ป้าเอียดอาหารตามสั่ง(หน้าม.ราชภัฎ)",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "จานด่วน / ก๋วยเตี๋ยว"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านป้าเอียดอาหารตามสั่ง(หน้าม.ราชภัฎ) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ร้านป้าเอียดอาหารตามสั่ง 94/60-61 ย์ ถนน กาญจนวนิช ซอย 11 ตำบล เขารูปช้าง อำเภอเมือง สงขลา 90000",
+    "latitude": 7.170083,
+    "longitude": 100.609374,
+    "googlePlaceId": "ChIJ3ehQfqgzTTARBpTFmFp6ECo",
+    "googleMapsUri": "https://maps.google.com/?cid=3031057078749074438&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 19
+  },
+  {
+    "id": "r_songkhla_134",
+    "name": "Café Amazon - Forest ม.ราชภัฏสงขลา",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านCafé Amazon - Forest ม.ราชภัฏสงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "5J86+G4M มหาวิทยาลัยราชภัฏ ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.166343,
+    "longitude": 100.610299,
+    "googlePlaceId": "ChIJg0lMY8UzTTARTMUzikNCIkg",
+    "googleMapsUri": "https://maps.google.com/?cid=5197789777787864396&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 77
+  },
+  {
+    "id": "r_songkhla_135",
+    "name": "เทคโน คาเฟ่ ราชภัฏสงขลา",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านเทคโน คาเฟ่ ราชภัฏสงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "160, มหาวิทยาลัยราชภัฏสงขลา ถ. กาญจนวนิช ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.172505,
+    "longitude": 100.613977,
+    "googlePlaceId": "ChIJXSyMrR8zTTARJh35DHQCqvs",
+    "googleMapsUri": "https://maps.google.com/?cid=18134309547017837862&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 1
+  },
+  {
+    "id": "r_songkhla_136",
+    "name": "Nangchill Soi9",
+    "rating": 4.2,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านNangchill Soi9 อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "9 ถ. กาญจนวนิช ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.170792,
+    "longitude": 100.611109,
+    "googlePlaceId": "ChIJf-964s4yTTARMvhqCXaQlC8",
+    "googleMapsUri": "https://maps.google.com/?cid=3428524052974336050&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 133
+  },
+  {
+    "id": "r_songkhla_137",
+    "name": "ร้านอาหารเกาะกลาง",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านอาหารเกาะกลาง อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "12 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.150457,
+    "longitude": 100.624513,
+    "googlePlaceId": "ChIJ-S5ozcbNsjERiQ_YMIwMxac",
+    "googleMapsUri": "https://maps.google.com/?cid=12089082571000385417&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 18
+  },
+  {
+    "id": "r_songkhla_138",
+    "name": "ครัวโหม๋เรา",
+    "rating": 4.9,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านครัวโหม๋เรา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ทองหวั่นอุทิศ ซอย 5 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.167079,
+    "longitude": 100.590849,
+    "googlePlaceId": "ChIJTclWGTgzTTARkJomHbcKiA0",
+    "googleMapsUri": "https://maps.google.com/?cid=975041100910074512&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 7
+  },
+  {
+    "id": "r_songkhla_139",
+    "name": "In more CAFE",
+    "rating": 3,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านIn more CAFE อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "160, มหาวิทยาลัยราชภัฏสงขลา ถ. กาญจนวนิช ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.166365,
+    "longitude": 100.61362,
+    "googlePlaceId": "ChIJ_2xG1LszTTAR6BsiPE-ioIM",
+    "googleMapsUri": "https://maps.google.com/?cid=9484759276437249000&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 1
+  },
+  {
+    "id": "r_songkhla_140",
+    "name": "Piti thai tea ปิติ ชาโบราณ หน้าม.ราชภัฏสงขลา",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารจีนโบราณ",
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านPiti thai tea ปิติ ชาโบราณ หน้าม.ราชภัฏสงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "60/25 ถ. กาญจนวนิช ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.170911,
+    "longitude": 100.612231,
+    "googlePlaceId": "ChIJJ7uppwAzTTARQ__mCkb6yH4",
+    "googleMapsUri": "https://maps.google.com/?cid=9135827022858616643&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 2
+  },
+  {
+    "id": "r_songkhla_141",
+    "name": "Day's Howl Cafe",
+    "rating": 4.9,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านDay's Howl Cafe อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "60/36 หมู่ 10 ต.เขารูปช้าง อ.เมือง ตำบล เขารูปช้าง เมือง สงขลา 90000",
+    "latitude": 7.170257,
+    "longitude": 100.611943,
+    "googlePlaceId": "ChIJj8MTmjUzTTAR5T6WtVjhpU8",
+    "googleMapsUri": "https://maps.google.com/?cid=5739241071273459429&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 10
+  },
+  {
+    "id": "r_songkhla_142",
+    "name": "Beach cha.sk",
+    "rating": 4.6,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านBeach cha.sk อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "60 145 ม 10 ถนน กาญจนวนิช ซอย 11 ตำบล เขารูปช้าง เมือง สงขลา 90000",
+    "latitude": 7.169995,
+    "longitude": 100.611143,
+    "googlePlaceId": "ChIJSSvfj_0zTTARxbxNMD2i0vE",
+    "googleMapsUri": "https://maps.google.com/?cid=17425168291936976069&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 18
+  },
+  {
+    "id": "r_songkhla_143",
+    "name": "ร้านข้าวสตู น้องมุก",
+    "rating": 4.5,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารจีนโบราณ"
+    ],
+    "allergens": [
+      "แป้งสาลี/กลูเตน",
+      "ไข่"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านข้าวสตู น้องมุก อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "5JHC+W22 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.179766,
+    "longitude": 100.620009,
+    "googlePlaceId": "ChIJj41zqdQyTTARV2zoTP7HVEE",
+    "googleMapsUri": "https://maps.google.com/?cid=4707607405534932055&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 274
+  },
+  {
+    "id": "r_songkhla_144",
+    "name": "ร้านแม่เฒ่า หรอยแรงแกงใต้",
+    "rating": 4.9,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านแม่เฒ่า หรอยแรงแกงใต้ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "164/2 ถนน สามสิบเมตร ท่าสะอ้าน ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.176656,
+    "longitude": 100.596807,
+    "googlePlaceId": "ChIJV3G6xwYzTTARMia1wN6VTcA",
+    "googleMapsUri": "https://maps.google.com/?cid=13856896412437259826&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 7
+  },
+  {
+    "id": "r_songkhla_145",
+    "name": "Black Mango",
+    "rating": 4.3,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านBlack Mango อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ช 13156 ม.10 ซอย ซอย เปี่ยมอุทิศ 1 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.173234,
+    "longitude": 100.611324,
+    "googlePlaceId": "ChIJc2ztMWczTTARswBZuWwbAPs",
+    "googleMapsUri": "https://maps.google.com/?cid=18086486257299947699&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 23
+  },
+  {
+    "id": "r_songkhla_146",
+    "name": "ทักษิณาคาเฟ่ (สาขาสงขลา)",
+    "rating": 4.2,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านทักษิณาคาเฟ่ (สาขาสงขลา) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ตึก 18 มหาวิทยาลัยทักษิณ วิทยาเขต ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.162234,
+    "longitude": 100.609484,
+    "googlePlaceId": "ChIJWYqukC0zTTARlCIbQDqqcgM",
+    "googleMapsUri": "https://maps.google.com/?cid=248448096619143828&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 5
+  },
+  {
+    "id": "r_songkhla_147",
+    "name": "ไก่กรอบ แอท ม.ทักษิณ",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านไก่กรอบ แอท ม.ทักษิณ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "ร้านไก่กรอบ แอท ม.ทักษิณ 92 ม.2 ถ. กาญจนวนิช ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.158736,
+    "longitude": 100.60446,
+    "googlePlaceId": "ChIJc5tgdUkzTTARGKAVqA8273Y",
+    "googleMapsUri": "https://maps.google.com/?cid=8570128056781742104&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 5
+  },
+  {
+    "id": "r_songkhla_148",
+    "name": "Comeback at Baan Khun Luang",
+    "rating": 4.9,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านComeback at Baan Khun Luang อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "196, 198 นครใน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195523,
+    "longitude": 100.589691,
+    "googlePlaceId": "ChIJq3ayTEwzTTARVkDpsydMnaU",
+    "googleMapsUri": "https://maps.google.com/?cid=11933778321007525974&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 600
+  },
+  {
+    "id": "r_songkhla_149",
+    "name": "325 THE RAMEN SPACE",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้าน325 THE RAMEN SPACE อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "บริษัท เดอะ ราเมง สเปซ จำกัด, สำนักงานใหญ่ ที่เลขที่ 152, นครใน ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.196374,
+    "longitude": 100.589462,
+    "googlePlaceId": "ChIJUxgaEPYzTTARWMVA70gRQXg",
+    "googleMapsUri": "https://maps.google.com/?cid=8665226162986861912&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 75
+  },
+  {
+    "id": "r_songkhla_150",
+    "name": "Mountain View cafe&restaurant",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านMountain View cafe&restaurant อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "4JV3+99C สวนสัตว์สงขลา ตำบล เขารูปช้าง เมือง สงขลา 90000",
+    "latitude": 7.14343,
+    "longitude": 100.603405,
+    "googlePlaceId": "ChIJywslLiIzTTARt8bttHLUFUg",
+    "googleMapsUri": "https://maps.google.com/?cid=5194291334368577207&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 572
+  },
+  {
+    "id": "r_songkhla_151",
+    "name": "หนานหยวนบะหมี่เกี๊ยวกุ้งสาขาสงขลา (ม.ทักษิณ)",
+    "rating": 4.6,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านหนานหยวนบะหมี่เกี๊ยวกุ้งสาขาสงขลา (ม.ทักษิณ) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "39 31 ถนน กาญจนวนิช ซอย 29 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.158669,
+    "longitude": 100.603944,
+    "googlePlaceId": "ChIJ28bkpxMzTTARHN7Jn014B54",
+    "googleMapsUri": "https://maps.google.com/?cid=11387202457618210332&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 29
+  },
+  {
+    "id": "r_songkhla_152",
+    "name": "B&J eating house",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านB&J eating house อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "178 1 ถนนริมรถไฟนอก ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.179206,
+    "longitude": 100.606213,
+    "googlePlaceId": "ChIJiXb9j4UzTTAR_EV1i4jb1wE",
+    "googleMapsUri": "https://maps.google.com/?cid=132816093532472828&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 13
+  },
+  {
+    "id": "r_songkhla_153",
+    "name": "cafe' Amazon ม.ทักษิณ(สงขลา)",
+    "rating": 4.7,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านcafe' Amazon ม.ทักษิณ(สงขลา) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "140 ตำบล เขารูปช้าง เมือง สงขลา 90000",
+    "latitude": 7.161689,
+    "longitude": 100.608285,
+    "googlePlaceId": "ChIJK7j-aUozTTAR8XSWOpySYSw",
+    "googleMapsUri": "https://maps.google.com/?cid=3197998410105255153&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 3
+  },
+  {
+    "id": "r_songkhla_154",
+    "name": "Thaksina Cafe3 , Thaksin university",
+    "rating": 3,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านThaksina Cafe3 , Thaksin university อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "140 ถ. กาญจนวนิช ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.162986,
+    "longitude": 100.609089,
+    "googlePlaceId": "ChIJh6q1rZczTTARKGotR-BJsSc",
+    "googleMapsUri": "https://maps.google.com/?cid=2860148465972636200&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 2
+  },
+  {
+    "id": "r_songkhla_155",
+    "name": "Wedrink Songkhla2 สาขา ม.ทักษิณ สงขลา",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านWedrink Songkhla2 สาขา ม.ทักษิณ สงขลา อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "90 เขารูปช้าง 135 หมู่10 ตำบล เขารูปช้าง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.160051,
+    "longitude": 100.604959,
+    "googlePlaceId": "ChIJhWroFAAzTTARlwJ4DKaHFXw",
+    "googleMapsUri": "https://maps.google.com/?cid=8941201782457500311&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 18
+  },
+  {
+    "id": "r_songkhla_156",
+    "name": "Photograph Coffee House",
+    "rating": 4.7,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านPhotograph Coffee House อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "64 ทะเลหลวง ซอย 18 ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.191571,
+    "longitude": 100.599115,
+    "googlePlaceId": "ChIJtVIKxy0zTTARTL8y-lHustg",
+    "googleMapsUri": "https://maps.google.com/?cid=15614804893904322380&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 126
+  },
+  {
+    "id": "r_songkhla_157",
+    "name": "บ้านเดือนฉาย ร้านกาแฟ ร้านอาหารพิพิธภัณฑ์)",
+    "rating": 4.8,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านบ้านเดือนฉาย ร้านกาแฟ ร้านอาหารพิพิธภัณฑ์) อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "23 ซอย หนองจิก ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.195749,
+    "longitude": 100.589913,
+    "googlePlaceId": "ChIJJ0zMWogzTTARQvPj9IELQu4",
+    "googleMapsUri": "https://maps.google.com/?cid=17168297382277018434&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 175
+  },
+  {
+    "id": "r_songkhla_158",
+    "name": "Lab-Nom Songkhla",
+    "rating": 4.3,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านLab-Nom Songkhla อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "5HWW+GH6 ชัย-เพชรมงคล ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.196293,
+    "longitude": 100.596397,
+    "googlePlaceId": "ChIJASni6RczTTARSBxSdP4BEOI",
+    "googleMapsUri": "https://maps.google.com/?cid=16289522044583943240&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 270
+  },
+  {
+    "id": "r_songkhla_159",
+    "name": "ไต้ก๋งซีฟูดส์",
+    "rating": 5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านไต้ก๋งซีฟูดส์ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "267 ถนน นครนอก ตำบลบ่อยาง อ.เมือง สงขลา 90000",
+    "latitude": 7.192975,
+    "longitude": 100.589951,
+    "googlePlaceId": "ChIJv664WgAzTTAR32ASxDt5JlU",
+    "googleMapsUri": "https://maps.google.com/?cid=6135724839938449631&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 6
+  },
+  {
+    "id": "r_songkhla_160",
+    "name": "ณรงค์ อาหารทะเล",
+    "rating": 4.6,
+    "priceRange": "$$$",
+    "avgPrice": 450,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านณรงค์ อาหารทะเล อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "เทศบาลตำบลพะวง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.161023,
+    "longitude": 100.572231,
+    "googlePlaceId": "ChIJmR612JszTTARnuYnAq6QqgQ",
+    "googleMapsUri": "https://maps.google.com/?cid=336240199227401886&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 36
+  },
+  {
+    "id": "r_songkhla_161",
+    "name": "คมซีฟู้ด",
+    "rating": 4.5,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านคมซีฟู้ด อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "แหลมขวัญ ซอย 4 เทศบาลตำบลพะวง เมือง สงขลา 90100",
+    "latitude": 7.160903,
+    "longitude": 100.571838,
+    "googlePlaceId": "ChIJybL_8eMzTTARD3jcIbBlt64",
+    "googleMapsUri": "https://maps.google.com/?cid=12589643090494257167&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 60
+  },
+  {
+    "id": "r_songkhla_162",
+    "name": "โกเข่ง ซีฟู้ดส์",
+    "rating": 3.1,
+    "priceRange": "$$",
+    "avgPrice": 180,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านโกเข่ง ซีฟู้ดส์ อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "5GJR+R8H ตำบล เกาะยอ อำเภอเมืองสงขลา สงขลา 90100",
+    "latitude": 7.182072,
+    "longitude": 100.540871,
+    "googlePlaceId": "ChIJNyr39y0yTTAR6iPzDaVnpC4",
+    "googleMapsUri": "https://maps.google.com/?cid=3360925180526535658&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 144
+  },
+  {
+    "id": "r_songkhla_163",
+    "name": "บังชาลี ฮาลาล​ Bangchalee Halal Restaurant",
+    "rating": 4.4,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "ฮาลาล / มุสลิม"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านบังชาลี ฮาลาล​ Bangchalee Halal Restaurant อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "107 ถ. เก้าแสน ตำบลบ่อยาง เมือง สงขลา 90000",
+    "latitude": 7.181102,
+    "longitude": 100.617131,
+    "googlePlaceId": "ChIJKXRyUyczTTARP4gtP6hjXxU",
+    "googleMapsUri": "https://maps.google.com/?cid=1540059171849603135&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 96
+  },
+  {
+    "id": "r_songkhla_164",
+    "name": "ร้านโกเขียวซีฟู๊ด",
+    "rating": 3.5,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "ซีฟู้ด / อาหารทะเล"
+    ],
+    "allergens": [
+      "อาหารทะเล"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านร้านโกเขียวซีฟู๊ด อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "6H7V+M3J ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.214205,
+    "longitude": 100.592655,
+    "googlePlaceId": "ChIJiwsWIWkzTTARai6AtNQkl-M",
+    "googleMapsUri": "https://maps.google.com/?cid=16399617064072916586&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 81
+  },
+  {
+    "id": "r_songkhla_165",
+    "name": "ครัวป๋ากบเก้าเส้งเผ็ดสะดุ้ง",
+    "rating": 4,
+    "priceRange": "$$",
+    "avgPrice": 120,
+    "distance": 1,
+    "type": [
+      "อาหารไทย / อาหารใต้"
+    ],
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านครัวป๋ากบเก้าเส้งเผ็ดสะดุ้ง อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "137 ถสงขลา ระโนด ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.178317,
+    "longitude": 100.616085,
+    "googlePlaceId": "ChIJV6k8b1czTTARWHyoXZR0NUo",
+    "googleMapsUri": "https://maps.google.com/?cid=5347308313147636824&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 1
+  },
+  {
+    "id": "r_songkhla_166",
+    "name": "The Rally Coffee - Old town",
+    "rating": 4.8,
+    "priceRange": "$",
+    "avgPrice": 70,
+    "distance": 1,
+    "type": [
+      "คาเฟ่ / ของหวาน"
+    ],
+    "allergens": [
+      "นม/ผลิตภัณฑ์จากนม"
+    ],
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+    ],
+    "description": "ร้านThe Rally Coffee - Old town อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
+    "address": "12 ซอย ยะหริ่ง ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
+    "latitude": 7.197582,
+    "longitude": 100.590043,
+    "googlePlaceId": "ChIJx3IqPwAzTTARZxYmL0FKLTI",
+    "googleMapsUri": "https://maps.google.com/?cid=3615627719672731239&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "userRatingCount": 269
   }
 ]
