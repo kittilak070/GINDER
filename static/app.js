@@ -4274,17 +4274,21 @@ function renderDeck() {
                <button type="button" class="card-photo-nav-hint hint-right" aria-label="รูปถัดไป" title="รูปถัดไป"><i class="fa-solid fa-chevron-right"></i></button>`
             : '';
 
+        const isUserUploaded = Boolean(images[0] && images[0].includes('/uploads/'));
+
         const drawerGalleryHtml = images.length > 1
             ? `<div class="drawer-photo-gallery">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
                     <strong><i class="fa-solid fa-images"></i> รูปภาพและเมนู (${images.length} รูป):</strong>
-                    <span style="font-size: 0.72rem; color: var(--text-muted);"><i class="fa-solid fa-circle-info"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
+                    ${isUserUploaded 
+                        ? '<span style="font-size: 0.72rem; color: #10b981; font-weight: 600;"><i class="fa-solid fa-circle-check"></i> รูปถ่ายจริง</span>' 
+                        : '<span style="font-size: 0.72rem; color: var(--text-muted);"><i class="fa-solid fa-circle-info"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>'}
                 </div>
                 <div class="drawer-photo-strip">
                     ${images.map((imgUrl, idx) => `
                         <div class="drawer-thumb-wrap">
                             <img src="${imgUrl}" class="drawer-thumb" alt="มุม ${idx + 1}" onclick="jumpCardPhoto('${r.id}', ${idx})">
-                            <span class="drawer-thumb-watermark">ภาพจำลองเว็บ</span>
+                            ${isUserUploaded ? '' : '<span class="drawer-thumb-watermark">ภาพจำลองเว็บ</span>'}
                         </div>
                     `).join('')}
                 </div>
@@ -4295,8 +4299,6 @@ function renderDeck() {
         const halalBadgeHtml = isHalal
             ? `<div class="card-halal-badge" title="อาหารฮาลาล"><i class="fa-solid fa-star-and-crescent"></i> ฮาลาล</div>`
             : '';
-
-        const isUserUploaded = Boolean(images[0] && images[0].includes('/uploads/'));
 
         card.innerHTML = `
             <div class="card-image-wrapper">
@@ -5968,12 +5970,13 @@ function loadMatchHistory() {
             list.forEach(item => {
                 const r = item.restaurant || {};
                 const dateStr = item.matchedAt ? new Date(item.matchedAt).toLocaleString('th-TH', { dateStyle: 'short', timeStyle: 'short' }) : '';
+                const isRealPhoto = Boolean(r.image && r.image.includes('/uploads/'));
                 const card = document.createElement('div');
                 card.className = 'profile-history-card';
                 card.innerHTML = `
                     <div style="position: relative; width: 55px; height: 55px; border-radius: 8px; overflow: hidden; flex-shrink: 0;">
                         <img src="${escapeHtml(r.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100')}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'">
-                        <span style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.78); color: #fff; font-size: 0.52rem; text-align: center; padding: 1px 0; font-weight: 500;">ภาพจำลองเว็บ</span>
+                        <span style="position: absolute; bottom: 0; left: 0; right: 0; background: ${isRealPhoto ? 'rgba(16,185,129,0.9)' : 'rgba(0,0,0,0.78)'}; color: #fff; font-size: 0.52rem; text-align: center; padding: 1px 0; font-weight: 600;">${isRealPhoto ? 'รูปจริง' : 'ภาพจำลอง'}</span>
                     </div>
                     <div style="flex: 1; min-width: 0;">
                         <div style="font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(r.name || 'ไม่ระบุชื่อร้าน')}</div>
