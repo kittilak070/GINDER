@@ -14,11 +14,10 @@
       "อาหารทะเล",
       "แป้งสาลี/กลูเตน"
     ],
-    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
+    "image": "/static/uploads/restaurants/rest_r_songkhla_001_1791752016330_416.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop"
+      "/static/uploads/restaurants/rest_r_songkhla_001_1791752016330_416.jpg",
+      "/static/uploads/restaurants/rest_r_songkhla_001_1791752026592_885.jpg"
     ],
     "description": "ร้านอาหารจีน-ปักษ์ใต้ระดับตำนานกว่า 80 ปี เมนูชูโรงยำมะม่วงกุ้งแห้งตัวโต กุ้งแม่น้ำทอดกระเทียมพริกไทย และต้มยำแห้งปลากะพงรสจัดจ้าน",
     "address": "85 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
@@ -43,11 +42,9 @@
       "แป้งสาลี/กลูเตน",
       "ไข่"
     ],
-    "image": "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=800&auto=format&fit=crop",
+    "image": "/static/uploads/restaurants/rest_r_songkhla_002_1791752099157_83.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=800&auto=format&fit=crop"
+      "/static/uploads/restaurants/rest_r_songkhla_002_1791752099157_83.jpg"
     ],
     "description": "ข้าวสตูหมูเครื่องในในตำนานถนนนางงาม น้ำซุปกลิ่นเครื่องยาจีนหอมละมุน เสิร์ฟคู่ซาลาเปาลูกยักษ์ไส้หมูสับไข่เค็มสูตรโบราณ",
     "address": "94 นางงาม ตำบลบ่อยาง อำเภอเมืองสงขลา สงขลา 90000",
@@ -2716,9 +2713,10 @@
       "อาหารไทย / อาหารใต้"
     ],
     "allergens": [],
-    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+    "image": "/static/uploads/restaurants/rest_r_songkhla_117_1791751951585_846.jpg",
     "images": [
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
+      "/static/uploads/restaurants/rest_r_songkhla_117_1791751951585_846.jpg",
+      "/static/uploads/restaurants/rest_r_songkhla_117_1791751986256_426.jpg"
     ],
     "description": "ร้านร้านอาหารชามทอง by Thongmanee อาหารอร่อยในเมืองสงขลา บรรยากาศเป็นกันเอง",
     "address": "71 ตำบลบ่อยาง เมือง สงขลา 90000",
