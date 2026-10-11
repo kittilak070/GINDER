@@ -303,7 +303,7 @@ async function enrichExistingRestaurants(restaurants) {
             const validCandidates = places.filter(p => {
                 if (!p.id || usedPlaceIds.has(p.id)) return false;
                 const addr = (p.formattedAddress || '').toLowerCase();
-                if (addr.includes('hat yai') || addr.includes('หาดใหญ่') || addr.includes('singhanakhon') || addr.includes('สิงหนคร') || addr.includes('satun') || addr.includes('สตูล') || addr.includes('phetchaburi') || addr.includes('เพชรบุรี') || addr.includes('chumphon') || addr.includes('ชุมพร') || addr.includes('phuket') || addr.includes('ภูเก็ต') || addr.includes('bangkok') || addr.includes('กรุงเทพ') || addr.includes('rattaphum') || addr.includes('รัตภูมิ')) {
+                if (addr.includes('hat yai') || addr.includes('หาดใหญ่') || addr.includes('singhanakhon') || addr.includes('สิงหนคร') || addr.includes('satun') || addr.includes('สตูล') || addr.includes('phetchaburi') || addr.includes('เพชรบุรี') || addr.includes('chumphon') || addr.includes('ชุมพร') || addr.includes('phuket') || addr.includes('ภูเก็ต') || addr.includes('bangkok') || addr.includes('กรุงเทพ') || addr.includes('rattaphum') || addr.includes('รัตภูมิ') || addr.includes('koh yo') || addr.includes('เกาะยอ')) {
                     return false;
                 }
                 if (p.location) {

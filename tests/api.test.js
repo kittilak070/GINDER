@@ -279,6 +279,37 @@ async function runSuite() {
         assert.ok(res.data.message.includes('ขอบคุณสำหรับข้อเสนอแนะ'));
     });
 
+    // 17. Restaurant Image Upload from User Device
+    await runTest('POST /api/upload-restaurant-image saves base64 image and returns static path', async () => {
+        const dummyBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+        const payload = {
+            restaurantId: 'test_upload_rest',
+            imageBase64: dummyBase64,
+            isPrimary: true
+        };
+        const res = await makeRequest('/api/upload-restaurant-image', { method: 'POST' }, payload);
+        assert.strictEqual(res.statusCode, 200, `Expected 200, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, true);
+        assert.ok(res.data.url.startsWith('/static/uploads/restaurants/'), 'Should return path under /static/uploads/restaurants/');
+        assert.ok(Array.isArray(res.data.images), 'Should return images array');
+
+        // Cleanup test artifact
+        try {
+            const fs = require('fs');
+            const path = require('path');
+            const createdFile = path.join(__dirname, '..', res.data.url);
+            if (fs.existsSync(createdFile)) fs.unlinkSync(createdFile);
+        } catch (e) {}
+    });
+
+    // 18. Restaurant Image Upload Validation
+    await runTest('POST /api/upload-restaurant-image rejects empty or missing image payload', async () => {
+        const payload = { restaurantId: 'test_upload_rest' };
+        const res = await makeRequest('/api/upload-restaurant-image', { method: 'POST' }, payload);
+        assert.strictEqual(res.statusCode, 400, `Expected 400, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, false);
+    });
+
     console.log(`\n========================================`);
     console.log(`  TEST RESULTS: ${passedCount} PASSED, ${failedCount} FAILED`);
     console.log(`========================================\n`);

@@ -58,9 +58,9 @@ app.use((req, res, next) => {
     next();
 });
 
-// OWASP Payload Size Limit (Skill 09: Defense against memory flooding / DoS)
-app.use(express.json({ limit: '1mb' }));
-app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+// OWASP Payload Size Limit (Skill 09: Defense against memory flooding / DoS - 25mb for high-res photo uploads)
+app.use(express.json({ limit: '25mb' }));
+app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 
 // Restrict CORS origins to authorized app domains & local development
 const allowedOrigins = [
@@ -700,7 +700,7 @@ async function sendRecoveryEmail(toEmail, username, otp) {
                 html: `
                     <div style="font-family: 'Mitr', sans-serif, Arial; max-width: 500px; margin: 0 auto; padding: 24px; background: #170e33; color: #ffffff; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
                         <div style="text-align: center; margin-bottom: 20px;">
-                            <h2 style="color: #FF3377; margin: 0; font-size: 26px;">GINDER</h2>
+                            <h2 style="color: #FF3366; margin: 0; font-size: 26px;">GINDER</h2>
                             <p style="color: #b6afcc; margin-top: 4px; font-size: 13px;">ระบบกู้คืนรหัสผ่าน</p>
                         </div>
                         <p style="font-size: 15px;">สวัสดีคุณ <strong>${username}</strong>,</p>
@@ -708,9 +708,9 @@ async function sendRecoveryEmail(toEmail, username, otp) {
                             คุณได้ทำการส่งคำขอกู้คืนรหัสผ่าน กรุณาใช้รหัส OTP ด้านล่างนี้เพื่อยืนยันตัวตนของคุณ:
                         </p>
                         <div style="text-align: center; margin: 25px 0;">
-                            <span style="display: inline-block; font-size: 32px; font-weight: 700; letter-spacing: 6px; color: #EE7816; background: rgba(255, 119, 51, 0.15); padding: 12px 28px; border-radius: 12px; border: 1px solid rgba(255, 119, 51, 0.3);">${otp}</span>
+                            <span style="display: inline-block; font-size: 32px; font-weight: 700; letter-spacing: 6px; color: #FF5E1E; background: rgba(255, 94, 30, 0.15); padding: 12px 28px; border-radius: 12px; border: 1px solid rgba(255, 94, 30, 0.3);">${otp}</span>
                         </div>
-                        <p style="color: #FF3232; font-size: 13px; text-align: center;">* รหัส OTP นี้จะหมดอายุภายใน 15 นาที</p>
+                        <p style="color: #F43F5E; font-size: 13px; text-align: center;">* รหัส OTP นี้จะหมดอายุภายใน 15 นาที</p>
                         <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 20px 0;">
                         <p style="color: #616161; font-size: 12px; text-align: center;">หากคุณไม่ได้เป็นผู้ส่งคำขอ โปรดละเว้นอีเมลนี้ บัญชีของคุณยังคงปลอดภัย</p>
                     </div>
@@ -1584,6 +1584,132 @@ app.get('/api/me', async (req, res) => {
     });
 });
 
+function syncLocalMockRestaurant(action, id, data) {
+    try {
+        const localPath = path.join(__dirname, 'data', 'mock_restaurants.json');
+        if (!fs.existsSync(localPath)) return;
+        const list = JSON.parse(fs.readFileSync(localPath, 'utf8'));
+        if (action === 'delete') {
+            const filtered = list.filter(r => String(r.id) !== String(id));
+            fs.writeFileSync(localPath, JSON.stringify(filtered, null, 2), 'utf8');
+        } else if (action === 'update') {
+            const idx = list.findIndex(r => String(r.id) === String(id));
+            if (idx !== -1) {
+                list[idx] = { ...list[idx], ...data };
+                fs.writeFileSync(localPath, JSON.stringify(list, null, 2), 'utf8');
+            }
+        } else if (action === 'insert') {
+            list.unshift(data);
+            fs.writeFileSync(localPath, JSON.stringify(list, null, 2), 'utf8');
+        }
+    } catch (e) {
+        console.warn('[Sync Mock Warning]:', e.message);
+    }
+}
+
+// --- RESTAURANT IMAGE UPLOAD (FROM USER MACHINE / MOBILE) ---
+app.post('/api/upload-restaurant-image', async (req, res) => {
+    try {
+        const { restaurantId, imageBase64, isPrimary, slotIndex } = req.body;
+        if (!imageBase64 || typeof imageBase64 !== 'string') {
+            return res.status(400).json({ success: false, message: 'กรุณาส่งข้อมูลรูปภาพ (imageBase64)' });
+        }
+
+        // Validate base64 format and mime type (jpeg, png, webp, gif)
+        const match = imageBase64.match(/^data:image\/(jpeg|jpg|png|webp|gif);base64,/i);
+        let ext = 'jpg';
+        let rawBase64 = imageBase64;
+        if (match) {
+            const mime = match[1].toLowerCase();
+            if (mime === 'jpeg' || mime === 'jpg') ext = 'jpg';
+            else if (mime === 'png') ext = 'png';
+            else if (mime === 'webp') ext = 'webp';
+            else if (mime === 'gif') ext = 'gif';
+            rawBase64 = imageBase64.replace(/^data:image\/[a-zA-Z0-9+]+;base64,/i, '');
+        }
+
+        const buffer = Buffer.from(rawBase64, 'base64');
+        if (buffer.length === 0) {
+            return res.status(400).json({ success: false, message: 'ข้อมูลรูปภาพไม่ถูกต้อง' });
+        }
+        if (buffer.length > 20 * 1024 * 1024) {
+            return res.status(400).json({ success: false, message: 'ขนาดไฟล์ภาพเกิน 20MB' });
+        }
+
+        // Skill 09 OWASP path traversal protection: sanitize restaurantId
+        const safeId = String(restaurantId || 'generic').replace(/[^a-zA-Z0-9_-]/g, '_');
+        const uploadDir = path.join(__dirname, 'static', 'uploads', 'restaurants');
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        const filename = `rest_${safeId}_${Date.now()}_${Math.floor(Math.random() * 1000)}.${ext}`;
+        const filePath = path.join(uploadDir, filename);
+        fs.writeFileSync(filePath, buffer);
+
+        const relativeUrl = `/static/uploads/restaurants/${filename}`;
+
+        // If restaurantId is given and not 'new', update mock_restaurants.json & Supabase
+        let updatedImages = [relativeUrl];
+        if (restaurantId && restaurantId !== 'new') {
+            const mockPath = path.join(__dirname, 'data', 'mock_restaurants.json');
+            if (fs.existsSync(mockPath)) {
+                try {
+                    const mockList = JSON.parse(fs.readFileSync(mockPath, 'utf8'));
+                    const target = mockList.find(r => String(r.id) === String(restaurantId));
+                    if (target) {
+                        if (!Array.isArray(target.images)) {
+                            target.images = target.image ? [target.image] : [];
+                        }
+
+                        const numericSlot = Number(slotIndex);
+                        if (slotIndex !== undefined && Number.isInteger(numericSlot) && numericSlot >= 0 && numericSlot < target.images.length) {
+                            target.images[numericSlot] = relativeUrl;
+                        } else if (isPrimary === true || isPrimary === 'true') {
+                            target.images = [relativeUrl, ...target.images.filter(img => img !== relativeUrl)];
+                        } else {
+                            target.images.push(relativeUrl);
+                        }
+
+                        if (isPrimary === true || isPrimary === 'true' || !target.image) {
+                            target.image = relativeUrl;
+                        } else {
+                            target.image = target.images[0] || relativeUrl;
+                        }
+
+                        updatedImages = target.images;
+                        fs.writeFileSync(mockPath, JSON.stringify(mockList, null, 2), 'utf8');
+                    }
+                } catch (e) {
+                    console.error('[Upload] Failed to update mock_restaurants.json:', e);
+                }
+            }
+
+            // Sync with Supabase restaurants table if connected
+            try {
+                if (supabase) {
+                    const imageField = updatedImages.length > 1 ? JSON.stringify(updatedImages) : (updatedImages[0] || relativeUrl);
+                    await supabase.from('restaurants').update({
+                        image: imageField
+                    }).eq('id', restaurantId);
+                }
+            } catch (supaErr) {
+                console.warn('[Upload Supabase Sync Warning]:', supaErr.message);
+            }
+        }
+
+        return res.json({
+            success: true,
+            url: relativeUrl,
+            images: updatedImages,
+            message: 'อัปโหลดรูปภาพร้านอาหารสำเร็จ'
+        });
+    } catch (err) {
+        console.error('[Upload Restaurant Image Error]:', err);
+        return res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในการบันทึกรูปภาพ: ' + err.message });
+    }
+});
+
 app.get('/api/admin/restaurants', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
     res.json(await getAllRestaurants());
@@ -1636,6 +1762,7 @@ app.post('/api/admin/restaurants', async (req, res) => {
     
     const { error } = await supabase.from('restaurants').insert(payload);
     if (error) return res.status(500).json({ message: `ไม่สามารถเพิ่มข้อมูลได้: ${error.message}` });
+    syncLocalMockRestaurant('insert', payload.id, formatRestaurant(payload));
     res.json({ success: true, message: "เพิ่มร้านอาหารสำเร็จ", restaurant: { id: payload.id } });
 });
 
@@ -1685,6 +1812,7 @@ app.put('/api/admin/restaurants/:id', async (req, res) => {
     
     const { error } = await supabase.from('restaurants').update(payload).eq('id', req.params.id);
     if (error) return res.status(500).json({ message: `ไม่สามารถแก้ไขข้อมูลได้: ${error.message}` });
+    syncLocalMockRestaurant('update', req.params.id, formatRestaurant({ ...payload, id: req.params.id }));
     res.json({ success: true, message: "แก้ไขข้อมูลร้านอาหารสำเร็จ" });
 });
 
@@ -1692,6 +1820,7 @@ app.delete('/api/admin/restaurants/:id', async (req, res) => {
     if (await getUserRole(req) !== 'admin') return res.status(403).json({ message: "สิทธิ์ไม่เพียงพอ" });
     const { error } = await supabase.from('restaurants').delete().eq('id', req.params.id);
     if (error) return res.status(500).json({ message: "ไม่สามารถลบข้อมูลได้" });
+    syncLocalMockRestaurant('delete', req.params.id, null);
     res.json({ success: true, message: "ลบร้านอาหารสำเร็จ" });
 });
 
@@ -3168,7 +3297,7 @@ if (require.main === module) {
                     const targetPort = ${PORT};
                     const targetUrl = 'http://' + window.location.hostname + ':' + targetPort + '/' + window.location.search + window.location.hash;
                     window.location.replace(targetUrl);
-                </script></head><body style="background:#100923;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">กำลังพาคุณกลับเข้าสู่ระบบ GINDER...</body></html>`);
+                </script></head><body style="background:#120F1D;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">กำลังพาคุณกลับเข้าสู่ระบบ GINDER...</body></html>`);
             });
             helperServer.on('error', () => {});
             helperServer.listen(3000, '0.0.0.0', () => {

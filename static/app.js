@@ -116,12 +116,12 @@ function showCustomConfirm({
             overlay.className = 'modal-backdrop';
             overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.68); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100000; opacity: 0; transition: opacity 0.25s ease;';
             overlay.innerHTML = `
-                <div class="custom-confirm-card" style="background: var(--bg-card, #1e2029); border: 1px solid var(--border-glass, rgba(255,255,255,0.12)); border-radius: 22px; padding: 2rem; width: 90%; max-width: 420px; box-shadow: 0 25px 60px rgba(0,0,0,0.6); transform: scale(0.92); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); text-align: center; color: #fff;">
+                <div class="custom-confirm-card" style="background: var(--bg-card, #1e2029); border: 1px solid var(--glass-border, rgba(255,255,255,0.12)); border-radius: 22px; padding: 2rem; width: 90%; max-width: 420px; box-shadow: 0 25px 60px rgba(0,0,0,0.4); transform: scale(0.92); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); text-align: center; color: var(--text-primary);">
                     <div id="custom-confirm-icon-box" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1.2rem auto;">
                         <i id="custom-confirm-icon" class="fa-solid fa-triangle-exclamation"></i>
                     </div>
-                    <h3 id="custom-confirm-title" style="margin: 0 0 0.6rem 0; font-size: 1.25rem; font-weight: 700; color: #fff;"></h3>
-                    <p id="custom-confirm-message" style="color: var(--text-secondary, #94a3b8); font-size: 0.95rem; line-height: 1.55; margin: 0 0 1.6rem 0;"></p>
+                    <h3 id="custom-confirm-title" style="margin: 0 0 0.6rem 0; font-size: 1.25rem; font-weight: 700; color: var(--text-primary);"></h3>
+                    <p id="custom-confirm-message" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 0 1.6rem 0;"></p>
                     <div style="display: flex; gap: 0.8rem; justify-content: center;">
                         <button id="custom-confirm-cancel" class="btn btn-secondary" style="padding: 0.7rem 1.4rem; border-radius: 12px; cursor: pointer; flex: 1; font-weight: 600;">ยกเลิก</button>
                         <button id="custom-confirm-ok" class="btn" style="padding: 0.7rem 1.5rem; border-radius: 12px; cursor: pointer; flex: 1; font-weight: 600;">ยืนยัน</button>
@@ -221,9 +221,9 @@ function showCustomPrompt(title, defaultValue = '', onConfirm) {
         overlay.className = 'modal-backdrop';
         overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100000; opacity: 0; transition: opacity 0.25s ease;';
         overlay.innerHTML = `
-            <div style="background: var(--bg-card, #1e2029); border: 1px solid var(--border-glass, rgba(255,255,255,0.12)); border-radius: 20px; padding: 1.8rem; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transform: scale(0.92); transition: transform 0.25s ease; color: #fff;">
-                <h4 id="custom-prompt-title" style="margin: 0 0 1rem 0; font-size: 1.1rem; font-weight: 600; color: #fff;"></h4>
-                <input type="text" id="custom-prompt-input" style="width: 100%; padding: 0.8rem 1rem; border-radius: 12px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-size: 1rem; outline: none; margin-bottom: 1.2rem; box-sizing: border-box;" />
+            <div style="background: var(--bg-card, #1e2029); border: 1px solid var(--glass-border, rgba(255,255,255,0.12)); border-radius: 20px; padding: 1.8rem; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.35); transform: scale(0.92); transition: transform 0.25s ease; color: var(--text-primary);">
+                <h4 id="custom-prompt-title" style="margin: 0 0 1rem 0; font-size: 1.1rem; font-weight: 600; color: var(--text-primary);"></h4>
+                <input type="text" id="custom-prompt-input" style="width: 100%; padding: 0.8rem 1rem; border-radius: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary); font-size: 1rem; outline: none; margin-bottom: 1.2rem; box-sizing: border-box;" />
                 <div style="display: flex; gap: 0.8rem; justify-content: flex-end;">
                     <button id="custom-prompt-cancel" class="btn btn-secondary" style="padding: 0.6rem 1.2rem; border-radius: 10px; cursor: pointer;">ยกเลิก</button>
                     <button id="custom-prompt-ok" class="btn btn-primary" style="padding: 0.6rem 1.4rem; border-radius: 10px; cursor: pointer;">ตกลง</button>
@@ -1339,6 +1339,43 @@ function resetApplicationState() {
 
 // --- EVENT LISTENERS ---
 function setupEventListeners() {
+    // Theme (Light / Dark) Toggle
+    const themeToggleBtn = document.getElementById('btn-theme-toggle');
+    if (themeToggleBtn) {
+        const updateThemeBtnUI = (theme) => {
+            themeToggleBtn.innerHTML = theme === 'light'
+                ? '<i class="fa-solid fa-moon"></i>'
+                : '<i class="fa-solid fa-sun" style="color: #FBBF24;"></i>';
+            themeToggleBtn.title = theme === 'light' ? 'เปลี่ยนเป็นโหมดมืด (Dark)' : 'เปลี่ยนเป็นโหมดสว่าง (Light)';
+            themeToggleBtn.setAttribute('aria-label', themeToggleBtn.title);
+        };
+
+        const initialTheme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('ginder_theme') || 'light';
+        updateThemeBtnUI(initialTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            themeToggleBtn.classList.add('btn-clicked');
+            setTimeout(() => themeToggleBtn.classList.remove('btn-clicked'), 320);
+            const activeTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const nextTheme = activeTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', nextTheme);
+            localStorage.setItem('ginder_theme', nextTheme);
+            updateThemeBtnUI(nextTheme);
+            if (soundFx && !soundFx.isMuted) soundFx.playPop();
+
+            // Theme Tooltip Badge Micro-interaction
+            let badge = themeToggleBtn.querySelector('.sound-tooltip-badge');
+            if (badge) badge.remove();
+            badge = document.createElement('span');
+            badge.className = 'sound-tooltip-badge';
+            badge.innerText = nextTheme === 'light' ? 'โหมดสว่าง (Warm Cream) ☀️' : 'โหมดมืด (Espresso Dark) 🌙';
+            themeToggleBtn.appendChild(badge);
+            setTimeout(() => {
+                if (badge.parentNode) badge.parentNode.removeChild(badge);
+            }, 1400);
+        });
+    }
+
     // Sound Effect Toggle
     const soundToggleBtn = document.getElementById('btn-sound-toggle');
     if (soundToggleBtn) {
@@ -2068,7 +2105,7 @@ function setupEventListeners() {
                 void landingRoomInput.offsetWidth;
                 landingRoomInput.classList.add('input-shake');
                 landingRoomInput.style.borderColor = 'var(--accent-pink)';
-                landingRoomInput.style.boxShadow = '0 0 14px rgba(255, 51, 119, 0.4)';
+                landingRoomInput.style.boxShadow = '0 0 14px rgba(255, 51, 102, 0.4)';
             }
             if (landingRoomStatus) {
                 landingRoomStatus.classList.remove('hidden');
@@ -2084,7 +2121,7 @@ function setupEventListeners() {
             if (landingRoomInput) {
                 landingRoomInput.classList.remove('input-ready');
                 landingRoomInput.style.borderColor = 'var(--accent-orange)';
-                landingRoomInput.style.boxShadow = '0 0 14px rgba(238, 120, 22, 0.4)';
+                landingRoomInput.style.boxShadow = '0 0 14px rgba(255, 94, 30, 0.4)';
             }
             if (landingRoomStatus) {
                 landingRoomStatus.classList.remove('hidden');
@@ -2099,7 +2136,7 @@ function setupEventListeners() {
         if (landingRoomInput) {
             landingRoomInput.classList.add('input-ready');
             landingRoomInput.style.borderColor = 'var(--accent-green)';
-            landingRoomInput.style.boxShadow = '0 0 14px rgba(0, 255, 38, 0.4)';
+            landingRoomInput.style.boxShadow = '0 0 14px rgba(16, 185, 129, 0.4)';
         }
         if (landingRoomStatus) {
             landingRoomStatus.classList.remove('hidden');
@@ -3276,7 +3313,7 @@ function renderLobbyQRCode(joinUrl) {
                 size: 280,
                 level: 'M',
                 background: '#ffffff',
-                foreground: '#100923'
+                foreground: '#120F1D'
             });
         } else {
             console.warn('[QR] QRious not loaded yet, trying online QR generator fallback...');
@@ -3305,7 +3342,7 @@ function renderLobbyQRCode(joinUrl) {
                     size: 340,
                     level: 'M',
                     background: '#ffffff',
-                    foreground: '#100923'
+                    foreground: '#120F1D'
                 });
             } else {
                 const fallbackZoomImg = new Image();
@@ -3849,10 +3886,10 @@ function triggerMatchCelebrationPopup(options = {}) {
     void popup.offsetWidth;
     popup.classList.add('active');
 
-    // Auto-dismiss after 2.4s so user can focus on the matched card and navigation button
+    // Auto-dismiss after 4.5s so user can comfortably enjoy the victory screen or tap anytime to proceed
     celebrationPopupTimer = setTimeout(() => {
         dismissCelebrationPopup();
-    }, 2400);
+    }, 4500);
 }
 
 function dismissCelebrationPopup() {
@@ -3891,6 +3928,9 @@ function renderResultScreen(r, options = {}) {
     const badgeEl = document.getElementById('match-consensus-badge');
     const percentEl = document.getElementById('match-consensus-percent');
     const retryBtn = document.getElementById('btn-solo-retry');
+    const pageBadge = document.getElementById('result-page-badge');
+    const pageSubtitle = document.getElementById('result-page-subtitle');
+    const spotlightEl = document.getElementById('celebration-restaurant-spotlight');
 
     if (options.isSolo) {
         if (retryBtn) retryBtn.classList.remove('hidden');
@@ -3902,6 +3942,13 @@ function renderResultScreen(r, options = {}) {
         if (subtitle) {
             subtitle.innerHTML = options.subtitleHtml || "มื้อนี้เลือกร้านนี้เลย ทานให้อร่อยนะครับ! 🍽️";
         }
+        if (pageBadge) {
+            pageBadge.innerHTML = options.stampText || "<i class='fa-solid fa-utensils'></i> SOLO WINNER!";
+            pageBadge.className = "result-page-badge solo";
+        }
+        if (pageSubtitle) {
+            pageSubtitle.innerHTML = options.subtitleHtml || "มื้อนี้เลือกร้านนี้เลย ทานให้อร่อยนะครับ! 🍽️";
+        }
     } else {
         if (retryBtn) retryBtn.classList.add('hidden');
         if (options.isFallback) {
@@ -3911,6 +3958,11 @@ function renderResultScreen(r, options = {}) {
             }
             if (subtitle) subtitle.innerHTML = `<i class="fa-solid fa-clock"></i> ${options.reason || 'หมดเวลา'}`;
             if (badgeEl) badgeEl.style.display = 'none';
+            if (pageBadge) {
+                pageBadge.innerText = "DECIDED! 🎲";
+                pageBadge.className = "result-page-badge fallback";
+            }
+            if (pageSubtitle) pageSubtitle.innerHTML = `<i class="fa-solid fa-clock"></i> ${options.reason || 'หมดเวลา'}`;
         } else {
             if (stamp) {
                 stamp.innerHTML = "<i class='fa-solid fa-heart'></i> MATCHED!";
@@ -3921,10 +3973,31 @@ function renderResultScreen(r, options = {}) {
                 badgeEl.style.display = 'inline-flex';
                 animateCountUp(percentEl, 0, 100, 1200);
             }
+            if (pageBadge) {
+                pageBadge.innerHTML = "<i class='fa-solid fa-heart'></i> MATCHED!";
+                pageBadge.className = "result-page-badge match";
+            }
+            if (pageSubtitle) pageSubtitle.innerText = "ใจตรงกันเป็นมติเอกฉันท์! ทานให้อร่อยนะครับ";
         }
     }
 
-    // Trigger celebratory popup announcement that auto-dismisses
+    if (spotlightEl && r) {
+        const cuisine = Array.isArray(r.type) ? r.type[0] : (r.type || 'ร้านอาหาร');
+        spotlightEl.innerHTML = `
+            <div class="celebration-spotlight-inner">
+                <span class="celebration-spotlight-tag"><i class="fa-solid fa-crown text-accent"></i> ร้านชนะเลิศของคุณ</span>
+                <h3 class="celebration-spotlight-name">${escapeHtml(r.name)}</h3>
+                <div class="celebration-spotlight-meta">
+                    <span class="rating"><i class="fa-solid fa-star"></i> ${r.rating}</span>
+                    <span class="dot">•</span>
+                    <span>${escapeHtml(cuisine)}</span>
+                    ${r.avgPrice ? `<span class="dot">•</span><span>~${r.avgPrice}฿</span>` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    // Trigger full-screen celebratory announcement
     triggerMatchCelebrationPopup(options);
 
     const cardContainer = document.getElementById('matched-restaurant-card');
@@ -3932,14 +4005,22 @@ function renderResultScreen(r, options = {}) {
     if (r) {
         const distNum = (r.distance !== null && r.distance !== undefined) ? parseFloat(r.distance) : NaN;
         const distDisplay = !isNaN(distNum) ? `${distNum.toFixed(1)} กม.` : 'ไม่ระบุระยะทาง';
+        const isUserUploaded = Boolean(r.image && r.image.includes('/uploads/'));
 
         cardContainer.innerHTML = `
             <div class="matched-image-wrapper">
                 <img src="${escapeHtml(r.image || '')}" alt="${escapeHtml(r.name || '')}" class="matched-image" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
-                <div class="restaurant-watermark-overlay" aria-hidden="true">
+                <div class="restaurant-watermark-overlay" aria-hidden="true" style="${isUserUploaded ? 'display:none;' : ''}">
                     <span class="watermark-text">ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
                 </div>
-                <div class="card-mockup-badge"><i class="fa-solid fa-camera"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ</div>
+                <div class="card-mockup-badge ${isUserUploaded ? 'is-user-uploaded' : ''}">
+                    ${isUserUploaded 
+                        ? '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> รูปถ่ายจริง' 
+                        : '<i class="fa-solid fa-camera"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ'}
+                </div>
+                <button type="button" class="btn-card-upload-quick" onclick="triggerCardPhotoUpload('${r.id}', event)" title="อัปโหลดรูปภาพจริงจากเครื่อง">
+                    <i class="fa-solid fa-camera"></i> <span>อัปโหลดรูป</span>
+                </button>
                 <div class="matched-result-corner-badge ${options.isFallback ? 'decided' : (options.isSolo ? 'solo' : 'match')}">
                     ${options.isFallback ? '<i class="fa-solid fa-dice animate-dice-roll"></i> DECIDED' : (options.isSolo ? '<i class="fa-solid fa-utensils"></i> WINNER' : '<i class="fa-solid fa-heart"></i> MATCHED')}
                 </div>
@@ -4011,7 +4092,7 @@ function renderSkeletonDeck() {
         ${emptyStateHtml}
         <div class="swipe-card skeleton-card">
             <div class="skeleton-image skeleton-shimmer">
-                <i class="fa-solid fa-utensils" style="font-size: 2.8rem; color: rgba(255,255,255,0.18);"></i>
+                <i class="fa-solid fa-utensils"></i>
                 <div class="skeleton-badge skeleton-shimmer"></div>
             </div>
             <div class="skeleton-details">
@@ -4218,14 +4299,23 @@ function renderDeck() {
             ? `<div class="card-halal-badge" title="อาหารฮาลาล"><i class="fa-solid fa-star-and-crescent"></i> ฮาลาล</div>`
             : '';
 
+        const isUserUploaded = Boolean(images[0] && images[0].includes('/uploads/'));
+
         card.innerHTML = `
             <div class="card-image-wrapper">
                 ${storyBarsHtml}
                 <img src="${escapeHtml(images[0] || '')}" class="card-image" alt="${escapeHtml(r.name || '')}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
-                <div class="restaurant-watermark-overlay" aria-hidden="true">
+                <div class="restaurant-watermark-overlay" aria-hidden="true" style="${isUserUploaded ? 'display:none;' : ''}">
                     <span class="watermark-text">ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
                 </div>
-                <div class="card-mockup-badge"><i class="fa-solid fa-camera"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ</div>
+                <div class="card-mockup-badge ${isUserUploaded ? 'is-user-uploaded' : ''}">
+                    ${isUserUploaded 
+                        ? '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> รูปถ่ายจริง' 
+                        : '<i class="fa-solid fa-camera"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ'}
+                </div>
+                <button type="button" class="btn-card-upload-quick" onclick="triggerCardPhotoUpload('${r.id}', event)" title="อัปโหลดรูปภาพจริงจากเครื่อง">
+                    <i class="fa-solid fa-camera"></i> <span>อัปโหลดรูป</span>
+                </button>
                 <div class="card-stamp card-stamp-like">อยากกิน</div>
                 <div class="card-stamp card-stamp-dislike">ไม่กิน</div>
                 <div class="card-info-badge"><i class="fa-solid fa-location-arrow"></i> ${distDisplay}</div>
@@ -4256,6 +4346,21 @@ function renderDeck() {
                     <p><strong>ระยะทาง:</strong> ห่างออกไป ${r.distance} กิโลเมตร</p>
                     <p><strong>ที่ตั้ง:</strong> ${escapeHtml(r.address)}</p>
                     ${drawerGalleryHtml}
+                    
+                    <!-- Dedicated Photo Upload Action in Drawer -->
+                    <div class="drawer-photo-upload-box">
+                        <div class="drawer-upload-title-row">
+                            <span class="drawer-upload-title"><i class="fa-solid fa-camera-retro"></i> รูปถ่ายร้านอาหาร</span>
+                            ${isUserUploaded 
+                                ? '<span class="photo-type-badge real-badge"><i class="fa-solid fa-circle-check"></i> มีรูปจริงแล้ว</span>' 
+                                : '<span class="photo-type-badge mock-badge"><i class="fa-solid fa-image"></i> ภาพจำลอง</span>'}
+                        </div>
+                        <p class="drawer-upload-hint">มีรูปหน้าร้าน บรรยากาศ หรือเมนูอร่อยๆ? อัปโหลดจากโทรศัพท์หรือคอมพิวเตอร์ของคุณได้ทันที</p>
+                        <button type="button" class="btn-drawer-upload-photo" onclick="triggerCardPhotoUpload('${r.id}', event)">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> เลือกไฟล์รูปภาพจากเครื่อง
+                        </button>
+                    </div>
+
                     ${r.allergens && r.allergens.length ? `
                         <div>
                             <strong>สารก่อภูมิแพ้ในร้าน:</strong>
@@ -4432,9 +4537,16 @@ function setupCardGestures(card) {
         });
     }
 
+    const cardUploadBtn = card.querySelector('.btn-card-upload-quick');
+    if (cardUploadBtn) {
+        cardUploadBtn.addEventListener('pointerdown', (e) => {
+            e.stopPropagation();
+        });
+    }
+
     card.addEventListener('pointerdown', (e) => {
         // Prevent action inside buttons or open drawer
-        if (e.target.closest('.card-drawer') || e.target.closest('.btn-close-drawer')) {
+        if (e.target.closest('.card-drawer') || e.target.closest('.btn-close-drawer') || e.target.closest('.btn-card-upload-quick') || e.target.closest('.drawer-photo-upload-box')) {
             return;
         }
         // Prevent action if another card is currently being swiped away
@@ -4628,6 +4740,156 @@ window.jumpCardPhoto = function(restaurantId, targetIdx) {
     const diff = targetIdx - (card._currentImgIndex || 0);
     switchCardPhoto(card, diff);
 };
+
+window.triggerCardPhotoUpload = function(restaurantId, event) {
+    if (event) {
+        if (typeof event.stopPropagation === 'function') event.stopPropagation();
+        if (typeof event.preventDefault === 'function') event.preventDefault();
+    }
+    const input = document.getElementById('global-restaurant-photo-upload-input');
+    if (!input) {
+        console.warn('global-restaurant-photo-upload-input element not found in DOM');
+        return;
+    }
+    input.dataset.targetRestaurantId = restaurantId;
+    input.value = '';
+    input.click();
+};
+
+// Global Photo Uploader for Uploading Photos directly from Computer / Mobile
+(function setupGlobalPhotoUploader() {
+    function initPhotoUploadListener() {
+        const input = document.getElementById('global-restaurant-photo-upload-input');
+        if (!input || input._hasUploadListener) return;
+        input._hasUploadListener = true;
+
+        input.addEventListener('change', async (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            const restaurantId = input.dataset.targetRestaurantId;
+            if (!restaurantId) return;
+
+            if (!file.type.startsWith('image/')) {
+                if (typeof showToast === 'function') {
+                    showToast('กรุณาเลือกไฟล์รูปภาพเท่านั้น (JPG, PNG, WEBP, GIF)', 'error');
+                }
+                input.value = '';
+                return;
+            }
+
+            if (file.size > 20 * 1024 * 1024) {
+                if (typeof showToast === 'function') {
+                    showToast('ไฟล์ภาพมีขนาดเกิน 20MB กรุณาเลือกไฟล์รูปอื่น', 'error');
+                }
+                input.value = '';
+                return;
+            }
+
+            if (typeof showToast === 'function') {
+                showToast('กำลังอัปโหลดรูปภาพขึ้นสู่ระบบ...', 'info');
+            }
+
+            try {
+                const reader = new FileReader();
+                const base64Data = await new Promise((resolve, reject) => {
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                const res = await fetch('/api/upload-restaurant-image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        restaurantId: restaurantId,
+                        imageBase64: base64Data,
+                        isPrimary: true
+                    })
+                });
+
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || 'ไม่สามารถอัปโหลดรูปภาพได้');
+                }
+
+                // Update local memory state in state.restaurants
+                if (typeof state !== 'undefined' && Array.isArray(state.restaurants)) {
+                    const r = state.restaurants.find(x => String(x.id) === String(restaurantId));
+                    if (r) {
+                        r.image = data.url;
+                        if (!Array.isArray(r.images)) r.images = [];
+                        r.images = [data.url, ...r.images.filter(x => x !== data.url)];
+                    }
+                }
+
+                // Live-update on-screen Swipe Card
+                const card = document.querySelector(`.swipe-card[data-id="${restaurantId}"]`);
+                if (card) {
+                    card._images = data.images || [data.url];
+                    card._currentImgIndex = 0;
+
+                    const imgEl = card.querySelector('.card-image');
+                    if (imgEl) imgEl.src = data.url;
+
+                    const watermark = card.querySelector('.restaurant-watermark-overlay');
+                    if (watermark) watermark.style.display = 'none';
+
+                    const mockupBadge = card.querySelector('.card-mockup-badge');
+                    if (mockupBadge) {
+                        mockupBadge.classList.add('is-user-uploaded');
+                        mockupBadge.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> รูปถ่ายจริง';
+                    }
+
+                    const photoBadge = card.querySelector('.photo-type-badge');
+                    if (photoBadge) {
+                        photoBadge.className = 'photo-type-badge real-badge';
+                        photoBadge.innerHTML = '<i class="fa-solid fa-circle-check"></i> มีรูปจริงแล้ว';
+                    }
+
+                    const galleryStrip = card.querySelector('.drawer-photo-strip');
+                    if (galleryStrip && Array.isArray(data.images)) {
+                        galleryStrip.innerHTML = data.images.map((imgUrl, idx) => `
+                            <div class="drawer-thumb-wrap">
+                                <img src="${imgUrl}" class="drawer-thumb" alt="มุม ${idx + 1}" onclick="jumpCardPhoto('${restaurantId}', ${idx})">
+                            </div>
+                        `).join('');
+                    }
+                }
+
+                // Live-update Result / Winner Card if currently visible
+                const matchedCard = document.getElementById('matched-restaurant-card');
+                if (matchedCard) {
+                    const matchedImg = matchedCard.querySelector('.matched-image');
+                    if (matchedImg) matchedImg.src = data.url;
+                    const watermark = matchedCard.querySelector('.restaurant-watermark-overlay');
+                    if (watermark) watermark.style.display = 'none';
+                    const mockupBadge = matchedCard.querySelector('.card-mockup-badge');
+                    if (mockupBadge) {
+                        mockupBadge.classList.add('is-user-uploaded');
+                        mockupBadge.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> รูปถ่ายจริง';
+                    }
+                }
+
+                if (typeof showToast === 'function') {
+                    showToast('อัปโหลดรูปภาพสำเร็จแล้ว! 🎉', 'success');
+                }
+            } catch (err) {
+                console.error('Failed to upload image:', err);
+                if (typeof showToast === 'function') {
+                    showToast('เกิดข้อผิดพลาด: ' + (err.message || 'ไม่สามารถอัปโหลดได้'), 'error');
+                }
+            } finally {
+                input.value = '';
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPhotoUploadListener);
+    } else {
+        initPhotoUploadListener();
+    }
+})();
 
 
 function executeSwipeAction(card, direction, dX = 150, dY = 0) {
@@ -4920,7 +5182,7 @@ function triggerConfettiExplosion() {
             angle: 60,
             spread: 45,
             origin: { x: 0.05, y: 0.75 },
-            colors: ['#FF3377', '#EE7816', '#00FF26'],
+            colors: ['#FF3366', '#FF5E1E', '#10B981', '#FBBF24'],
             ticks: 75,
             gravity: 1.2,
             scalar: 0.75,
@@ -4931,7 +5193,7 @@ function triggerConfettiExplosion() {
             angle: 120,
             spread: 45,
             origin: { x: 0.95, y: 0.75 },
-            colors: ['#FF3377', '#EE7816', '#00FF26'],
+            colors: ['#FF3366', '#FF5E1E', '#10B981', '#FBBF24'],
             ticks: 75,
             gravity: 1.2,
             scalar: 0.75,
@@ -5885,7 +6147,7 @@ function loadMatchHistory() {
                 const r = item.restaurant || {};
                 const dateStr = item.matchedAt ? new Date(item.matchedAt).toLocaleString('th-TH', { dateStyle: 'short', timeStyle: 'short' }) : '';
                 const card = document.createElement('div');
-                card.style.cssText = 'background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.8rem; display: flex; gap: 0.8rem; align-items: center;';
+                card.className = 'profile-history-card';
                 card.innerHTML = `
                     <div style="position: relative; width: 55px; height: 55px; border-radius: 8px; overflow: hidden; flex-shrink: 0;">
                         <img src="${escapeHtml(r.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100')}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'">

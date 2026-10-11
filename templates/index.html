@@ -28,7 +28,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
     <!-- Dynamic Theme Styling -->
-    <link rel="stylesheet" href="/static/style.css?v=2.5.3">
+    <link rel="stylesheet" href="/static/style.css?v=2.7.5">
+
+    <!-- Immediate Theme Initialization to Prevent Flash of Dark/Light -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('ginder_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
 </head>
 
 <body>
@@ -44,6 +52,9 @@
                 <span class="logo-text">GINDER</span>
             </div>
             <div class="header-actions">
+                <button id="btn-theme-toggle" class="btn-icon-glass" title="สลับโหมดสว่าง / มืด" aria-label="สลับโหมดสว่าง/มืด" type="button">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
                 <button id="btn-sound-toggle" class="btn-icon-glass" title="เปิด/ปิดเสียงเอฟเฟกต์" aria-label="สลับเสียงเอฟเฟกต์" type="button">
                     <i class="fa-solid fa-volume-high"></i>
                 </button>
@@ -505,7 +516,7 @@
                 <div class="form-group">
                     <label for="join-room-id">รหัสห้อง</label>
                     <input type="text" id="join-room-id" class="form-control" autocomplete="off" maxlength="4"
-                        style="text-transform: uppercase; text-align: center; letter-spacing: 2px; font-weight: bold; color: var(--accent-orange); background: rgba(255, 255, 255, 0.02); cursor: default; border-color: rgba(255, 51, 119, 0.2);"
+                        style="text-transform: uppercase; text-align: center; letter-spacing: 2px; font-weight: bold; color: var(--accent-orange); background: rgba(255, 255, 255, 0.02); cursor: default; border-color: rgba(255, 51, 102, 0.2);"
                         readonly>
                 </div>
 
@@ -719,35 +730,12 @@
 
             <!-- VIEW 6: RESULT / MATCH SCREEN -->
             <section id="view-result" class="view-section">
-                <!-- CELEBRATION POPUP MODAL (DECIDED / MATCHED / SOLO) -->
-                <div id="result-celebration-popup" class="match-celebration-overlay hidden" role="dialog" aria-modal="true" aria-label="ผลลัพธ์การแมตช์" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
-                    <div class="match-celebration-backdrop" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();"></div>
-                    <div class="match-celebration-card" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
-                        <button type="button" id="btn-close-celebration-popup" class="match-celebration-close" aria-label="ปิด" title="ปิด" onclick="event.stopPropagation(); if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                        <div class="celebration-particles" aria-hidden="true">
-                            <span class="particle p1">🎉</span>
-                            <span class="particle p2">✨</span>
-                            <span class="particle p3">🔥</span>
-                            <span class="particle p4">✨</span>
-                        </div>
-                        <div class="result-header">
-                            <div class="match-stamp-wrapper">
-                                <div class="match-stamp animate-bounce" id="result-stamp">
-                                    <i class="fa-solid fa-heart"></i> MATCHED!
-                                </div>
-                                <div class="match-ring-wave"></div>
-                            </div>
-                            <div class="match-consensus-badge" id="match-consensus-badge">
-                                <i class="fa-solid fa-fire text-accent"></i> <span id="match-consensus-percent">100</span>% มติเอกฉันท์
-                            </div>
-                            <p id="result-subtitle" class="result-subtitle">ทุกคนปัดขวาใจตรงกันที่ร้านนี้!</p>
-                        </div>
-                        <div class="celebration-dismiss-hint">
-                            <i class="fa-solid fa-hand-pointer"></i> แตะที่ใดก็ได้เพื่อดูร้านอาหาร
-                        </div>
+                <!-- IN-PAGE RESULT HEADER (CLEAN & PERMANENT) -->
+                <div class="result-page-header">
+                    <div id="result-page-badge" class="result-page-badge">
+                        <i class="fa-solid fa-utensils"></i> SOLO WINNER!
                     </div>
+                    <p id="result-page-subtitle" class="result-page-subtitle">มื้อนี้เลือกร้านนี้เลย ทานให้อร่อยนะครับ! 🍽️</p>
                 </div>
 
                 <div id="matched-restaurant-card" class="matched-card">
@@ -779,6 +767,49 @@
             </div>
             <div>© 2026 GINDER Platform • คุ้มครองข้อมูลส่วนบุคคลตาม พ.ร.บ. PDPA พ.ศ. 2562</div>
         </footer>
+    </div>
+
+    <!-- ============================================================================== -->
+    <!-- FULL-SCREEN IMMERSIVE CELEBRATION STAGE (DECIDED / MATCHED / SOLO) -->
+    <!-- Positioned outside .app-container to guarantee 100% viewport alignment without transform traps -->
+    <!-- ============================================================================== -->
+    <div id="result-celebration-popup" class="match-celebration-overlay hidden" role="dialog" aria-modal="true" aria-label="ผลลัพธ์การแมตช์" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
+        <div class="match-celebration-backdrop" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();"></div>
+        <div class="match-celebration-card" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
+            <button type="button" id="btn-close-celebration-popup" class="match-celebration-close" aria-label="ปิด" title="ปิด" onclick="event.stopPropagation(); if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="celebration-particles" aria-hidden="true">
+                <span class="particle p1">🎉</span>
+                <span class="particle p2">✨</span>
+                <span class="particle p3">🔥</span>
+                <span class="particle p4">✨</span>
+            </div>
+            <div class="celebration-trophy-badge animate-bounce">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div class="result-header">
+                <div class="match-stamp-wrapper">
+                    <div class="match-stamp animate-bounce" id="result-stamp">
+                        <i class="fa-solid fa-heart"></i> MATCHED!
+                    </div>
+                    <div class="match-ring-wave"></div>
+                </div>
+                <div class="match-consensus-badge" id="match-consensus-badge">
+                    <i class="fa-solid fa-fire text-accent"></i> <span id="match-consensus-percent">100</span>% มติเอกฉันท์
+                </div>
+                <p id="result-subtitle" class="result-subtitle">ทุกคนปัดขวาใจตรงกันที่ร้านนี้!</p>
+            </div>
+            <div id="celebration-restaurant-spotlight" class="celebration-restaurant-spotlight">
+                <!-- Injected by JS: Name, Rating, and Cuisine -->
+            </div>
+            <button type="button" class="btn btn-primary btn-lg full-width btn-celebration-proceed" onclick="event.stopPropagation(); if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
+                <span>ดูร้านอาหาร & แผนที่</span> <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <div class="celebration-dismiss-hint">
+                <i class="fa-solid fa-hand-pointer"></i> แตะที่ใดก็ได้เพื่อดูร้านอาหาร
+            </div>
+        </div>
     </div>
 
 
@@ -1019,7 +1050,7 @@
             <div id="tab-pane-profile-info" class="profile-pane">
                 <!-- Connected Provider Badge -->
                 <div id="profile-provider-container" style="margin-bottom: 1rem;">
-                    <div id="profile-provider-badge" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.85rem; border-radius: 20px; font-size: 0.82rem; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-secondary);">
+                    <div id="profile-provider-badge" class="profile-provider-badge">
                         <i class="fa-solid fa-shield-halved text-accent"></i> <span id="profile-provider-text">เข้าสู่ระบบด้วย: บัญชีบุคคล</span>
                     </div>
                 </div>
@@ -1096,7 +1127,7 @@
                 </div>
 
                 <!-- Danger Zone: Right to Erasure -->
-                <div style="background: rgba(255, 50, 50, 0.05); border: 1px solid rgba(255, 50, 50, 0.25); border-radius: var(--border-radius-sm); padding: 0.9rem;">
+                <div style="background: rgba(244, 63, 94, 0.05); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: var(--border-radius-sm); padding: 0.9rem;">
                     <h4 style="font-size: 0.9rem; font-weight: 600; color: var(--color-danger); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.3rem;">
                         <i class="fa-solid fa-triangle-exclamation"></i> 3. สิทธิขอลบข้อมูลและทำลายบัญชี (Right to Erasure)
                     </h4>
@@ -1196,7 +1227,7 @@
                 <div class="cookie-cat-card" style="background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 0.85rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
                         <span style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);"><i class="fa-solid fa-shield-halved text-accent"></i> 1. คุกกี้ที่จำเป็นอย่างยิ่ง (Strictly Necessary)</span>
-                        <span style="font-size: 0.72rem; background: rgba(0, 255, 38, 0.15); color: var(--color-success); border: 1px solid rgba(0, 255, 38, 0.3); border-radius: 12px; padding: 0.15rem 0.5rem; font-weight: 600;">เปิดเสมอ</span>
+                        <span style="font-size: 0.72rem; background: rgba(16, 185, 129, 0.15); color: var(--color-success); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 0.15rem 0.5rem; font-weight: 600;">เปิดเสมอ</span>
                     </div>
                     <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; margin: 0;">
                         จำเป็นต่อการทำงานหลักของระบบ เช่น การรักษาความปลอดภัย การเข้าสู่ระบบ และการเชื่อมต่อห้องจับคู่ ไม่สามารถปิดได้
@@ -1277,7 +1308,7 @@
             <div id="policy-content-scroll" style="overflow-y: auto; flex: 1; padding-right: 0.5rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6;">
                 <!-- SECTION 1: PRIVACY POLICY -->
                 <div id="pane-policy-privacy">
-                    <div style="background: rgba(238, 120, 22, 0.1); border-left: 3px solid var(--color-primary); padding: 0.6rem 0.8rem; margin-bottom: 1rem; border-radius: 4px; color: #ffca99;">
+                    <div class="pdpa-notice-callout">
                         <strong>ประกาศการคุ้มครองข้อมูลส่วนบุคคล (PDPA Notice):</strong> เว็บไซต์ GINDER ให้ความสำคัญสูงสุดต่อการคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้บริการ และปฏิบัติตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 อย่างเคร่งครัด
                     </div>
 
@@ -1641,6 +1672,9 @@
         window.SUPABASE_URL = "https://icksdmnzcdswiscusrep.supabase.co";
         window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlja3NkbW56Y2Rzd2lzY3VzcmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMTE3ODEsImV4cCI6MjA5OTU4Nzc4MX0.RjNqKuh2Tr0ugcXyCTtnluBRP-g7jefAVCO9kqtXXPg";
     </script>
+    <!-- Global Hidden File Input for Restaurant Photo Upload from User Device -->
+    <input type="file" id="global-restaurant-photo-upload-input" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none;" aria-hidden="true">
+
     <!-- App entry logic -->
     <script src="/static/app.js?v=2.5.0"></script>
 

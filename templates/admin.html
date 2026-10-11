@@ -16,35 +16,48 @@
     <!-- Chart.js for Interactive Charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- Immediate Admin Theme Initialization -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('ginder_admin_theme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.add('light-mode');
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.body.classList.add('light-mode');
+                });
+            }
+        })();
+    </script>
+
     <style>
         :root {
             /* GINDER Cosmic Theme - Perfectly aligned with Front-End */
-            --bg-body: #100923;
-            --bg-body-secondary: #170e33;
-            --sidebar-bg: #0c061a;
-            --sidebar-brand: #13092b;
-            --sidebar-text: #b6afcc;
-            --sidebar-active-bg: linear-gradient(135deg, #ff3377 0%, #ee7816 100%);
+            --bg-body: #120F1D;
+            --bg-body-secondary: #1A1628;
+            --sidebar-bg: #0e0b17;
+            --sidebar-brand: #161124;
+            --sidebar-text: #C4BED8;
+            --sidebar-active-bg: linear-gradient(135deg, #ff3366 0%, #ff5e1e 100%);
             --sidebar-active-text: #ffffff;
             --sidebar-hover-bg: rgba(255, 255, 255, 0.08);
 
-            --topbar-bg: rgba(18, 10, 38, 0.85);
+            --topbar-bg: rgba(18, 15, 29, 0.85);
             --topbar-border: rgba(255, 255, 255, 0.08);
             --topbar-text: #ffffff;
 
-            --card-bg: rgba(26, 15, 52, 0.75);
+            --card-bg: rgba(26, 20, 42, 0.75);
             --card-border: rgba(255, 255, 255, 0.08);
             --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
 
             --text-main: #ffffff;
-            --text-secondary: #b6afcc;
+            --text-secondary: #C4BED8;
             --text-muted: #797194;
 
-            --color-primary: #ee7816;
-            --color-secondary: #ff3377;
-            --color-gradient: linear-gradient(135deg, #ff3377 0%, #ee7816 100%);
-            --color-primary-light: rgba(238, 120, 22, 0.15);
-            --color-accent-pink: #ff3377;
+            --color-primary: #ff5e1e;
+            --color-secondary: #ff3366;
+            --color-gradient: linear-gradient(135deg, #ff3366 0%, #ff5e1e 100%);
+            --color-primary-light: rgba(255, 94, 30, 0.15);
+            --color-accent-pink: #ff3366;
             --color-accent-purple: #8b5cf6;
             --color-success: #10b981;
             --color-danger: #ef4444;
@@ -58,28 +71,29 @@
             --topbar-height: 64px;
         }
 
-        /* Light mode optional toggle */
+        /* Light mode optional toggle - Aligned with GINDER Warm Milk Cream */
+        html.light-mode body,
         body.light-mode {
-            --bg-body: #f8fafc;
-            --bg-body-secondary: #f1f5f9;
-            --sidebar-bg: #0f172a;
-            --sidebar-brand: #0b1120;
-            --sidebar-text: #94a3b8;
-            --sidebar-active-bg: linear-gradient(135deg, #ff3377 0%, #ee7816 100%);
+            --bg-body: #FAF7F2;
+            --bg-body-secondary: #F3EFEA;
+            --sidebar-bg: #1A1628;
+            --sidebar-brand: #120F1D;
+            --sidebar-text: #C4BED8;
+            --sidebar-active-bg: linear-gradient(135deg, #ff3366 0%, #ff5e1e 100%);
             --sidebar-active-text: #ffffff;
-            --sidebar-hover-bg: rgba(255, 255, 255, 0.06);
+            --sidebar-hover-bg: rgba(255, 255, 255, 0.08);
 
-            --topbar-bg: #ffffff;
-            --topbar-border: #e2e8f0;
-            --topbar-text: #0f172a;
+            --topbar-bg: #FFFFFF;
+            --topbar-border: rgba(0, 0, 0, 0.08);
+            --topbar-text: #1E1B18;
 
-            --card-bg: #ffffff;
-            --card-border: #e2e8f0;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --card-bg: #FFFFFF;
+            --card-border: rgba(0, 0, 0, 0.08);
+            --card-shadow: 0 4px 16px rgba(100, 75, 50, 0.06);
 
-            --text-main: #0f172a;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
+            --text-main: #1E1B18;
+            --text-secondary: #6B635B;
+            --text-muted: #9E958C;
         }
 
         *, *::before, *::after {
@@ -195,14 +209,14 @@
         }
 
         .sidebar-brand i {
-            color: #ee7816;
+            color: #ff5e1e;
             font-size: 1.4rem;
         }
 
         .brand-badge {
-            background: rgba(238, 120, 22, 0.2);
+            background: rgba(255, 94, 30, 0.2);
             color: #fb923c;
-            border: 1px solid rgba(238, 120, 22, 0.3);
+            border: 1px solid rgba(255, 94, 30, 0.3);
             font-size: 0.7rem;
             font-weight: 600;
             padding: 0.15rem 0.45rem;
@@ -266,7 +280,7 @@
             background: var(--sidebar-active-bg);
             color: #ffffff;
             font-weight: 600;
-            box-shadow: 0 4px 12px rgba(238, 120, 22, 0.35);
+            box-shadow: 0 4px 12px rgba(255, 94, 30, 0.35);
         }
 
         .sidebar-item.active i {
@@ -409,7 +423,7 @@
             outline: none;
             background: #ffffff;
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(238, 120, 22, 0.15);
+            box-shadow: 0 0 0 3px rgba(255, 94, 30, 0.15);
             width: 280px;
         }
 
@@ -464,7 +478,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ee7816, #ff3377);
+            background: linear-gradient(135deg, #ff5e1e, #ff3366);
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -631,7 +645,7 @@
 
         .mini-bar {
             flex: 1;
-            background: linear-gradient(180deg, #ff3377 0%, #ee7816 100%); box-shadow: 0 0 8px rgba(238, 120, 22, 0.35);
+            background: linear-gradient(180deg, #ff3366 0%, #ff5e1e 100%); box-shadow: 0 0 8px rgba(255, 94, 30, 0.35);
             border-radius: 3px 3px 0 0;
             transition: height 0.5s ease;
         }
@@ -694,7 +708,7 @@
 
         .card-subtab-btn.active {
             color: var(--color-primary);
-            border-bottom-color: var(--color-primary); text-shadow: 0 0 12px rgba(238, 120, 22, 0.4);
+            border-bottom-color: var(--color-primary); text-shadow: 0 0 12px rgba(255, 94, 30, 0.4);
             font-weight: 600;
         }
 
@@ -724,7 +738,7 @@
         .period-btn.active {
             color: #fb923c;
             font-weight: 600;
-            background: linear-gradient(135deg, #ff3377 0%, #ee7816 100%); color: #ffffff !important; box-shadow: 0 2px 8px rgba(238, 120, 22, 0.4);
+            background: linear-gradient(135deg, #ff3366 0%, #ff5e1e 100%); color: #ffffff !important; box-shadow: 0 2px 8px rgba(255, 94, 30, 0.4);
         }
 
         .date-range-badge {
@@ -924,7 +938,7 @@
 
         .btn-primary:hover {
             background: #d9690d;
-            box-shadow: 0 4px 8px rgba(238, 120, 22, 0.25);
+            box-shadow: 0 4px 8px rgba(255, 94, 30, 0.25);
         }
 
         .btn-secondary {
@@ -953,16 +967,16 @@
         }
 
         .btn-edit {
-            background: rgba(238, 120, 22, 0.15);
+            background: rgba(255, 94, 30, 0.15);
             color: var(--color-primary-blue);
-            border: 1px solid rgba(238, 120, 22, 0.35);
+            border: 1px solid rgba(255, 94, 30, 0.35);
             padding: 0.4rem 0.75rem;
             border-radius: var(--radius-sm);
             cursor: pointer;
         }
 
         .btn-edit:hover {
-            background: #ee7816;
+            background: #ff5e1e;
             color: #ffffff;
         }
 
@@ -985,7 +999,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(238, 120, 22, 0.12);
+            box-shadow: 0 0 0 3px rgba(255, 94, 30, 0.12);
         }
 
         .form-group {
@@ -1049,7 +1063,7 @@
         .badge-type {
             background: var(--color-primary-light);
             color: var(--color-primary);
-            border: 1px solid rgba(238, 120, 22, 0.2);
+            border: 1px solid rgba(255, 94, 30, 0.2);
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
             font-size: 0.75rem;
@@ -1209,8 +1223,8 @@
 
 <body>
     <!-- GINDER Ambient Background Glows matching Front-End -->
-    <div class="admin-bg-glow" style="position: fixed; top: -80px; left: 180px; width: 400px; height: 400px; border-radius: 50%; filter: blur(140px); opacity: 0.15; background: #ee7816; pointer-events: none; z-index: 0;"></div>
-    <div class="admin-bg-glow" style="position: fixed; bottom: -80px; right: -80px; width: 450px; height: 450px; border-radius: 50%; filter: blur(160px); opacity: 0.12; background: #ff3377; pointer-events: none; z-index: 0;"></div>
+    <div class="admin-bg-glow" style="position: fixed; top: -80px; left: 180px; width: 400px; height: 400px; border-radius: 50%; filter: blur(140px); opacity: 0.15; background: #ff5e1e; pointer-events: none; z-index: 0;"></div>
+    <div class="admin-bg-glow" style="position: fixed; bottom: -80px; right: -80px; width: 450px; height: 450px; border-radius: 50%; filter: blur(160px); opacity: 0.12; background: #ff3366; pointer-events: none; z-index: 0;"></div>
 
     <!-- TOAST CONTAINER -->
     <div id="toast-container" class="toast-container"></div>
@@ -1349,12 +1363,12 @@
                                 <svg class="sparkline-svg" viewBox="0 0 160 45" preserveAspectRatio="none">
                                     <defs>
                                         <linearGradient id="waveGrad" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="0%" stop-color="#ff3377" stop-opacity="0.9" />
-                                            <stop offset="100%" stop-color="#ee7816" stop-opacity="0.8" />
+                                            <stop offset="0%" stop-color="#ff3366" stop-opacity="0.9" />
+                                            <stop offset="100%" stop-color="#ff5e1e" stop-opacity="0.8" />
                                         </linearGradient>
                                     </defs>
                                     <path d="M0,35 Q30,10 60,30 T120,15 T160,25 L160,45 L0,45 Z" fill="url(#waveGrad)" />
-                                    <path d="M0,35 Q30,10 60,30 T120,15 T160,25" fill="none" stroke="#ff3377" stroke-width="2.5" />
+                                    <path d="M0,35 Q30,10 60,30 T120,15 T160,25" fill="none" stroke="#ff3366" stroke-width="2.5" />
                                 </svg>
                             </div>
                             <div class="kpi-footer">
@@ -1453,7 +1467,7 @@
                         </div>
 
                         <div class="content-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem;">
-                            <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(238, 120, 22, 0.1); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                            <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(255, 94, 30, 0.1); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
                                 <i class="fa-solid fa-utensils"></i>
                             </div>
                             <div style="font-size: 2rem; font-weight: 700;" id="stat-total-restaurants">0</div>
@@ -2344,23 +2358,48 @@
 
             const imageFileInput = document.getElementById('form-image-files');
             if (imageFileInput) {
-                imageFileInput.addEventListener('change', (e) => {
+                imageFileInput.addEventListener('change', async (e) => {
                     const files = Array.from(e.target.files || []);
                     if (files.length === 0) return;
-                    let loaded = 0;
-                    files.forEach(file => {
-                        const reader = new FileReader();
-                        reader.onload = (event) => {
-                            if (event.target && event.target.result) {
-                                currentRestaurantImages.push(event.target.result);
-                                loaded++;
-                                if (loaded === files.length) {
-                                    renderAdminImagePreviews();
-                                }
+                    const restId = document.getElementById('form-id') ? document.getElementById('form-id').value : 'new';
+                    showToast(`กำลังอัปโหลดรูปภาพ ${files.length} ไฟล์จากเครื่อง...`, 'info');
+
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        try {
+                            const reader = new FileReader();
+                            const base64 = await new Promise((resolve, reject) => {
+                                reader.onload = () => resolve(reader.result);
+                                reader.onerror = reject;
+                                reader.readAsDataURL(file);
+                            });
+
+                            const res = await fetch('/api/upload-restaurant-image', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    restaurantId: restId || 'new',
+                                    imageBase64: base64,
+                                    isPrimary: currentRestaurantImages.length === 0
+                                })
+                            });
+                            const data = await res.json();
+                            if (data.success && data.url) {
+                                currentRestaurantImages.push(data.url);
+                            } else {
+                                currentRestaurantImages.push(base64);
                             }
-                        };
-                        reader.readAsDataURL(file);
-                    });
+                        } catch (err) {
+                            console.error('Admin upload error:', err);
+                        }
+                    }
+
+                    const urlTextarea = document.getElementById('form-image-urls');
+                    if (urlTextarea) {
+                        urlTextarea.value = currentRestaurantImages.filter(x => !x.startsWith('data:')).join('\n');
+                    }
+                    renderAdminImagePreviews();
+                    showToast('อัปโหลดรูปภาพจากเครื่องสำเร็จ! ✨', 'success');
                     imageFileInput.value = '';
                 });
             }
@@ -2631,7 +2670,7 @@
                                         <span style="font-weight: 600; color: var(--text-secondary);">${count} ร้าน</span>
                                     </div>
                                     <div style="width: 100%; height: 8px; background: rgba(0,0,0,0.06); border-radius: 4px; overflow: hidden;">
-                                        <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #ee7816, #ff3377); border-radius: 4px; transition: width 0.4s ease;"></div>
+                                        <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #ff5e1e, #ff3366); border-radius: 4px; transition: width 0.4s ease;"></div>
                                     </div>
                                 `;
                                 catListEl.appendChild(row);
@@ -3050,7 +3089,7 @@
                         {
                             label: 'การแมตช์อาหาร (Swipes)',
                             data: dataMatches,
-                            backgroundColor: '#ee7816', // GINDER Flame Orange
+                            backgroundColor: '#ff5e1e', // GINDER Flame Orange
                             borderRadius: 4,
                             barPercentage: 0.6,
                             categoryPercentage: 0.7
@@ -3058,7 +3097,7 @@
                         {
                             label: 'ผู้เข้าใช้งาน (Users)',
                             data: dataUsers,
-                            backgroundColor: '#ff3377', // GINDER Neon Rose / Hot Pink
+                            backgroundColor: '#ff3366', // GINDER Neon Rose / Hot Pink
                             borderRadius: 4,
                             barPercentage: 0.6,
                             categoryPercentage: 0.7
