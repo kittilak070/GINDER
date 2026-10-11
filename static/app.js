@@ -4018,9 +4018,6 @@ function renderResultScreen(r, options = {}) {
                         ? '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> รูปถ่ายจริง' 
                         : '<i class="fa-solid fa-camera"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ'}
                 </div>
-                <button type="button" class="btn-card-upload-quick" onclick="triggerCardPhotoUpload('${r.id}', event)" title="อัปโหลดรูปภาพจริงจากเครื่อง">
-                    <i class="fa-solid fa-camera"></i> <span>อัปโหลดรูป</span>
-                </button>
                 <div class="matched-result-corner-badge ${options.isFallback ? 'decided' : (options.isSolo ? 'solo' : 'match')}">
                     ${options.isFallback ? '<i class="fa-solid fa-dice animate-dice-roll"></i> DECIDED' : (options.isSolo ? '<i class="fa-solid fa-utensils"></i> WINNER' : '<i class="fa-solid fa-heart"></i> MATCHED')}
                 </div>
@@ -4313,9 +4310,6 @@ function renderDeck() {
                         ? '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> รูปถ่ายจริง' 
                         : '<i class="fa-solid fa-camera"></i> ภาพนี้เป็นเพียงภาพจำลองเว็บ'}
                 </div>
-                <button type="button" class="btn-card-upload-quick" onclick="triggerCardPhotoUpload('${r.id}', event)" title="อัปโหลดรูปภาพจริงจากเครื่อง">
-                    <i class="fa-solid fa-camera"></i> <span>อัปโหลดรูป</span>
-                </button>
                 <div class="card-stamp card-stamp-like">อยากกิน</div>
                 <div class="card-stamp card-stamp-dislike">ไม่กิน</div>
                 <div class="card-info-badge"><i class="fa-solid fa-location-arrow"></i> ${distDisplay}</div>
@@ -4346,21 +4340,6 @@ function renderDeck() {
                     <p><strong>ระยะทาง:</strong> ห่างออกไป ${r.distance} กิโลเมตร</p>
                     <p><strong>ที่ตั้ง:</strong> ${escapeHtml(r.address)}</p>
                     ${drawerGalleryHtml}
-                    
-                    <!-- Dedicated Photo Upload Action in Drawer -->
-                    <div class="drawer-photo-upload-box">
-                        <div class="drawer-upload-title-row">
-                            <span class="drawer-upload-title"><i class="fa-solid fa-camera-retro"></i> รูปถ่ายร้านอาหาร</span>
-                            ${isUserUploaded 
-                                ? '<span class="photo-type-badge real-badge"><i class="fa-solid fa-circle-check"></i> มีรูปจริงแล้ว</span>' 
-                                : '<span class="photo-type-badge mock-badge"><i class="fa-solid fa-image"></i> ภาพจำลอง</span>'}
-                        </div>
-                        <p class="drawer-upload-hint">มีรูปหน้าร้าน บรรยากาศ หรือเมนูอร่อยๆ? อัปโหลดจากโทรศัพท์หรือคอมพิวเตอร์ของคุณได้ทันที</p>
-                        <button type="button" class="btn-drawer-upload-photo" onclick="triggerCardPhotoUpload('${r.id}', event)">
-                            <i class="fa-solid fa-cloud-arrow-up"></i> เลือกไฟล์รูปภาพจากเครื่อง
-                        </button>
-                    </div>
-
                     ${r.allergens && r.allergens.length ? `
                         <div>
                             <strong>สารก่อภูมิแพ้ในร้าน:</strong>
@@ -4537,16 +4516,9 @@ function setupCardGestures(card) {
         });
     }
 
-    const cardUploadBtn = card.querySelector('.btn-card-upload-quick');
-    if (cardUploadBtn) {
-        cardUploadBtn.addEventListener('pointerdown', (e) => {
-            e.stopPropagation();
-        });
-    }
-
     card.addEventListener('pointerdown', (e) => {
         // Prevent action inside buttons or open drawer
-        if (e.target.closest('.card-drawer') || e.target.closest('.btn-close-drawer') || e.target.closest('.btn-card-upload-quick') || e.target.closest('.drawer-photo-upload-box')) {
+        if (e.target.closest('.card-drawer') || e.target.closest('.btn-close-drawer')) {
             return;
         }
         // Prevent action if another card is currently being swiped away
@@ -4740,156 +4712,6 @@ window.jumpCardPhoto = function(restaurantId, targetIdx) {
     const diff = targetIdx - (card._currentImgIndex || 0);
     switchCardPhoto(card, diff);
 };
-
-window.triggerCardPhotoUpload = function(restaurantId, event) {
-    if (event) {
-        if (typeof event.stopPropagation === 'function') event.stopPropagation();
-        if (typeof event.preventDefault === 'function') event.preventDefault();
-    }
-    const input = document.getElementById('global-restaurant-photo-upload-input');
-    if (!input) {
-        console.warn('global-restaurant-photo-upload-input element not found in DOM');
-        return;
-    }
-    input.dataset.targetRestaurantId = restaurantId;
-    input.value = '';
-    input.click();
-};
-
-// Global Photo Uploader for Uploading Photos directly from Computer / Mobile
-(function setupGlobalPhotoUploader() {
-    function initPhotoUploadListener() {
-        const input = document.getElementById('global-restaurant-photo-upload-input');
-        if (!input || input._hasUploadListener) return;
-        input._hasUploadListener = true;
-
-        input.addEventListener('change', async (e) => {
-            const file = e.target.files && e.target.files[0];
-            if (!file) return;
-            const restaurantId = input.dataset.targetRestaurantId;
-            if (!restaurantId) return;
-
-            if (!file.type.startsWith('image/')) {
-                if (typeof showToast === 'function') {
-                    showToast('กรุณาเลือกไฟล์รูปภาพเท่านั้น (JPG, PNG, WEBP, GIF)', 'error');
-                }
-                input.value = '';
-                return;
-            }
-
-            if (file.size > 20 * 1024 * 1024) {
-                if (typeof showToast === 'function') {
-                    showToast('ไฟล์ภาพมีขนาดเกิน 20MB กรุณาเลือกไฟล์รูปอื่น', 'error');
-                }
-                input.value = '';
-                return;
-            }
-
-            if (typeof showToast === 'function') {
-                showToast('กำลังอัปโหลดรูปภาพขึ้นสู่ระบบ...', 'info');
-            }
-
-            try {
-                const reader = new FileReader();
-                const base64Data = await new Promise((resolve, reject) => {
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-
-                const res = await fetch('/api/upload-restaurant-image', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        restaurantId: restaurantId,
-                        imageBase64: base64Data,
-                        isPrimary: true
-                    })
-                });
-
-                const data = await res.json();
-                if (!res.ok || !data.success) {
-                    throw new Error(data.message || 'ไม่สามารถอัปโหลดรูปภาพได้');
-                }
-
-                // Update local memory state in state.restaurants
-                if (typeof state !== 'undefined' && Array.isArray(state.restaurants)) {
-                    const r = state.restaurants.find(x => String(x.id) === String(restaurantId));
-                    if (r) {
-                        r.image = data.url;
-                        if (!Array.isArray(r.images)) r.images = [];
-                        r.images = [data.url, ...r.images.filter(x => x !== data.url)];
-                    }
-                }
-
-                // Live-update on-screen Swipe Card
-                const card = document.querySelector(`.swipe-card[data-id="${restaurantId}"]`);
-                if (card) {
-                    card._images = data.images || [data.url];
-                    card._currentImgIndex = 0;
-
-                    const imgEl = card.querySelector('.card-image');
-                    if (imgEl) imgEl.src = data.url;
-
-                    const watermark = card.querySelector('.restaurant-watermark-overlay');
-                    if (watermark) watermark.style.display = 'none';
-
-                    const mockupBadge = card.querySelector('.card-mockup-badge');
-                    if (mockupBadge) {
-                        mockupBadge.classList.add('is-user-uploaded');
-                        mockupBadge.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> รูปถ่ายจริง';
-                    }
-
-                    const photoBadge = card.querySelector('.photo-type-badge');
-                    if (photoBadge) {
-                        photoBadge.className = 'photo-type-badge real-badge';
-                        photoBadge.innerHTML = '<i class="fa-solid fa-circle-check"></i> มีรูปจริงแล้ว';
-                    }
-
-                    const galleryStrip = card.querySelector('.drawer-photo-strip');
-                    if (galleryStrip && Array.isArray(data.images)) {
-                        galleryStrip.innerHTML = data.images.map((imgUrl, idx) => `
-                            <div class="drawer-thumb-wrap">
-                                <img src="${imgUrl}" class="drawer-thumb" alt="มุม ${idx + 1}" onclick="jumpCardPhoto('${restaurantId}', ${idx})">
-                            </div>
-                        `).join('');
-                    }
-                }
-
-                // Live-update Result / Winner Card if currently visible
-                const matchedCard = document.getElementById('matched-restaurant-card');
-                if (matchedCard) {
-                    const matchedImg = matchedCard.querySelector('.matched-image');
-                    if (matchedImg) matchedImg.src = data.url;
-                    const watermark = matchedCard.querySelector('.restaurant-watermark-overlay');
-                    if (watermark) watermark.style.display = 'none';
-                    const mockupBadge = matchedCard.querySelector('.card-mockup-badge');
-                    if (mockupBadge) {
-                        mockupBadge.classList.add('is-user-uploaded');
-                        mockupBadge.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> รูปถ่ายจริง';
-                    }
-                }
-
-                if (typeof showToast === 'function') {
-                    showToast('อัปโหลดรูปภาพสำเร็จแล้ว! 🎉', 'success');
-                }
-            } catch (err) {
-                console.error('Failed to upload image:', err);
-                if (typeof showToast === 'function') {
-                    showToast('เกิดข้อผิดพลาด: ' + (err.message || 'ไม่สามารถอัปโหลดได้'), 'error');
-                }
-            } finally {
-                input.value = '';
-            }
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initPhotoUploadListener);
-    } else {
-        initPhotoUploadListener();
-    }
-})();
 
 
 function executeSwipeAction(card, direction, dX = 150, dY = 0) {

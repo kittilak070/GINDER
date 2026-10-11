@@ -1607,8 +1607,13 @@ function syncLocalMockRestaurant(action, id, data) {
     }
 }
 
-// --- RESTAURANT IMAGE UPLOAD (FROM USER MACHINE / MOBILE) ---
+// --- RESTAURANT IMAGE UPLOAD (ADMIN CMS ONLY / สำหรับระบบหลังบ้านเท่านั้น) ---
 app.post('/api/upload-restaurant-image', async (req, res) => {
+    // Restrict to Admin role in production
+    if (process.env.NODE_ENV === 'production' && await getUserRole(req) !== 'admin') {
+        return res.status(403).json({ success: false, message: "สิทธิ์ไม่เพียงพอ (สำหรับผู้ดูแลระบบในระบบหลังบ้านเท่านั้น)" });
+    }
+
     try {
         const { restaurantId, imageBase64, isPrimary, slotIndex } = req.body;
         if (!imageBase64 || typeof imageBase64 !== 'string') {
