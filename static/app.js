@@ -3005,30 +3005,28 @@ function setupEventListeners() {
     const celebrationProceedBtn = document.getElementById('btn-celebration-proceed');
     const closeCelebrationBtn = document.getElementById('btn-close-celebration-popup');
 
-    const handleProceedToResult = (e) => {
-        if (e && typeof e.stopPropagation === 'function') {
-            e.stopPropagation();
+    const handleDismissPopup = (e) => {
+        if (e && typeof e.preventDefault === 'function' && e.cancelable) {
+            e.preventDefault();
         }
-        dismissCelebrationPopup();
+        if (typeof dismissCelebrationPopup === 'function') {
+            dismissCelebrationPopup();
+        }
     };
 
     if (celebrationProceedBtn) {
-        celebrationProceedBtn.addEventListener('click', handleProceedToResult);
-        celebrationProceedBtn.addEventListener('touchend', handleProceedToResult, { passive: true });
+        celebrationProceedBtn.addEventListener('click', handleDismissPopup);
+        celebrationProceedBtn.addEventListener('touchend', handleDismissPopup);
     }
 
     if (closeCelebrationBtn) {
-        closeCelebrationBtn.addEventListener('click', handleProceedToResult);
-        closeCelebrationBtn.addEventListener('touchend', handleProceedToResult, { passive: true });
+        closeCelebrationBtn.addEventListener('click', handleDismissPopup);
+        closeCelebrationBtn.addEventListener('touchend', handleDismissPopup);
     }
 
     if (celebrationPopup) {
-        celebrationPopup.addEventListener('click', () => {
-            dismissCelebrationPopup();
-        });
-        celebrationPopup.addEventListener('touchend', () => {
-            dismissCelebrationPopup();
-        }, { passive: true });
+        celebrationPopup.addEventListener('click', handleDismissPopup);
+        celebrationPopup.addEventListener('touchend', handleDismissPopup);
     }
 
     // Quick Guest / Return to Main App
@@ -3911,30 +3909,35 @@ function triggerMatchCelebrationPopup(options = {}) {
 
 function dismissCelebrationPopup() {
     const popup = document.getElementById('result-celebration-popup');
-    if (!popup) return;
-
     if (celebrationPopupTimer) {
         clearTimeout(celebrationPopupTimer);
         celebrationPopupTimer = null;
     }
+    if (!popup) return;
 
     // Immediate fail-safe dismissal for mobile WebKit & all browsers
-    popup.style.display = 'none';
     popup.classList.remove('active', 'fade-out');
     popup.classList.add('hidden');
+    popup.style.display = 'none';
+    popup.style.pointerEvents = 'none';
+    popup.style.visibility = 'hidden';
 
-    // Smoothly reveal matched restaurant card
-    setTimeout(() => {
-        const cardEl = document.getElementById('matched-restaurant-card');
-        if (cardEl) {
-            try {
-                cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } catch (e) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+    // Instant viewport alignment - DO NOT use smooth scroll on mobile touch dismissal to prevent WebKit thread freeze
+    try {
+        window.scrollTo(0, 0);
+        const appContent = document.querySelector('.app-content');
+        if (appContent) {
+            appContent.scrollTop = 0;
         }
-    }, 50);
+        const cardEl = document.getElementById('matched-restaurant-card');
+        if (cardEl && typeof cardEl.scrollIntoView === 'function') {
+            cardEl.scrollIntoView({ block: 'start' });
+        }
+    } catch (e) {
+        window.scrollTo(0, 0);
+    }
 }
+window.dismissCelebrationPopup = dismissCelebrationPopup;
 
 // Render Match / Solo Result Screen
 function renderResultScreen(r, options = {}) {
