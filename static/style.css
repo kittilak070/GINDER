@@ -1881,9 +1881,8 @@ body {
 .card-image-wrapper {
     position: relative;
     width: 100%;
-    flex: 1 1 auto;
-    min-height: 0;
-    height: auto;
+    height: 60%;
+    flex: 0 0 60%;
     background-color: #120F1D;
     overflow: hidden;
 }
@@ -2242,16 +2241,20 @@ body {
 }
 
 .card-details {
-    padding: clamp(0.75rem, 2vh, 1rem) clamp(0.85rem, 2.5vw, 1.15rem);
-    flex: 1;
+    padding: clamp(0.55rem, 1.4vh, 0.85rem) clamp(0.75rem, 2.5vw, 1.1rem);
+    height: 40%;
+    flex: 0 0 40%;
     display: flex;
     flex-direction: column;
     background: #181326;
     background: linear-gradient(180deg, #1e1140 0%, #130a2a 100%);
     position: relative;
     justify-content: flex-start;
-    gap: 0.35rem;
+    gap: 0.3rem;
     min-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 5;
 }
 
 .card-title-row {
@@ -6219,16 +6222,22 @@ body:has(#view-swipe.active) .swipe-card,
 body.in-swipe-game .card-image-wrapper,
 body:has(#view-swipe.active) .card-image-wrapper,
 #view-swipe.active .card-image-wrapper {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    height: auto !important;
+    height: 60% !important;
+    flex: 0 0 60% !important;
+    overflow: hidden !important;
 }
 
 body.in-swipe-game .card-details,
 body:has(#view-swipe.active) .card-details,
 #view-swipe.active .card-details {
-    flex-shrink: 0 !important;
-    padding: clamp(0.42rem, 1vh, 0.68rem) 0.9rem clamp(0.45rem, 1.1vh, 0.72rem) !important;
+    height: 40% !important;
+    flex: 0 0 40% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: clamp(0.5rem, 1.3vh, 0.85rem) 0.95rem clamp(0.45rem, 1.1vh, 0.75rem) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    z-index: 5 !important;
 }
 
 /* Controls pinned flush to bottom with safe-area support - No floating void */
