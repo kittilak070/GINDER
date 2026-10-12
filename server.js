@@ -10,6 +10,7 @@ const crypto = require('crypto');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const os = require('os');
+const compression = require('compression');
 
 function getLocalNetworkIp() {
     const nets = os.networkInterfaces();
@@ -24,6 +25,7 @@ function getLocalNetworkIp() {
 }
 
 const app = express();
+app.use(compression());
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
