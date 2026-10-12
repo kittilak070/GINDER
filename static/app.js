@@ -3985,19 +3985,6 @@ function dismissCelebrationPopup() {
     }
     if (!popup) return;
 
-    // Guaranteed instant activation of view-result before closing overlay
-    Object.keys(views).forEach(key => {
-        if (!views[key]) return;
-        if (key === 'result') {
-            views[key].classList.add('active');
-            views[key].style.display = 'flex';
-        } else {
-            views[key].classList.remove('active');
-            views[key].style.display = 'none';
-        }
-    });
-    document.body.classList.add('view-result-active');
-
     // Quick and smooth dismissal of celebration overlay
     popup.classList.remove('active');
     popup.classList.add('fade-out');
@@ -4009,15 +3996,18 @@ function dismissCelebrationPopup() {
         popup.style.visibility = 'hidden';
     }, 150);
 
-    // Instant viewport alignment to top
-    try {
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-        const appContent = document.querySelector('.app-content');
-        if (appContent) {
-            appContent.scrollTop = 0;
+    // Instant viewport alignment to top if currently on result view
+    const resultView = document.getElementById('view-result');
+    if (resultView && resultView.classList.contains('active')) {
+        try {
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            const appContent = document.querySelector('.app-content');
+            if (appContent) {
+                appContent.scrollTop = 0;
+            }
+        } catch (e) {
+            window.scrollTo(0, 0);
         }
-    } catch (e) {
-        window.scrollTo(0, 0);
     }
 }
 window.dismissCelebrationPopup = dismissCelebrationPopup;
