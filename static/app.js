@@ -1166,13 +1166,21 @@ function showView(viewName) {
         }
     }
 
-    // Hide floating feedback button during card swiping, restore when round ends or on other views
+    // Hide floating feedback and PDPA buttons during card swiping, restore when round ends or on other views
     const btnFloatingFeedback = document.getElementById('btn-floating-feedback');
     if (btnFloatingFeedback) {
         if (viewName === 'swipe') {
             btnFloatingFeedback.style.display = 'none';
         } else {
             btnFloatingFeedback.style.display = '';
+        }
+    }
+    const btnFloatingPdpa = document.getElementById('btn-floating-pdpa');
+    if (btnFloatingPdpa) {
+        if (viewName === 'swipe') {
+            btnFloatingPdpa.style.display = 'none';
+        } else {
+            btnFloatingPdpa.style.display = '';
         }
     }
 
@@ -2994,20 +3002,57 @@ function setupEventListeners() {
 
     // Result Celebration Popup (Decided / Matched / Solo)
     const celebrationPopup = document.getElementById('result-celebration-popup');
+    const celebrationProceedBtn = document.getElementById('btn-celebration-proceed');
+    const celebrationMapBtn = document.getElementById('btn-celebration-map');
+    const closeCelebrationBtn = document.getElementById('btn-close-celebration-popup');
+
+    const handleProceedToResult = (e) => {
+        if (e) {
+            e.stopPropagation();
+            if (e.cancelable && e.type === 'touchend') e.preventDefault();
+        }
+        dismissCelebrationPopup();
+        setTimeout(() => {
+            const cardEl = document.getElementById('matched-restaurant-card');
+            if (cardEl) {
+                cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 120);
+    };
+
+    if (celebrationProceedBtn) {
+        celebrationProceedBtn.addEventListener('click', handleProceedToResult);
+        celebrationProceedBtn.addEventListener('touchend', handleProceedToResult, { passive: false });
+    }
+
+    if (celebrationMapBtn) {
+        const handleMapTap = (e) => {
+            if (e) e.stopPropagation();
+            // Allow default link opening while dismissing modal
+            dismissCelebrationPopup();
+        };
+        celebrationMapBtn.addEventListener('click', handleMapTap);
+        celebrationMapBtn.addEventListener('touchend', handleMapTap);
+    }
+
     if (celebrationPopup) {
         const dismissAction = (e) => {
-            if (e && e.type === 'touchend') e.preventDefault();
+            // Do not dismiss or cancel events if touching interactive buttons inside the card
+            if (e && e.target && e.target.closest('#btn-celebration-proceed, #btn-celebration-map, #btn-close-celebration-popup, a, button')) {
+                return;
+            }
+            if (e && e.cancelable && e.type === 'touchend') e.preventDefault();
             dismissCelebrationPopup();
         };
         celebrationPopup.addEventListener('click', dismissAction);
         celebrationPopup.addEventListener('touchend', dismissAction, { passive: false });
     }
-    const closeCelebrationBtn = document.getElementById('btn-close-celebration-popup');
+
     if (closeCelebrationBtn) {
         const closeAction = (e) => {
             if (e) {
                 e.stopPropagation();
-                if (e.type === 'touchend') e.preventDefault();
+                if (e.cancelable && e.type === 'touchend') e.preventDefault();
             }
             dismissCelebrationPopup();
         };
@@ -4044,14 +4089,25 @@ function renderResultScreen(r, options = {}) {
 
         // Update Maps URL
         const mapsBtn = document.getElementById('btn-open-map');
+        const celebMapBtn = document.getElementById('btn-celebration-map');
+        let destinationMapUrl = '#';
+
         if (r.mapsUrl || r.googleMapsUri || r.google_maps_url) {
-            mapsBtn.href = r.mapsUrl || r.googleMapsUri || r.google_maps_url;
+            destinationMapUrl = r.mapsUrl || r.googleMapsUri || r.google_maps_url;
         } else if (r.googlePlaceId || r.google_place_id) {
-            mapsBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name)}&query_place_id=${r.googlePlaceId || r.google_place_id}`;
+            destinationMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name)}&query_place_id=${r.googlePlaceId || r.google_place_id}`;
         } else {
-            mapsBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' ' + (r.address || 'สงขลา'))}`;
+            destinationMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' ' + (r.address || 'สงขลา'))}`;
         }
-        mapsBtn.classList.remove('hidden');
+
+        if (mapsBtn) {
+            mapsBtn.href = destinationMapUrl;
+            mapsBtn.classList.remove('hidden');
+        }
+        if (celebMapBtn) {
+            celebMapBtn.href = destinationMapUrl;
+            celebMapBtn.style.display = 'inline-flex';
+        }
     } else {
         cardContainer.innerHTML = `
             <div class="matched-details" style="text-align: center; padding: 3rem 1rem;">
@@ -4061,6 +4117,8 @@ function renderResultScreen(r, options = {}) {
             </div>
         `;
         document.getElementById('btn-open-map').classList.add('hidden');
+        const celebMapBtn = document.getElementById('btn-celebration-map');
+        if (celebMapBtn) celebMapBtn.style.display = 'none';
     }
 }
 
@@ -4256,9 +4314,9 @@ function renderDeck() {
         card._images = images;
         card._currentImgIndex = 0;
 
-        // Preload next images in background for instant responsiveness
-        if (images.length > 1) {
-            images.forEach(imgUrl => {
+        // Preload next images in background for instant responsiveness (top cards only to save mobile memory)
+        if (images.length > 1 && i >= state.restaurants.length - 2) {
+            images.slice(1).forEach(imgUrl => {
                 const p = new Image();
                 p.src = imgUrl;
             });
@@ -4303,7 +4361,7 @@ function renderDeck() {
         card.innerHTML = `
             <div class="card-image-wrapper">
                 ${storyBarsHtml}
-                <img src="${escapeHtml(images[0] || '')}" class="card-image" alt="${escapeHtml(r.name || '')}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
+                <img src="${escapeHtml(images[0] || '')}" class="card-image" alt="${escapeHtml(r.name || '')}" decoding="async" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop';">
                 <div class="restaurant-watermark-overlay" aria-hidden="true" style="${isUserUploaded ? 'display:none;' : ''}">
                     <span class="watermark-text">ภาพนี้เป็นเพียงภาพจำลองเว็บ</span>
                 </div>
@@ -4462,22 +4520,24 @@ function setupCardGestures(card) {
             // Dragging Right -> Like: scale up like button with glow, dim dislike button
             const progress = Math.min((deltaX - 15) / 105, 1);
             likeBtn.style.transform = `scale(${1 + progress * 0.28})`;
-            likeBtn.classList.add('swipe-hint-active');
-            likeBtn.classList.remove('swipe-hint-dimmed');
-
             dislikeBtn.style.transform = `scale(${1 - progress * 0.12})`;
-            dislikeBtn.classList.remove('swipe-hint-active');
-            dislikeBtn.classList.add('swipe-hint-dimmed');
+            if (!likeBtn.classList.contains('swipe-hint-active')) {
+                likeBtn.classList.add('swipe-hint-active');
+                likeBtn.classList.remove('swipe-hint-dimmed');
+                dislikeBtn.classList.remove('swipe-hint-active');
+                dislikeBtn.classList.add('swipe-hint-dimmed');
+            }
         } else if (deltaX < -15) {
             // Dragging Left -> Dislike: scale up dislike button with glow, dim like button
             const progress = Math.min((-deltaX - 15) / 105, 1);
             dislikeBtn.style.transform = `scale(${1 + progress * 0.28})`;
-            dislikeBtn.classList.add('swipe-hint-active');
-            dislikeBtn.classList.remove('swipe-hint-dimmed');
-
             likeBtn.style.transform = `scale(${1 - progress * 0.12})`;
-            likeBtn.classList.remove('swipe-hint-active');
-            likeBtn.classList.add('swipe-hint-dimmed');
+            if (!dislikeBtn.classList.contains('swipe-hint-active')) {
+                dislikeBtn.classList.add('swipe-hint-active');
+                dislikeBtn.classList.remove('swipe-hint-dimmed');
+                likeBtn.classList.remove('swipe-hint-active');
+                likeBtn.classList.add('swipe-hint-dimmed');
+            }
         } else {
             resetSwipeButtonHints();
         }
@@ -4485,10 +4545,12 @@ function setupCardGestures(card) {
 
     const resetSwipeButtonHints = () => {
         if (likeBtn) {
+            likeBtn.style.transition = '';
             likeBtn.style.transform = '';
             likeBtn.classList.remove('swipe-hint-active', 'swipe-hint-dimmed');
         }
         if (dislikeBtn) {
+            dislikeBtn.style.transition = '';
             dislikeBtn.style.transform = '';
             dislikeBtn.classList.remove('swipe-hint-active', 'swipe-hint-dimmed');
         }
@@ -4554,6 +4616,8 @@ function setupCardGestures(card) {
 
         card.classList.add('dragging');
         card.style.transition = 'none';
+        if (likeBtn) likeBtn.style.transition = 'none';
+        if (dislikeBtn) dislikeBtn.style.transition = 'none';
         try {
             card.setPointerCapture(e.pointerId);
         } catch (err) {}
@@ -4760,10 +4824,12 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
     const likeBtn = document.getElementById('btn-swipe-right');
     const dislikeBtn = document.getElementById('btn-swipe-left');
     if (likeBtn) {
+        likeBtn.style.transition = '';
         likeBtn.style.transform = '';
         likeBtn.classList.remove('swipe-hint-active', 'swipe-hint-dimmed');
     }
     if (dislikeBtn) {
+        dislikeBtn.style.transition = '';
         dislikeBtn.style.transform = '';
         dislikeBtn.classList.remove('swipe-hint-active', 'swipe-hint-dimmed');
     }

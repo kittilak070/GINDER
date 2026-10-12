@@ -1768,9 +1768,8 @@ body {
     position: relative;
     width: 100%;
     min-height: 0;
-    height: clamp(380px, 62dvh, 620px);
-    max-height: calc(100dvh - 195px);
-    margin-bottom: clamp(0.5rem, 1.6vh, 1rem);
+    height: 100%;
+    margin-bottom: clamp(0.35rem, 1.2vh, 0.75rem);
     perspective: 1000px;
 }
 
@@ -1796,6 +1795,9 @@ body {
     touch-action: none;
     user-select: none;
     will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    contain: layout paint;
     cursor: grab;
     transition: opacity 0.15s ease;
 }
@@ -1879,7 +1881,9 @@ body {
 .card-image-wrapper {
     position: relative;
     width: 100%;
-    height: 60%;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto;
     background-color: #120F1D;
     overflow: hidden;
 }
@@ -2883,8 +2887,8 @@ body {
 }
 
 .btn-celebration-proceed {
+    width: 100%;
     max-width: 360px;
-    margin-top: 0.4rem;
     font-size: 1.05rem;
     font-weight: 600;
     box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4);
@@ -2892,6 +2896,38 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-celebration-map {
+    width: 100%;
+    max-width: 360px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #FFFFFF !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    touch-action: manipulation;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-celebration-map:hover,
+.btn-celebration-map:active {
+    background: rgba(255, 255, 255, 0.24);
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
 }
 
 .match-celebration-close {
@@ -4827,29 +4863,42 @@ body.view-result-active .btn-floating-feedback {
 
 
 
-/* 4. Foodie Streak & Combo HUD */
+/* 4. Foodie Streak & Combo HUD (Strict Single Line - No Wrapping) */
 .combo-streak-container {
     position: absolute;
-    top: 3.8rem;
+    top: clamp(0.6rem, 1.6vh, 1.1rem);
     left: 50%;
     transform: translateX(-50%);
     z-index: 40;
     pointer-events: none;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: auto;
+    max-width: 92%;
+    display: flex;
+    justify-content: center;
+    white-space: nowrap !important;
 }
 
 .combo-badge {
     display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap !important;
     align-items: center;
-    gap: 0.45rem;
-    background: linear-gradient(135deg, rgba(255, 94, 30, 0.9) 0%, rgba(255, 51, 102, 0.9) 100%);
+    justify-content: center;
+    gap: 0.35rem;
+    white-space: nowrap !important;
+    background: linear-gradient(135deg, rgba(255, 94, 30, 0.95) 0%, rgba(255, 51, 102, 0.95) 100%);
     color: #fff;
-    padding: 0.38rem 0.95rem;
-    border-radius: 30px;
-    font-size: 0.85rem;
+    padding: 0.22rem 0.7rem;
+    border-radius: 40px;
+    font-size: clamp(0.72rem, 2.2vw, 0.82rem);
     font-weight: 800;
-    box-shadow: 0 4px 20px rgba(255, 94, 30, 0.6), 0 0 15px rgba(255, 51, 102, 0.4);
-    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 18px rgba(255, 94, 30, 0.5), 0 0 12px rgba(255, 51, 102, 0.3);
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    line-height: 1.2;
+    user-select: none;
 }
 
 .combo-badge.animate-fire {
@@ -4857,18 +4906,39 @@ body.view-result-active .btn-floating-feedback {
 }
 
 @keyframes fire-pulse {
-    0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 94, 30, 0.5); }
-    100% { transform: scale(1.08); box-shadow: 0 6px 25px rgba(255, 51, 102, 0.8); }
+    0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 94, 30, 0.45); }
+    100% { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255, 51, 102, 0.7); }
 }
 
 .combo-fire-icon {
-    font-size: 1.15rem;
+    font-size: 0.95rem;
+    line-height: 1;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.combo-text {
+    white-space: nowrap !important;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    font-size: clamp(0.74rem, 2.2vw, 0.82rem);
+    line-height: 1;
+    display: inline-block;
+    flex-shrink: 0;
 }
 
 .combo-quote {
-    font-size: 0.75rem;
-    opacity: 0.9;
-    font-weight: 500;
+    white-space: nowrap !important;
+    font-size: clamp(0.7rem, 2vw, 0.76rem);
+    opacity: 0.95;
+    font-weight: 600;
+    line-height: 1;
+    display: inline-block;
+    padding-left: 0.35rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
 }
 
 /* 5. Live Room Reactions Floating Bar (Hidden per user request) */
@@ -6054,9 +6124,16 @@ body:has(#view-swipe.active) .app-footer,
     transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Hide floating feedback button and optimize layout during active card swipe gameplay */
+/* Hide floating feedback, PDPA shield and footer during active card swipe gameplay */
 body.in-swipe-game .btn-floating-feedback,
-body:has(#view-swipe.active) .btn-floating-feedback {
+body:has(#view-swipe.active) .btn-floating-feedback,
+#view-swipe.active ~ * .btn-floating-feedback,
+body.in-swipe-game .btn-floating-pdpa,
+body:has(#view-swipe.active) .btn-floating-pdpa,
+#view-swipe.active ~ * .btn-floating-pdpa,
+#btn-floating-pdpa.hidden-during-swipe,
+body.in-swipe-game .app-footer,
+body:has(#view-swipe.active) .app-footer {
     display: none !important;
     opacity: 0 !important;
     pointer-events: none !important;
@@ -6064,19 +6141,107 @@ body:has(#view-swipe.active) .btn-floating-feedback {
     transform: translateY(20px) scale(0.8) !important;
 }
 
-body.in-swipe-game .app-content {
-    padding-top: clamp(0.4rem, 1.2vh, 0.75rem);
-    padding-bottom: calc(clamp(0.4rem, 1.2vh, 0.75rem) + env(safe-area-inset-bottom, 0px));
-    min-height: 0;
+/* Fullscreen Mobile Swipe Layout (Clean, Adaptive for all screens, No blank bottom void) */
+body.in-swipe-game,
+body:has(#view-swipe.active) {
+    overflow: hidden !important;
+    height: 100vh;
+    height: 100dvh;
+    overscroll-behavior: none !important;
 }
 
-body.in-swipe-game #view-swipe.active {
+body.in-swipe-game .app-container,
+body:has(#view-swipe.active) .app-container {
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
     display: flex;
     flex-direction: column;
+    padding-bottom: 0 !important;
+}
+
+body.in-swipe-game .app-content,
+body:has(#view-swipe.active) .app-content {
     flex: 1 1 auto;
     min-height: 0;
     height: 100%;
-    justify-content: space-between;
+    overflow: hidden !important;
+    padding: clamp(0.2rem, 0.8vh, 0.4rem) clamp(0.5rem, 2.5vw, 0.85rem) 0 !important;
+    padding-left: calc(clamp(0.5rem, 2.5vw, 0.85rem) + env(safe-area-inset-left, 0px)) !important;
+    padding-right: calc(clamp(0.5rem, 2.5vw, 0.85rem) + env(safe-area-inset-right, 0px)) !important;
+    padding-bottom: 0 !important;
+    display: flex;
+    flex-direction: column;
+}
+
+body.in-swipe-game #view-swipe.active,
+body:has(#view-swipe.active) #view-swipe.active,
+#view-swipe.active {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    justify-content: space-between !important;
+}
+
+body.in-swipe-game .deck-container,
+body:has(#view-swipe.active) .deck-container,
+#view-swipe.active .deck-container {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin-bottom: clamp(0.2rem, 0.6vh, 0.4rem) !important;
+    position: relative;
+    width: 100%;
+}
+
+body.in-swipe-game .swipe-deck,
+body:has(#view-swipe.active) .swipe-deck,
+#view-swipe.active .swipe-deck {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+body.in-swipe-game .swipe-card,
+body:has(#view-swipe.active) .swipe-card,
+#view-swipe.active .swipe-card {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body.in-swipe-game .card-image-wrapper,
+body:has(#view-swipe.active) .card-image-wrapper,
+#view-swipe.active .card-image-wrapper {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+}
+
+body.in-swipe-game .card-details,
+body:has(#view-swipe.active) .card-details,
+#view-swipe.active .card-details {
+    flex-shrink: 0 !important;
+    padding: clamp(0.42rem, 1vh, 0.68rem) 0.9rem clamp(0.45rem, 1.1vh, 0.72rem) !important;
+}
+
+/* Controls pinned flush to bottom with safe-area support - No floating void */
+body.in-swipe-game .swipe-controls,
+body:has(#view-swipe.active) .swipe-controls,
+#view-swipe.active .swipe-controls {
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+    padding-top: 0.1rem;
+    padding-bottom: calc(clamp(0.2rem, 0.7vh, 0.45rem) + env(safe-area-inset-bottom, 8px)) !important;
+    gap: clamp(1rem, 4.5vw, 2rem) !important;
+    flex-shrink: 0 !important;
+    z-index: 10;
 }
 
 .btn-floating-feedback:hover {
@@ -6210,8 +6375,13 @@ body.in-swipe-game #view-swipe.active {
 
 @media (max-width: 480px) {
     #view-landing,
-    .app-content {
+    body:not(.in-swipe-game):not(:has(#view-swipe.active)) .app-content {
         padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    body.in-swipe-game .app-content,
+    body:has(#view-swipe.active) .app-content,
+    #view-swipe.active {
+        padding-bottom: 0 !important;
     }
     .btn-floating-feedback {
         bottom: 14px;

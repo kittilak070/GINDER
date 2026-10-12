@@ -112,6 +112,15 @@ test('JS: #btn-restart safely handles resetApplicationState and navigates to lan
     assert(jsContent.includes('clearSwipeAffordance();'), 'clearSwipeAffordance must be called cleanly');
 });
 
+// Test 11: Result Celebration Popup Mobile Touch & Proceed Navigation Handlers
+test('UX/UI: Result Celebration Popup has proceed button, map button, and mobile touch immunity', () => {
+    assert(jsContent.includes("document.getElementById('btn-celebration-proceed')"), 'Missing btn-celebration-proceed in app.js');
+    assert(jsContent.includes("document.getElementById('btn-celebration-map')"), 'Missing btn-celebration-map in app.js');
+    assert(jsContent.includes("cardEl.scrollIntoView"), 'btn-celebration-proceed must scroll smoothly to restaurant card');
+    assert(jsContent.includes("e.target.closest('#btn-celebration-proceed"), 'dismissAction must not cancel touch events on interactive buttons');
+    assert(cssContent.includes('.btn-celebration-map'), 'Missing .btn-celebration-map in style.css');
+});
+
 console.log('\n========================================');
 console.log(`  TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
 console.log('========================================\n');

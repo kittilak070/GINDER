@@ -773,10 +773,10 @@
     <!-- FULL-SCREEN IMMERSIVE CELEBRATION STAGE (DECIDED / MATCHED / SOLO) -->
     <!-- Positioned outside .app-container to guarantee 100% viewport alignment without transform traps -->
     <!-- ============================================================================== -->
-    <div id="result-celebration-popup" class="match-celebration-overlay hidden" role="dialog" aria-modal="true" aria-label="ผลลัพธ์การแมตช์" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
-        <div class="match-celebration-backdrop" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();"></div>
-        <div class="match-celebration-card" onclick="if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
-            <button type="button" id="btn-close-celebration-popup" class="match-celebration-close" aria-label="ปิด" title="ปิด" onclick="event.stopPropagation(); if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
+    <div id="result-celebration-popup" class="match-celebration-overlay hidden" role="dialog" aria-modal="true" aria-label="ผลลัพธ์การแมตช์">
+        <div class="match-celebration-backdrop"></div>
+        <div class="match-celebration-card">
+            <button type="button" id="btn-close-celebration-popup" class="match-celebration-close" aria-label="ปิด" title="ปิด">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <div class="celebration-particles" aria-hidden="true">
@@ -803,9 +803,14 @@
             <div id="celebration-restaurant-spotlight" class="celebration-restaurant-spotlight">
                 <!-- Injected by JS: Name, Rating, and Cuisine -->
             </div>
-            <button type="button" class="btn btn-primary btn-lg full-width btn-celebration-proceed" onclick="event.stopPropagation(); if(typeof dismissCelebrationPopup==='function') dismissCelebrationPopup();">
-                <span>ดูร้านอาหาร & แผนที่</span> <i class="fa-solid fa-arrow-right"></i>
-            </button>
+            <div class="celebration-action-buttons" style="width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 0.65rem; margin-top: 0.4rem; z-index: 3;">
+                <button type="button" id="btn-celebration-proceed" class="btn btn-primary btn-lg full-width btn-celebration-proceed">
+                    <span>ดูรายละเอียดร้าน & แผนที่</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <a id="btn-celebration-map" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-md full-width btn-celebration-map" style="display: none;">
+                    <i class="fa-solid fa-map-location-dot text-accent"></i> <span>เปิด Google Maps นำทางทันที</span>
+                </a>
+            </div>
             <div class="celebration-dismiss-hint">
                 <i class="fa-solid fa-hand-pointer"></i> แตะที่ใดก็ได้เพื่อดูร้านอาหาร
             </div>
