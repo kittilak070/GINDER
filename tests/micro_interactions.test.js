@@ -114,15 +114,14 @@ test('JS: #btn-restart safely handles resetApplicationState and navigates to lan
     assert(jsContent.includes('clearSwipeAffordance();'), 'clearSwipeAffordance must be called cleanly');
 });
 
-// Test 11: Result Celebration Popup Mobile Touch & Proceed Navigation Handlers
-test('UX/UI: Result Celebration Popup has proceed button, smooth card scroll, and immediate map button removed', () => {
-    assert(jsContent.includes("document.getElementById('btn-celebration-proceed')"), 'Missing btn-celebration-proceed in app.js');
-    assert(!jsContent.includes("document.getElementById('btn-celebration-map')"), 'btn-celebration-map must be removed from app.js');
-    assert(jsContent.includes("cardEl.scrollIntoView"), 'dismissCelebrationPopup must scroll smoothly to restaurant card');
-    assert(htmlContent.includes('id="btn-celebration-proceed"'), 'Missing btn-celebration-proceed in index.html');
+// Test 11: Result Celebration Popup Auto-transition in 2.5s and Proceed Button Removal
+test('UX/UI: Result Celebration Popup auto-transitions in 2.5s and manual proceed button is removed', () => {
+    assert(jsContent.includes('2500'), 'triggerMatchCelebrationPopup must auto-transition in 2.5s (2500ms)');
+    assert(!htmlContent.includes('id="btn-celebration-proceed"'), 'btn-celebration-proceed must be removed from index.html');
     assert(!htmlContent.includes('id="btn-celebration-map"'), 'btn-celebration-map must be removed from index.html');
-    assert(cssContent.includes('.btn-celebration-proceed'), 'Missing .btn-celebration-proceed in style.css');
+    assert(jsContent.includes("cardEl.scrollIntoView"), 'dismissCelebrationPopup must scroll smoothly to restaurant card');
     assert(cssContent.includes('.celebration-particles'), 'Missing .celebration-particles in style.css');
+    assert(cssContent.includes('.celebration-progress-bar'), 'Missing .celebration-progress-bar in style.css');
 });
 
 console.log('\n========================================');

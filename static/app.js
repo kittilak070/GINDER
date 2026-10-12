@@ -3005,31 +3005,20 @@ function setupEventListeners() {
 
     // Result Celebration Popup (Decided / Matched / Solo)
     const celebrationPopup = document.getElementById('result-celebration-popup');
-    const celebrationProceedBtn = document.getElementById('btn-celebration-proceed');
     const closeCelebrationBtn = document.getElementById('btn-close-celebration-popup');
 
-    const handleDismissPopup = (e) => {
-        if (e && typeof e.preventDefault === 'function' && e.cancelable) {
-            e.preventDefault();
-        }
+    const handleDismissPopup = () => {
         if (typeof dismissCelebrationPopup === 'function') {
             dismissCelebrationPopup();
         }
     };
 
-    if (celebrationProceedBtn) {
-        celebrationProceedBtn.addEventListener('click', handleDismissPopup);
-        celebrationProceedBtn.addEventListener('touchend', handleDismissPopup);
-    }
-
     if (closeCelebrationBtn) {
         closeCelebrationBtn.addEventListener('click', handleDismissPopup);
-        closeCelebrationBtn.addEventListener('touchend', handleDismissPopup);
     }
 
     if (celebrationPopup) {
         celebrationPopup.addEventListener('click', handleDismissPopup);
-        celebrationPopup.addEventListener('touchend', handleDismissPopup);
     }
 
     // Quick Guest / Return to Main App
@@ -3935,10 +3924,18 @@ function triggerMatchCelebrationPopup(options = {}) {
     void popup.offsetWidth;
     popup.classList.add('active');
 
-    // Auto-dismiss after 4.5s so user can comfortably enjoy the victory screen or tap anytime to proceed
+    // Reset progress bar animation if present
+    const progressFill = popup.querySelector('.celebration-progress-fill');
+    if (progressFill) {
+        progressFill.style.animation = 'none';
+        void progressFill.offsetWidth;
+        progressFill.style.animation = 'celebration-progress-shrink 2.5s linear forwards';
+    }
+
+    // Auto-dismiss after 2.5s directly to restaurant details & map
     celebrationPopupTimer = setTimeout(() => {
         dismissCelebrationPopup();
-    }, 4500);
+    }, 2500);
 }
 
 function dismissCelebrationPopup() {
@@ -3955,6 +3952,12 @@ function dismissCelebrationPopup() {
     popup.style.display = 'none';
     popup.style.pointerEvents = 'none';
     popup.style.visibility = 'hidden';
+
+    // Ensure result view is visible
+    const resultView = document.getElementById('view-result');
+    if (resultView && resultView.classList.contains('hidden')) {
+        resultView.classList.remove('hidden');
+    }
 
     // Instant viewport alignment - DO NOT use smooth scroll on mobile touch dismissal to prevent WebKit thread freeze
     try {
