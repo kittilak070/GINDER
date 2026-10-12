@@ -124,6 +124,17 @@ test('UX/UI: Result Celebration Popup auto-transitions in 2.5s and manual procee
     assert(cssContent.includes('.celebration-progress-bar'), 'Missing .celebration-progress-bar in style.css');
 });
 
+// Test 12: App Splash Screen & Brand Preloader
+test('UX/UI: App Splash screen preloader markup, animation, and auto-dismiss logic defined', () => {
+    assert(htmlContent.includes('id="app-splash-screen"'), 'Missing #app-splash-screen in index.html');
+    assert(htmlContent.includes('splash-flame-badge'), 'Missing splash-flame-badge in index.html');
+    assert(cssContent.includes('.app-splash-screen'), 'Missing .app-splash-screen in style.css');
+    assert(cssContent.includes('@keyframes splash-flame-pulse'), 'Missing splash-flame-pulse animation in style.css');
+    assert(cssContent.includes('.splash-progress-bar'), 'Missing .splash-progress-bar in style.css');
+    assert(jsContent.includes('function dismissSplashScreen()'), 'Missing dismissSplashScreen in app.js');
+    assert(jsContent.includes('setupSplashScreen();'), 'setupSplashScreen should be called in DOMContentLoaded');
+});
+
 console.log('\n========================================');
 console.log(`  TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
 console.log('========================================\n');

@@ -28,7 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
     <!-- Dynamic Theme Styling -->
-    <link rel="stylesheet" href="/static/style.css?v=2.9.2">
+    <link rel="stylesheet" href="/static/style.css?v=2.9.3">
 
     <!-- Immediate Theme Initialization to Prevent Flash of Dark/Light -->
     <script>
@@ -40,6 +40,44 @@
 </head>
 
 <body>
+    <!-- ============================================================================== -->
+    <!-- APP SPLASH / BRAND PRELOADER SCREEN -->
+    <!-- ============================================================================== -->
+    <div id="app-splash-screen" class="app-splash-screen" role="status" aria-live="polite" aria-label="กำลังโหลด GINDER" onclick="if(window.dismissSplashScreen) window.dismissSplashScreen();">
+        <div class="splash-content">
+            <div class="splash-badge-wrapper">
+                <div class="splash-flame-badge">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <div class="splash-halo-ring"></div>
+            </div>
+            <h1 class="splash-logo-title">GINDER</h1>
+            <p class="splash-tagline">ปัดสนุก เลือกร้านอาหารง่ายๆ ในสงขลา</p>
+            <div class="splash-loading-box">
+                <div class="splash-progress-track">
+                    <div class="splash-progress-bar"></div>
+                </div>
+                <div class="splash-status-text">
+                    <i class="fa-solid fa-spinner fa-spin"></i> กำลังเตรียมความอร่อย...
+                </div>
+            </div>
+        </div>
+        <div class="splash-ambient-glow" aria-hidden="true"></div>
+    </div>
+    <script>
+        // Emergency fail-safe fallback: Dismiss splash after 2.0s max even if network lags
+        window.__splashFallbackTimer = setTimeout(function() {
+            var splash = document.getElementById('app-splash-screen');
+            if (splash && !splash.classList.contains('hidden')) {
+                splash.classList.add('fade-out');
+                setTimeout(function() {
+                    splash.classList.add('hidden');
+                    splash.style.display = 'none';
+                }, 380);
+            }
+        }, 2000);
+    </script>
+
     <!-- Background Elements -->
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
@@ -1676,7 +1714,7 @@
         window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlja3NkbW56Y2Rzd2lzY3VzcmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMTE3ODEsImV4cCI6MjA5OTU4Nzc4MX0.RjNqKuh2Tr0ugcXyCTtnluBRP-g7jefAVCO9kqtXXPg";
     </script>
     <!-- App entry logic -->
-    <script src="/static/app.js?v=2.9.2"></script>
+    <script src="/static/app.js?v=2.9.3"></script>
 
     <!-- In-App Feedback Widget Script -->
     <script>

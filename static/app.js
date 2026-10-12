@@ -1007,8 +1007,47 @@ window.openOAuthSetupModal = openOAuthSetupModal;
 window.closeSocialAuthModal = closeSocialAuthModal;
 window.handleSocialLogin = handleSocialLogin;
 
+// --- APP SPLASH / BRAND PRELOADER MANAGER ---
+let splashDismissed = false;
+function dismissSplashScreen() {
+    if (splashDismissed) return;
+    splashDismissed = true;
+    if (window.__splashFallbackTimer) {
+        clearTimeout(window.__splashFallbackTimer);
+        window.__splashFallbackTimer = null;
+    }
+    const splash = document.getElementById('app-splash-screen');
+    if (!splash) return;
+
+    splash.classList.add('fade-out');
+    setTimeout(() => {
+        splash.classList.add('hidden');
+        splash.style.display = 'none';
+        splash.style.pointerEvents = 'none';
+    }, 380);
+}
+window.dismissSplashScreen = dismissSplashScreen;
+
+function setupSplashScreen() {
+    const splash = document.getElementById('app-splash-screen');
+    if (!splash) return;
+
+    // Allow clicking or tapping anywhere on splash to dismiss immediately
+    splash.addEventListener('click', () => {
+        dismissSplashScreen();
+    });
+
+    // Auto-dismiss smoothly after 1100ms
+    setTimeout(() => {
+        dismissSplashScreen();
+    }, 1100);
+}
+
 // --- INITIALIZE & ROUTING ---
 window.addEventListener('DOMContentLoaded', async () => {
+    // 0. Initialize App Splash / Brand Preloader
+    setupSplashScreen();
+
     // 1. Read Room ID & autoJoin from URL query params FIRST to prevent modals or race conditions
     const urlParams = new URLSearchParams(window.location.search);
     const roomIdParam = urlParams.get('roomId');
