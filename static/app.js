@@ -2656,9 +2656,12 @@ function setupEventListeners() {
         });
 
         // 3. Distance
+        const activeGroupDistPill = document.querySelector('#group-dist-pills .solo-dist-pill.active');
         const distSliderEl = document.getElementById('pref-distance');
         let selectedMaxDistance = null;
-        if (distSliderEl && parseFloat(distSliderEl.value) < 20.0) {
+        if (activeGroupDistPill && activeGroupDistPill.dataset.dist !== '') {
+            selectedMaxDistance = parseFloat(activeGroupDistPill.dataset.dist);
+        } else if (distSliderEl && parseFloat(distSliderEl.value) < 20.0) {
             selectedMaxDistance = parseFloat(distSliderEl.value);
         }
 
@@ -3225,9 +3228,12 @@ async function startSoloSwipe() {
     });
 
     // Read distance filter for solo mode
+    const activeSoloDistPill = document.querySelector('#solo-dist-pills .solo-dist-pill.active');
     const soloDistSliderEl = document.getElementById('solo-pref-distance');
     let selectedMaxDistance = null;
-    if (soloDistSliderEl && parseFloat(soloDistSliderEl.value) < 20.0) {
+    if (activeSoloDistPill && activeSoloDistPill.dataset.dist !== '') {
+        selectedMaxDistance = parseFloat(activeSoloDistPill.dataset.dist);
+    } else if (soloDistSliderEl && parseFloat(soloDistSliderEl.value) < 20.0) {
         selectedMaxDistance = parseFloat(soloDistSliderEl.value);
     }
 
@@ -3286,7 +3292,19 @@ async function startSoloSwipe() {
             return;
         }
 
-        state.restaurants = data.restaurants;
+        let restaurants = data.restaurants;
+        // Client-side strict distance enforcement
+        if (selectedMaxDistance !== null && Array.isArray(restaurants)) {
+            const strictlyWithin = restaurants.filter(r => {
+                const d = parseFloat(r.distance);
+                return !isNaN(d) && d <= selectedMaxDistance;
+            });
+            if (strictlyWithin.length > 0) {
+                restaurants = strictlyWithin;
+            }
+        }
+
+        state.restaurants = restaurants;
         state.currentIndex = 0;
         state.votes = {};
         state.soloLiked = [];
@@ -3568,9 +3586,12 @@ function saveEditRoomSettings() {
         if (c.dataset.type) selectedFood.push(c.dataset.type);
     });
 
+    const activeEditDistPill = document.querySelector('#edit-room-dist-pills .solo-dist-pill.active');
     const distSlider = document.getElementById('edit-room-distance-slider');
     let maxDist = null;
-    if (distSlider && parseFloat(distSlider.value) < 20.0) {
+    if (activeEditDistPill && activeEditDistPill.dataset.dist !== '') {
+        maxDist = parseFloat(activeEditDistPill.dataset.dist);
+    } else if (distSlider && parseFloat(distSlider.value) < 20.0) {
         maxDist = parseFloat(distSlider.value);
     }
 
@@ -3824,7 +3845,20 @@ socket.on('start_game_error', (data) => {
 });
 
 socket.on('game_started', (data) => {
-    state.restaurants = data.restaurants;
+    let restaurants = data.restaurants || [];
+    if (state.preferences && state.preferences.maxDistance && Array.isArray(restaurants)) {
+        const maxD = parseFloat(state.preferences.maxDistance);
+        if (!isNaN(maxD) && maxD < 20.0) {
+            const strictlyWithin = restaurants.filter(r => {
+                const d = parseFloat(r.distance);
+                return !isNaN(d) && d <= maxD;
+            });
+            if (strictlyWithin.length > 0) {
+                restaurants = strictlyWithin;
+            }
+        }
+    }
+    state.restaurants = restaurants;
     state.currentIndex = 0;
     state.votes = {};
     resetComboStreak();

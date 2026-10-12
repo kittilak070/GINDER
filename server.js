@@ -838,7 +838,9 @@ function filterRestaurantsByCriteria(allR, pref = {}, allergiesList = [], coords
     const allAllergies = new Set(allergiesList || []);
     const minPrice = pref.minPrice !== undefined ? pref.minPrice : 0;
     const maxPrice = pref.maxPrice !== undefined ? pref.maxPrice : 9999;
-    const maxDistance = pref.maxDistance;
+    const maxDistance = (pref.maxDistance !== undefined && pref.maxDistance !== null && !isNaN(parseFloat(pref.maxDistance)) && parseFloat(pref.maxDistance) < 20.0)
+        ? parseFloat(pref.maxDistance)
+        : null;
     const foodTypes = pref.foodTypes || [];
 
     let list = [...allR];
@@ -861,7 +863,7 @@ function filterRestaurantsByCriteria(allR, pref = {}, allergiesList = [], coords
         const userLat = parseFloat(coords.latitude);
         const userLng = parseFloat(coords.longitude);
         list = list.map(r => {
-            let dist = r.distance;
+            let dist = parseFloat(r.distance) || 1.0;
             if (r.latitude !== null && r.longitude !== null && !isNaN(parseFloat(r.latitude)) && !isNaN(parseFloat(r.longitude))) {
                 dist = Math.round(calculateHaversine(userLat, userLng, parseFloat(r.latitude), parseFloat(r.longitude)) * 10) / 10;
             }
@@ -871,56 +873,95 @@ function filterRestaurantsByCriteria(allR, pref = {}, allergiesList = [], coords
             };
         });
         console.log(`[GPS Distance] Calculated real distances from coordinates (${userLat.toFixed(4)}, ${userLng.toFixed(4)})`);
+    } else {
+        list = list.map(r => ({
+            ...r,
+            distance: parseFloat(r.distance) || 1.0
+        }));
     }
 
-    // 1. First pass: Apply user's selected filters
+    const isWithinDistance = (r) => {
+        if (maxDistance === null) return true;
+        const d = parseFloat(r.distance);
+        return !isNaN(d) && d <= maxDistance;
+    };
+
+    const isAllergenSafe = (r) => {
+        return !r.allergens || !r.allergens.some(a => allAllergies.has(a));
+    };
+
+    // 1. First pass: Apply all selected criteria strictly
     let filtered = list.filter(r => {
         if (foodTypes.length > 0 && !matchFoodTypes(r.type, foodTypes)) return false;
         if (r.avgPrice < minPrice || r.avgPrice > maxPrice) return false;
-        if (maxDistance && r.distance > maxDistance) return false;
-        if (r.allergens && r.allergens.some(a => allAllergies.has(a))) return false;
+        if (!isWithinDistance(r)) return false;
+        if (!isAllergenSafe(r)) return false;
         return true;
     });
 
-    // 2. Second pass: If too few (< 6), relax distance filter
-    if (filtered.length < 6) {
-        console.log(`[Smart Filter] Only ${filtered.length} matches found. Relaxing distance filter...`);
-        const relaxedDistance = list.filter(r => {
-            if (foodTypes.length > 0 && !matchFoodTypes(r.type, foodTypes)) return false;
-            if (r.avgPrice < minPrice || r.avgPrice > maxPrice) return false;
-            if (r.allergens && r.allergens.some(a => allAllergies.has(a))) return false;
-            return true;
-        });
-        relaxedDistance.forEach(item => {
-            if (!filtered.some(f => f.id === item.id)) filtered.push(item);
-        });
-    }
+    // 2. Strict Distance Preservation: If user specified maxDistance (e.g. <= 1.0km),
+    // distance MUST NEVER be relaxed to pull in restaurants beyond maxDistance (such as 4km).
+    if (maxDistance !== null) {
+        // If too few (< 6), expand food types while STRICTLY maintaining distance <= maxDistance
+        if (filtered.length < 6) {
+            console.log(`[Smart Filter] Only ${filtered.length} matches found within ${maxDistance}km. Expanding food types while strictly enforcing distance <= ${maxDistance}km...`);
+            const moreNearby = list.filter(r => {
+                if (r.avgPrice < minPrice || r.avgPrice > maxPrice) return false;
+                if (!isWithinDistance(r)) return false;
+                if (!isAllergenSafe(r)) return false;
+                return true;
+            });
+            moreNearby.forEach(item => {
+                if (!filtered.some(f => f.id === item.id)) filtered.push(item);
+            });
+        }
 
-    // 3. Third pass: If still too few (< 6), relax price range slightly
-    if (filtered.length < 6) {
-        console.log(`[Smart Filter] Still ${filtered.length} matches found. Relaxing price filter...`);
-        const relaxedPrice = list.filter(r => {
-            if (foodTypes.length > 0 && !matchFoodTypes(r.type, foodTypes)) return false;
-            if (r.allergens && r.allergens.some(a => allAllergies.has(a))) return false;
-            return true;
-        });
-        relaxedPrice.forEach(item => {
-            if (!filtered.some(f => f.id === item.id)) filtered.push(item);
-        });
-    }
+        // If still too few (< 6), expand price range while STRICTLY maintaining distance <= maxDistance
+        if (filtered.length < 6) {
+            console.log(`[Smart Filter] Expanding price range while strictly enforcing distance <= ${maxDistance}km...`);
+            const moreNearbyAnyPrice = list.filter(r => {
+                if (!isWithinDistance(r)) return false;
+                if (!isAllergenSafe(r)) return false;
+                return true;
+            });
+            moreNearbyAnyPrice.forEach(item => {
+                if (!filtered.some(f => f.id === item.id)) filtered.push(item);
+            });
+        }
 
-    // 4. Fourth pass: Safe from allergies
-    if (filtered.length < 6) {
-        console.log(`[Smart Filter] Expanding to allergen-safe restaurants...`);
-        const safeR = list.filter(r => !r.allergens || !r.allergens.some(a => allAllergies.has(a)));
-        safeR.forEach(item => {
-            if (!filtered.some(f => f.id === item.id)) filtered.push(item);
-        });
-    }
+        // If literally zero restaurants are within maxDistance in the whole system,
+        // pick closest available safe restaurants sorted strictly by distance ascending
+        if (filtered.length === 0) {
+            console.log(`[Smart Filter] 0 restaurants found within ${maxDistance}km. Selecting closest available restaurants by distance...`);
+            const safeR = list.filter(isAllergenSafe);
+            safeR.sort((a, b) => (parseFloat(a.distance) || 99) - (parseFloat(b.distance) || 99));
+            filtered = safeR.slice(0, 10);
+        }
+    } else {
+        // No distance restriction: standard relaxation passes
+        if (filtered.length < 6) {
+            console.log(`[Smart Filter] Only ${filtered.length} matches found. Relaxing food types...`);
+            const relaxedFood = list.filter(r => {
+                if (r.avgPrice < minPrice || r.avgPrice > maxPrice) return false;
+                if (!isAllergenSafe(r)) return false;
+                return true;
+            });
+            relaxedFood.forEach(item => {
+                if (!filtered.some(f => f.id === item.id)) filtered.push(item);
+            });
+        }
 
-    // 5. Ultimate fallback
-    if (filtered.length === 0) {
-        filtered = [...list];
+        if (filtered.length < 6) {
+            console.log(`[Smart Filter] Relaxing price filter...`);
+            const relaxedPrice = list.filter(isAllergenSafe);
+            relaxedPrice.forEach(item => {
+                if (!filtered.some(f => f.id === item.id)) filtered.push(item);
+            });
+        }
+
+        if (filtered.length === 0) {
+            filtered = [...list];
+        }
     }
 
     return filtered;

@@ -310,6 +310,18 @@ async function runSuite() {
         assert.strictEqual(res.data.success, false);
     });
 
+    // 19. Strict Distance Enforcement
+    await runTest('POST /api/solo/deck strictly respects maxDistance <= 1.0km without relaxing beyond boundary', async () => {
+        const payload = { preferences: { maxDistance: 1.0 } };
+        const res = await makeRequest('/api/solo/deck', { method: 'POST' }, payload);
+        assert.strictEqual(res.statusCode, 200, `Expected 200, got ${res.statusCode}`);
+        assert.strictEqual(res.data.success, true);
+        assert(Array.isArray(res.data.restaurants), 'Expected restaurants array');
+        assert(res.data.restaurants.length > 0, 'Expected at least 1 restaurant within 1.0km');
+        const violations = res.data.restaurants.filter(r => parseFloat(r.distance) > 1.0);
+        assert.strictEqual(violations.length, 0, `Found ${violations.length} restaurants with distance > 1.0km: ${violations.map(r => r.name + ' (' + r.distance + 'km)').join(', ')}`);
+    });
+
     console.log(`\n========================================`);
     console.log(`  TEST RESULTS: ${passedCount} PASSED, ${failedCount} FAILED`);
     console.log(`========================================\n`);
