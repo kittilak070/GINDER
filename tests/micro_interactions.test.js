@@ -114,12 +114,13 @@ test('JS: #btn-restart safely handles resetApplicationState and navigates to lan
     assert(jsContent.includes('clearSwipeAffordance();'), 'clearSwipeAffordance must be called cleanly');
 });
 
-// Test 11: Result Celebration Popup Auto-transition in 2.5s and Proceed Button Removal
-test('UX/UI: Result Celebration Popup auto-transitions in 2.5s and manual proceed button is removed', () => {
-    assert(jsContent.includes('2500'), 'triggerMatchCelebrationPopup must auto-transition in 2.5s (2500ms)');
+// Test 11: Result Celebration Popup Auto-transition in 3s without time displayed
+test('UX/UI: Result Celebration Popup auto-transitions in 3s without displaying numeric seconds', () => {
+    assert(jsContent.includes('3000'), 'triggerMatchCelebrationPopup must auto-transition in 3s (3000ms)');
     assert(!htmlContent.includes('id="btn-celebration-proceed"'), 'btn-celebration-proceed must be removed from index.html');
     assert(!htmlContent.includes('id="btn-celebration-map"'), 'btn-celebration-map must be removed from index.html');
-    assert(jsContent.includes("cardEl.scrollIntoView"), 'dismissCelebrationPopup must scroll smoothly to restaurant card');
+    assert(!htmlContent.includes('2.5 วิ'), 'Numeric seconds 2.5 วิ should not be mentioned in celebration text');
+    assert(!htmlContent.includes('3 วิ'), 'Numeric seconds 3 วิ should not be mentioned in celebration text');
     assert(cssContent.includes('.celebration-particles'), 'Missing .celebration-particles in style.css');
     assert(cssContent.includes('.celebration-progress-bar'), 'Missing .celebration-progress-bar in style.css');
 });

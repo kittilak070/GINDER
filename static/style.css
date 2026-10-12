@@ -3207,7 +3207,7 @@ body {
     background: linear-gradient(90deg, #FF3366 0%, #FF9933 100%);
     border-radius: 999px;
     transform-origin: left;
-    animation: celebration-progress-shrink 2.5s linear forwards;
+    animation: celebration-progress-shrink 3s linear forwards;
 }
 
 @keyframes celebration-progress-shrink {

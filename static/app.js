@@ -1161,7 +1161,7 @@ function setupWelcomeModal() {
 }
 
 function showView(viewName) {
-    if (!state.currentUser && viewName !== 'landing' && viewName !== 'auth') {
+    if (!state.currentUser && !['landing', 'auth', 'swipe', 'result'].includes(viewName)) {
         // Silently complete guest login so user is never blocked by login screen
         triggerQuickGuestLogin(() => {
             showView(viewName);
@@ -3963,18 +3963,18 @@ function triggerMatchCelebrationPopup(options = {}) {
     void popup.offsetWidth;
     popup.classList.add('active');
 
-    // Reset progress bar animation if present
+    // Reset progress bar animation if present (3 seconds)
     const progressFill = popup.querySelector('.celebration-progress-fill');
     if (progressFill) {
         progressFill.style.animation = 'none';
         void progressFill.offsetWidth;
-        progressFill.style.animation = 'celebration-progress-shrink 2.5s linear forwards';
+        progressFill.style.animation = 'celebration-progress-shrink 3s linear forwards';
     }
 
-    // Auto-dismiss after 2.5s directly to restaurant details & map
+    // Auto-dismiss after 3s directly to restaurant details & map
     celebrationPopupTimer = setTimeout(() => {
         dismissCelebrationPopup();
-    }, 2500);
+    }, 3000);
 }
 
 function dismissCelebrationPopup() {
@@ -3985,29 +3985,36 @@ function dismissCelebrationPopup() {
     }
     if (!popup) return;
 
-    // Immediate fail-safe dismissal for mobile WebKit & all browsers
-    popup.classList.remove('active', 'fade-out');
-    popup.classList.add('hidden');
-    popup.style.display = 'none';
+    // Guaranteed instant activation of view-result before closing overlay
+    Object.keys(views).forEach(key => {
+        if (!views[key]) return;
+        if (key === 'result') {
+            views[key].classList.add('active');
+            views[key].style.display = 'flex';
+        } else {
+            views[key].classList.remove('active');
+            views[key].style.display = 'none';
+        }
+    });
+    document.body.classList.add('view-result-active');
+
+    // Quick and smooth dismissal of celebration overlay
+    popup.classList.remove('active');
+    popup.classList.add('fade-out');
     popup.style.pointerEvents = 'none';
-    popup.style.visibility = 'hidden';
 
-    // Ensure result view is visible
-    const resultView = document.getElementById('view-result');
-    if (resultView && resultView.classList.contains('hidden')) {
-        resultView.classList.remove('hidden');
-    }
+    setTimeout(() => {
+        popup.classList.add('hidden');
+        popup.style.display = 'none';
+        popup.style.visibility = 'hidden';
+    }, 150);
 
-    // Instant viewport alignment - DO NOT use smooth scroll on mobile touch dismissal to prevent WebKit thread freeze
+    // Instant viewport alignment to top
     try {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         const appContent = document.querySelector('.app-content');
         if (appContent) {
             appContent.scrollTop = 0;
-        }
-        const cardEl = document.getElementById('matched-restaurant-card');
-        if (cardEl && typeof cardEl.scrollIntoView === 'function') {
-            cardEl.scrollIntoView({ block: 'start' });
         }
     } catch (e) {
         window.scrollTo(0, 0);
