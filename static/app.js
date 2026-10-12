@@ -3003,61 +3003,32 @@ function setupEventListeners() {
     // Result Celebration Popup (Decided / Matched / Solo)
     const celebrationPopup = document.getElementById('result-celebration-popup');
     const celebrationProceedBtn = document.getElementById('btn-celebration-proceed');
-    const celebrationMapBtn = document.getElementById('btn-celebration-map');
     const closeCelebrationBtn = document.getElementById('btn-close-celebration-popup');
 
     const handleProceedToResult = (e) => {
-        if (e) {
+        if (e && typeof e.stopPropagation === 'function') {
             e.stopPropagation();
-            if (e.cancelable && e.type === 'touchend') e.preventDefault();
         }
         dismissCelebrationPopup();
-        setTimeout(() => {
-            const cardEl = document.getElementById('matched-restaurant-card');
-            if (cardEl) {
-                cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }, 120);
     };
 
     if (celebrationProceedBtn) {
         celebrationProceedBtn.addEventListener('click', handleProceedToResult);
-        celebrationProceedBtn.addEventListener('touchend', handleProceedToResult, { passive: false });
-    }
-
-    if (celebrationMapBtn) {
-        const handleMapTap = (e) => {
-            if (e) e.stopPropagation();
-            // Allow default link opening while dismissing modal
-            dismissCelebrationPopup();
-        };
-        celebrationMapBtn.addEventListener('click', handleMapTap);
-        celebrationMapBtn.addEventListener('touchend', handleMapTap);
-    }
-
-    if (celebrationPopup) {
-        const dismissAction = (e) => {
-            // Do not dismiss or cancel events if touching interactive buttons inside the card
-            if (e && e.target && e.target.closest('#btn-celebration-proceed, #btn-celebration-map, #btn-close-celebration-popup, a, button')) {
-                return;
-            }
-            if (e && e.cancelable && e.type === 'touchend') e.preventDefault();
-            dismissCelebrationPopup();
-        };
-        celebrationPopup.addEventListener('click', dismissAction);
-        celebrationPopup.addEventListener('touchend', dismissAction, { passive: false });
+        celebrationProceedBtn.addEventListener('touchend', handleProceedToResult, { passive: true });
     }
 
     if (closeCelebrationBtn) {
-        const closeAction = (e) => {
-            if (e) {
-                e.stopPropagation();
-                if (e.cancelable && e.type === 'touchend') e.preventDefault();
-            }
+        closeCelebrationBtn.addEventListener('click', handleProceedToResult);
+        closeCelebrationBtn.addEventListener('touchend', handleProceedToResult, { passive: true });
+    }
+
+    if (celebrationPopup) {
+        celebrationPopup.addEventListener('click', () => {
             dismissCelebrationPopup();
-        };
-        closeCelebrationBtn.addEventListener('click', closeAction);
-        closeCelebrationBtn.addEventListener('touchend', closeAction, { passive: false });
+        });
+        celebrationPopup.addEventListener('touchend', () => {
+            dismissCelebrationPopup();
+        }, { passive: true });
     }
 
     // Quick Guest / Return to Main App
@@ -3926,6 +3897,7 @@ function triggerMatchCelebrationPopup(options = {}) {
         celebrationPopupTimer = null;
     }
 
+    popup.style.display = 'flex';
     popup.classList.remove('hidden', 'fade-out');
     // Force DOM reflow so WebKit / iOS Safari triggers CSS keyframe animation smoothly
     void popup.offsetWidth;
@@ -3939,19 +3911,29 @@ function triggerMatchCelebrationPopup(options = {}) {
 
 function dismissCelebrationPopup() {
     const popup = document.getElementById('result-celebration-popup');
-    if (!popup || popup.classList.contains('hidden')) return;
+    if (!popup) return;
 
     if (celebrationPopupTimer) {
         clearTimeout(celebrationPopupTimer);
         celebrationPopupTimer = null;
     }
 
-    popup.classList.add('fade-out');
-    popup.classList.remove('active');
+    // Immediate fail-safe dismissal for mobile WebKit & all browsers
+    popup.style.display = 'none';
+    popup.classList.remove('active', 'fade-out');
+    popup.classList.add('hidden');
+
+    // Smoothly reveal matched restaurant card
     setTimeout(() => {
-        popup.classList.add('hidden');
-        popup.classList.remove('fade-out');
-    }, 280);
+        const cardEl = document.getElementById('matched-restaurant-card');
+        if (cardEl) {
+            try {
+                cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (e) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    }, 50);
 }
 
 // Render Match / Solo Result Screen
@@ -4089,7 +4071,6 @@ function renderResultScreen(r, options = {}) {
 
         // Update Maps URL
         const mapsBtn = document.getElementById('btn-open-map');
-        const celebMapBtn = document.getElementById('btn-celebration-map');
         let destinationMapUrl = '#';
 
         if (r.mapsUrl || r.googleMapsUri || r.google_maps_url) {
@@ -4104,10 +4085,6 @@ function renderResultScreen(r, options = {}) {
             mapsBtn.href = destinationMapUrl;
             mapsBtn.classList.remove('hidden');
         }
-        if (celebMapBtn) {
-            celebMapBtn.href = destinationMapUrl;
-            celebMapBtn.style.display = 'inline-flex';
-        }
     } else {
         cardContainer.innerHTML = `
             <div class="matched-details" style="text-align: center; padding: 3rem 1rem;">
@@ -4117,8 +4094,6 @@ function renderResultScreen(r, options = {}) {
             </div>
         `;
         document.getElementById('btn-open-map').classList.add('hidden');
-        const celebMapBtn = document.getElementById('btn-celebration-map');
-        if (celebMapBtn) celebMapBtn.style.display = 'none';
     }
 }
 

@@ -2889,7 +2889,22 @@ body {
     font-weight: 600;
 }
 
+.celebration-action-buttons {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 0.4rem;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto !important;
+}
+
 .btn-celebration-proceed {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto !important;
     width: 100%;
     max-width: 360px;
     font-size: 1.05rem;
@@ -2902,35 +2917,6 @@ body {
     touch-action: manipulation;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-}
-
-.btn-celebration-map {
-    width: 100%;
-    max-width: 360px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border-radius: var(--border-radius);
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #FFFFFF !important;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    touch-action: manipulation;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.btn-celebration-map:hover,
-.btn-celebration-map:active {
-    background: rgba(255, 255, 255, 0.24);
-    color: #FFFFFF !important;
-    transform: translateY(-1px);
 }
 
 .match-celebration-close {
@@ -2949,7 +2935,8 @@ body {
     cursor: pointer;
     font-size: 1rem;
     transition: all 0.2s ease;
-    z-index: 5;
+    z-index: 15;
+    pointer-events: auto !important;
 }
 
 .match-celebration-close:hover {
@@ -2958,17 +2945,23 @@ body {
     transform: scale(1.1);
 }
 
-.celebration-particles {
+.celebration-particles,
+.celebration-particles * {
     position: absolute;
-    inset: 0;
-    pointer-events: none;
+    pointer-events: none !important;
+    user-select: none !important;
     overflow: hidden;
+}
+
+.celebration-particles {
+    inset: 0;
 }
 
 .celebration-particles .particle {
     position: absolute;
     font-size: 1.6rem;
     animation: celebration-particle-float 2.4s infinite ease-in-out;
+    pointer-events: none !important;
 }
 
 .celebration-particles .p1 { top: 14%; left: 8%; animation-delay: 0s; font-size: 2rem; }

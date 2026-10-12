@@ -23,9 +23,11 @@ function test(name, fn) {
 
 const cssPath = path.join(__dirname, '../static/style.css');
 const jsPath = path.join(__dirname, '../static/app.js');
+const htmlPath = path.join(__dirname, '../templates/index.html');
 
 const cssContent = fs.readFileSync(cssPath, 'utf8');
 const jsContent = fs.readFileSync(jsPath, 'utf8');
+const htmlContent = fs.readFileSync(htmlPath, 'utf8');
 
 // Test 1: Glassmorphic Ripple CSS & JS
 test('CSS & JS: Global Glassmorphic Ripple effect defined and initialized', () => {
@@ -113,12 +115,14 @@ test('JS: #btn-restart safely handles resetApplicationState and navigates to lan
 });
 
 // Test 11: Result Celebration Popup Mobile Touch & Proceed Navigation Handlers
-test('UX/UI: Result Celebration Popup has proceed button, map button, and mobile touch immunity', () => {
+test('UX/UI: Result Celebration Popup has proceed button, smooth card scroll, and immediate map button removed', () => {
     assert(jsContent.includes("document.getElementById('btn-celebration-proceed')"), 'Missing btn-celebration-proceed in app.js');
-    assert(jsContent.includes("document.getElementById('btn-celebration-map')"), 'Missing btn-celebration-map in app.js');
-    assert(jsContent.includes("cardEl.scrollIntoView"), 'btn-celebration-proceed must scroll smoothly to restaurant card');
-    assert(jsContent.includes("e.target.closest('#btn-celebration-proceed"), 'dismissAction must not cancel touch events on interactive buttons');
-    assert(cssContent.includes('.btn-celebration-map'), 'Missing .btn-celebration-map in style.css');
+    assert(!jsContent.includes("document.getElementById('btn-celebration-map')"), 'btn-celebration-map must be removed from app.js');
+    assert(jsContent.includes("cardEl.scrollIntoView"), 'dismissCelebrationPopup must scroll smoothly to restaurant card');
+    assert(htmlContent.includes('id="btn-celebration-proceed"'), 'Missing btn-celebration-proceed in index.html');
+    assert(!htmlContent.includes('id="btn-celebration-map"'), 'btn-celebration-map must be removed from index.html');
+    assert(cssContent.includes('.btn-celebration-proceed'), 'Missing .btn-celebration-proceed in style.css');
+    assert(cssContent.includes('.celebration-particles'), 'Missing .celebration-particles in style.css');
 });
 
 console.log('\n========================================');
