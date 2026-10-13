@@ -192,7 +192,7 @@ async function getHistory() {
             .from('match_history')
             .select('*')
             .order('matched_at', { ascending: false })
-            .limit(200);
+            .limit(500);
         if (!error && data && data.length > 0) {
             return data.map(item => ({
                 id: item.id,
@@ -1290,9 +1290,12 @@ app.post('/api/solo/deck', async (req, res) => {
 
 app.post('/api/solo/record-match', async (req, res) => {
     try {
-        const { restaurant, isLuckyPick } = req.body || {};
+        const { restaurant, isLuckyPick, notes, userName } = req.body || {};
         if (!restaurant) return res.status(400).json({ error: "Missing restaurant" });
-        const user = req.session && req.session.user ? req.session.user.display_name || req.session.user.username : (req.body.userName || 'Solo Foodie');
+        const user = (req.session && req.session.user && (req.session.user.display_name || req.session.user.username))
+            ? (req.session.user.display_name || req.session.user.username)
+            : (userName || 'นักชิมเดี่ยว');
+        const defaultNotes = notes || (isLuckyPick ? 'สุ่มร้านจากสำรับทั้งหมด' : 'คัดสรรจากร้านที่ปัดถูกใจ');
         const historyItem = {
             id: 'hist_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
             roomId: 'SOLO',
@@ -1307,10 +1310,11 @@ app.post('/api/solo/record-match', async (req, res) => {
             },
             participants: [user],
             isFallback: !!isLuckyPick,
+            fallbackReason: defaultNotes,
             matchedAt: new Date().toISOString()
         };
-        saveHistoryItem(historyItem);
-        res.json({ success: true });
+        await saveHistoryItem(historyItem);
+        res.json({ success: true, historyItem });
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
@@ -2353,9 +2357,13 @@ app.get('/api/admin/reports/summary', async (req, res) => {
         const { data: users } = await supabase.from('users').select('id, username, display_name, allergies, role, created_at');
 
         const totalMatches = history.length;
-        const unanimousMatches = history.filter(h => !h.isFallback).length;
-        const fallbackMatches = history.filter(h => !!h.isFallback).length;
-        const unanimousRate = totalMatches > 0 ? Math.round((unanimousMatches / totalMatches) * 100) : 0;
+        const soloMatches = history.filter(h => (h.roomId || '').toUpperCase() === 'SOLO').length;
+        const groupMatches = history.filter(h => (h.roomId || '').toUpperCase() !== 'SOLO').length;
+        const unanimousMatches = history.filter(h => (h.roomId || '').toUpperCase() !== 'SOLO' && !h.isFallback).length;
+        const fallbackMatches = history.filter(h => (h.roomId || '').toUpperCase() !== 'SOLO' && h.isFallback).length;
+        const soloLikedMatches = history.filter(h => (h.roomId || '').toUpperCase() === 'SOLO' && !h.isFallback).length;
+        const soloFallbackMatches = history.filter(h => (h.roomId || '').toUpperCase() === 'SOLO' && h.isFallback).length;
+        const unanimousRate = groupMatches > 0 ? Math.round((unanimousMatches / groupMatches) * 100) : 100;
 
         // User allergies aggregation
         const allergyCounts = {};
@@ -2382,11 +2390,75 @@ app.get('/api/admin/reports/summary', async (req, res) => {
             feedbackTypeCounts[t] = (feedbackTypeCounts[t] || 0) + 1;
         });
 
+        const formattedMatches = history.map(item => {
+            const isSolo = (item.roomId || '').toUpperCase() === 'SOLO';
+            const rest = item.restaurant || {};
+            const restName = rest.name || 'ไม่ระบุชื่อร้าน';
+            const restImage = rest.image || '';
+            const restType = Array.isArray(rest.type) ? rest.type.join(', ') : (rest.type || 'ทั่วไป');
+            const restRating = rest.rating || null;
+            const restAvgPrice = rest.avgPrice || null;
+            const restAddress = rest.address || '';
+            const participantsList = Array.isArray(item.participants) 
+                ? item.participants 
+                : (item.participants ? [item.participants] : (isSolo ? ['นักชิมเดี่ยว'] : ['สมาชิกในห้อง']));
+            const participantCount = participantsList.length || 1;
+            const participantNames = participantsList.join(', ');
+
+            let decisionMode = 'unanimous';
+            let decisionModeText = 'มติเอกฉันท์ 100%';
+            if (isSolo) {
+                decisionMode = item.isFallback ? 'solo_fallback' : 'solo_match';
+                decisionModeText = item.isFallback ? 'โหมดเดี่ยว (สุ่มจากสำรับ)' : 'โหมดเดี่ยว (ปัดถูกใจ)';
+            } else {
+                decisionMode = item.isFallback ? 'fallback' : 'unanimous';
+                decisionModeText = item.isFallback ? 'ตัวสำรอง (Fallback)' : 'มติเอกฉันท์ 100%';
+            }
+
+            const defaultNotes = isSolo 
+                ? (item.isFallback ? 'สุ่มร้านจากสำรับทั้งหมด' : 'คัดสรรจากร้านที่ปัดถูกใจ')
+                : (item.isFallback ? 'หมดเวลา / ระบบสุ่มจากร้านที่สมาชิกชอบมากที่สุด' : 'สมาชิกในห้องถูกใจตรงกันเป็นมติเอกฉันท์ 100%');
+
+            const timestamp = item.matchedAt || item.matched_at || new Date().toISOString();
+
+            return {
+                id: item.id,
+                roomId: item.roomId || (isSolo ? 'SOLO' : '-'),
+                room_code: item.roomId || (isSolo ? 'SOLO' : '-'),
+                isSolo: isSolo,
+                is_solo: isSolo,
+                restaurant: rest,
+                selected_restaurant_name: restName,
+                restaurant_name: restName,
+                restaurant_image: restImage,
+                restaurant_type: restType,
+                restaurant_rating: restRating,
+                restaurant_avg_price: restAvgPrice,
+                restaurant_address: restAddress,
+                participants: participantsList,
+                participant_names: participantNames,
+                participant_count: participantCount,
+                isFallback: !!item.isFallback,
+                is_fallback: !!item.isFallback,
+                decision_mode: decisionMode,
+                decision_mode_text: decisionModeText,
+                fallback_reason: item.fallbackReason || null,
+                notes: item.fallbackReason || defaultNotes,
+                matchedAt: timestamp,
+                matched_at: timestamp,
+                created_at: timestamp
+            };
+        });
+
         res.json({
             metrics: {
                 totalMatches,
+                soloMatches,
+                groupMatches,
                 unanimousMatches,
                 fallbackMatches,
+                soloLikedMatches,
+                soloFallbackMatches,
                 unanimousRate,
                 totalRestaurants: restaurants.length,
                 totalUsers: (users || []).length,
@@ -2394,11 +2466,13 @@ app.get('/api/admin/reports/summary', async (req, res) => {
             },
             summary: {
                 totalMatches,
+                soloMatches,
+                groupMatches,
                 unanimousMatches,
                 fallbackMatches,
                 unanimousRate
             },
-            recentMatches: history.slice(0, 100),
+            recentMatches: formattedMatches.slice(0, 300),
             topAllergies,
             feedbackTypeCounts
         });
@@ -2420,23 +2494,35 @@ app.get('/api/admin/reports/export/:type', async (req, res) => {
         if (exportType === 'matches') {
             filename = `GINDER_Match_History_${nowStr}.csv`;
             const history = await getHistory();
-            rows.push(['รหัสประวัติ', 'รหัสห้อง', 'ชื่อร้านอาหาร', 'คะแนนรีวิว', 'ราคาเฉลี่ยต่อคน', 'หมวดหมู่อาหาร', 'ที่อยู่ร้าน', 'รายชื่อผู้ร่วมโต๊ะ', 'ประเภทผลลัพธ์', 'เหตุผลประกอบ', 'วันที่-เวลาที่แมตช์']);
+            rows.push(['รหัสประวัติ', 'รหัสห้อง', 'โหมดการเล่น', 'ชื่อร้านอาหาร', 'คะแนนรีวิว', 'ราคาเฉลี่ยต่อคน (บาท)', 'หมวดหมู่อาหาร', 'ที่อยู่ร้าน', 'จำนวนผู้ร่วมโต๊ะ', 'รายชื่อผู้ร่วมโต๊ะ', 'ประเภทผลลัพธ์', 'เหตุผลประกอบ / หมายเหตุ', 'วันที่-เวลาที่แมตช์']);
             history.forEach(h => {
+                const isSolo = (h.roomId || '').toUpperCase() === 'SOLO';
                 const rest = h.restaurant || {};
                 const typeStr = Array.isArray(rest.type) ? rest.type.join(', ') : (rest.type || '');
-                const membersStr = Array.isArray(h.participants) ? h.participants.join(', ') : '';
-                const matchType = h.isFallback ? 'ตัวสำรอง (Fallback)' : 'มติเอกฉันท์ 100%';
+                const participantsList = Array.isArray(h.participants) ? h.participants : (h.participants ? [h.participants] : (isSolo ? ['นักชิมเดี่ยว'] : ['สมาชิกในห้อง']));
+                const membersStr = participantsList.join(', ');
+                let matchType = '';
+                if (isSolo) {
+                    matchType = h.isFallback ? 'โหมดเดี่ยว (สุ่มจากสำรับ)' : 'โหมดเดี่ยว (ปัดถูกใจ)';
+                } else {
+                    matchType = h.isFallback ? 'โหมดกลุ่ม (ตัวสำรอง Fallback)' : 'โหมดกลุ่ม (มติเอกฉันท์ 100%)';
+                }
+                const defaultNote = isSolo 
+                    ? (h.isFallback ? 'สุ่มร้านจากสำรับทั้งหมด' : 'คัดสรรจากร้านที่ปัดถูกใจ')
+                    : (h.isFallback ? 'หมดเวลา / ระบบสุ่มตัวสำรอง' : 'สมาชิกในห้องถูกใจตรงกัน 100%');
                 rows.push([
                     h.id || '',
-                    h.roomId || '',
+                    h.roomId || (isSolo ? 'SOLO' : ''),
+                    isSolo ? 'โหมดเดี่ยว (Solo)' : 'โหมดกลุ่ม (Group)',
                     rest.name || '',
                     rest.rating || '',
                     rest.avgPrice || '',
                     typeStr,
                     rest.address || '',
+                    participantsList.length || 1,
                     membersStr,
                     matchType,
-                    h.fallbackReason || '',
+                    h.fallbackReason || defaultNote,
                     h.matchedAt || ''
                 ]);
             });
@@ -2842,6 +2928,10 @@ app.get('/api/admin/pdpa/dsr-requests', async (req, res) => {
 
 function recordMatchHistory(room, restaurant, isFallback) {
     if (!room || !restaurant) return;
+    const participants = Object.values(room.users || {}).map(u => u.name).filter(Boolean);
+    const defaultNotes = isFallback 
+        ? (restaurant ? 'หมดเวลา / ระบบสุ่มจากร้านที่สมาชิกชอบมากที่สุด' : 'ไม่พบร้านที่ตรงเงื่อนไข')
+        : 'สมาชิกในห้องถูกใจตรงกันเป็นมติเอกฉันท์ 100%';
     const historyItem = {
         id: 'hist_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
         roomId: room.id,
@@ -2854,8 +2944,9 @@ function recordMatchHistory(room, restaurant, isFallback) {
             type: restaurant.type,
             address: restaurant.address
         },
-        participants: Object.values(room.users || {}).map(u => u.name),
+        participants: participants.length > 0 ? participants : ['สมาชิกในห้อง'],
         isFallback: !!isFallback,
+        fallbackReason: defaultNotes,
         matchedAt: new Date().toISOString()
     };
     saveHistoryItem(historyItem);

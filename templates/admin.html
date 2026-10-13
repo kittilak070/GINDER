@@ -1654,28 +1654,57 @@
                             </div>
                         </div>
 
+                        <!-- Match Summary Metrics Row -->
+                        <div class="kpi-row" style="margin-top: 1.25rem; margin-bottom: 1.25rem;">
+                            <div class="kpi-card" style="padding: 1rem;">
+                                <div class="kpi-title"><i class="fa-solid fa-utensils text-accent"></i> แมตช์สำเร็จทั้งหมด</div>
+                                <div class="kpi-value" id="report-stat-total" style="font-size: 1.5rem;">0</div>
+                            </div>
+                            <div class="kpi-card" style="padding: 1rem;">
+                                <div class="kpi-title"><i class="fa-solid fa-user" style="color: #60a5fa;"></i> โหมดเดี่ยว (Solo)</div>
+                                <div class="kpi-value" id="report-stat-solo" style="font-size: 1.5rem; color: #60a5fa;">0</div>
+                            </div>
+                            <div class="kpi-card" style="padding: 1rem;">
+                                <div class="kpi-title"><i class="fa-solid fa-users" style="color: #c084fc;"></i> โหมดกลุ่ม (Group)</div>
+                                <div class="kpi-value" id="report-stat-group" style="font-size: 1.5rem; color: #c084fc;">0</div>
+                            </div>
+                            <div class="kpi-card" style="padding: 1rem;">
+                                <div class="kpi-title"><i class="fa-solid fa-circle-check" style="color: var(--color-success);"></i> มติเอกฉันท์ 100%</div>
+                                <div class="kpi-value" id="report-stat-unanimous" style="font-size: 1.5rem; color: var(--color-success);">0</div>
+                            </div>
+                            <div class="kpi-card" style="padding: 1rem;">
+                                <div class="kpi-title"><i class="fa-solid fa-clock-rotate-left" style="color: var(--color-primary);"></i> ตัวสำรอง (Fallback)</div>
+                                <div class="kpi-value" id="report-stat-fallback" style="font-size: 1.5rem; color: var(--color-primary);">0</div>
+                            </div>
+                        </div>
+
                         <!-- Match Audit Log Table -->
-                        <div class="table-responsive" style="margin-top: 1rem;">
+                        <div class="table-responsive" style="margin-top: 0.5rem;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.85rem;">
-                                <h3 style="font-size: 1rem; font-weight: 600;">ประวัติการแมตช์อาหารล่าสุด (Match History Audit)</h3>
+                                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                    <h3 style="font-size: 1rem; font-weight: 600; margin: 0;">ประวัติการแมตช์อาหารล่าสุด (Match History Audit)</h3>
+                                    <span id="report-match-count-badge" class="badge" style="background: rgba(255, 255, 255, 0.08); font-size: 0.75rem; color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.12);">0 รายการ</span>
+                                </div>
                                 <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
                                     <select id="report-match-filter" class="form-control" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.8rem;">
                                         <option value="all">ผลลัพธ์ทั้งหมด</option>
+                                        <option value="solo">เฉพาะโหมดเดี่ยว (Solo)</option>
+                                        <option value="group">เฉพาะโหมดกลุ่ม (Group)</option>
                                         <option value="unanimous">มติเอกฉันท์ (Unanimous)</option>
                                         <option value="fallback">ตัวสำรอง (Fallback)</option>
                                     </select>
-                                    <input type="text" id="report-match-search" placeholder="ค้นหาชื่อร้าน หรือ รหัสห้อง..." class="form-control" style="width: 200px; padding: 0.35rem 0.65rem; font-size: 0.8rem;">
+                                    <input type="text" id="report-match-search" placeholder="ค้นหาชื่อร้าน, รหัสห้อง, สมาชิก..." class="form-control" style="width: 230px; padding: 0.35rem 0.65rem; font-size: 0.8rem;">
                                 </div>
                             </div>
 
                             <table>
                                 <thead>
                                     <tr>
-                                        <th style="width: 140px;">วัน-เวลา</th>
-                                        <th style="width: 90px;">ห้อง</th>
+                                        <th style="width: 150px;">วัน-เวลา</th>
+                                        <th style="width: 95px;">ห้อง</th>
                                         <th>ร้านอาหารที่เลือก</th>
-                                        <th style="width: 130px;">ผลการตัดสิน</th>
-                                        <th>ผู้ร่วมโต๊ะ</th>
+                                        <th style="width: 170px;">ผลการตัดสิน</th>
+                                        <th style="width: 170px;">ผู้ร่วมโต๊ะ</th>
                                         <th>หมายเหตุ</th>
                                     </tr>
                                 </thead>
@@ -2852,6 +2881,19 @@
             fetch('/api/admin/reports/summary')
                 .then(res => res.json())
                 .then(data => {
+                    const metrics = data.metrics || data.summary || {};
+                    const elTotal = document.getElementById('report-stat-total');
+                    const elSolo = document.getElementById('report-stat-solo');
+                    const elGroup = document.getElementById('report-stat-group');
+                    const elUnanimous = document.getElementById('report-stat-unanimous');
+                    const elFallback = document.getElementById('report-stat-fallback');
+
+                    if (elTotal) elTotal.innerText = (metrics.totalMatches || 0).toLocaleString();
+                    if (elSolo) elSolo.innerText = (metrics.soloMatches || 0).toLocaleString();
+                    if (elGroup) elGroup.innerText = (metrics.groupMatches || 0).toLocaleString();
+                    if (elUnanimous) elUnanimous.innerText = (metrics.unanimousMatches || 0).toLocaleString();
+                    if (elFallback) elFallback.innerText = (metrics.fallbackMatches || 0).toLocaleString();
+
                     reportAllMatches = data.recentMatches || [];
                     filterAndRenderReportMatches();
                 })
@@ -2868,14 +2910,25 @@
             const searchVal = searchEl ? searchEl.value.toLowerCase().trim() : '';
 
             let list = reportAllMatches;
-            if (filterVal === 'unanimous') list = list.filter(m => m.decision_mode === 'unanimous');
-            else if (filterVal === 'fallback') list = list.filter(m => m.decision_mode === 'fallback');
+            if (filterVal === 'solo') {
+                list = list.filter(m => m.is_solo || m.isSolo || (m.room_code || m.roomId || '').toUpperCase() === 'SOLO');
+            } else if (filterVal === 'group') {
+                list = list.filter(m => !(m.is_solo || m.isSolo) && (m.room_code || m.roomId || '').toUpperCase() !== 'SOLO');
+            } else if (filterVal === 'unanimous') {
+                list = list.filter(m => m.decision_mode === 'unanimous' || (!m.is_fallback && !m.isFallback && (m.room_code || m.roomId || '').toUpperCase() !== 'SOLO'));
+            } else if (filterVal === 'fallback') {
+                list = list.filter(m => m.decision_mode === 'fallback' || m.decision_mode === 'solo_fallback' || m.is_fallback || m.isFallback);
+            }
 
             if (searchVal) {
-                list = list.filter(m => 
-                    (m.selected_restaurant_name && m.selected_restaurant_name.toLowerCase().includes(searchVal)) ||
-                    (m.room_code && m.room_code.toLowerCase().includes(searchVal))
-                );
+                list = list.filter(m => {
+                    const restName = (m.selected_restaurant_name || m.restaurant_name || (m.restaurant && m.restaurant.name) || '').toLowerCase();
+                    const roomCode = (m.room_code || m.roomId || '').toLowerCase();
+                    const members = (m.participant_names || (Array.isArray(m.participants) ? m.participants.join(', ') : '') || '').toLowerCase();
+                    const notes = (m.notes || m.fallback_reason || '').toLowerCase();
+                    const cuisine = (m.restaurant_type || (m.restaurant && m.restaurant.type ? (Array.isArray(m.restaurant.type) ? m.restaurant.type.join(', ') : m.restaurant.type) : '') || '').toLowerCase();
+                    return restName.includes(searchVal) || roomCode.includes(searchVal) || members.includes(searchVal) || notes.includes(searchVal) || cuisine.includes(searchVal);
+                });
             }
 
             renderReportMatchesTable(list);
@@ -2883,27 +2936,90 @@
 
         function renderReportMatchesTable(matches) {
             const tbody = document.getElementById('report-matches-table-body');
+            const countBadge = document.getElementById('report-match-count-badge');
+            if (countBadge) {
+                countBadge.innerText = `${matches.length.toLocaleString()} รายการ`;
+            }
             if (!tbody) return;
             tbody.innerHTML = '';
             if (matches.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">ไม่พบประวัติการแมตช์</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2.5rem;"><i class="fa-solid fa-search" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; opacity: 0.4;"></i>ไม่พบประวัติการแมตช์ที่ตรงตามเงื่อนไข</td></tr>';
                 return;
             }
 
-            matches.slice(0, 100).forEach(m => {
+            matches.slice(0, 150).forEach(m => {
                 const tr = document.createElement('tr');
-                const dateStr = m.created_at ? new Date(m.created_at).toLocaleString('th-TH') : '-';
-                const modeBadge = m.decision_mode === 'unanimous' 
-                    ? '<span class="badge" style="background: rgba(16, 185, 129, 0.1); color: var(--color-success); border: 1px solid rgba(16, 185, 129, 0.2);">มติเอกฉันท์</span>'
-                    : '<span class="badge" style="background: rgba(249, 115, 22, 0.1); color: var(--color-primary); border: 1px solid rgba(249, 115, 22, 0.2);">ตัวสำรอง (Fallback)</span>';
+                const rawDate = m.matchedAt || m.matched_at || m.created_at;
+                const dateStr = rawDate ? new Date(rawDate).toLocaleString('th-TH', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) : '-';
                 
+                const isSolo = m.is_solo || m.isSolo || (m.room_code || m.roomId || '').toUpperCase() === 'SOLO';
+                const roomCode = m.room_code || m.roomId || (isSolo ? 'SOLO' : '-');
+                const roomBadge = isSolo
+                    ? '<span class="badge" style="background: rgba(147, 51, 234, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25); font-weight: 600;"><i class="fa-solid fa-user"></i> SOLO</span>'
+                    : `<span class="badge" style="background: rgba(249, 115, 22, 0.12); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.25); font-weight: 700; letter-spacing: 0.5px;"><i class="fa-solid fa-users"></i> ${escapeHtml(roomCode)}</span>`;
+
+                const rest = m.restaurant || {};
+                const restName = m.selected_restaurant_name || m.restaurant_name || rest.name || 'ไม่ระบุชื่อร้าน';
+                const restImg = m.restaurant_image || rest.image || '';
+                const restType = m.restaurant_type || (Array.isArray(rest.type) ? rest.type.join(', ') : (rest.type || 'ทั่วไป'));
+                const restRating = m.restaurant_rating || rest.rating || '';
+                const restPrice = m.restaurant_avg_price || rest.avgPrice || '';
+
+                let modeBadge = '';
+                if (isSolo) {
+                    if (m.isFallback || m.is_fallback || m.decision_mode === 'solo_fallback') {
+                        modeBadge = '<span class="badge" style="background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25);"><i class="fa-solid fa-dice"></i> โหมดเดี่ยว (สุ่ม)</span>';
+                    } else {
+                        modeBadge = '<span class="badge" style="background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.25);"><i class="fa-solid fa-heart"></i> โหมดเดี่ยว (ปัดถูกใจ)</span>';
+                    }
+                } else {
+                    if (m.isFallback || m.is_fallback || m.decision_mode === 'fallback') {
+                        modeBadge = '<span class="badge" style="background: rgba(249, 115, 22, 0.12); color: var(--color-primary); border: 1px solid rgba(249, 115, 22, 0.25);"><i class="fa-solid fa-clock-rotate-left"></i> ตัวสำรอง (Fallback)</span>';
+                    } else {
+                        modeBadge = '<span class="badge" style="background: rgba(16, 185, 129, 0.12); color: var(--color-success); border: 1px solid rgba(16, 185, 129, 0.25);"><i class="fa-solid fa-circle-check"></i> มติเอกฉันท์ 100%</span>';
+                    }
+                }
+
+                const participants = Array.isArray(m.participants) ? m.participants : (m.participants ? [m.participants] : []);
+                const pCount = m.participant_count || participants.length || 1;
+                const pNames = m.participant_names || participants.join(', ') || (isSolo ? 'นักชิมเดี่ยว' : 'สมาชิกในห้อง');
+
+                const notes = m.notes || m.fallback_reason || m.fallbackReason || (isSolo ? (m.isFallback ? 'สุ่มร้านจากสำรับ' : 'คัดสรรจากร้านที่ปัดถูกใจ') : (m.isFallback ? 'ระบบสุ่มตัวสำรอง' : 'มติเอกฉันท์ 100%'));
+
+                const imgHtml = restImg 
+                    ? `<img src="${escapeHtml(restImg)}" style="width: 38px; height: 38px; border-radius: 8px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=200';" alt="">`
+                    : `<div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: var(--color-primary); flex-shrink: 0;"><i class="fa-solid fa-utensils"></i></div>`;
+
                 tr.innerHTML = `
-                    <td style="font-size: 0.8rem; color: var(--text-secondary);">${dateStr}</td>
-                    <td><strong style="color: var(--color-primary);">${escapeHtml(m.room_code || '-')}</strong></td>
-                    <td style="font-weight: 600;">${escapeHtml(m.selected_restaurant_name || '-')}</td>
+                    <td style="font-size: 0.8rem; color: var(--text-secondary); white-space: nowrap;">${dateStr}</td>
+                    <td>${roomBadge}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            ${imgHtml}
+                            <div style="min-width: 0;">
+                                <strong style="display: block; font-size: 0.9rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;" title="${escapeHtml(restName)}">${escapeHtml(restName)}</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.4rem; margin-top: 0.15rem;">
+                                    <span>${escapeHtml(restType)}</span>
+                                    ${restRating ? `<span>• <i class="fa-solid fa-star" style="color: #fbbf24; font-size: 0.7rem;"></i> ${restRating}</span>` : ''}
+                                    ${restPrice ? `<span>• ~${restPrice}฿</span>` : ''}
+                                </span>
+                            </div>
+                        </div>
+                    </td>
                     <td>${modeBadge}</td>
-                    <td style="font-size: 0.85rem;">${m.participant_count || 1} คน</td>
-                    <td style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(m.notes || '-')}</td>
+                    <td>
+                        <span style="font-size: 0.85rem; font-weight: 600; display: block;"><i class="fa-solid fa-user-group" style="font-size: 0.75rem; opacity: 0.7; margin-right: 0.25rem;"></i>${pCount} คน</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); display: block; max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${escapeHtml(pNames)}">${escapeHtml(pNames)}</span>
+                    </td>
+                    <td style="font-size: 0.8rem; color: var(--text-secondary); max-width: 220px;">
+                        <span title="${escapeHtml(notes)}">${escapeHtml(notes)}</span>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });

@@ -4924,12 +4924,18 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
                 setTimeout(() => {
                     let winner = null;
                     let subtitle = '';
-                    if (state.soloLiked.length > 0) {
+                    let isLucky = false;
+                    let matchNotes = '';
+                    if (state.soloLiked && state.soloLiked.length > 0) {
                         winner = state.soloLiked[Math.floor(Math.random() * state.soloLiked.length)];
                         subtitle = `คัดสรรจาก ${state.soloLiked.length} ร้านที่คุณปัดถูกใจ! 🍽️`;
+                        isLucky = false;
+                        matchNotes = `คัดสรรจาก ${state.soloLiked.length} ร้านที่ปัดถูกใจ`;
                     } else {
                         winner = state.restaurants[Math.floor(Math.random() * state.restaurants.length)];
                         subtitle = `สุ่มร้านเด็ดให้จากสำรับทั้งหมด! 🍽️`;
+                        isLucky = true;
+                        matchNotes = 'สุ่มร้านเด็ดจากสำรับทั้งหมด (ไม่พบร้านที่กดถูกใจ)';
                     }
                     renderResultScreen(winner, {
                         isSolo: true,
@@ -4939,13 +4945,17 @@ function executeSwipeAction(card, direction, dX = 150, dY = 0) {
 
                     // Record history
                     if (winner) {
+                        const currentUserName = (state.currentUser && (state.currentUser.displayName || state.currentUser.username))
+                            ? (state.currentUser.displayName || state.currentUser.username)
+                            : (state.name || 'นักชิมเดี่ยว');
                         fetch('/api/solo/record-match', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 restaurant: winner,
-                                isLuckyPick: false,
-                                userName: state.currentUser ? (state.currentUser.displayName || state.currentUser.username) : 'นักชิมเดี่ยว'
+                                isLuckyPick: isLucky,
+                                notes: matchNotes,
+                                userName: currentUserName
                             })
                         }).catch(() => {});
                     }
